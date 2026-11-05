@@ -8,6 +8,7 @@ import quizRoutes from './routes/quizRoutes.js';
 import attemptRoutes from './routes/attemptRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
+import battleRoutes from './routes/battleRoutes.js';
 import { db } from './database/db.js';
 import { initAuthAccounts } from './controllers/authController.js';
 
@@ -47,6 +48,9 @@ app.use('/analytics', analyticsRoutes);
 
 app.use('/api/ai', aiRoutes);
 app.use('/ai', aiRoutes);
+
+app.use('/api/battle', battleRoutes);
+app.use('/battle', battleRoutes);
 
 // Serve frontend static build if available
 const frontendDistPath = path.join(__dirname, '..', '..', 'frontend', 'dist');

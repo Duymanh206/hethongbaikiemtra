@@ -44,6 +44,12 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
   // Active room data
   const [roomData, setRoomData] = useState(null);
   const [isHost, setIsHost] = useState(false);
+  const [hostToken, setHostToken] = useState(null);
+  const [playerId, setPlayerId] = useState(null);
+  const [httpQuestions, setHttpQuestions] = useState([]);
+  const [httpQIndex, setHttpQIndex] = useState(0);
+  const [isCreatingRoom, setIsCreatingRoom] = useState(false);
+  const [isJoiningRoom, setIsJoiningRoom] = useState(false);
   const [players, setPlayers] = useState([]);
   const [qrDataUrl, setQrDataUrl] = useState('');
   const [shareLink, setShareLink] = useState('');
@@ -136,33 +142,112 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
     return () => clearInterval(interval);
   }, [stage]);
 
-  // Host creates room
-  const handleCreateRoom = () => {
-    if (!socketRef.current) return;
-    socketRef.current.emit(
-      'create_room',
-      {
-        quizId: selectedQuizId,
-        scoringMode,
-        hostName: user?.fullName || 'Chủ phòng'
-      },
-      (res) => {
-        if (res.success) {
-          setRoomData(res);
-          setIsHost(true);
-          setStage('host_lobby');
+  // HTTP Polling fallback loop for room sync on Vercel
+  useEffect(() => {
+    if (!roomData?.pin || stage === 'menu') return;
 
-          // Construct direct shareable URL
-          const link = `${window.location.origin}/?pin=${res.pin}`;
-          setShareLink(link);
+    const poll = async () => {
+      try {
+        const query = new URLSearchParams();
+        if (hostToken) query.set('hostToken', hostToken);
+        if (playerId) query.set('playerId', playerId);
 
-          // Generate QR code for Room PIN
-          QRCode.toDataURL(link).then(url => setQrDataUrl(url)).catch(() => {});
-        } else {
-          alert(res.message);
+        const res = await fetch(`/api/battle/room/${roomData.pin}?${query.toString()}`);
+        const data = await res.json();
+        if (data.success) {
+          if (data.players) setPlayers(data.players);
+          if (data.questions && data.questions.length > 0) {
+            setHttpQuestions(data.questions);
+            if (!currentQuestion) {
+              setCurrentQuestion(data.questions[0]);
+            }
+          }
+
+          if (data.status === 'playing' && stage === 'player_lobby') {
+            setStage('playing');
+            if (data.questions && data.questions.length > 0) {
+              setCurrentQuestion(data.questions[0]);
+              setTimeRemaining(20);
+            }
+          } else if (data.status === 'podium' && stage !== 'podium') {
+            setPodiumData(data);
+            setStage('podium');
+            try {
+              confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            } catch (e) {}
+          }
         }
+      } catch {}
+    };
+
+    poll();
+    const interval = setInterval(poll, 2000);
+    return () => clearInterval(interval);
+  }, [roomData?.pin, stage, hostToken, playerId]);
+
+  const setupHostRoom = (res) => {
+    setRoomData(res);
+    setIsHost(true);
+    if (res.hostToken) setHostToken(res.hostToken);
+    setStage('host_lobby');
+
+    // Construct direct shareable URL
+    const link = res.shareLink || `${window.location.origin}/?pin=${res.pin}`;
+    setShareLink(link);
+
+    // Generate QR code for Room PIN
+    QRCode.toDataURL(link).then(url => setQrDataUrl(url)).catch(() => {});
+  };
+
+  // Host creates room (Dual-mode: Socket.io + HTTP fallback)
+  const handleCreateRoom = async () => {
+    setIsCreatingRoom(true);
+    let socketResponded = false;
+
+    if (socketRef.current && socketRef.current.connected) {
+      socketRef.current.emit(
+        'create_room',
+        {
+          quizId: selectedQuizId,
+          scoringMode,
+          hostName: user?.fullName || 'Chủ phòng'
+        },
+        (res) => {
+          if (res && res.success) {
+            socketResponded = true;
+            setupHostRoom(res);
+            setIsCreatingRoom(false);
+          }
+        }
+      );
+    }
+
+    // Always run HTTP fallback if socket doesn't respond quickly (e.g. on Vercel)
+    setTimeout(async () => {
+      if (socketResponded) return;
+      try {
+        const res = await fetch('/api/battle/create-room', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            quizId: selectedQuizId,
+            scoringMode,
+            hostName: user?.fullName || 'Chủ phòng'
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          setupHostRoom(data);
+        } else {
+          alert(data.message || 'Không thể tạo phòng đấu');
+        }
+      } catch (err) {
+        console.error('HTTP create-room error:', err);
+        alert('Lỗi kết nối khi tạo phòng đấu. Vui lòng thử lại!');
+      } finally {
+        setIsCreatingRoom(false);
       }
-    );
+    }, 500);
   };
 
   // Copy share link
@@ -172,58 +257,165 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 3000);
     }).catch(() => {
-      // Fallback
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 3000);
     });
   };
 
-  // Player joins room
-  const handleJoinRoom = (e) => {
-    e.preventDefault();
-    if (!pinInput.trim() || !socketRef.current) return;
+  // Player joins room (Dual-mode: Socket.io + HTTP fallback)
+  const handleJoinRoom = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const pin = pinInput.trim();
+    if (!pin) return;
+    setIsJoiningRoom(true);
+    const nickname = nicknameInput.trim() || user?.fullName || 'Thí sinh';
+    let socketResponded = false;
 
-    socketRef.current.emit(
-      'join_room',
-      {
-        pin: pinInput.trim(),
-        nickname: nicknameInput.trim() || user?.fullName || 'Người chơi'
-      },
-      (res) => {
-        if (res.success) {
-          setRoomData(res.room);
+    if (socketRef.current && socketRef.current.connected) {
+      socketRef.current.emit(
+        'join_room',
+        {
+          pin,
+          nickname
+        },
+        (res) => {
+          if (res && res.success) {
+            socketResponded = true;
+            setRoomData(res.room);
+            setIsHost(false);
+            setStage('player_lobby');
+            setIsJoiningRoom(false);
+          }
+        }
+      );
+    }
+
+    setTimeout(async () => {
+      if (socketResponded) return;
+      try {
+        const res = await fetch('/api/battle/join-room', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pin,
+            playerName: nickname,
+            studentId: user?.studentId || ''
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          setPlayerId(data.playerId);
+          setRoomData(data);
           setIsHost(false);
           setStage('player_lobby');
         } else {
-          alert(res.message);
+          alert(data.message || 'Không tìm thấy phòng thi với mã PIN này');
         }
+      } catch (err) {
+        console.error('HTTP join-room error:', err);
+        alert('Không thể tham gia phòng thi');
+      } finally {
+        setIsJoiningRoom(false);
       }
-    );
+    }, 500);
   };
 
   // Host starts battle
-  const handleHostStart = () => {
-    if (!socketRef.current || !roomData) return;
-    socketRef.current.emit('start_battle', { pin: roomData.pin });
+  const handleHostStart = async () => {
+    if (socketRef.current && socketRef.current.connected && roomData) {
+      socketRef.current.emit('start_battle', { pin: roomData.pin });
+    }
+
+    if (roomData) {
+      try {
+        await fetch('/api/battle/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin: roomData.pin, hostToken })
+        });
+      } catch {}
+      setStage('playing');
+      if (httpQuestions.length > 0) {
+        setCurrentQuestion(httpQuestions[0]);
+        setHttpQIndex(0);
+        setTimeRemaining(20);
+      }
+    }
   };
 
   // Player submits answer
-  const handleSubmitPlayerAnswer = (optionId) => {
-    if (hasAnswered || !socketRef.current || !roomData) return;
+  const handleSubmitPlayerAnswer = async (optionId) => {
+    if (hasAnswered || !roomData) return;
     setSelectedOptionId(optionId);
     setHasAnswered(true);
 
-    socketRef.current.emit('submit_answer', {
-      pin: roomData.pin,
-      optionId,
-      answerTimeMs: (20 - timeRemaining) * 1000
-    });
+    if (socketRef.current && socketRef.current.connected) {
+      socketRef.current.emit('submit_answer', {
+        pin: roomData.pin,
+        optionId,
+        answerTimeMs: (20 - timeRemaining) * 1000
+      });
+    }
+
+    try {
+      const qId = currentQuestion?.id || httpQuestions[httpQIndex]?.id;
+      const res = await fetch('/api/battle/submit-answer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pin: roomData.pin,
+          playerId,
+          questionId: qId,
+          selectedOptionId: optionId,
+          timeSpentSeconds: 20 - timeRemaining
+        })
+      });
+      const d = await res.json();
+      if (d.success) {
+        setRevealData({
+          myResult: {
+            isCorrect: d.isCorrect,
+            pointsAwarded: d.points,
+            myScore: d.points
+          },
+          isLastQuestion: httpQIndex >= (httpQuestions.length - 1)
+        });
+        setStage('reveal');
+      }
+    } catch (err) {
+      console.error('Submit answer error:', err);
+    }
   };
 
   // Host triggers next question
-  const handleHostNextQuestion = () => {
-    if (!socketRef.current || !roomData) return;
-    socketRef.current.emit('host_next_question', { pin: roomData.pin });
+  const handleHostNextQuestion = async () => {
+    if (socketRef.current && socketRef.current.connected && roomData) {
+      socketRef.current.emit('host_next_question', { pin: roomData.pin });
+    }
+
+    const nextIdx = httpQIndex + 1;
+    if (nextIdx < httpQuestions.length) {
+      setHttpQIndex(nextIdx);
+      setCurrentQuestion(httpQuestions[nextIdx]);
+      setTimeRemaining(20);
+      setSelectedOptionId(null);
+      setHasAnswered(false);
+      setStage('playing');
+    } else {
+      try {
+        const res = await fetch('/api/battle/finish', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin: roomData.pin, hostToken })
+        });
+        const d = await res.json();
+        setPodiumData(d);
+      } catch {}
+      setStage('podium');
+      try {
+        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+      } catch {}
+    }
   };
 
   return (
@@ -285,9 +477,10 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-sm shadow-lg shadow-blue-600/30 transition-all active:scale-98"
+                  disabled={isJoiningRoom}
+                  className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-sm shadow-lg shadow-blue-600/30 transition-all active:scale-98 cursor-pointer disabled:opacity-50"
                 >
-                  Vào Phòng Chờ
+                  {isJoiningRoom ? 'Đang vào phòng...' : 'Vào Phòng Chờ'}
                 </button>
               </form>
             </div>
@@ -360,10 +553,11 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
                 <button
                   type="button"
                   onClick={handleCreateRoom}
-                  className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/30 transition-all active:scale-98 flex items-center justify-center gap-2"
+                  disabled={isCreatingRoom}
+                  className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/30 transition-all active:scale-98 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   <Share2 className="w-4 h-4" />
-                  <span>Tạo Phòng & Lấy Link Mời</span>
+                  <span>{isCreatingRoom ? 'Đang tạo phòng & link...' : 'Tạo Phòng & Lấy Link Mời'}</span>
                 </button>
               </div>
             </div>
