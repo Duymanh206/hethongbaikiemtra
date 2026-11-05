@@ -271,14 +271,25 @@ export default function LoginPage() {
 
                 {/* Pending Notice Alert */}
                 {pendingNotice && (
-                  <div className="mb-4 p-3.5 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs space-y-1">
+                  <div className="mb-4 p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs space-y-2.5">
                     <div className="font-bold flex items-center gap-1.5 text-amber-800">
                       <Clock className="w-4 h-4 text-amber-600 shrink-0" />
                       <span>Đang chờ Quản trị viên phê duyệt:</span>
                     </div>
                     <p className="leading-relaxed text-[11px]">{pendingNotice}</p>
-                    <p className="text-[10px] text-amber-700 pt-1 italic">
-                      * Quản trị viên (Hoàng Duy Mạnh) đã nhận được email thông báo và sẽ bấm duyệt để bạn có thể vào làm bài.
+                    
+                    <a
+                      href={`mailto:manhvipsv@gmail.com?subject=${encodeURIComponent('[Quizz. PRO] Yêu cầu phê duyệt tài khoản mới')}&body=${encodeURIComponent('Kính gửi Quản trị viên Hoàng Duy Mạnh,\n\nVui lòng phê duyệt tài khoản đăng ký mới để tôi có thể làm bài trên hệ thống.')}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-xs transition-all active:scale-95 cursor-pointer"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>Gửi email nhắc duyệt tới manhvipsv@gmail.com</span>
+                    </a>
+
+                    <p className="text-[10px] text-amber-700 italic">
+                      * Quản trị viên Hoàng Duy Mạnh chỉ cần đăng nhập tài khoản là có thể bấm "Duyệt đăng ký" ngay trên thanh menu hệ thống.
                     </p>
                   </div>
                 )}

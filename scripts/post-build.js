@@ -20,7 +20,7 @@ if (fs.existsSync(frontendDist)) {
   fs.writeFileSync(path.join(frontendDist, 'index.js'), serverCode);
   fs.writeFileSync(path.join(frontendDist, 'app.js'), serverCode);
   fs.writeFileSync(path.join(frontendDist, 'server.js'), serverCode);
-  
+
   // 2. Sync to root/dist
   fs.mkdirSync(rootDist, { recursive: true });
   fs.cpSync(frontendDist, rootDist, { recursive: true });

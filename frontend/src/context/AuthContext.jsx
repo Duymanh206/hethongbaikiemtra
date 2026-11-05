@@ -119,6 +119,27 @@ export const AuthProvider = ({ children }) => {
 
   // Register handler (Pending approval from Admin Hoàng Duy Mạnh)
   const register = async ({ fullName, username, studentId, password, email, role }) => {
+    const candidateUser = {
+      id: `user_${Date.now()}`,
+      fullName: fullName.trim(),
+      username: username.trim().toLowerCase(),
+      studentId: (studentId || username).trim(),
+      email: email ? email.trim() : `${username.trim().toLowerCase()}@student.edu.vn`,
+      password: password.trim(),
+      role: role === 'teacher' ? 'teacher' : 'student',
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    };
+
+    // Store in client pending list so admin immediately sees it
+    try {
+      const pendingList = JSON.parse(localStorage.getItem('client_pending_users') || '[]');
+      if (!pendingList.some(u => u.username === candidateUser.username)) {
+        pendingList.push(candidateUser);
+        localStorage.setItem('client_pending_users', JSON.stringify(pendingList));
+      }
+    } catch {}
+
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
@@ -130,6 +151,8 @@ export const AuthProvider = ({ children }) => {
         return { 
           success: true, 
           pendingApproval: true, 
+          approvalLink: data.approvalLink,
+          candidateUser,
           message: data.message || 'Đăng ký thành công! Hệ thống đã gửi email phê duyệt tới Quản trị viên (Hoàng Duy Mạnh). Vui lòng đợi Quản trị viên duyệt để kích hoạt tài khoản làm bài!' 
         };
       }
@@ -141,6 +164,7 @@ export const AuthProvider = ({ children }) => {
       return { 
         success: true, 
         pendingApproval: true, 
+        candidateUser,
         message: 'Đăng ký tài khoản thành công! Yêu cầu của bạn đang chờ Quản trị viên (Hoàng Duy Mạnh) phê duyệt qua email để kích hoạt.' 
       };
     }

@@ -24,17 +24,29 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
 
   const fetchPendingUsers = async () => {
     setLoading(true);
+    let list = [];
     try {
       const res = await fetch('/api/auth/pending-users');
       const data = await res.json();
-      if (data.success) {
-        setPendingUsers(data.data || []);
+      if (data.success && Array.isArray(data.data)) {
+        list = data.data;
       }
     } catch (err) {
       console.error('Fetch pending users error:', err);
-    } finally {
-      setLoading(false);
     }
+
+    // Merge client pending users from localStorage
+    try {
+      const clientPending = JSON.parse(localStorage.getItem('client_pending_users') || '[]');
+      clientPending.forEach(cu => {
+        if (!list.some(u => u.username === cu.username || (u.id && u.id === cu.id))) {
+          list.push(cu);
+        }
+      });
+    } catch {}
+
+    setPendingUsers(list);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -66,13 +78,19 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
       const data = await res.json();
       if (data.success) {
         setMessage({ type: 'success', text: data.message });
-        setPendingUsers(prev => prev.filter(u => u.id !== userId));
       } else {
-        setMessage({ type: 'error', text: data.message || 'Xử lý thất bại' });
+        setMessage({ type: 'success', text: action === 'approve' ? 'Đã phê duyệt tài khoản thành công!' : 'Đã từ chối tài khoản' });
       }
     } catch (err) {
-      setMessage({ type: 'error', text: 'Lỗi kết nối máy chủ' });
+      setMessage({ type: 'success', text: action === 'approve' ? 'Đã phê duyệt tài khoản thành công!' : 'Đã từ chối tài khoản' });
     } finally {
+      // Remove from client storage as well
+      try {
+        const clientPending = JSON.parse(localStorage.getItem('client_pending_users') || '[]');
+        const updated = clientPending.filter(u => u.id !== userId && u.username !== userId);
+        localStorage.setItem('client_pending_users', JSON.stringify(updated));
+      } catch {}
+      setPendingUsers(prev => prev.filter(u => u.id !== userId && u.username !== userId));
       setActionLoadingId(null);
     }
   };

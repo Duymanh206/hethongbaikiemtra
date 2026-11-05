@@ -9,7 +9,9 @@
       "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
       "role": "student",
       "createdAt": "2026-03-01T08:00:00.000Z",
-      "password": "123"
+      "password": "123",
+      "status": "active",
+      "isAdmin": true
     },
     {
       "id": "user_2",
@@ -20,7 +22,8 @@
       "password": "123",
       "role": "teacher",
       "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
-      "createdAt": "2026-02-15T09:30:00.000Z"
+      "createdAt": "2026-02-15T09:30:00.000Z",
+      "status": "active"
     },
     {
       "id": "user_1793849359413",
@@ -32,6 +35,19 @@
       "role": "student",
       "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
       "createdAt": "2026-11-05T03:29:19.413Z"
+    },
+    {
+      "id": "user_1793859957615",
+      "username": "test_cand_1",
+      "fullName": "Test Candidate",
+      "studentId": "SV99999",
+      "email": "cand@gmail.com",
+      "password": "123",
+      "role": "student",
+      "status": "pending",
+      "approvalToken": "701b2795c1b502c83285ba1e5719d318ce642448ce0e93f7",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "createdAt": "2026-11-05T06:25:57.615Z"
     }
   ],
   "quizzes": [
@@ -8101,5 +8117,19 @@
     }
   ],
   "battle_rooms": [],
-  "reviews": []
+  "reviews": [],
+  "system_notifications": [
+    {
+      "id": "notif_1793859957640",
+      "userId": "user_1793859957615",
+      "userName": "Test Candidate",
+      "studentId": "SV99999",
+      "userRole": "student",
+      "approvalToken": "701b2795c1b502c83285ba1e5719d318ce642448ce0e93f7",
+      "approvalLink": "http://localhost:5000/api/auth/approve?userId=user_1793859957615&token=701b2795c1b502c83285ba1e5719d318ce642448ce0e93f7&action=approve",
+      "rejectLink": "http://localhost:5000/api/auth/approve?userId=user_1793859957615&token=701b2795c1b502c83285ba1e5719d318ce642448ce0e93f7&action=reject",
+      "status": "pending",
+      "createdAt": "2026-11-05T06:25:57.640Z"
+    }
+  ]
 }

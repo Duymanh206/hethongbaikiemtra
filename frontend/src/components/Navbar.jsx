@@ -44,12 +44,22 @@ export default function Navbar({ activePage, setActivePage }) {
       fetch('/api/auth/pending-users')
         .then(r => r.json())
         .then(d => {
-          if (d.success) setPendingCount(d.pendingCount || 0);
+          let count = (d.success && d.pendingCount) ? d.pendingCount : 0;
+          try {
+            const clientPending = JSON.parse(localStorage.getItem('client_pending_users') || '[]');
+            count = Math.max(count, clientPending.length);
+          } catch {}
+          setPendingCount(count);
         })
-        .catch(() => {});
+        .catch(() => {
+          try {
+            const clientPending = JSON.parse(localStorage.getItem('client_pending_users') || '[]');
+            setPendingCount(clientPending.length);
+          } catch {}
+        });
     };
     fetchPending();
-    const interval = setInterval(fetchPending, 10000);
+    const interval = setInterval(fetchPending, 5000);
     return () => clearInterval(interval);
   }, [isAdmin]);
 
