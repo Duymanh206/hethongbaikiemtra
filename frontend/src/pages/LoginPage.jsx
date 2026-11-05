@@ -125,16 +125,18 @@ export default function LoginPage() {
     if (result.success) {
       if (result.pendingApproval) {
         setPendingNotice(result.message);
-        // Reset form
-        setRegFullName('');
-        setRegUsername('');
-        setRegStudentId('');
-        setRegEmail('');
-        setRegPassword('');
-        setRegConfirmPassword('');
       } else {
-        setSuccessMessage('Đăng ký tài khoản thành công!');
+        setSuccessMessage('Đăng ký tài khoản thành công! Bạn có thể đăng nhập ngay bên dưới để làm bài.');
+        setLoginUsername(regUsername);
+        setLoginPassword(regPassword);
+        setActiveTab('login');
       }
+      setRegFullName('');
+      setRegUsername('');
+      setRegStudentId('');
+      setRegEmail('');
+      setRegPassword('');
+      setRegConfirmPassword('');
     } else {
       setErrorMessage(result.message || 'Đăng ký không thành công');
     }

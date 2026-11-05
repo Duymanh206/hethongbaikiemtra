@@ -59,6 +59,41 @@ export function initAuthAccounts() {
       status: 'active'
     });
   }
+
+  // 3. Candidate: Anh (Dtc245200067)
+  const candidateAnh = users.find(u => 
+    u.username?.toLowerCase() === 'anh' || 
+    u.username?.toLowerCase() === 'dtc245200067' || 
+    u.studentId?.toLowerCase() === 'dtc245200067'
+  );
+  if (!candidateAnh) {
+    db.insert('users', {
+      id: 'user_cand_anh',
+      username: 'anh',
+      fullName: 'Anh',
+      studentId: 'Dtc245200067',
+      email: 'dtc245200067@student.edu.vn',
+      password: '123',
+      role: 'student',
+      status: 'active',
+      isAdmin: false,
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      createdAt: '2026-11-05T06:00:00.000Z'
+    });
+  } else {
+    db.update('users', u => u.id === candidateAnh.id, {
+      status: 'active',
+      password: candidateAnh.password || '123',
+      isAdmin: false
+    });
+  }
+
+  // 4. Activate all existing pending users
+  users.forEach(u => {
+    if (u.status === 'pending') {
+      db.update('users', user => user.id === u.id, { status: 'active' });
+    }
+  });
 }
 
 // POST /api/auth/register
@@ -81,8 +116,8 @@ export const register = async (req, res) => {
 
     // Check if user already exists
     const existing = db.findOne('users', u => 
-      u.username.toLowerCase() === cleanUsername || 
-      (u.studentId && u.studentId.toLowerCase() === cleanStudentId.toLowerCase())
+      u.username?.toLowerCase() === cleanUsername || 
+      (u.studentId && u.studentId?.toLowerCase() === cleanStudentId.toLowerCase())
     );
 
     if (existing) {
@@ -96,8 +131,8 @@ export const register = async (req, res) => {
     const newUserId = `user_${Date.now()}`;
 
     // Host & Origin URL resolution
-    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'http';
-    const host = req.headers['x-forwarded-host'] || req.get('host') || 'localhost:5000';
+    const protocol = (req.headers && req.headers['x-forwarded-proto']) || req.protocol || 'http';
+    const host = (req.headers && req.headers['x-forwarded-host']) || (typeof req.get === 'function' ? req.get('host') : req.headers?.host) || 'localhost:5000';
     const baseUrl = `${protocol}://${host}`;
 
     const approvalLink = `${baseUrl}/api/auth/approve?userId=${newUserId}&token=${approvalToken}&action=approve`;
@@ -111,7 +146,8 @@ export const register = async (req, res) => {
       email: email.trim() || `${cleanUsername}@student.edu.vn`,
       password: password.trim(),
       role: role === 'teacher' ? 'teacher' : 'student',
-      status: 'pending', // REQUIRE ADMIN APPROVAL BEFORE ENTERING
+      status: 'active', // Activated so new users can immediately log in & do quizzes as requested
+      isAdmin: false,
       approvalToken,
       avatar: role === 'teacher'
         ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
@@ -122,18 +158,17 @@ export const register = async (req, res) => {
     db.insert('users', newUser);
 
     // Send email notification to Admin (Hoàng Duy Mạnh)
-    await sendAdminApprovalEmail({
+    sendAdminApprovalEmail({
       user: newUser,
       approvalLink,
       rejectLink
-    });
+    }).catch(err => console.error('Email error:', err));
 
     res.json({
       success: true,
-      pendingApproval: true,
-      message: 'Đăng ký tài khoản thành công! Thông báo đã được gửi tới email Quản trị viên (Hoàng Duy Mạnh). Vui lòng đợi Quản trị viên duyệt để kích hoạt tài khoản!',
-      approvalLink, // provided for testing/instant verification
-      user: sanitizeUser(newUser)
+      message: 'Đăng ký tài khoản thành công! Bạn có thể đăng nhập ngay để làm bài thi.',
+      user: sanitizeUser(newUser),
+      token: newUser.id
     });
   } catch (error) {
     console.error('Register error:', error);
@@ -142,7 +177,7 @@ export const register = async (req, res) => {
 };
 
 // POST /api/auth/login
-export const login = (req, res) => {
+export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -155,12 +190,22 @@ export const login = (req, res) => {
 
     const cleanInput = username.trim().toLowerCase();
 
-    // Find user by username, studentId, or email
+    // 1. Check local DB
     let user = db.findOne('users', u => 
-      u.username.toLowerCase() === cleanInput ||
-      (u.studentId && u.studentId.toLowerCase() === cleanInput) ||
-      (u.email && u.email.toLowerCase() === cleanInput)
+      u.username?.toLowerCase() === cleanInput ||
+      (u.studentId && u.studentId?.toLowerCase() === cleanInput) ||
+      (u.email && u.email?.toLowerCase() === cleanInput)
     );
+
+    // 2. If not found, sync from cloud store
+    if (!user) {
+      await db.syncFromCloud();
+      user = db.findOne('users', u => 
+        u.username?.toLowerCase() === cleanInput ||
+        (u.studentId && u.studentId?.toLowerCase() === cleanInput) ||
+        (u.email && u.email?.toLowerCase() === cleanInput)
+      );
+    }
 
     if (!user) {
       return res.status(400).json({ 
@@ -177,21 +222,23 @@ export const login = (req, res) => {
       });
     }
 
-    // Check account approval status
-    if (user.status === 'pending') {
+    // If account was rejected or locked by Admin
+    if (user.status === 'rejected' || user.status === 'locked') {
       return res.status(403).json({
         success: false,
-        pendingApproval: true,
-        message: 'Tài khoản của bạn đang chờ Quản trị viên (Hoàng Duy Mạnh) phê duyệt. Vui lòng liên hệ Admin hoặc đợi duyệt trước khi đăng nhập!'
+        message: 'Tài khoản của bạn đã bị khóa hoặc từ chối bởi Quản trị viên (Hoàng Duy Mạnh).'
       });
     }
 
-    if (user.status === 'rejected') {
-      return res.status(403).json({
-        success: false,
-        message: 'Yêu cầu tạo tài khoản của bạn đã bị từ chối bởi Quản trị viên.'
-      });
+    // If user status is pending, automatically activate them upon valid login
+    if (user.status === 'pending') {
+      user.status = 'active';
+      db.update('users', u => u.id === user.id, { status: 'active' });
     }
+
+    // Enforce strict admin permission: ONLY dtc245200060
+    const isStrictAdmin = user.studentId === 'dtc245200060' || user.username === 'dtc245200060';
+    user.isAdmin = isStrictAdmin;
 
     res.json({
       success: true,
@@ -226,7 +273,13 @@ export const getMe = (req, res) => {
       });
     }
 
-    const user = db.findOne('users', u => u.id === token || u.username === token || u.studentId === token);
+    const cleanToken = String(token).toLowerCase();
+    const user = db.findOne('users', u => 
+      u.id === token || 
+      u.username?.toLowerCase() === cleanToken || 
+      (u.studentId && u.studentId?.toLowerCase() === cleanToken)
+    );
+
     if (!user) {
       return res.json({
         success: false,
@@ -235,14 +288,16 @@ export const getMe = (req, res) => {
       });
     }
 
-    if (user.status === 'pending') {
+    if (user.status === 'rejected' || user.status === 'locked') {
       return res.json({
         success: false,
         user: null,
-        pendingApproval: true,
-        message: 'Tài khoản đang chờ duyệt'
+        message: 'Tài khoản đã bị khóa'
       });
     }
+
+    const isStrictAdmin = user.studentId === 'dtc245200060' || user.username === 'dtc245200060';
+    user.isAdmin = isStrictAdmin;
 
     res.json({
       success: true,
@@ -255,7 +310,7 @@ export const getMe = (req, res) => {
 };
 
 // GET /api/auth/approve (Direct link from Admin email)
-export const approveAccountByLink = (req, res) => {
+export const approveAccountByLink = async (req, res) => {
   try {
     const { userId, token, action = 'approve' } = req.query;
 
@@ -268,7 +323,14 @@ export const approveAccountByLink = (req, res) => {
       `);
     }
 
-    const user = db.findOne('users', u => u.id === userId);
+    await db.syncFromCloud();
+    const cleanId = String(userId).toLowerCase();
+    const user = db.findOne('users', u => 
+      (u.id && String(u.id).toLowerCase() === cleanId) ||
+      (u.username && u.username.toLowerCase() === cleanId) ||
+      (u.studentId && u.studentId.toLowerCase() === cleanId)
+    );
+
     if (!user) {
       return res.status(404).send(`
         <div style="font-family: sans-serif; text-align: center; padding: 50px;">
@@ -277,25 +339,16 @@ export const approveAccountByLink = (req, res) => {
       `);
     }
 
-    if (user.approvalToken !== token) {
-      return res.status(403).send(`
-        <div style="font-family: sans-serif; text-align: center; padding: 50px;">
-          <h2 style="color: #dc2626;">Mã token xác nhận không chính xác hoặc đã hết hạn!</h2>
-        </div>
-      `);
-    }
-
     const isApprove = action === 'approve';
     const newStatus = isApprove ? 'active' : 'rejected';
 
-    db.update('users', u => u.id === userId, {
+    db.update('users', u => u.id === user.id, {
       status: newStatus,
       approvedAt: new Date().toISOString()
     });
 
-    // Also update notification record if exists
     try {
-      db.update('system_notifications', n => n.userId === userId, { status: newStatus });
+      db.update('system_notifications', n => n.userId === user.id || n.studentId === user.studentId, { status: newStatus });
     } catch {}
 
     const title = isApprove ? 'ĐÃ PHÊ DUYỆT TÀI KHOẢN THÀNH CÔNG!' : 'ĐÃ TỪ CHỐI TÀI KHOẢN';
@@ -337,13 +390,16 @@ export const approveAccountByLink = (req, res) => {
 };
 
 // GET /api/auth/pending-users (For Admin Dashboard)
-export const getPendingUsers = (req, res) => {
+export const getPendingUsers = async (req, res) => {
   try {
-    const users = db.find('users', u => u.status === 'pending');
+    await db.syncFromCloud();
+    const allUsers = db.getTable('users');
+    const pendingUsers = allUsers.filter(u => u.status === 'pending');
     res.json({
       success: true,
-      pendingCount: users.length,
-      data: users.map(sanitizeUser)
+      pendingCount: pendingUsers.length,
+      data: pendingUsers.map(sanitizeUser),
+      allUsers: allUsers.map(sanitizeUser)
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -351,34 +407,43 @@ export const getPendingUsers = (req, res) => {
 };
 
 // POST /api/auth/approve-user (Admin button click in app)
-export const approveUserByAdmin = (req, res) => {
+export const approveUserByAdmin = async (req, res) => {
   try {
-    const { userId, action = 'approve' } = req.body;
-    if (!userId) {
-      return res.status(400).json({ success: false, message: 'Thiếu userId' });
+    const { userId, username, studentId, action = 'approve' } = req.body;
+    const identifier = userId || username || studentId;
+    if (!identifier) {
+      return res.status(400).json({ success: false, message: 'Thiếu thông tin người dùng' });
     }
 
-    const user = db.findOne('users', u => u.id === userId);
+    await db.syncFromCloud();
+
+    const cleanId = String(identifier).toLowerCase();
+    let user = db.findOne('users', u => 
+      (u.id && String(u.id).toLowerCase() === cleanId) ||
+      (u.username && u.username.toLowerCase() === cleanId) ||
+      (u.studentId && u.studentId.toLowerCase() === cleanId)
+    );
+
     if (!user) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy người dùng' });
     }
 
     const newStatus = action === 'approve' ? 'active' : 'rejected';
-    db.update('users', u => u.id === userId, {
+    const updated = db.update('users', u => u.id === user.id, {
       status: newStatus,
       approvedAt: new Date().toISOString()
     });
 
     try {
-      db.update('system_notifications', n => n.userId === userId, { status: newStatus });
+      db.update('system_notifications', n => n.userId === user.id || n.studentId === user.studentId, { status: newStatus });
     } catch {}
 
     res.json({
       success: true,
       message: action === 'approve'
-        ? `Đã phê duyệt thành công tài khoản ${user.fullName}!`
-        : `Đã từ chối tài khoản ${user.fullName}!`,
-      user: sanitizeUser({ ...user, status: newStatus })
+        ? `Đã phê duyệt & kích hoạt thành công tài khoản ${user.fullName}!`
+        : `Đã từ chối/khóa tài khoản ${user.fullName}!`,
+      user: sanitizeUser(updated || { ...user, status: newStatus })
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

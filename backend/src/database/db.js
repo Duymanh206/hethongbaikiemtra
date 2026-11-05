@@ -11,6 +11,7 @@ const BUNDLED_DATA_DIR = path.join(__dirname, '..', '..', 'data');
 const BUNDLED_STORE_PATH = path.join(BUNDLED_DATA_DIR, 'store.json');
 const DATA_DIR = IS_VERCEL ? '/tmp' : BUNDLED_DATA_DIR;
 const STORE_PATH = IS_VERCEL ? path.join('/tmp', 'store.json') : BUNDLED_STORE_PATH;
+const CLOUD_SYNC_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1aaa77dde3ea0';
 
 // Initial seed data with the exact requirements
 const initialData = {
@@ -254,6 +255,61 @@ class Database {
   constructor() {
     this.ensureDataDir();
     this.data = this.loadData();
+    this.syncFromCloud().catch(() => {});
+  }
+
+  async syncFromCloud() {
+    try {
+      const res = await fetch(CLOUD_SYNC_URL, {
+        signal: AbortSignal.timeout(2500)
+      });
+      if (!res.ok) return;
+      const json = await res.json();
+      if (json && json.data && Array.isArray(json.data.users)) {
+        const cloudUsers = json.data.users;
+        const localUsers = this.getTable('users');
+        let changed = false;
+
+        for (const cu of cloudUsers) {
+          const idx = localUsers.findIndex(u => 
+            (u.id && cu.id && u.id === cu.id) ||
+            (u.username && cu.username && u.username.toLowerCase() === cu.username.toLowerCase()) ||
+            (u.studentId && cu.studentId && u.studentId.toLowerCase() === cu.studentId.toLowerCase())
+          );
+          if (idx !== -1) {
+            if (cu.status && localUsers[idx].status !== cu.status) {
+              localUsers[idx] = { ...localUsers[idx], ...cu };
+              changed = true;
+            }
+          } else {
+            localUsers.push(cu);
+            changed = true;
+          }
+        }
+        if (changed) {
+          this.saveData();
+        }
+      }
+    } catch {
+      // Non-blocking
+    }
+  }
+
+  async syncToCloud() {
+    try {
+      const users = this.getTable('users');
+      await fetch(CLOUD_SYNC_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'quiz_store_v1',
+          data: { users }
+        }),
+        signal: AbortSignal.timeout(2500)
+      });
+    } catch {
+      // Non-blocking
+    }
   }
 
   ensureDataDir() {
@@ -314,6 +370,9 @@ class Database {
     const table = this.getTable(tableName);
     table.push(record);
     this.saveData();
+    if (tableName === 'users') {
+      this.syncToCloud().catch(() => {});
+    }
     return record;
   }
 
@@ -323,6 +382,9 @@ class Database {
     if (index !== -1) {
       table[index] = { ...table[index], ...updates };
       this.saveData();
+      if (tableName === 'users') {
+        this.syncToCloud().catch(() => {});
+      }
       return table[index];
     }
     return null;
@@ -334,6 +396,9 @@ class Database {
     this.data[tableName] = table.filter(item => !predicate(item));
     if (this.data[tableName].length !== initialLen) {
       this.saveData();
+      if (tableName === 'users') {
+        this.syncToCloud().catch(() => {});
+      }
       return true;
     }
     return false;

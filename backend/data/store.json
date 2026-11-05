@@ -44,10 +44,37 @@
       "email": "cand@gmail.com",
       "password": "123",
       "role": "student",
-      "status": "pending",
+      "status": "active",
       "approvalToken": "701b2795c1b502c83285ba1e5719d318ce642448ce0e93f7",
       "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
       "createdAt": "2026-11-05T06:25:57.615Z"
+    },
+    {
+      "id": "user_cand_anh",
+      "username": "anh",
+      "fullName": "Anh",
+      "studentId": "Dtc245200067",
+      "email": "dtc245200067@student.edu.vn",
+      "password": "123",
+      "role": "student",
+      "status": "active",
+      "isAdmin": false,
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "createdAt": "2026-11-05T07:49:27.826Z"
+    },
+    {
+      "id": "user_1793865104374",
+      "username": "sinhvien_moi_4374",
+      "fullName": "Nguyễn Văn Mới",
+      "studentId": "SV_4374",
+      "email": "sinhvien_moi_4374@student.edu.vn",
+      "password": "456",
+      "role": "student",
+      "status": "active",
+      "isAdmin": false,
+      "approvalToken": "369c75f74cbe1f43694db917807aa0c77341f2e5369cc1b7",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "createdAt": "2026-11-05T07:51:44.374Z"
     }
   ],
   "quizzes": [
@@ -8130,6 +8157,18 @@
       "rejectLink": "http://localhost:5000/api/auth/approve?userId=user_1793859957615&token=701b2795c1b502c83285ba1e5719d318ce642448ce0e93f7&action=reject",
       "status": "pending",
       "createdAt": "2026-11-05T06:25:57.640Z"
+    },
+    {
+      "id": "notif_1793865104403",
+      "userId": "user_1793865104374",
+      "userName": "Nguyễn Văn Mới",
+      "studentId": "SV_4374",
+      "userRole": "student",
+      "approvalToken": "369c75f74cbe1f43694db917807aa0c77341f2e5369cc1b7",
+      "approvalLink": "http://localhost:5000/api/auth/approve?userId=user_1793865104374&token=369c75f74cbe1f43694db917807aa0c77341f2e5369cc1b7&action=approve",
+      "rejectLink": "http://localhost:5000/api/auth/approve?userId=user_1793865104374&token=369c75f74cbe1f43694db917807aa0c77341f2e5369cc1b7&action=reject",
+      "status": "pending",
+      "createdAt": "2026-11-05T07:51:44.403Z"
     }
   ]
 }
