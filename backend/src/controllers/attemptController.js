@@ -173,22 +173,29 @@ export const submitAttempt = (req, res) => {
       } else if (q.type === 'drag_drop_categorize') {
         // qAnswer is { 'itemId': 'categoryName', ... }
         const items = allDragDrop.filter(d => d.questionId === q.id);
-        if (qAnswer && typeof qAnswer === 'object' && Object.keys(qAnswer).length === items.length) {
-          const allMatch = items.every(item => qAnswer[item.id] === item.targetCategoryOrMatch);
+        if (qAnswer && typeof qAnswer === 'object' && Object.keys(qAnswer).length > 0) {
+          const allMatch = items.length > 0 && items.every(item => qAnswer[item.id] === item.targetCategoryOrMatch);
           if (allMatch) isCorrect = true;
         }
       } else if (q.type === 'drag_drop_matching') {
         // qAnswer is { 'statementItemId': 'matchedTarget', ... }
         const items = allDragDrop.filter(d => d.questionId === q.id);
-        if (qAnswer && typeof qAnswer === 'object' && Object.keys(qAnswer).length === items.length) {
-          const allMatch = items.every(item => qAnswer[item.id] === item.targetCategoryOrMatch);
+        if (qAnswer && typeof qAnswer === 'object' && Object.keys(qAnswer).length > 0) {
+          const allMatch = items.length > 0 && items.every(item => qAnswer[item.id] === item.targetCategoryOrMatch);
           if (allMatch) isCorrect = true;
         }
       } else if (q.type === 'true_false_matrix') {
-        // qAnswer is { 'tf_1': 'dung' | 'sai', ... }
+        // qAnswer is { [stmtId]: 'dung' | 'sai' }
         const stmts = q.statements || [];
-        if (qAnswer && typeof qAnswer === 'object' && Object.keys(qAnswer).length === stmts.length) {
-          const allMatch = stmts.every(s => qAnswer[s.id] === s.isCorrect);
+        if (qAnswer && typeof qAnswer === 'object' && Object.keys(qAnswer).length > 0) {
+          const allMatch = stmts.length > 0 && stmts.every(s => {
+            const userChoice = qAnswer[s.id];
+            if (!userChoice) return false;
+            const target = (s.correctAnswer || s.isCorrect || 'Đúng').toString().toLowerCase();
+            const isTargetTrue = target.includes('đúng') || target === 'dung' || target === 'true';
+            const isUserTrue = userChoice === 'dung' || userChoice === 'Đúng' || userChoice === true;
+            return isTargetTrue === isUserTrue;
+          });
           if (allMatch) isCorrect = true;
         }
       }
@@ -276,13 +283,21 @@ export const getAttemptResult = (req, res) => {
         userPlacedTarget: userAnswer && typeof userAnswer === 'object' ? userAnswer[d.id] : null
       }));
 
-      const qStatements = (q.statements || []).map(s => ({
-        id: s.id,
-        text: s.text,
-        correctValue: s.isCorrect,
-        userSelectedValue: userAnswer && typeof userAnswer === 'object' ? userAnswer[s.id] : null,
-        isStatementCorrect: userAnswer && typeof userAnswer === 'object' ? userAnswer[s.id] === s.isCorrect : false
-      }));
+      const qStatements = (q.statements || []).map(s => {
+        const rawCorrect = s.correctAnswer || s.isCorrect || 'Đúng';
+        const isTargetTrue = rawCorrect.toString().toLowerCase().includes('đúng') || rawCorrect === 'dung' || rawCorrect === true;
+        const userVal = userAnswer && typeof userAnswer === 'object' ? userAnswer[s.id] : null;
+        const isUserTrue = userVal === 'dung' || userVal === 'Đúng' || userVal === true;
+        const isStatementCorrect = userVal ? isTargetTrue === isUserTrue : false;
+
+        return {
+          id: s.id,
+          text: s.text,
+          correctValue: isTargetTrue ? 'Đúng' : 'Sai',
+          userSelectedValue: userVal ? (isUserTrue ? 'Đúng' : 'Sai') : null,
+          isStatementCorrect
+        };
+      });
 
       return {
         id: q.id,

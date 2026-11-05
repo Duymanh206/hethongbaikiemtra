@@ -13,6 +13,25 @@
   ],
   "quizzes": [
     {
+      "id": "quiz_1793843679161",
+      "title": "ỨNG DỤNG TRÍ TUỆ NHÂN TẠO - BÀI 6",
+      "description": "Import tự động từ file Word: á»¨NG Dá»¤NG TRÃ TUá» NHÃN Táº O - BÃI 6.docx",
+      "category": "Triết học & Lý luận chính trị",
+      "originalDocxName": "á»¨NG Dá»¤NG TRÃ TUá» NHÃN Táº O - BÃI 6.docx",
+      "durationMinutes": 15,
+      "passingScore": 5,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 30,
+      "attemptsCount": 1,
+      "avgRating": 5,
+      "createdBy": "Hoàng Duy Mạnh",
+      "createdAt": "2026-11-05T01:54:39.161Z",
+      "updatedAt": "2026-11-05T01:54:39.161Z"
+    },
+    {
       "id": "quiz_cnxhkh_05",
       "title": "BÀI KIỂM TRA 15 PHÚT - TUẦN 1",
       "description": "Chủ nghĩa xã hội khoa học - Bài 5: Vấn đề dân tộc và tôn giáo trong thời kỳ quá độ lên CNXH",
@@ -30,6 +49,25 @@
       "createdBy": "Hoàng Duy Mạnh",
       "createdAt": "2026-11-05T01:46:25.436Z",
       "updatedAt": "2026-11-05T01:46:25.438Z"
+    },
+    {
+      "id": "quiz_1793843634614",
+      "title": "Chủ Nghĩa Xã Hội Khoa Học_Bài 5",
+      "description": "Import tự động từ file Word: Chá»§ NghÄ©a XÃ£ Há»i Khoa Há»c_BÃ i 5.docx",
+      "category": "Triết học & Lý luận chính trị",
+      "originalDocxName": "Chá»§ NghÄ©a XÃ£ Há»i Khoa Há»c_BÃ i 5.docx",
+      "durationMinutes": 15,
+      "passingScore": 5,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 40,
+      "attemptsCount": 1,
+      "avgRating": 5,
+      "createdBy": "Hoàng Duy Mạnh",
+      "createdAt": "2026-11-05T01:53:54.614Z",
+      "updatedAt": "2026-11-05T01:53:54.614Z"
     }
   ],
   "questions": [
@@ -686,6 +724,1050 @@
           "correctAnswer": "Sai"
         }
       ]
+    },
+    {
+      "id": "q_quiz_1793843634614_1",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 1,
+      "type": "single_choice",
+      "content": "Trong những nội dung của quyền dân tộc tự quyết, nội dung nào được coi là cơ bản, trước hết?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_2",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 2,
+      "type": "single_choice",
+      "content": "Quan điểm: Không phân biệt dân tộc lớn hay nhỏ, ở trình độ phát triển cao hay thấp, các dân tộc đều có nghĩa vụ và quyền lợi ngang nhau trên tất cả các lĩnh vực của đời sống xã hội - thuộc nội dung nào trong Cương lĩnh dân tộc của V.I. Lênin?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_3",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 3,
+      "type": "single_choice",
+      "content": "Thứ tự quá trình phát triển của dân tộc lần lượt trải qua các hình thức nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_4",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 4,
+      "type": "single_choice",
+      "content": "Theo chủ nghĩa Mác – Lênin, nguyên nhân nào dẫn đến các cộng đồng dân cư muốn tách ra để hình thành cộng đồng dân tộc độc lập?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_5",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 5,
+      "type": "single_choice",
+      "content": "Tôn giáo là một phạm trù thuộc:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_6",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 6,
+      "type": "single_choice",
+      "content": "Tôn giáo là sản phẩm của ai?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_7",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 7,
+      "type": "single_choice",
+      "content": "Tôn giáo khác với tín ngưỡng khác ở điểm nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_8",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 8,
+      "type": "single_choice",
+      "content": "Niềm tin của con người vào các lực lượng siêu nhiên, thần thánh đến mức độ mê muội, cuồng tín, dẫn đến những hành vi cực đoan, sai lệch quá mức, trái với các giá trị văn hoá, đạo đức, pháp luật – gọi là:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_9",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 9,
+      "type": "single_choice",
+      "content": "Theo chủ nghĩa Mác – Lênin, xét đến cùng nhân tố quyết định sự tồn tại và phát triển của các hình thái ý thức xã hội, trong đó có tôn giáo là gì?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_10",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 10,
+      "type": "single_choice",
+      "content": "Sự sợ hãi trước những hiện tượng tự nhiên, xã hội, hay lúc ốm đau, những may rủi, bất ngờ, tâm lý muốn bình yên khi làm việc lớn... khiến con người dễ tìm đến với hình thái ý thức xã hội nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_11",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 11,
+      "type": "multiple_choice",
+      "content": "Tại sao ngày nay khoa học đã phát triển rất mạnh mẽ mà tôn giáo vẫn có xu hướng phát triển?",
+      "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 2,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_12",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 12,
+      "type": "single_choice",
+      "content": "Ở Việt Nam hiện nay có khoảng bao nhiêu dân tộc?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_13",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 13,
+      "type": "single_choice",
+      "content": "Tìm đáp án sai về đặc điểm dân tộc ở Việt Nam",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_14",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 14,
+      "type": "single_choice",
+      "content": "Vận dụng kiến thức về đặc điểm tôn giáo ở Việt Nam, hãy xác định số lượng tôn giáo đã được công nhận và cấp đăng ký hoạt động ở Việt Nam:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_15",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 15,
+      "type": "single_choice",
+      "content": "Tại sao các tôn giáo ở Việt Nam luôn đồng hành cùng dân tộc và có nhiều đóng góp quan trọng trong quá trình xây dựng và bảo vệ đất nước?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_16",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 16,
+      "type": "single_choice",
+      "content": "Dân tộc hiểu theo nghĩa hẹp là:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_17",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 17,
+      "type": "single_choice",
+      "content": "Đâu là đặc trưng quan trọng nhất, là cơ sở để liên kết các thành viên của dân tộc tạo thành nền tảng vững chắc của cộng đồng dân tộc?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_18",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 18,
+      "type": "multiple_choice",
+      "content": "Theo quan điểm của chủ nghĩa Mác – Lênin, để thực hiện được bình đẳng dân tộc cần phải làm gì?",
+      "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 2,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_19",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 19,
+      "type": "single_choice",
+      "content": "Tôn giáo ra đời từ những nguồn gốc cơ bản nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_20",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 20,
+      "type": "single_choice",
+      "content": "Vận dụng kiến thức về vấn đề dân tộc, hãy chỉ ra điểm khác biệt cơ bản trong quá trình hình thành nên dân tộc Việt Nam so với các dân tộc khác là gì?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_21",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 21,
+      "type": "single_choice",
+      "content": "Hiểu theo nghĩa rộng, dân tộc là:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_22",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 22,
+      "type": "single_choice",
+      "content": "Đâu là sự giống nhau giữa tôn giáo và tín ngưỡng?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_23",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 23,
+      "type": "single_choice",
+      "content": "Về phương diện thế giới quan, tôn giáo mang bản chất:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_24",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 24,
+      "type": "single_choice",
+      "content": "Luận điểm nổi tiếng: “Tôn giáo là tiếng thở dài của chúng sinh bị áp bức, là trái tim của thế giới không có trái tim…Tôn giáo là thuốc phiện của nhân dân” là của ai?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_25",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 25,
+      "type": "single_choice",
+      "content": "Vì sao Đảng, Nhà nước Việt Nam chủ trương luôn tôn trọng, bảo đảm quyền tự do tín ngưỡng tôn giáo và không tín ngưỡng tôn giáo của nhân dân?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_26",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 26,
+      "type": "single_choice",
+      "content": "Nội dung nào vừa là nội dung chủ yếu vừa là giải pháp quan trọng để liên kết các nội dung của Cương lĩnh dân tộc thành một chỉnh thể?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_27",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 27,
+      "type": "single_choice",
+      "content": "Đối với quốc gia và từng thành viên của dân tộc, yếu tố nào là thiêng liêng nhất mà nếu không có thì không có khái niệm tổ quốc, quốc gi",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_28",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 28,
+      "type": "single_choice",
+      "content": "Tìm đáp án sai về nguồn gốc hình thành của tôn giáo:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_29",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 29,
+      "type": "drag_drop_categorize",
+      "content": "Kéo thả các yếu tố liên quan vào các cột tương ứng:",
+      "instructionBadge": "(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 6,
+      "categories": [
+        "Đặc trưng của dân tộc (quốc gia)",
+        "Đặc trưng của dân tộc (tộc người)"
+      ],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_30",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 30,
+      "type": "drag_drop_categorize",
+      "content": "Kéo thả các yếu tố liên quan đến tôn giáo vào các cột tương ứng:",
+      "instructionBadge": "(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 6,
+      "categories": [
+        "Yếu tố liên quan đến tôn giáo",
+        "Nguồn gốc của tôn giáo"
+      ],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_31",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 31,
+      "type": "drag_drop_matching",
+      "content": "Kéo thả các đáp án đúng tương ứng với các phát biểu về dân tộc dưới đây:",
+      "instructionBadge": "(!) Kéo và thả các đáp án đúng vào ô tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_32",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 32,
+      "type": "true_false_matrix",
+      "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
+      "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": [
+        {
+          "id": "stmt_32_1",
+          "indexNumber": 1,
+          "text": "1) Tâm lý dân tộc tạo nên bản sắc văn hóa dân tộc",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_32_2",
+          "indexNumber": 2,
+          "text": "2) Dân tộc (tộc người) có ý thức tự giác tộc người",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_32_3",
+          "indexNumber": 3,
+          "text": "3) Đấu tranh chống chủ nghĩa Sô - vanh là giải pháp thực hiện bình đẳng dân tộc",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_32_4",
+          "indexNumber": 4,
+          "text": "4) Tôn giáo là đặc trưng chính của dân tộc quốc gia",
+          "correctAnswer": "Sai"
+        }
+      ]
+    },
+    {
+      "id": "q_quiz_1793843634614_33",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 33,
+      "type": "true_false_matrix",
+      "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
+      "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": [
+        {
+          "id": "stmt_33_1",
+          "indexNumber": 1,
+          "text": "1) Tôn giáo phản ánh chân thực hiện thực khách quan",
+          "correctAnswer": "Sai"
+        },
+        {
+          "id": "stmt_33_2",
+          "indexNumber": 2,
+          "text": "2) Tín ngưỡng là niềm tin vào lực lượng siêu nhiên",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_33_3",
+          "indexNumber": 3,
+          "text": "3) Khoa học chưa giải thích hết được các hiện tượng là lý do tôn giáo phát triển",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_33_4",
+          "indexNumber": 4,
+          "text": "4) Nguồn gốc nhận thức của tôn giáo là sự hạn chế hiểu biết của con người",
+          "correctAnswer": "Đúng"
+        }
+      ]
+    },
+    {
+      "id": "q_quiz_1793843634614_34",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 34,
+      "type": "true_false_matrix",
+      "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
+      "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": [
+        {
+          "id": "stmt_34_1",
+          "indexNumber": 1,
+          "text": "1) Tôn giáo phản ánh hoang đường, hư ảo hiện thực khách quan",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_34_2",
+          "indexNumber": 2,
+          "text": "2) Tín ngưỡng có hệ thống giáo lý chặt chẽ",
+          "correctAnswer": "Sai"
+        },
+        {
+          "id": "stmt_34_3",
+          "indexNumber": 3,
+          "text": "3) Nguồn gốc kinh tế - xã hội dẫn đến sự ra đời của tôn giáo",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_34_4",
+          "indexNumber": 4,
+          "text": "4) Mê tín dị đoan là niềm tin mù quáng cần loại bỏ",
+          "correctAnswer": "Đúng"
+        }
+      ]
+    },
+    {
+      "id": "q_quiz_1793843634614_35",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 35,
+      "type": "drag_drop_categorize",
+      "content": "Kéo thả các yếu tố liên quan vào các cột tương ứng:",
+      "instructionBadge": "(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 7,
+      "categories": [
+        "Đặc trưng của dân tộc",
+        "Nội dung cương lĩnh dân tộc của Mác-Lênin"
+      ],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_36",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 36,
+      "type": "drag_drop_matching",
+      "content": "Kéo thả các đáp án đúng tương ứng với các phát biểu về nội dung Cương lĩnh dân tộc của Chủ nghĩa Mác – Lênin:",
+      "instructionBadge": "(!) Kéo và thả các đáp án đúng vào ô tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_37",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 37,
+      "type": "multiple_choice",
+      "content": "Hãy chỉ ra đâu là nguồn gốc tồn tại của Tôn giáo?",
+      "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 2,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_38",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 38,
+      "type": "drag_drop_matching",
+      "content": "Kéo thả các đáp án đúng khớp với các phát biểu dưới đây:",
+      "instructionBadge": "(!) Kéo và thả các đáp án đúng vào ô tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843634614_39",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 39,
+      "type": "true_false_matrix",
+      "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
+      "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": [
+        {
+          "id": "stmt_39_1",
+          "indexNumber": 1,
+          "text": "1) Cương lĩnh dân tộc của Chủ nghĩa Mác-Lênin không đề cập đến bình đẳng dân tộc",
+          "correctAnswer": "Sai"
+        },
+        {
+          "id": "stmt_39_2",
+          "indexNumber": 2,
+          "text": "2) Dân tộc (tộc người) có ngôn ngữ riêng",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_39_3",
+          "indexNumber": 3,
+          "text": "3) Lãnh thổ chung là đặc trưng của dân tộc quốc gia",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_39_4",
+          "indexNumber": 4,
+          "text": "4) Quyền tự quyết dân tộc không bao gồm nội dung liên hiệp các dân tộc lại",
+          "correctAnswer": "Sai"
+        }
+      ]
+    },
+    {
+      "id": "q_quiz_1793843634614_40",
+      "quizId": "quiz_1793843634614",
+      "orderIndex": 40,
+      "type": "true_false_matrix",
+      "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
+      "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": [
+        {
+          "id": "stmt_40_1",
+          "indexNumber": 1,
+          "text": "1) Dân tộc là cộng đồng người có ngôn ngữ riêng và văn hóa đặc thù",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_40_2",
+          "indexNumber": 2,
+          "text": "2) Bình đẳng dân tộc là nội dung cương lĩnh dân tộc của Mác-Lênin",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_40_3",
+          "indexNumber": 3,
+          "text": "3) Quyền tự quyết dân tộc bao gồm quyền phân lập thành quốc gia độc lập",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_40_4",
+          "indexNumber": 4,
+          "text": "4) Dân tộc (quốc gia) không cần lãnh thổ chung",
+          "correctAnswer": "Sai"
+        }
+      ]
+    },
+    {
+      "id": "q_quiz_1793843679161_1",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 1,
+      "type": "single_choice",
+      "content": "Trong chiến lược sử dụng mô hình phân tầng (tiered model strategy), mô hình nhẹ (Lightweight Model) như GPT-4o mini hay Claude Haiku thường được dùng cho mục đích gì?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_2",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 2,
+      "type": "single_choice",
+      "content": "Một công ty có 500 tài liệu PDF về chính sách nội bộ, muốn xây dựng hệ thống hỗ trợ nhân viên tra cứu. Hệ thống cần trích dẫn chính xác nguồn cho mỗi câu trả lời và giảm thiểu hallucination. Công ty đã có sẵn PostgreSQL trong hạ tầng và đội ngũ không có kỹ sư ML chuyên trách. Dựa trên nội dung chương 6, phương án thiết kế nào phù hợp nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_3",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 3,
+      "type": "single_choice",
+      "content": "Một công ty vận hành FAQ chatbot với 10.000 lượt hỏi/ngày, trong đó khoảng 40% câu hỏi là giống hệt hoặc rất tương đồng về mặt ngữ nghĩa. Dựa trên chiến lược tối ưu chi phí trong chương 6, giải pháp nào giúp tiết kiệm chi phí API nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_4",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 4,
+      "type": "single_choice",
+      "content": "Một bệnh viện muốn xây dựng trợ lý AI phân tích hồ sơ bệnh án để hỗ trợ bác sĩ. Dữ liệu bệnh án là thông tin y tế nhạy cảm, tuyệt đối không được phép rời khỏi hạ tầng bệnh viện. Dựa trên phân tích Model-as-a-Service vs Self-Hosting trong chương 6, lựa chọn nào phù hợp nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_5",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 5,
+      "type": "single_choice",
+      "content": "Trong pipeline RAG chi tiết 12 bước được mô tả ở chương 6, bước Output Validation (bước 10) phát hiện câu trả lời của LLM chứa thông tin không dựa trên ngữ cảnh được cung cấp. Hành động nào phù hợp nhất với thiết kế pipeline vòng lặp (Loop/Agentic Pipeline)?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_6",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 6,
+      "type": "single_choice",
+      "content": "Một team đang thiết kế pipeline cho ứng dụng hỏi đáp y tế. Họ muốn pipeline có khả năng tự đánh giá chất lượng câu trả lời và sinh lại nếu chưa đạt yêu cầu. Mô hình pipeline nào trong chương 6 mô tả chính xác khả năng này?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_7",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 7,
+      "type": "single_choice",
+      "content": "Một công ty SaaS muốn xây dựng nền tảng AI đa tenant -- mỗi khách hàng doanh nghiệp có bộ tài liệu riêng, cấu hình prompt riêng và có thể chọn model provider riêng. Dữ liệu giữa các tenant phải được cô lập tuyệt đối. Dựa trên case study trong chương 6, kiến trúc nào phù hợp nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_8",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 8,
+      "type": "single_choice",
+      "content": "Một công ty thương mại điện tử có hệ thống monolithic xử lý đơn hàng ổn định với 5 developer. Họ muốn tích hợp thêm chatbot AI chăm sóc khách hàng dựa trên chính sách đổi trả và FAQ. Dựa trên nguyên tắc tiến hóa kiến trúc trong chương 6, cách tiếp cận nào phù hợp nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_9",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 9,
+      "type": "single_choice",
+      "content": "Một nhà phát triển xây dựng ứng dụng RAG cho tài liệu nghiên cứu khoa học. Người dùng thường hỏi các câu phức tạp đòi hỏi suy luận nhiều bước như: &quot;Phương pháp X trong bài báo A khác gì với phương pháp Y trong bài báo B, và ưu điểm của từng phương pháp là gì?&quot;. Biến thể RAG nào trong chương 6 phù hợp nhất cho loại câu hỏi này?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_10",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 10,
+      "type": "single_choice",
+      "content": "Khi so sánh ba mô hình kiến trúc, một kiến trúc sư nhận xét: &quot;RAG-based có thể giảm hallucination đáng kể so với API-based&quot;. Cơ chế cốt lõi nào trong kiến trúc RAG giúp đạt được điều này?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_11",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 11,
+      "type": "single_choice",
+      "content": "Một team phát triển ứng dụng AI chăm sóc khách hàng đang cân nhắc giữa hai thiết kế pipeline: pipeline A (12 bước đầy đủ: query rewriting, reranking, validation) đạt độ chính xác 95% nhưng phản hồi trong 5--8 giây; pipeline B (5 bước đơn giản) đạt độ chính xác 85% nhưng phản hồi trong 1--2 giây. Dựa trên trade-off Chất lượng -- Độ trễ và nguyên tắc UX trong chương 6, chiến lược nào tối ưu nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_12",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 12,
+      "type": "single_choice",
+      "content": "Một công ty xử lý 50.000 truy vấn/ngày cho chatbot hỗ trợ khách hàng. Phân tích cho thấy: 70% là câu hỏi FAQ đơn giản, 20% cần suy luận trung bình, 10% là câu hỏi phức tạp. Dựa trên chiến lược model cascading và bảng giá token trong chương 6, phương án nào tối ưu chi phí nhất mà vẫn đảm bảo chất lượng?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_13",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 13,
+      "type": "single_choice",
+      "content": "Một team 3 người đang xây dựng MVP cho ứng dụng AI phân tích cảm xúc đánh giá sản phẩm. Họ phân vân giữa việc dùng LangChain (framework) hoặc tự viết toàn bộ pipeline (custom implementation). Dựa trên trade-off Đơn giản -- Linh hoạt và hoàn cảnh cụ thể, lựa chọn nào hợp lý nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_14",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 14,
+      "type": "single_choice",
+      "content": "Một kiến trúc sư đang áp dụng khung ra quyết định 5 bước để chọn vector database cho dự án. Ở bước 3 (Phân tích trade-off), cô ấy cần đánh giá các phương án Pinecone (managed), pgvector (PostgreSQL extension) và Milvus (self-host). Dựa trên các chiều phân tích trade-off được khuyến nghị trong chương 6, tiêu chí nào sau đây KHÔNG thuộc phạm vi phân tích của bước này?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_15",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 15,
+      "type": "single_choice",
+      "content": "Điểm khác biệt chính giữa Naive RAG và Agentic RAG được mô tả trong chương 6 là gì?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_16",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 16,
+      "type": "single_choice",
+      "content": "Một startup muốn xây dựng AI writing assistant hỗ trợ viết email và báo cáo, không cần truy xuất tài liệu nội bộ, nguồn lực hạn chế và cần ra mắt nhanh. Dựa trên phân tích trong Chương 6, mô hình kiến trúc nào phù hợp nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_17",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 17,
+      "type": "single_choice",
+      "content": "Sự khác biệt chính giữa pipeline tuyến tính (Linear Pipeline) và pipeline phân nhánh (Branching Pipeline) trong ứng dụng AI tạo sinh là gì?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_18",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 18,
+      "type": "single_choice",
+      "content": "Vector database đóng vai trò gì trong kiến trúc RAG (Retrieval-Augmented Generation)?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_19",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 19,
+      "type": "single_choice",
+      "content": "Model Gateway trong kiến trúc ứng dụng AI tạo sinh chủ yếu giải quyết vấn đề gì?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_20",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 20,
+      "type": "single_choice",
+      "content": "Trong kiến trúc phân tầng của ứng dụng AI tạo sinh, tầng Điều phối (Orchestration Layer) đảm nhận vai trò gì?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_21",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 21,
+      "type": "single_choice",
+      "content": "Nguyên lý “thiết kế cho tính không xác định” (design for non-determinism) trong kiến trúc AI tạo sinh được hiện thực hóa thông qua những chiến lược nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_22",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 22,
+      "type": "single_choice",
+      "content": "Một startup fintech muốn tích hợp AI để phân tích báo cáo tài chính nội bộ. Họ cân nhắc giữa (A) sử dụng LLM API — triển khai nhanh, ít yêu cầu vận hành; và (B) self-host mô hình mã nguồn mở — kiểm soát hạ tầng và dữ liệu tốt hơn nhưng yêu cầu năng lực ML/MLOps. Startup hiện không có kỹ sư ML và ngân sách hạn chế. Dựa trên trade-off giữa Kiểm soát (Control) và Tiện lợi (Convenience), lựa chọn nào phù hợp nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_23",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 23,
+      "type": "single_choice",
+      "content": "Một ứng dụng chatbot cần xử lý đồng thời 1000 người dùng, mỗi người có thể hỏi nhiều câu liên tiếp trong một phiên hội thoại kéo dài. Để quản lý context window hiệu quả khi hội thoại vượt quá giới hạn token của mô hình, chiến lược nào sau đây phù hợp nhất theo nội dung Chương 6?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_24",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 24,
+      "type": "single_choice",
+      "content": "Một nhóm phát triển đang thiết kế ứng dụng AI phân tích tài liệu pháp lý. Họ phát hiện LLM đôi khi tạo ra các điều khoản luật không tồn tại. Dựa trên các nguyên lý thiết kế trong Chương 6, nguyên lý nào giúp giải quyết trực tiếp vấn đề hallucination này?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_25",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 25,
+      "type": "single_choice",
+      "content": "Khi thiết kế API cho ứng dụng AI tạo sinh, một developer nhận thấy một số tác vụ phân tích tài liệu dài có thể mất từ 30 giây đến vài phút để hoàn thành. Dựa trên các mô hình API trong Chương 6, thiết kế nào phù hợp nhất để xử lý tình huống này?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_26",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 26,
+      "type": "single_choice",
+      "content": "Một kỹ sư đang thực hiện chunking tài liệu pháp lý cho hệ thống RAG. Tài liệu có cấu trúc phức tạp với nhiều điều, khoản và mục con. Fixed-size chunking 512 token với overlap 50 token thường cắt nội dung giữa các điều khoản, làm giảm chất lượng truy xuất. Chiến lược chunking nào trong Chương 6 phù hợp nhất để giải quyết vấn đề này?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_27",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 27,
+      "type": "single_choice",
+      "content": "Một ngân hàng cần xây dựng trợ lý AI nội bộ để trả lời câu hỏi về chính sách, quy trình và sản phẩm từ hàng nghìn tài liệu nội bộ. Yêu cầu bắt buộc là dữ liệu không rời khỏi hạ tầng ngân hàng và mỗi câu trả lời phải kèm trích dẫn nguồn chính xác. Dựa trên phân tích trong Chương 6, phương án nào đáp ứng tốt nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_28",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 28,
+      "type": "single_choice",
+      "content": "Tại sao kiến trúc ứng dụng AI tạo sinh cần được thiết kế khác với kiến trúc phần mềm truyền thống?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_29",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 29,
+      "type": "single_choice",
+      "content": "Một team đang chọn vector database cho ứng dụng RAG với khoảng 100.000 tài liệu. Họ đã có sẵn PostgreSQL trong hạ tầng và muốn giảm thiểu số lượng công nghệ mới cần vận hành. Dựa trên bảng so sánh vector database trong chương 6, lựa chọn nào phù hợp nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793843679161_30",
+      "quizId": "quiz_1793843679161",
+      "orderIndex": 30,
+      "type": "single_choice",
+      "content": "Một ứng dụng AI cần hỗ trợ cả tìm kiếm ngữ nghĩa (semantic search) và tìm kiếm từ khóa chính xác (keyword search) trên cùng một bộ tài liệu. Dựa trên bảng so sánh vector database trong chương 6, lựa chọn nào hỗ trợ hybrid search một cách tự nhiên nhất?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
     }
   ],
   "question_options": [
@@ -1616,6 +2698,1894 @@
       "content": "Do khoa học chưa giải thích hết được các hiện tượng tự nhiên và xã hội",
       "isCorrect": true,
       "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_1_1",
+      "questionId": "q_quiz_1793843634614_1",
+      "label": "A",
+      "content": "Quyền tự quyết về chính trị",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_1_2",
+      "questionId": "q_quiz_1793843634614_1",
+      "label": "B",
+      "content": "Quyền tự quyết về văn hoá",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_1_3",
+      "questionId": "q_quiz_1793843634614_1",
+      "label": "C",
+      "content": "Quyền tự quyết về các mối quan hệ quốc tế",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_1_4",
+      "questionId": "q_quiz_1793843634614_1",
+      "label": "D",
+      "content": "Quyền tự quyết về kinh tế",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_2_1",
+      "questionId": "q_quiz_1793843634614_2",
+      "label": "A",
+      "content": "Các dân tộc hoàn toàn bình đẳng",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_2_2",
+      "questionId": "q_quiz_1793843634614_2",
+      "label": "B",
+      "content": "Liên hiệp công nhân tất cả các dân tộ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_2_3",
+      "questionId": "q_quiz_1793843634614_2",
+      "label": "C",
+      "content": "Đoàn kết các dân tộc",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_2_4",
+      "questionId": "q_quiz_1793843634614_2",
+      "label": "D",
+      "content": "Các dân tộc được quyền tự quyết",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_3_1",
+      "questionId": "q_quiz_1793843634614_3",
+      "label": "A",
+      "content": "Bộ lạc, bộ tộc, thị tộc, dân tộc",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_3_2",
+      "questionId": "q_quiz_1793843634614_3",
+      "label": "B",
+      "content": "Bộ tộc, thị tộc, bộ lạc, dân tộ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_3_3",
+      "questionId": "q_quiz_1793843634614_3",
+      "label": "C",
+      "content": "Thị tộc, bộ tộc, bộ lạc, dân tộc",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_3_4",
+      "questionId": "q_quiz_1793843634614_3",
+      "label": "D",
+      "content": "Thị tộc, bộ lạc, bộ tộc, dân tộc",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_4_1",
+      "questionId": "q_quiz_1793843634614_4",
+      "label": "A",
+      "content": "Do chủ nghĩa tư bản đã phát triển thành chủ nghĩa đế quốc",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_4_2",
+      "questionId": "q_quiz_1793843634614_4",
+      "label": "B",
+      "content": "Do sự thức tỉnh, sự trưởng thành về ý thức dân tộc, ý thức về quyền sống của mình",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_4_3",
+      "questionId": "q_quiz_1793843634614_4",
+      "label": "C",
+      "content": "Do các cộng đồng dân cư muốn phân chia lại thị trường thế giới",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_4_4",
+      "questionId": "q_quiz_1793843634614_4",
+      "label": "D",
+      "content": "Do các cộng đồng dân cư muốn độc lập để có thể đi xâm chiếm các dân tộc khác",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_5_1",
+      "questionId": "q_quiz_1793843634614_5",
+      "label": "A",
+      "content": "Hình thái ý thức xã hội",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_5_2",
+      "questionId": "q_quiz_1793843634614_5",
+      "label": "B",
+      "content": "Cơ sở hạ tầng",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_5_3",
+      "questionId": "q_quiz_1793843634614_5",
+      "label": "C",
+      "content": "Kiến trúc thượng tầng",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_5_4",
+      "questionId": "q_quiz_1793843634614_5",
+      "label": "D",
+      "content": "Tồn tại xã hội",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_6_1",
+      "questionId": "q_quiz_1793843634614_6",
+      "label": "A",
+      "content": "Lực lượng siêu nhiên",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_6_2",
+      "questionId": "q_quiz_1793843634614_6",
+      "label": "B",
+      "content": "Các thần linh",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_6_3",
+      "questionId": "q_quiz_1793843634614_6",
+      "label": "C",
+      "content": "Thượng đế",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_6_4",
+      "questionId": "q_quiz_1793843634614_6",
+      "label": "D",
+      "content": "Con người",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_7_1",
+      "questionId": "q_quiz_1793843634614_7",
+      "label": "A",
+      "content": "Tín ngưỡng tôn giáo ra đời từ rất sớm",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_7_2",
+      "questionId": "q_quiz_1793843634614_7",
+      "label": "B",
+      "content": "Tín ngưỡng tôn giáo có số lượng tín đồ đông",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_7_3",
+      "questionId": "q_quiz_1793843634614_7",
+      "label": "C",
+      "content": "Tín ngưỡng tôn giáo có hệ thống giáo lý, giáo luật, có tổ chức và các nghi lễ chặt chẽ",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_7_4",
+      "questionId": "q_quiz_1793843634614_7",
+      "label": "D",
+      "content": "Tín ngưỡng tôn giáo tồn tại ở tất cả các quốc gia trên thế giới",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_8_1",
+      "questionId": "q_quiz_1793843634614_8",
+      "label": "A",
+      "content": "Mê tín dị đoan",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_8_2",
+      "questionId": "q_quiz_1793843634614_8",
+      "label": "B",
+      "content": "Thờ cúng tổ tiên",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_8_3",
+      "questionId": "q_quiz_1793843634614_8",
+      "label": "C",
+      "content": "Tín ngưỡng thờ Mẫu",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_8_4",
+      "questionId": "q_quiz_1793843634614_8",
+      "label": "D",
+      "content": "Thờ anh hùng dân tộc",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_9_1",
+      "questionId": "q_quiz_1793843634614_9",
+      "label": "A",
+      "content": "Sản xuất vật chất và các quan hệ kinh tế",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_9_2",
+      "questionId": "q_quiz_1793843634614_9",
+      "label": "B",
+      "content": "Các cuộc cách mạng",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_9_3",
+      "questionId": "q_quiz_1793843634614_9",
+      "label": "C",
+      "content": "Các hoạt động chính trị và quan hệ chính trị",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_9_4",
+      "questionId": "q_quiz_1793843634614_9",
+      "label": "D",
+      "content": "Các hoạt động văn hoá",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_10_1",
+      "questionId": "q_quiz_1793843634614_10",
+      "label": "A",
+      "content": "Ý thức tôn giáo",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_10_2",
+      "questionId": "q_quiz_1793843634614_10",
+      "label": "B",
+      "content": "Ý thức chính trị",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_10_3",
+      "questionId": "q_quiz_1793843634614_10",
+      "label": "C",
+      "content": "Ý thức thẩm mỹ",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_10_4",
+      "questionId": "q_quiz_1793843634614_10",
+      "label": "D",
+      "content": "Ý thức pháp quyền",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_11_1",
+      "questionId": "q_quiz_1793843634614_11",
+      "label": "A",
+      "content": "Do nhận thức của con người về tự nhiên, về xã hội và về chính bản thân mình còn có giới hạn",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_11_2",
+      "questionId": "q_quiz_1793843634614_11",
+      "label": "B",
+      "content": "Do lực lượng siêu nhiên thúc đẩy",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_11_3",
+      "questionId": "q_quiz_1793843634614_11",
+      "label": "C",
+      "content": "Do xã hội có xu hướng phát triển ngày càng tụt lùi",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_11_4",
+      "questionId": "q_quiz_1793843634614_11",
+      "label": "D",
+      "content": "Do thế giới mà con người đang sống vẫn còn muôn vàn điều bí ẩn mà khoa học chưa hiểu rõ bản chất của nó",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_12_1",
+      "questionId": "q_quiz_1793843634614_12",
+      "label": "A",
+      "content": "54",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_12_2",
+      "questionId": "q_quiz_1793843634614_12",
+      "label": "B",
+      "content": "50",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_12_3",
+      "questionId": "q_quiz_1793843634614_12",
+      "label": "C",
+      "content": "63",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_12_4",
+      "questionId": "q_quiz_1793843634614_12",
+      "label": "D",
+      "content": "45",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_13_1",
+      "questionId": "q_quiz_1793843634614_13",
+      "label": "A",
+      "content": "Các dân tộc cư trú tập trung tại các trung tâm lớn",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_13_2",
+      "questionId": "q_quiz_1793843634614_13",
+      "label": "B",
+      "content": "Các dân tộc ở Việt Nam có trình độ phát triển không đều",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_13_3",
+      "questionId": "q_quiz_1793843634614_13",
+      "label": "C",
+      "content": "Các dân tộc thiểu số ở Việt Nam phân bố chủ yếu ở địa bàn có vị trí chiến lược quan trọng",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_13_4",
+      "questionId": "q_quiz_1793843634614_13",
+      "label": "D",
+      "content": "Có sự chênh lệch về số dân giữa các tộc người",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_14_1",
+      "questionId": "q_quiz_1793843634614_14",
+      "label": "A",
+      "content": "5",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_14_2",
+      "questionId": "q_quiz_1793843634614_14",
+      "label": "B",
+      "content": "43",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_14_3",
+      "questionId": "q_quiz_1793843634614_14",
+      "label": "C",
+      "content": "16",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_14_4",
+      "questionId": "q_quiz_1793843634614_14",
+      "label": "D",
+      "content": "13",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_15_1",
+      "questionId": "q_quiz_1793843634614_15",
+      "label": "A",
+      "content": "Vì các tôn giáo thường bị lợi dụng bởi các thế lực phản động",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_15_2",
+      "questionId": "q_quiz_1793843634614_15",
+      "label": "B",
+      "content": "Vì các tôn giáo có vai trò quyết định đến những vấn đề quan trọng của xã hội",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_15_3",
+      "questionId": "q_quiz_1793843634614_15",
+      "label": "C",
+      "content": "Vì đa số tín đồ là nhân dân lao động có lòng yêu nước, chống giặc ngoại xâm",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_15_4",
+      "questionId": "q_quiz_1793843634614_15",
+      "label": "D",
+      "content": "Vì các tôn giáo có quan hệ với các tổ chức nước ngoài",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_16_1",
+      "questionId": "q_quiz_1793843634614_16",
+      "label": "A",
+      "content": "Bộ lạc",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_16_2",
+      "questionId": "q_quiz_1793843634614_16",
+      "label": "B",
+      "content": "Quốc gia dân tộ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_16_3",
+      "questionId": "q_quiz_1793843634614_16",
+      "label": "C",
+      "content": "Tộc người",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_16_4",
+      "questionId": "q_quiz_1793843634614_16",
+      "label": "D",
+      "content": "Bộ tộc",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_17_1",
+      "questionId": "q_quiz_1793843634614_17",
+      "label": "A",
+      "content": "Có thể cư trú tập trung trên một vùng lãnh thổ của một quốc gia, hoặc cư trú đan xen với nhiều dân tộc anh em",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_17_2",
+      "questionId": "q_quiz_1793843634614_17",
+      "label": "B",
+      "content": "Có ngôn ngữ riêng và có thể có chữ viết riêng làm công cụ giao tiếp",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_17_3",
+      "questionId": "q_quiz_1793843634614_17",
+      "label": "C",
+      "content": "Có nét tâm lý riêng (nét tâm lý dân tộc) biểu hiện kết tinh trong nền văn hoá dân tộc và tạo thành bản sắc văn hoá của dân tộc",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_17_4",
+      "questionId": "q_quiz_1793843634614_17",
+      "label": "D",
+      "content": "Có chung một phương thức sinh hoạt kinh tế",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_18_1",
+      "questionId": "q_quiz_1793843634614_18",
+      "label": "A",
+      "content": "Thủ tiêu tình trạng áp bức giai cấp, trên cơ sở đó xoá bỏ tình trạng áp bức dân tộc",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_18_2",
+      "questionId": "q_quiz_1793843634614_18",
+      "label": "B",
+      "content": "Phải liên kết với các nước đế quốc lớn",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_18_3",
+      "questionId": "q_quiz_1793843634614_18",
+      "label": "C",
+      "content": "Phải đấu tranh chống chủ nghĩa phân biệt chủng tộc, chủ nghĩa sô vanh",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_18_4",
+      "questionId": "q_quiz_1793843634614_18",
+      "label": "D",
+      "content": "Phải duy trì chế độ tư hữu về tư liệu sản xuất",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_19_1",
+      "questionId": "q_quiz_1793843634614_19",
+      "label": "A",
+      "content": "Có nguồn gốc tự nhiên, kinh tế - xã hội, tâm lý, nhận thức",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_19_2",
+      "questionId": "q_quiz_1793843634614_19",
+      "label": "B",
+      "content": "Có nguồn gốc do thượng đế tạo ra",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_19_3",
+      "questionId": "q_quiz_1793843634614_19",
+      "label": "C",
+      "content": "Có nguồn gốc do chủ nghĩa tư bản tạo ra",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_19_4",
+      "questionId": "q_quiz_1793843634614_19",
+      "label": "D",
+      "content": "Có nguồn gốc do lực lượng siêu nhiên tạo ra",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_20_1",
+      "questionId": "q_quiz_1793843634614_20",
+      "label": "A",
+      "content": "Do dân tộc Việt Nam có diện tích nhỏ",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_20_2",
+      "questionId": "q_quiz_1793843634614_20",
+      "label": "B",
+      "content": "Do quá trình đồng hóa của các bộ tộc phong kiến",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_20_3",
+      "questionId": "q_quiz_1793843634614_20",
+      "label": "C",
+      "content": "Do yêu cầu đoàn kết của quá trình đấu tranh chống thiên tai và xâm lược",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_20_4",
+      "questionId": "q_quiz_1793843634614_20",
+      "label": "D",
+      "content": "Do sự phát triển tiến bộ của các bộ lạc",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_21_1",
+      "questionId": "q_quiz_1793843634614_21",
+      "label": "A",
+      "content": "Tộc người",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_21_2",
+      "questionId": "q_quiz_1793843634614_21",
+      "label": "B",
+      "content": "Thị tộ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_21_3",
+      "questionId": "q_quiz_1793843634614_21",
+      "label": "C",
+      "content": "Bộ tộc",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_21_4",
+      "questionId": "q_quiz_1793843634614_21",
+      "label": "D",
+      "content": "Quốc gia",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_22_1",
+      "questionId": "q_quiz_1793843634614_22",
+      "label": "A",
+      "content": "Đều có hệ thống kinh điển",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_22_2",
+      "questionId": "q_quiz_1793843634614_22",
+      "label": "B",
+      "content": "Đều có giáo chủ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_22_3",
+      "questionId": "q_quiz_1793843634614_22",
+      "label": "C",
+      "content": "Đều có các giáo sĩ",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_22_4",
+      "questionId": "q_quiz_1793843634614_22",
+      "label": "D",
+      "content": "Đều có niềm tin vào đấng siêu nhiên",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_23_1",
+      "questionId": "q_quiz_1793843634614_23",
+      "label": "A",
+      "content": "Thế giới quan siêu hình",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_23_2",
+      "questionId": "q_quiz_1793843634614_23",
+      "label": "B",
+      "content": "Thế giới quan duy tâm",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_23_3",
+      "questionId": "q_quiz_1793843634614_23",
+      "label": "C",
+      "content": "Thế giới quan biện chứng",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_23_4",
+      "questionId": "q_quiz_1793843634614_23",
+      "label": "D",
+      "content": "Thế giới quan duy vật",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_24_1",
+      "questionId": "q_quiz_1793843634614_24",
+      "label": "A",
+      "content": "V.I. Lênin",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_24_2",
+      "questionId": "q_quiz_1793843634614_24",
+      "label": "B",
+      "content": "Hồ Chí Minh",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_24_3",
+      "questionId": "q_quiz_1793843634614_24",
+      "label": "C",
+      "content": "Mác",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_24_4",
+      "questionId": "q_quiz_1793843634614_24",
+      "label": "D",
+      "content": "Ph. Ăngghen",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_25_1",
+      "questionId": "q_quiz_1793843634614_25",
+      "label": "A",
+      "content": "Vì tín ngưỡng, tôn giáo có số lượng tín đồ đông",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_25_2",
+      "questionId": "q_quiz_1793843634614_25",
+      "label": "B",
+      "content": "Vì tín ngưỡng, tôn giáo là nhu cầu tinh thần của nhân dân",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_25_3",
+      "questionId": "q_quiz_1793843634614_25",
+      "label": "C",
+      "content": "Vì tín ngưỡng tôn giáo được du nhập từ nước ngoài vào",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_25_4",
+      "questionId": "q_quiz_1793843634614_25",
+      "label": "D",
+      "content": "Vì lực lượng chức sắc trong các tôn giáo có tiềm lực kinh tế lớn mạnh",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_26_1",
+      "questionId": "q_quiz_1793843634614_26",
+      "label": "A",
+      "content": "Các dân tộc được quyền tự quyết",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_26_2",
+      "questionId": "q_quiz_1793843634614_26",
+      "label": "B",
+      "content": "Các dân tộc hoàn toàn bình đẳng",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_26_3",
+      "questionId": "q_quiz_1793843634614_26",
+      "label": "C",
+      "content": "Liên hiệp công nhân tất cả các dân tộc",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_26_4",
+      "questionId": "q_quiz_1793843634614_26",
+      "label": "D",
+      "content": "Các dân tộc có nền phát triển kinh tế ngang nhau",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_27_1",
+      "questionId": "q_quiz_1793843634614_27",
+      "label": "A",
+      "content": "Lãnh thổ",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_27_2",
+      "questionId": "q_quiz_1793843634614_27",
+      "label": "B",
+      "content": "Ngôn ngữ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_27_3",
+      "questionId": "q_quiz_1793843634614_27",
+      "label": "C",
+      "content": "Kinh tế",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_27_4",
+      "questionId": "q_quiz_1793843634614_27",
+      "label": "D",
+      "content": "Truyền thống văn hoá",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_28_1",
+      "questionId": "q_quiz_1793843634614_28",
+      "label": "A",
+      "content": "Nguồn gốc nhân tạo",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_28_2",
+      "questionId": "q_quiz_1793843634614_28",
+      "label": "B",
+      "content": "Nguồn gốc nhận thứ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_28_3",
+      "questionId": "q_quiz_1793843634614_28",
+      "label": "C",
+      "content": "Nguồn gốc kinh tế - xã hội",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_28_4",
+      "questionId": "q_quiz_1793843634614_28",
+      "label": "D",
+      "content": "Nguồn gốc tâm lý",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_37_1",
+      "questionId": "q_quiz_1793843634614_37",
+      "label": "A",
+      "content": "Do các lực lượng siêu nhiên thúc đẩy",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_37_2",
+      "questionId": "q_quiz_1793843634614_37",
+      "label": "B",
+      "content": "Do vẫn tồn tại đối kháng giai cấp",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_37_3",
+      "questionId": "q_quiz_1793843634614_37",
+      "label": "C",
+      "content": "Do qui định của nhà nước",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843634614_37_4",
+      "questionId": "q_quiz_1793843634614_37",
+      "label": "D",
+      "content": "Do khoa học chưa giải thích hết được các hiện tượng tự nhiên và xã hội",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_1_1",
+      "questionId": "q_quiz_1793843679161_1",
+      "label": "A",
+      "content": "Xử lý các tác vụ đơn giản như phân loại ý định, tóm tắt ngắn hoặc tiền xử lý prompt, nhằm giảm chi phí và độ trễ trong khi vẫn đảm bảo chất lượng đủ dùng",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_1_2",
+      "questionId": "q_quiz_1793843679161_1",
+      "label": "B",
+      "content": "Tạo ra đầu ra cuối cùng cho người dùng trong mọi tình huống vì mô hình nhẹ luôn nhanh hơn và rẻ hơn mô hình mạnh",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_1_3",
+      "questionId": "q_quiz_1793843679161_1",
+      "label": "C",
+      "content": "Thay thế hoàn toàn mô hình chính khi mô hình chính gặp lỗi, đóng vai trò là giải pháp dự phòng duy nhất cho toàn bộ hệ thống",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_1_4",
+      "questionId": "q_quiz_1793843679161_1",
+      "label": "D",
+      "content": "Huấn luyện lại (fine-tune) trên dữ liệu riêng của tổ chức để tạo ra mô hình tùy chỉnh có chất lượng tương đương mô hình mạnh nhất",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_2_1",
+      "questionId": "q_quiz_1793843679161_2",
+      "label": "A",
+      "content": "Sử dụng kiến trúc RAG với pgvector (PostgreSQL extension) làm vector database, tích hợp LLM API, triển khai pipeline gồm chunking → embedding → vector search → reranking → sinh câu trả lời kèm trích dẫn nguồn, tận dụng hạ tầng sẵn có",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_2_2",
+      "questionId": "q_quiz_1793843679161_2",
+      "label": "B",
+      "content": "Gọi trực tiếp LLM API và nhét toàn bộ nội dung 500 tài liệu PDF vào prompt để mô hình tự tìm thông tin liên quan và tự động trích dẫn nguồn",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_2_3",
+      "questionId": "q_quiz_1793843679161_2",
+      "label": "C",
+      "content": "Self-host toàn bộ LLM và vector database trên GPU cluster riêng, xây dựng kiến trúc microservices với Kafka để đảm bảo chất lượng cao nhất",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_2_4",
+      "questionId": "q_quiz_1793843679161_2",
+      "label": "D",
+      "content": "Sử dụng Elasticsearch cho full-text search thay vì vector database, và dùng rule-based system để trích xuất câu trả lời thay vì sử dụng LLM",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_3_1",
+      "questionId": "q_quiz_1793843679161_3",
+      "label": "A",
+      "content": "Triển khai semantic caching để cache kết quả cho các prompt phổ biến hoặc tương tự về mặt ngữ nghĩa, có thể tiết kiệm 30--50% chi phí API cho các truy vấn lặp lại",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_3_2",
+      "questionId": "q_quiz_1793843679161_3",
+      "label": "B",
+      "content": "Sử dụng Claude Opus cho mọi truy vấn vì đây là mô hình mạnh nhất và cho kết quả chính xác nhất, giảm nhu cầu gọi lại",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_3_3",
+      "questionId": "q_quiz_1793843679161_3",
+      "label": "C",
+      "content": "Cắt ngắn mọi câu trả lời xuống tối đa 50 token để giảm chi phí output, bất kể nội dung câu hỏi",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_3_4",
+      "questionId": "q_quiz_1793843679161_3",
+      "label": "D",
+      "content": "Chuyển toàn bộ sang xử lý batch với thời gian chờ 24 giờ cho tất cả truy vấn, kể cả những câu hỏi cần phản hồi tức thời",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_4_1",
+      "questionId": "q_quiz_1793843679161_4",
+      "label": "A",
+      "content": "Self-host mô hình LLM (qua vLLM hoặc TGI) trên GPU cluster trong hạ tầng riêng của bệnh viện, đảm bảo dữ liệu không rời khỏi tổ chức và tuân thủ quy định bảo mật y tế",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_4_2",
+      "questionId": "q_quiz_1793843679161_4",
+      "label": "B",
+      "content": "Sử dụng OpenAI API với GPT-4o vì đây là mô hình mạnh nhất, tiết kiệm chi phí vận hành và OpenAI cam kết không dùng dữ liệu API để huấn luyện",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_4_3",
+      "questionId": "q_quiz_1793843679161_4",
+      "label": "C",
+      "content": "Kết hợp hybrid -- dùng API cho câu hỏi đơn giản và self-host cho dữ liệu nhạy cảm, ưu tiên API vì chi phí thấp hơn đáng kể",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_4_4",
+      "questionId": "q_quiz_1793843679161_4",
+      "label": "D",
+      "content": "Thuê một công ty bên ngoài xây dựng và vận hành toàn bộ hệ thống AI trên cloud của họ với hợp đồng bảo mật tiêu chuẩn",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_5_1",
+      "questionId": "q_quiz_1793843679161_5",
+      "label": "A",
+      "content": "Đánh dấu câu trả lời là không đạt, quay lại bước Prompt Assembly với prompt được điều chỉnh (nhấn mạnh yêu cầu chỉ dựa trên ngữ cảnh được cung cấp), và thực hiện LLM inference lại",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_5_2",
+      "questionId": "q_quiz_1793843679161_5",
+      "label": "B",
+      "content": "Chấp nhận câu trả lời và hiển thị cho người dùng kèm cảnh báo &quot;thông tin có thể không chính xác, vui lòng tự xác minh&quot;",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_5_3",
+      "questionId": "q_quiz_1793843679161_5",
+      "label": "C",
+      "content": "Tự động chuyển sang sử dụng một LLM khác mạnh hơn cho tất cả các yêu cầu trong tương lai mà không đánh giá lại",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_5_4",
+      "questionId": "q_quiz_1793843679161_5",
+      "label": "D",
+      "content": "Bỏ qua bước Output Validation và gửi thẳng câu trả lời cho người dùng để giảm độ trễ pipeline",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_6_1",
+      "questionId": "q_quiz_1793843679161_6",
+      "label": "A",
+      "content": "Pipeline vòng lặp (Loop / Agentic Pipeline) -- cho phép lặp lại các bước dựa trên kết quả đánh giá, ví dụ: LLM sinh câu trả lời → đánh giá chất lượng → nếu chưa đạt, quay lại sinh lại với prompt điều chỉnh",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_6_2",
+      "questionId": "q_quiz_1793843679161_6",
+      "label": "B",
+      "content": "Pipeline tuyến tính (Linear Pipeline) -- các bước thực thi tuần tự cố định, phù hợp với mọi loại ứng dụng bao gồm cả y tế",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_6_3",
+      "questionId": "q_quiz_1793843679161_6",
+      "label": "C",
+      "content": "Pipeline song song (Parallel Pipeline) -- chạy đồng thời nhiều LLM và chọn câu trả lời đầu tiên hoàn thành",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_6_4",
+      "questionId": "q_quiz_1793843679161_6",
+      "label": "D",
+      "content": "Pipeline phân nhánh (Branching Pipeline) -- rẽ nhánh dựa trên loại bệnh được đề cập trong câu hỏi",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_7_1",
+      "questionId": "q_quiz_1793843679161_7",
+      "label": "A",
+      "content": "Kiến trúc Microservices + Model Gateway -- phân tách thành Tenant Management Service, Multi-tenant RAG Service (với namespace isolation trong vector DB), Model Gateway Service (hỗ trợ nhiều provider), Billing &amp; Usage Service, sử dụng Kubernetes và Kafka",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_7_2",
+      "questionId": "q_quiz_1793843679161_7",
+      "label": "B",
+      "content": "Kiến trúc API-based monolithic -- một backend duy nhất gọi LLM API, lưu tất cả dữ liệu của mọi tenant trong cùng một bảng database với cột tenant_id để phân biệt",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_7_3",
+      "questionId": "q_quiz_1793843679161_7",
+      "label": "C",
+      "content": "Kiến trúc Self-hosting -- mỗi tenant được cấp một GPU server riêng biệt và một instance LLM hoàn toàn độc lập",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_7_4",
+      "questionId": "q_quiz_1793843679161_7",
+      "label": "D",
+      "content": "Kiến trúc RAG-based đơn giản -- dùng chung một vector database cho tất cả tenant và phân biệt dữ liệu bằng metadata",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_8_1",
+      "questionId": "q_quiz_1793843679161_8",
+      "label": "A",
+      "content": "Bắt đầu với kiến trúc API-based -- thêm module chatbot vào monolithic hiện có, gọi LLM API, sử dụng database có sẵn để lưu policy documents; sau này nếu cần có thể tích hợp RAG và chuyển dần sang microservices theo strangler fig pattern",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_8_2",
+      "questionId": "q_quiz_1793843679161_8",
+      "label": "B",
+      "content": "Thiết kế lại toàn bộ hệ thống theo kiến trúc microservices ngay từ đầu, bao gồm cả phần xử lý đơn hàng và chatbot AI",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_8_3",
+      "questionId": "q_quiz_1793843679161_8",
+      "label": "C",
+      "content": "Xây dựng hệ thống chatbot hoàn toàn độc lập trên tech stack mới (Python + vector database + GPU cluster) và tích hợp qua API gateway",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_8_4",
+      "questionId": "q_quiz_1793843679161_8",
+      "label": "D",
+      "content": "Thuê ngoài toàn bộ việc phát triển chatbot AI cho một công ty khác và chỉ tập trung vào hệ thống đơn hàng hiện tại",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_9_1",
+      "questionId": "q_quiz_1793843679161_9",
+      "label": "A",
+      "content": "Advanced RAG với multi-hop retrieval -- cho phép truy xuất nhiều bước, dùng kết quả bước trước để truy xuất bước sau, kết hợp query rewriting để xử lý câu hỏi phức tạp đòi hỏi so sánh và tổng hợp đa tài liệu",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_9_2",
+      "questionId": "q_quiz_1793843679161_9",
+      "label": "B",
+      "content": "Naive RAG -- vì câu hỏi so sánh là dạng câu hỏi đơn giản, chỉ cần chunk → embed → search → generate là đủ để trả lời",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_9_3",
+      "questionId": "q_quiz_1793843679161_9",
+      "label": "C",
+      "content": "Graph RAG thuần túy -- chuyển toàn bộ tài liệu nghiên cứu thành knowledge graph và chỉ truy xuất từ graph, bỏ qua hoàn toàn vector search",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_9_4",
+      "questionId": "q_quiz_1793843679161_9",
+      "label": "D",
+      "content": "Fixed-size chunking với top-1 retrieval -- chỉ truy xuất một tài liệu liên quan nhất để so sánh, giữ pipeline đơn giản",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_10_1",
+      "questionId": "q_quiz_1793843679161_10",
+      "label": "A",
+      "content": "RAG &quot;neo&quot; phản hồi của LLM vào ngữ cảnh cụ thể được truy xuất từ nguồn dữ liệu đáng tin cậy, buộc mô hình dựa trên thông tin thực tế thay vì tự sinh từ kiến thức nội tại có thể không chính xác",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_10_2",
+      "questionId": "q_quiz_1793843679161_10",
+      "label": "B",
+      "content": "RAG sử dụng mô hình LLM mạnh hơn so với kiến trúc API-based, do đó chất lượng đầu ra cao hơn và ít hallucination hơn",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_10_3",
+      "questionId": "q_quiz_1793843679161_10",
+      "label": "C",
+      "content": "RAG thay thế hoàn toàn LLM bằng vector search engine trong bước sinh câu trả lời, loại bỏ hoàn toàn khả năng hallucination",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_10_4",
+      "questionId": "q_quiz_1793843679161_10",
+      "label": "D",
+      "content": "RAG sử dụng nhiều bước validation hơn nên có thể phát hiện và loại bỏ 100% mọi trường hợp hallucination",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_11_1",
+      "questionId": "q_quiz_1793843679161_11",
+      "label": "A",
+      "content": "Thiết kế pipeline với cơ chế &quot;early exit&quot; -- chạy pipeline đơn giản trước, nếu kết quả đạt ngưỡng chất lượng (confidence score cao) thì trả về ngay; chỉ chạy các bước bổ sung nếu kết quả bước đơn giản không đủ tốt",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_11_2",
+      "questionId": "q_quiz_1793843679161_11",
+      "label": "B",
+      "content": "Luôn sử dụng pipeline A 12 bước đầy đủ vì chất lượng là yếu tố quan trọng nhất và người dùng sẵn sàng đợi 8 giây cho câu trả lời chính xác",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_11_3",
+      "questionId": "q_quiz_1793843679161_11",
+      "label": "C",
+      "content": "Luôn sử dụng pipeline B 5 bước đơn giản với streaming để tối thiểu hóa thời gian chờ, chấp nhận tỉ lệ lỗi 15%",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_11_4",
+      "questionId": "q_quiz_1793843679161_11",
+      "label": "D",
+      "content": "Chạy song song cả hai pipeline cho mỗi câu hỏi và trả về kết quả của pipeline nào hoàn thành trước",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_12_1",
+      "questionId": "q_quiz_1793843679161_12",
+      "label": "A",
+      "content": "Phân loại ý định bằng mô hình nhẹ (GPT-4o mini), sau đó dùng GPT-4o mini cho câu hỏi FAQ (70%), Claude Sonnet cho câu hỏi trung bình (20%), và Claude Opus cho câu hỏi phức tạp (10%) -- model cascading dựa trên độ phức tạp của từng loại câu hỏi",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_12_2",
+      "questionId": "q_quiz_1793843679161_12",
+      "label": "B",
+      "content": "Dùng Claude Opus cho tất cả 50.000 truy vấn để đảm bảo chất lượng cao nhất cho mọi câu hỏi, không phân biệt độ phức tạp",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_12_3",
+      "questionId": "q_quiz_1793843679161_12",
+      "label": "C",
+      "content": "Dùng GPT-4o mini cho tất cả truy vấn vì đây là mô hình rẻ nhất, chấp nhận chất lượng thấp hơn cho các câu hỏi phức tạp",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_12_4",
+      "questionId": "q_quiz_1793843679161_12",
+      "label": "D",
+      "content": "Self-host toàn bộ LLM trên GPU cluster để tránh chi phí API, mặc dù chi phí GPU cố định cao hơn tổng chi phí API ở mức usage hiện tại",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_13_1",
+      "questionId": "q_quiz_1793843679161_13",
+      "label": "A",
+      "content": "Dùng LangChain cho MVP để phát triển nhanh và tập trung vào business logic; sau này nếu cần tùy chỉnh sâu mà LangChain gây cản trở, có thể dần thay thế từng phần bằng custom implementation theo strangler fig pattern",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_13_2",
+      "questionId": "q_quiz_1793843679161_13",
+      "label": "B",
+      "content": "Luôn tự viết custom implementation từ đầu vì LangChain là framework kém chất lượng, không đáng tin cậy cho bất kỳ ứng dụng nào",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_13_3",
+      "questionId": "q_quiz_1793843679161_13",
+      "label": "C",
+      "content": "Dùng LangChain cho toàn bộ vòng đời sản phẩm vì framework luôn là lựa chọn tốt nhất cho mọi ứng dụng AI ở mọi giai đoạn",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_13_4",
+      "questionId": "q_quiz_1793843679161_13",
+      "label": "D",
+      "content": "Không dùng bất kỳ công nghệ nào, tự xây dựng mọi thứ từ đầu bao gồm cả LLM và vector database để có toàn quyền kiểm soát",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_14_1",
+      "questionId": "q_quiz_1793843679161_14",
+      "label": "A",
+      "content": "Mức độ phổ biến của công nghệ trên Google Trends và số lượng sao GitHub tại thời điểm đánh giá",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_14_2",
+      "questionId": "q_quiz_1793843679161_14",
+      "label": "B",
+      "content": "Tác động đến chất lượng đầu ra (độ chính xác của kết quả tìm kiếm và độ liên quan của ngữ cảnh truy xuất)",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_14_3",
+      "questionId": "q_quiz_1793843679161_14",
+      "label": "C",
+      "content": "Chi phí tổng thể (chi phí triển khai ban đầu, chi phí vận hành hàng tháng, chi phí nhân sự vận hành)",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_14_4",
+      "questionId": "q_quiz_1793843679161_14",
+      "label": "D",
+      "content": "Độ phức tạp triển khai và khả năng bảo trì dài hạn (yêu cầu về kỹ năng, thời gian setup, công sức vận hành)",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_15_1",
+      "questionId": "q_quiz_1793843679161_15",
+      "label": "A",
+      "content": "Naive RAG thực hiện quy trình chunk → embed → search → generate theo luồng tương đối cố định, trong khi Agentic RAG cho phép agent tự quyết định khi nào cần truy xuất, lựa chọn nguồn/công cụ truy xuất và đánh giá kết quả để quyết định có cần truy xuất thêm hay không.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_15_2",
+      "questionId": "q_quiz_1793843679161_15",
+      "label": "B",
+      "content": "Naive RAG thường thực hiện truy xuất một lần trước khi sinh câu trả lời, trong khi Agentic RAG khác biệt chủ yếu ở việc thực hiện truy xuất nhiều lần liên tiếp để thu được nhiều tài liệu hơn trước khi đưa toàn bộ vào LLM.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_15_3",
+      "questionId": "q_quiz_1793843679161_15",
+      "label": "C",
+      "content": "Naive RAG sử dụng truy vấn của người dùng để tìm kiếm trực tiếp trong vector database, trong khi Agentic RAG luôn sử dụng LLM để viết lại truy vấn trước khi truy xuất, nhờ đó loại bỏ hoàn toàn nhu cầu đánh giá kết quả sau truy xuất.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_15_4",
+      "questionId": "q_quiz_1793843679161_15",
+      "label": "D",
+      "content": "Naive RAG dựa chủ yếu vào tìm kiếm tương đồng vector, trong khi Agentic RAG kết hợp nhiều nguồn và công cụ truy xuất; vì vậy điểm khác biệt cốt lõi là Agentic RAG sử dụng hybrid search thay cho vector search.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_16_1",
+      "questionId": "q_quiz_1793843679161_16",
+      "label": "A",
+      "content": "Kiến trúc API-based — sử dụng LLM thông qua API giúp triển khai MVP nhanh, chi phí đầu tư ban đầu thấp, không cần vận hành hạ tầng GPU và có thể đáp ứng tốt tác vụ sinh văn bản thông qua prompt engineering.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_16_2",
+      "questionId": "q_quiz_1793843679161_16",
+      "label": "B",
+      "content": "Kiến trúc Microservices kết hợp LLM API — tách riêng các dịch vụ tạo email, tạo báo cáo và quản lý prompt để dễ mở rộng, triển khai độc lập và tối ưu từng chức năng ngay từ phiên bản MVP.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_16_3",
+      "questionId": "q_quiz_1793843679161_16",
+      "label": "C",
+      "content": "Kiến trúc RAG-based sử dụng nguồn tri thức công khai — bổ sung bước truy xuất các mẫu email, hướng dẫn viết và tài liệu tham khảo trước khi sinh nội dung nhằm tăng tính chính xác và nhất quán của văn bản.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_16_4",
+      "questionId": "q_quiz_1793843679161_16",
+      "label": "D",
+      "content": "Kiến trúc Self-hosted LLM quy mô nhỏ — triển khai một mô hình mã nguồn mở đã lượng tử hóa trên máy chủ GPU thuê theo nhu cầu để giảm phụ thuộc API, tăng khả năng kiểm soát dữ liệu và tối ưu chi phí khi số lượng người dùng tăng.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_17_1",
+      "questionId": "q_quiz_1793843679161_17",
+      "label": "A",
+      "content": "Pipeline tuyến tính thực thi các bước theo một luồng tuần tự xác định từ đầu vào đến đầu ra, trong khi pipeline phân nhánh có thể lựa chọn các luồng xử lý khác nhau dựa trên điều kiện hoặc kết quả của bước trung gian, chẳng hạn kết quả phân loại ý định.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_17_2",
+      "questionId": "q_quiz_1793843679161_17",
+      "label": "B",
+      "content": "Pipeline tuyến tính thực hiện các bước xử lý theo thứ tự cố định, trong khi pipeline phân nhánh chủ yếu cho phép một số bước được thực thi song song nhằm giảm thời gian phản hồi của toàn bộ hệ thống.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_17_3",
+      "questionId": "q_quiz_1793843679161_17",
+      "label": "C",
+      "content": "Pipeline tuyến tính thường chuyển đầu ra của bước trước thành đầu vào của bước tiếp theo, trong khi pipeline phân nhánh khác biệt chủ yếu ở việc sử dụng nhiều prompt hoặc nhiều LLM chuyên biệt cho từng loại yêu cầu của người dùng.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_17_4",
+      "questionId": "q_quiz_1793843679161_17",
+      "label": "D",
+      "content": "Pipeline tuyến tính phù hợp khi quy trình xử lý đã xác định trước, trong khi pipeline phân nhánh phù hợp với yêu cầu phức tạp hơn vì có thể quay lại thực hiện một bước nhiều lần cho đến khi kết quả đáp ứng tiêu chí chất lượng.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_18_1",
+      "questionId": "q_quiz_1793843679161_18",
+      "label": "A",
+      "content": "Lưu trữ vector embedding của tài liệu và hỗ trợ tìm kiếm theo độ tương đồng ngữ nghĩa để truy xuất các đoạn thông tin liên quan đến truy vấn, cung cấp ngữ cảnh cho LLM sinh câu trả lời.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_18_2",
+      "questionId": "q_quiz_1793843679161_18",
+      "label": "B",
+      "content": "Lưu trữ tài liệu sau khi chia thành các chunk và tự động chuyển từng chunk thành vector embedding, nhờ đó đảm nhiệm toàn bộ quá trình lập chỉ mục mà không cần embedding model riêng.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_18_3",
+      "questionId": "q_quiz_1793843679161_18",
+      "label": "C",
+      "content": "Lưu trữ vector embedding của tài liệu và sử dụng chúng để tạo trực tiếp phần ngữ cảnh đầu vào cho LLM, đồng thời tự động đánh giá và loại bỏ các tài liệu không chính xác trước khi sinh câu trả lời.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_18_4",
+      "questionId": "q_quiz_1793843679161_18",
+      "label": "D",
+      "content": "Lưu trữ vector embedding của tài liệu và thực hiện tìm kiếm ngữ nghĩa; điểm khác biệt là vector database tự hiểu ý định của truy vấn và viết lại truy vấn trước khi tìm kiếm để bảo đảm kết quả phù hợp nhất.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_19_1",
+      "questionId": "q_quiz_1793843679161_19",
+      "label": "A",
+      "content": "Cung cấp một giao diện truy cập thống nhất cho nhiều mô hình/nhà cung cấp, chuẩn hóa yêu cầu và phản hồi, đồng thời hỗ trợ định tuyến mô hình, fallback/retry và giám sát tập trung.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_19_2",
+      "questionId": "q_quiz_1793843679161_19",
+      "label": "B",
+      "content": "Tạo một lớp trung gian giữa ứng dụng và LLM nhằm tối ưu hiệu năng bằng prompt caching, response caching và batching; mục tiêu chính là giảm độ trễ và số lần gọi mô hình.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_19_3",
+      "questionId": "q_quiz_1793843679161_19",
+      "label": "C",
+      "content": "Quản lý việc lựa chọn mô hình bằng cách đánh giá chất lượng câu trả lời sau mỗi yêu cầu và tự động fine-tune mô hình có hiệu năng thấp trước khi chuyển tiếp các yêu cầu tiếp theo.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_19_4",
+      "questionId": "q_quiz_1793843679161_19",
+      "label": "D",
+      "content": "Cung cấp một lớp trừu tượng cho nhiều LLM bằng cách chuyển đổi tất cả mô hình sang cùng một định dạng triển khai, nhờ đó ứng dụng có thể sử dụng các mô hình khác nhau mà không cần phụ thuộc vào API riêng của từng nhà cung cấp.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_20_1",
+      "questionId": "q_quiz_1793843679161_20",
+      "label": "A",
+      "content": "Điều phối luồng xử lý từ khi nhận yêu cầu đến khi trả về kết quả, bao gồm quản lý hội thoại, thực thi pipeline, quản lý trạng thái, định tuyến mô hình và phối hợp các bước kiểm soát chất lượng.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_20_2",
+      "questionId": "q_quiz_1793843679161_20",
+      "label": "B",
+      "content": "Điều phối việc tiếp nhận yêu cầu từ người dùng, duy trì lịch sử hội thoại và chuẩn hóa dữ liệu đầu vào trước khi chuyển trực tiếp yêu cầu đến mô hình phù hợp để sinh kết quả.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_20_3",
+      "questionId": "q_quiz_1793843679161_20",
+      "label": "C",
+      "content": "Điều phối quá trình truy xuất bằng cách lựa chọn nguồn dữ liệu, thực hiện semantic search, reranking và xây dựng context phù hợp trước khi chuyển thông tin cho LLM sinh câu trả lời.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_20_4",
+      "questionId": "q_quiz_1793843679161_20",
+      "label": "D",
+      "content": "Điều phối việc sử dụng các mô hình bằng cách lựa chọn model, cân bằng tải giữa các endpoint, theo dõi latency/token usage và thực hiện fallback khi một model không khả dụng.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_21_1",
+      "questionId": "q_quiz_1793843679161_21",
+      "label": "A",
+      "content": "Sử dụng output parsing có khả năng chịu lỗi, retry với prompt được điều chỉnh khi cần, structured output để ràng buộc định dạng và fallback path khi mô hình không tạo được đầu ra hợp lệ.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_21_2",
+      "questionId": "q_quiz_1793843679161_21",
+      "label": "B",
+      "content": "Giảm temperature và cố định các tham số sinh để tăng tính ổn định của đầu ra, kết hợp caching các phản hồi đã được xác thực nhằm bảo đảm những yêu cầu tương tự nhận được kết quả nhất quán.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_21_3",
+      "questionId": "q_quiz_1793843679161_21",
+      "label": "C",
+      "content": "Sử dụng validation sau khi LLM sinh kết quả và áp dụng guardrails để phát hiện đầu ra không hợp lệ; khi phát hiện lỗi, hệ thống ghi log để nhà phát triển điều chỉnh prompt hoặc mô hình trong các phiên bản tiếp theo.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_21_4",
+      "questionId": "q_quiz_1793843679161_21",
+      "label": "D",
+      "content": "Sử dụng nhiều LLM cho cùng một yêu cầu và lựa chọn kết quả có độ tin cậy cao nhất thông qua cơ chế voting hoặc scoring, từ đó giảm ảnh hưởng của sự biến thiên trong đầu ra của từng mô hình.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_22_1",
+      "questionId": "q_quiz_1793843679161_22",
+      "label": "A",
+      "content": "Sử dụng LLM API với các tùy chọn bảo vệ dữ liệu phù hợp cho khách hàng doanh nghiệp, chẳng hạn zero data retention nếu nhà cung cấp hỗ trợ, nhằm tận dụng managed service và giảm yêu cầu vận hành trong khi vẫn đáp ứng các yêu cầu bảo mật cần thiết.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_22_2",
+      "questionId": "q_quiz_1793843679161_22",
+      "label": "B",
+      "content": "Self-host một mô hình mã nguồn mở đã lượng tử hóa trên GPU cloud thuê theo nhu cầu; mặc dù cần thêm công sức triển khai và vận hành, phương án này phù hợp hơn vì dữ liệu tài chính không phải truyền đến hạ tầng của nhà cung cấp LLM.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_22_3",
+      "questionId": "q_quiz_1793843679161_22",
+      "label": "C",
+      "content": "Áp dụng kiến trúc hybrid: xử lý và ẩn danh dữ liệu tài chính tại hệ thống nội bộ, sau đó triển khai một LLM nhỏ tại chỗ để phân tích dữ liệu nhạy cảm và chỉ sử dụng LLM API cho các tác vụ tổng hợp kết quả không chứa dữ liệu gốc.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_22_4",
+      "questionId": "q_quiz_1793843679161_22",
+      "label": "D",
+      "content": "Sử dụng LLM API ở giai đoạn MVP nhưng xây dựng ngay một lớp abstraction độc lập với nhà cung cấp, đồng thời chuẩn bị hạ tầng để chuyển sang self-host khi sản phẩm đi vào vận hành chính thức nhằm tăng khả năng kiểm soát dài hạn.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_23_1",
+      "questionId": "q_quiz_1793843679161_23",
+      "label": "A",
+      "content": "Áp dụng sliding window để giữ lại các lượt hội thoại gần nhất hoặc rolling summary để tóm tắt định kỳ phần hội thoại cũ trong tầng Điều phối, qua đó duy trì ngữ cảnh cần thiết mà không vượt quá giới hạn context window.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_23_2",
+      "questionId": "q_quiz_1793843679161_23",
+      "label": "B",
+      "content": "Lưu toàn bộ lịch sử hội thoại trong session store và ở mỗi lượt chỉ lựa chọn các tin nhắn có độ tương đồng ngữ nghĩa cao nhất với câu hỏi hiện tại để đưa vào context, thay thế hoàn toàn việc duy trì thứ tự hội thoại.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_23_3",
+      "questionId": "q_quiz_1793843679161_23",
+      "label": "C",
+      "content": "Tóm tắt toàn bộ lịch sử hội thoại thành một bản summary duy nhất sau một số lượt trao đổi, sau đó loại bỏ hoàn toàn các tin nhắn gốc và chỉ cập nhật bản summary này cho mọi câu hỏi tiếp theo.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_23_4",
+      "questionId": "q_quiz_1793843679161_23",
+      "label": "D",
+      "content": "Phân chia lịch sử hội thoại thành nhiều đoạn theo số lượng token và gửi lần lượt từng đoạn đến LLM ở các lời gọi độc lập, sau đó tổng hợp các phản hồi để tạo context cho câu hỏi hiện tại.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_24_1",
+      "questionId": "q_quiz_1793843679161_24",
+      "label": "A",
+      "content": "Kiểm soát và giám sát toàn diện — triển khai guardrails đa tầng như kiểm tra đầu vào, xác thực đầu ra với nguồn đáng tin cậy, human-in-the-loop đối với trường hợp rủi ro cao và audit trail để phát hiện, ngăn chặn hoặc truy vết thông tin không chính xác.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_24_2",
+      "questionId": "q_quiz_1793843679161_24",
+      "label": "B",
+      "content": "Module hóa và khả năng thay thế — tách LLM thành một thành phần độc lập để có thể chuyển sang mô hình có độ chính xác cao hơn hoặc mô hình chuyên biệt cho lĩnh vực pháp lý khi hệ thống phát hiện tỷ lệ hallucination vượt ngưỡng.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_24_3",
+      "questionId": "q_quiz_1793843679161_24",
+      "label": "C",
+      "content": "Thiết kế cho tính không xác định — sử dụng structured output, retry và fallback sang mô hình khác khi kết quả không đáp ứng định dạng hoặc confidence score thấp, qua đó giảm khả năng kết quả không phù hợp được trả về cho người dùng.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_24_4",
+      "questionId": "q_quiz_1793843679161_24",
+      "label": "D",
+      "content": "Tối ưu hóa context và truy xuất — bổ sung các điều khoản pháp luật liên quan vào context của LLM và giới hạn mô hình chỉ sinh câu trả lời dựa trên context được cung cấp nhằm giảm khả năng tạo thông tin ngoài nguồn.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_25_1",
+      "questionId": "q_quiz_1793843679161_25",
+      "label": "A",
+      "content": "Sử dụng mô hình bất đồng bộ (asynchronous) — API tiếp nhận yêu cầu, tạo tác vụ xử lý và trả về task ID ngay; client có thể sử dụng endpoint trạng thái để theo dõi và lấy kết quả sau khi tác vụ hoàn thành.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_25_2",
+      "questionId": "q_quiz_1793843679161_25",
+      "label": "B",
+      "content": "Sử dụng streaming API — duy trì kết nối với client và truyền từng phần kết quả ngay khi LLM tạo ra, nhờ đó client không phải chờ toàn bộ quá trình phân tích hoàn thành mới nhận được phản hồi.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_25_3",
+      "questionId": "q_quiz_1793843679161_25",
+      "label": "C",
+      "content": "Sử dụng synchronous API kết hợp timeout mở rộng — tăng thời gian chờ của HTTP request và sử dụng connection pooling để duy trì kết nối trong suốt quá trình phân tích, giúp giữ mô hình request–response đơn giản.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_25_4",
+      "questionId": "q_quiz_1793843679161_25",
+      "label": "D",
+      "content": "Sử dụng webhook callback — server tiếp nhận yêu cầu, xử lý ở background và tự động gửi kết quả đến callback URL do client cung cấp khi hoàn thành, giúp tránh duy trì kết nối HTTP dài.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_26_1",
+      "questionId": "q_quiz_1793843679161_26",
+      "label": "A",
+      "content": "Sử dụng semantic chunking — xác định ranh giới chunk dựa trên các đơn vị ngữ nghĩa hoặc cấu trúc tự nhiên như đoạn, mục, điều và khoản, giúp mỗi chunk duy trì một đơn vị nội dung tương đối hoàn chỉnh.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_26_2",
+      "questionId": "q_quiz_1793843679161_26",
+      "label": "B",
+      "content": "Sử dụng adaptive-size chunking — tự động điều chỉnh kích thước chunk theo độ dài của từng phần tài liệu nhưng vẫn ưu tiên duy trì kích thước gần ngưỡng token tối ưu của embedding model để cân bằng giữa lượng ngữ cảnh và độ chính xác truy xuất.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_26_3",
+      "questionId": "q_quiz_1793843679161_26",
+      "label": "C",
+      "content": "Sử dụng fixed-size chunking với dynamic overlap — giữ kích thước chunk ổn định nhưng tăng mức overlap tại những khu vực có mật độ thông tin cao nhằm bảo toàn ngữ cảnh giữa các chunk liền kề.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_26_4",
+      "questionId": "q_quiz_1793843679161_26",
+      "label": "D",
+      "content": "Sử dụng hierarchical chunking — tạo các chunk ở nhiều mức kích thước khác nhau, chẳng hạn tài liệu → chương → mục → đoạn, sau đó truy xuất ở cấp phù hợp để vừa duy trì ngữ cảnh tổng thể vừa hỗ trợ tìm kiếm chi tiết.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_27_1",
+      "questionId": "q_quiz_1793843679161_27",
+      "label": "A",
+      "content": "Sử dụng kiến trúc RAG-based kết hợp self-hosting — LLM được triển khai nội bộ qua vLLM/TGI, vector database như Milvus/Qdrant cũng được self-host, pipeline gồm retrieval → reranking → generation, đồng thời lưu metadata nguồn để sinh trích dẫn và audit log đầy đủ.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_27_2",
+      "questionId": "q_quiz_1793843679161_27",
+      "label": "B",
+      "content": "Sử dụng self-hosted LLM kết hợp full-document prompting — toàn bộ mô hình chạy trong hạ tầng ngân hàng và các tài liệu liên quan được đưa trực tiếp vào context window của LLM để sinh câu trả lời, qua đó bảo đảm dữ liệu không ra ngoài hệ thống.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_27_3",
+      "questionId": "q_quiz_1793843679161_27",
+      "label": "C",
+      "content": "Sử dụng RAG nội bộ với vector database self-hosted, nhưng phần generation được thực hiện bởi một LLM API bên ngoài thông qua kênh mã hóa và cơ chế ẩn danh dữ liệu để giảm chi phí vận hành mô hình.",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_27_4",
+      "questionId": "q_quiz_1793843679161_27",
+      "label": "D",
+      "content": "Sử dụng kiến trúc knowledge graph nội bộ — chuyển các chính sách, quy trình và sản phẩm thành đồ thị tri thức, sau đó truy vấn đồ thị để tạo câu trả lời và trích dẫn node/relationship tương ứng mà không cần triển khai pipeline RAG đầy đủ.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_28_1",
+      "questionId": "q_quiz_1793843679161_28",
+      "label": "A",
+      "content": "Vì LLM là hệ thống xác suất với đầu ra không hoàn toàn tiền định, một phần logic nghiệp vụ nằm trong trọng số mô hình thay vì mã nguồn, và chi phí/độ trễ inference cao hơn nhiều bậc so với truy vấn cơ sở dữ liệu",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_28_2",
+      "questionId": "q_quiz_1793843679161_28",
+      "label": "B",
+      "content": "Vì ứng dụng AI tạo sinh luôn yêu cầu GPU cluster và phải được triển khai trên Kubernetes thay vì các nền tảng truyền thống",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_28_3",
+      "questionId": "q_quiz_1793843679161_28",
+      "label": "C",
+      "content": "Vì ứng dụng AI tạo sinh không thể sử dụng cơ sở dữ liệu quan hệ như PostgreSQL hay MySQL để lưu trữ dữ liệu",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_28_4",
+      "questionId": "q_quiz_1793843679161_28",
+      "label": "D",
+      "content": "Vì tất cả ứng dụng AI tạo sinh đều phải sử dụng kiến trúc microservices, không thể dùng kiến trúc monolithic",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_29_1",
+      "questionId": "q_quiz_1793843679161_29",
+      "label": "A",
+      "content": "pgvector -- vì là PostgreSQL extension, tích hợp trực tiếp với cơ sở dữ liệu hiện có, không yêu cầu infrastructure mới, vẫn hỗ trợ tìm kiếm vector hiệu quả cho quy mô 100.000 tài liệu",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_29_2",
+      "questionId": "q_quiz_1793843679161_29",
+      "label": "B",
+      "content": "Pinecone -- vì là managed service không cần vận hành, luôn là lựa chọn tối ưu cho mọi ứng dụng RAG bất kể quy mô và hạ tầng hiện có",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_29_3",
+      "questionId": "q_quiz_1793843679161_29",
+      "label": "C",
+      "content": "Milvus -- vì có hiệu năng cực cao và khả năng scale cho hàng tỉ vector, phù hợp nhất cho mọi quy mô từ nhỏ đến lớn",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_29_4",
+      "questionId": "q_quiz_1793843679161_29",
+      "label": "D",
+      "content": "Chroma -- vì nhẹ và dễ dùng nhất, là lựa chọn tối ưu cho môi trường production với hàng trăm nghìn tài liệu",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_30_1",
+      "questionId": "q_quiz_1793843679161_30",
+      "label": "A",
+      "content": "Weaviate -- vì hỗ trợ hybrid search (vector + keyword) tích hợp sẵn với GraphQL API, cho phép kết hợp cả hai chiến lược tìm kiếm trong cùng một truy vấn",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_30_2",
+      "questionId": "q_quiz_1793843679161_30",
+      "label": "B",
+      "content": "Pinecone -- vì là managed service phổ biến nhất, luôn hỗ trợ mọi tính năng tìm kiếm bao gồm cả hybrid search",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_30_3",
+      "questionId": "q_quiz_1793843679161_30",
+      "label": "C",
+      "content": "Chroma -- vì là lựa chọn nhẹ nhất và có sẵn plugin để tích hợp keyword search một cách dễ dàng",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793843679161_30_4",
+      "questionId": "q_quiz_1793843679161_30",
+      "label": "D",
+      "content": "pgvector -- vì PostgreSQL có sẵn full-text search và tự động kết hợp tối ưu với vector search mà không cần cấu hình",
+      "isCorrect": false,
+      "orderIndex": 4
     }
   ],
   "drag_drop_items": [
@@ -1835,10 +4805,986 @@
       "itemText": "Là sự phản ánh niềm tin mù quáng của một số người vào các lực lượng siêu nhiên",
       "targetCategoryOrMatch": "Mê tín dị đoan",
       "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_29_1",
+      "questionId": "q_quiz_1793843634614_29",
+      "itemText": "Lãnh thổ chung",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc (quốc gia)",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_29_2",
+      "questionId": "q_quiz_1793843634614_29",
+      "itemText": "Ngôn ngữ chung",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc (quốc gia)",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_29_3",
+      "questionId": "q_quiz_1793843634614_29",
+      "itemText": "Tâm lý dân tộc",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc (quốc gia)",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_29_4",
+      "questionId": "q_quiz_1793843634614_29",
+      "itemText": "Ngôn ngữ tộc người",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc (tộc người)",
+      "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_29_5",
+      "questionId": "q_quiz_1793843634614_29",
+      "itemText": "Văn hóa đặc thù",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc (tộc người)",
+      "orderIndex": 5
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_29_6",
+      "questionId": "q_quiz_1793843634614_29",
+      "itemText": "Ý thức tự giác tộc người",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc (tộc người)",
+      "orderIndex": 6
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_30_1",
+      "questionId": "q_quiz_1793843634614_30",
+      "itemText": "Cơ sở thờ tự",
+      "targetCategoryOrMatch": "Yếu tố liên quan đến tôn giáo",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_30_2",
+      "questionId": "q_quiz_1793843634614_30",
+      "itemText": "Hệ thống tín đồ",
+      "targetCategoryOrMatch": "Yếu tố liên quan đến tôn giáo",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_30_3",
+      "questionId": "q_quiz_1793843634614_30",
+      "itemText": "Niềm tin",
+      "targetCategoryOrMatch": "Yếu tố liên quan đến tôn giáo",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_30_4",
+      "questionId": "q_quiz_1793843634614_30",
+      "itemText": "Tâm lý",
+      "targetCategoryOrMatch": "Nguồn gốc của tôn giáo",
+      "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_30_5",
+      "questionId": "q_quiz_1793843634614_30",
+      "itemText": "Kinh tế",
+      "targetCategoryOrMatch": "Nguồn gốc của tôn giáo",
+      "orderIndex": 5
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_30_6",
+      "questionId": "q_quiz_1793843634614_30",
+      "itemText": "Nhận thức",
+      "targetCategoryOrMatch": "Nguồn gốc của tôn giáo",
+      "orderIndex": 6
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_31_1",
+      "questionId": "q_quiz_1793843634614_31",
+      "itemText": "Khái niệm dân tộc theo nghĩa hẹp được gọi là gì?",
+      "targetCategoryOrMatch": "Dân tộc tộc người",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_31_2",
+      "questionId": "q_quiz_1793843634614_31",
+      "itemText": "Đặc trưng quan trọng nhất của dân tộc là gì?",
+      "targetCategoryOrMatch": "Phương thức sinh hoạt kinh tế chung",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_31_3",
+      "questionId": "q_quiz_1793843634614_31",
+      "itemText": "Nội dung cơ bản của cương lĩnh dân tộc Mác-Lênin là gì?",
+      "targetCategoryOrMatch": "Bình đẳng dân tộc",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_31_4",
+      "questionId": "q_quiz_1793843634614_31",
+      "itemText": "Yếu tố thiêng liêng đối với dân tộc (quốc gia) và từng thành viên dân tộc là gì?",
+      "targetCategoryOrMatch": "Lãnh thổ",
+      "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_35_1",
+      "questionId": "q_quiz_1793843634614_35",
+      "itemText": "Tâm lý dân tộc riêng",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_35_2",
+      "questionId": "q_quiz_1793843634614_35",
+      "itemText": "Lãnh thổ chung",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_35_3",
+      "questionId": "q_quiz_1793843634614_35",
+      "itemText": "Ngôn ngữ riêng",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_35_4",
+      "questionId": "q_quiz_1793843634614_35",
+      "itemText": "Bản sắc văn hóa dân tộc",
+      "targetCategoryOrMatch": "Đặc trưng của dân tộc",
+      "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_35_5",
+      "questionId": "q_quiz_1793843634614_35",
+      "itemText": "Các dân tộc hoàn toàn bình đẳng",
+      "targetCategoryOrMatch": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+      "orderIndex": 5
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_35_6",
+      "questionId": "q_quiz_1793843634614_35",
+      "itemText": "Các dân tộc được quyền tự quyết",
+      "targetCategoryOrMatch": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+      "orderIndex": 6
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_35_7",
+      "questionId": "q_quiz_1793843634614_35",
+      "itemText": "Liên hiệp công nhân tất cả các dân tộc",
+      "targetCategoryOrMatch": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+      "orderIndex": 7
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_36_1",
+      "questionId": "q_quiz_1793843634614_36",
+      "itemText": "Thực hiện quyền tự quyết dân tộc phải đứng vững trên lập trường của giai cấp nào?",
+      "targetCategoryOrMatch": "Giai cấp công nhân",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_36_2",
+      "questionId": "q_quiz_1793843634614_36",
+      "itemText": "Yếu tố thúc đẩy bình đẳng dân tộc là gì?",
+      "targetCategoryOrMatch": "Cơ sở pháp lý",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_36_3",
+      "questionId": "q_quiz_1793843634614_36",
+      "itemText": "Giải pháp quan trọng để liên kết các nội dung của Cương lĩnh dân tộc thành một chỉnh thể",
+      "targetCategoryOrMatch": "Liên hiệp công nhân các dân tộc lại",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_36_4",
+      "questionId": "q_quiz_1793843634614_36",
+      "itemText": "Đây là quyền thiêng liêng của các dân tộc, không phân biệt dân tộc lớn hay nhỏ",
+      "targetCategoryOrMatch": "Quyền bình đẳng dân tộc",
+      "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_38_1",
+      "questionId": "q_quiz_1793843634614_38",
+      "itemText": "Là sự phản ánh một cách hoang đường, hư ảo hiện thực khách quan",
+      "targetCategoryOrMatch": "Tôn giáo",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_38_2",
+      "questionId": "q_quiz_1793843634614_38",
+      "itemText": "Mê tín dị đoan dẫn con người đến điều gì?",
+      "targetCategoryOrMatch": "Mê muội",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_38_3",
+      "questionId": "q_quiz_1793843634614_38",
+      "itemText": "Là niềm tin và sự ngưỡng mộ của con người vào một lực lượng siêu nhiên, thần bí",
+      "targetCategoryOrMatch": "Tín ngưỡng",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793843634614_38_4",
+      "questionId": "q_quiz_1793843634614_38",
+      "itemText": "Là sự phản ánh niềm tin mù quáng của một số người vào các lực lượng siêu nhiên",
+      "targetCategoryOrMatch": "Mê tín dị đoan",
+      "orderIndex": 4
     }
   ],
-  "exam_attempts": [],
-  "attempt_answers": [],
+  "exam_attempts": [
+    {
+      "id": "att_1793843637518_ressqe",
+      "quizId": "quiz_1793843634614",
+      "userId": "user_1",
+      "studentId": "dtc245200060",
+      "candidateName": "Hoàng Duy Mạnh",
+      "score": 1.5,
+      "maxScore": 10,
+      "correctCount": 6,
+      "totalCount": 40,
+      "percentage": 15,
+      "startedAt": "2026-11-05T01:53:57.518Z",
+      "submittedAt": "2026-11-05T02:00:02.454Z",
+      "durationSeconds": 223,
+      "remainingSeconds": 690,
+      "isSubmitted": true,
+      "status": "completed",
+      "violationsCount": 2,
+      "violationLogs": [
+        {
+          "time": "2026-11-05T01:54:18.963Z",
+          "reason": "Thí sinh thoát chế độ toàn màn hình"
+        },
+        {
+          "time": "2026-11-05T01:59:53.223Z",
+          "reason": "Thí sinh rời tiêu điểm khỏi cửa sổ bài thi"
+        }
+      ],
+      "savedAnswers": {
+        "q_quiz_1793843634614_24": "opt_q_quiz_1793843634614_24_2",
+        "q_quiz_1793843634614_12": "opt_q_quiz_1793843634614_12_1",
+        "q_quiz_1793843634614_34": {
+          "stmt_34_1": "dung",
+          "stmt_34_3": "sai",
+          "stmt_34_2": "sai",
+          "stmt_34_4": "sai"
+        },
+        "q_quiz_1793843634614_21": "opt_q_quiz_1793843634614_21_3",
+        "q_quiz_1793843634614_5": "opt_q_quiz_1793843634614_5_3",
+        "q_quiz_1793843634614_26": "opt_q_quiz_1793843634614_26_4",
+        "q_quiz_1793843634614_4": "opt_q_quiz_1793843634614_4_4",
+        "q_quiz_1793843634614_22": "opt_q_quiz_1793843634614_22_4",
+        "q_quiz_1793843634614_1": "opt_q_quiz_1793843634614_1_2",
+        "q_quiz_1793843634614_32": {
+          "stmt_32_2": "dung",
+          "stmt_32_1": "sai",
+          "stmt_32_3": "sai",
+          "stmt_32_4": "dung"
+        },
+        "q_quiz_1793843634614_35": {
+          "dd_q_quiz_1793843634614_35_7": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+          "dd_q_quiz_1793843634614_35_1": "Đặc trưng của dân tộc",
+          "dd_q_quiz_1793843634614_35_4": "Đặc trưng của dân tộc",
+          "dd_q_quiz_1793843634614_35_6": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+          "\r\nBản sắc văn hóa dân tộc\r\n\r\nNgôn ngữ riêng\r\n\r\nNội dung cương lĩnh dân tộc của Mác-Lênin\r\nLãnh thổ chung": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+          "dd_q_quiz_1793843634614_35_2": "Đặc trưng của dân tộc",
+          "dd_q_quiz_1793843634614_35_5": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+          "dd_q_quiz_1793843634614_35_3": "Đặc trưng của dân tộc"
+        },
+        "q_quiz_1793843634614_18": [
+          "opt_q_quiz_1793843634614_18_1",
+          "opt_q_quiz_1793843634614_18_3"
+        ],
+        "q_quiz_1793843634614_9": "opt_q_quiz_1793843634614_9_3",
+        "q_quiz_1793843634614_39": {
+          "stmt_39_1": "sai",
+          "stmt_39_2": "dung",
+          "stmt_39_4": "dung",
+          "stmt_39_3": "sai"
+        },
+        "q_quiz_1793843634614_2": "opt_q_quiz_1793843634614_2_2",
+        "q_quiz_1793843634614_15": "opt_q_quiz_1793843634614_15_2",
+        "q_quiz_1793843634614_40": {
+          "stmt_40_2": "dung",
+          "stmt_40_1": "sai",
+          "stmt_40_3": "sai",
+          "stmt_40_4": "dung"
+        },
+        "q_quiz_1793843634614_11": [
+          "opt_q_quiz_1793843634614_11_3",
+          "opt_q_quiz_1793843634614_11_4"
+        ],
+        "q_quiz_1793843634614_14": "opt_q_quiz_1793843634614_14_2",
+        "q_quiz_1793843634614_13": "opt_q_quiz_1793843634614_13_3",
+        "q_quiz_1793843634614_17": "opt_q_quiz_1793843634614_17_3",
+        "q_quiz_1793843634614_27": "opt_q_quiz_1793843634614_27_3",
+        "q_quiz_1793843634614_16": "opt_q_quiz_1793843634614_16_2",
+        "q_quiz_1793843634614_7": "opt_q_quiz_1793843634614_7_3",
+        "q_quiz_1793843634614_20": "opt_q_quiz_1793843634614_20_3",
+        "q_quiz_1793843634614_36": {
+          "dd_q_quiz_1793843634614_36_4": "Quyền bình đẳng dân tộc",
+          "dd_q_quiz_1793843634614_36_2": "Cơ sở pháp lý",
+          "dd_q_quiz_1793843634614_36_3": "Giai cấp công nhân",
+          "dd_q_quiz_1793843634614_36_1": "Liên hiệp công nhân các dân tộc lại"
+        },
+        "q_quiz_1793843634614_23": "opt_q_quiz_1793843634614_23_3",
+        "q_quiz_1793843634614_25": "opt_q_quiz_1793843634614_25_4",
+        "q_quiz_1793843634614_33": {
+          "stmt_33_2": "dung",
+          "stmt_33_1": "dung",
+          "stmt_33_3": "sai",
+          "stmt_33_4": "dung"
+        },
+        "q_quiz_1793843634614_8": "opt_q_quiz_1793843634614_8_3",
+        "q_quiz_1793843634614_37": [
+          "opt_q_quiz_1793843634614_37_4",
+          "opt_q_quiz_1793843634614_37_3"
+        ],
+        "q_quiz_1793843634614_29": {
+          "dd_q_quiz_1793843634614_29_3": "Đặc trưng của dân tộc (quốc gia)",
+          "dd_q_quiz_1793843634614_29_5": "Đặc trưng của dân tộc (quốc gia)",
+          "dd_q_quiz_1793843634614_29_6": "Đặc trưng của dân tộc (quốc gia)",
+          "dd_q_quiz_1793843634614_29_1": "Đặc trưng của dân tộc (tộc người)",
+          "dd_q_quiz_1793843634614_29_2": "Đặc trưng của dân tộc (tộc người)",
+          "dd_q_quiz_1793843634614_29_4": "Đặc trưng của dân tộc (tộc người)"
+        },
+        "q_quiz_1793843634614_38": {
+          "dd_q_quiz_1793843634614_38_2": "Tôn giáo",
+          "dd_q_quiz_1793843634614_38_3": "Mê muội",
+          "dd_q_quiz_1793843634614_38_4": "Tín ngưỡng",
+          "dd_q_quiz_1793843634614_38_1": "Mê tín dị đoan"
+        },
+        "q_quiz_1793843634614_6": "opt_q_quiz_1793843634614_6_1",
+        "q_quiz_1793843634614_28": "opt_q_quiz_1793843634614_28_3",
+        "q_quiz_1793843634614_31": {
+          "dd_q_quiz_1793843634614_31_3": "Dân tộc tộc người",
+          "dd_q_quiz_1793843634614_31_4": "Bình đẳng dân tộc",
+          "dd_q_quiz_1793843634614_31_2": "Lãnh thổ",
+          "dd_q_quiz_1793843634614_31_1": "Phương thức sinh hoạt kinh tế chung"
+        },
+        "q_quiz_1793843634614_30": {
+          "dd_q_quiz_1793843634614_30_2": "Nguồn gốc của tôn giáo",
+          "dd_q_quiz_1793843634614_30_3": "Nguồn gốc của tôn giáo",
+          "dd_q_quiz_1793843634614_30_6": "Nguồn gốc của tôn giáo",
+          "dd_q_quiz_1793843634614_30_5": "Yếu tố liên quan đến tôn giáo",
+          "dd_q_quiz_1793843634614_30_1": "Yếu tố liên quan đến tôn giáo",
+          "dd_q_quiz_1793843634614_30_4": "Yếu tố liên quan đến tôn giáo"
+        },
+        "q_quiz_1793843634614_3": "opt_q_quiz_1793843634614_3_2",
+        "q_quiz_1793843634614_19": "opt_q_quiz_1793843634614_19_1",
+        "q_quiz_1793843634614_10": "opt_q_quiz_1793843634614_10_2"
+      },
+      "markedForReview": [],
+      "lastSyncAt": "2026-11-05T01:59:48.279Z"
+    },
+    {
+      "id": "att_1793843682207_8vjfwa",
+      "quizId": "quiz_1793843679161",
+      "userId": "user_1",
+      "studentId": "dtc245200060",
+      "candidateName": "Hoàng Duy Mạnh",
+      "score": 5,
+      "maxScore": 10,
+      "correctCount": 15,
+      "totalCount": 30,
+      "percentage": 50,
+      "startedAt": "2026-11-05T01:54:42.207Z",
+      "submittedAt": "2026-11-05T01:56:08.067Z",
+      "durationSeconds": 85,
+      "remainingSeconds": 825,
+      "isSubmitted": true,
+      "status": "completed",
+      "violationsCount": 0,
+      "violationLogs": [],
+      "savedAnswers": {
+        "q_quiz_1793843679161_21": "opt_q_quiz_1793843679161_21_3",
+        "q_quiz_1793843679161_2": "opt_q_quiz_1793843679161_2_1",
+        "q_quiz_1793843679161_10": "opt_q_quiz_1793843679161_10_3",
+        "q_quiz_1793843679161_1": "opt_q_quiz_1793843679161_1_3",
+        "q_quiz_1793843679161_8": "opt_q_quiz_1793843679161_8_1",
+        "q_quiz_1793843679161_23": "opt_q_quiz_1793843679161_23_1",
+        "q_quiz_1793843679161_24": "opt_q_quiz_1793843679161_24_2",
+        "q_quiz_1793843679161_13": "opt_q_quiz_1793843679161_13_1",
+        "q_quiz_1793843679161_16": "opt_q_quiz_1793843679161_16_4",
+        "q_quiz_1793843679161_14": "opt_q_quiz_1793843679161_14_2",
+        "q_quiz_1793843679161_27": "opt_q_quiz_1793843679161_27_4",
+        "q_quiz_1793843679161_30": "opt_q_quiz_1793843679161_30_1",
+        "q_quiz_1793843679161_28": "opt_q_quiz_1793843679161_28_1",
+        "q_quiz_1793843679161_17": "opt_q_quiz_1793843679161_17_3",
+        "q_quiz_1793843679161_3": "opt_q_quiz_1793843679161_3_4",
+        "q_quiz_1793843679161_6": "opt_q_quiz_1793843679161_6_1",
+        "q_quiz_1793843679161_12": "opt_q_quiz_1793843679161_12_1",
+        "q_quiz_1793843679161_25": "opt_q_quiz_1793843679161_25_3",
+        "q_quiz_1793843679161_26": "opt_q_quiz_1793843679161_26_4",
+        "q_quiz_1793843679161_15": "opt_q_quiz_1793843679161_15_1",
+        "q_quiz_1793843679161_29": "opt_q_quiz_1793843679161_29_1",
+        "q_quiz_1793843679161_9": "opt_q_quiz_1793843679161_9_1",
+        "q_quiz_1793843679161_18": "opt_q_quiz_1793843679161_18_2",
+        "q_quiz_1793843679161_4": "opt_q_quiz_1793843679161_4_2",
+        "q_quiz_1793843679161_11": "opt_q_quiz_1793843679161_11_1",
+        "q_quiz_1793843679161_7": "opt_q_quiz_1793843679161_7_1",
+        "q_quiz_1793843679161_5": "opt_q_quiz_1793843679161_5_1"
+      },
+      "markedForReview": [],
+      "lastSyncAt": "2026-11-05T01:55:57.223Z"
+    }
+  ],
+  "attempt_answers": [
+    {
+      "id": "ans_1793843767905_vem3d2",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_1",
+      "userAnswer": "opt_q_quiz_1793843679161_1_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843767911_zjeydp",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_2",
+      "userAnswer": "opt_q_quiz_1793843679161_2_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767915_1709ar",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_3",
+      "userAnswer": "opt_q_quiz_1793843679161_3_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843767920_95p4o5",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_4",
+      "userAnswer": "opt_q_quiz_1793843679161_4_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843767927_7qg0pj",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_5",
+      "userAnswer": "opt_q_quiz_1793843679161_5_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767932_dlibqw",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_6",
+      "userAnswer": "opt_q_quiz_1793843679161_6_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767938_7dee7x",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_7",
+      "userAnswer": "opt_q_quiz_1793843679161_7_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767943_wxi9n0",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_8",
+      "userAnswer": "opt_q_quiz_1793843679161_8_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767949_gpm1bp",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_9",
+      "userAnswer": "opt_q_quiz_1793843679161_9_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767954_1kbcfp",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_10",
+      "userAnswer": "opt_q_quiz_1793843679161_10_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843767960_p3j5vp",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_11",
+      "userAnswer": "opt_q_quiz_1793843679161_11_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767966_rukre7",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_12",
+      "userAnswer": "opt_q_quiz_1793843679161_12_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767973_7wp27h",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_13",
+      "userAnswer": "opt_q_quiz_1793843679161_13_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767978_gcwzqs",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_14",
+      "userAnswer": "opt_q_quiz_1793843679161_14_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843767984_oao5i8",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_15",
+      "userAnswer": "opt_q_quiz_1793843679161_15_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843767991_6eb28l",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_16",
+      "userAnswer": "opt_q_quiz_1793843679161_16_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843767996_n58p79",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_17",
+      "userAnswer": "opt_q_quiz_1793843679161_17_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843768001_r2g38f",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_18",
+      "userAnswer": "opt_q_quiz_1793843679161_18_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843768007_ol3fq6",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_19",
+      "userAnswer": "opt_q_quiz_1793843679161_19_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843768012_wyv26a",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_20",
+      "userAnswer": "opt_q_quiz_1793843679161_20_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843768017_8r2ams",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_21",
+      "userAnswer": "opt_q_quiz_1793843679161_21_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843768022_zkyb8k",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_22",
+      "userAnswer": "opt_q_quiz_1793843679161_22_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843768027_xf6md4",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_23",
+      "userAnswer": "opt_q_quiz_1793843679161_23_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843768032_rz3qoh",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_24",
+      "userAnswer": "opt_q_quiz_1793843679161_24_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843768037_41cu45",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_25",
+      "userAnswer": "opt_q_quiz_1793843679161_25_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843768041_bk8cq3",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_26",
+      "userAnswer": "opt_q_quiz_1793843679161_26_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843768046_hnswes",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_27",
+      "userAnswer": "opt_q_quiz_1793843679161_27_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793843768051_xu2qvc",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_28",
+      "userAnswer": "opt_q_quiz_1793843679161_28_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843768056_4wadtm",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_29",
+      "userAnswer": "opt_q_quiz_1793843679161_29_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793843768061_irhoup",
+      "attemptId": "att_1793843682207_8vjfwa",
+      "questionId": "q_quiz_1793843679161_30",
+      "userAnswer": "opt_q_quiz_1793843679161_30_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793844002220_5vvany",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_1",
+      "userAnswer": "opt_q_quiz_1793843634614_1_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002225_hvtd8r",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_2",
+      "userAnswer": "opt_q_quiz_1793843634614_2_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002231_qbfnvm",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_3",
+      "userAnswer": "opt_q_quiz_1793843634614_3_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002237_ki8jrp",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_4",
+      "userAnswer": "opt_q_quiz_1793843634614_4_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002243_40ghlm",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_5",
+      "userAnswer": "opt_q_quiz_1793843634614_5_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002248_awkqzn",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_6",
+      "userAnswer": "opt_q_quiz_1793843634614_6_1",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002254_yrzq7a",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_7",
+      "userAnswer": "opt_q_quiz_1793843634614_7_3",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793844002259_rw1x5f",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_8",
+      "userAnswer": "opt_q_quiz_1793843634614_8_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002266_u38z70",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_9",
+      "userAnswer": "opt_q_quiz_1793843634614_9_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002271_l8q4bo",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_10",
+      "userAnswer": "opt_q_quiz_1793843634614_10_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002278_sc0pi0",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_11",
+      "userAnswer": [
+        "opt_q_quiz_1793843634614_11_3",
+        "opt_q_quiz_1793843634614_11_4"
+      ],
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002283_rbvc9u",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_12",
+      "userAnswer": "opt_q_quiz_1793843634614_12_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793844002289_god0go",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_13",
+      "userAnswer": "opt_q_quiz_1793843634614_13_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002295_nt7mu1",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_14",
+      "userAnswer": "opt_q_quiz_1793843634614_14_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002301_ihbw05",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_15",
+      "userAnswer": "opt_q_quiz_1793843634614_15_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002306_vvpu0a",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_16",
+      "userAnswer": "opt_q_quiz_1793843634614_16_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002312_eu0lzs",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_17",
+      "userAnswer": "opt_q_quiz_1793843634614_17_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002318_exg1dj",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_18",
+      "userAnswer": [
+        "opt_q_quiz_1793843634614_18_1",
+        "opt_q_quiz_1793843634614_18_3"
+      ],
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793844002324_ka1xgd",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_19",
+      "userAnswer": "opt_q_quiz_1793843634614_19_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793844002329_yp65k3",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_20",
+      "userAnswer": "opt_q_quiz_1793843634614_20_3",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793844002335_mlnbvx",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_21",
+      "userAnswer": "opt_q_quiz_1793843634614_21_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002340_9osy9s",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_22",
+      "userAnswer": "opt_q_quiz_1793843634614_22_4",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793844002346_p2xfwj",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_23",
+      "userAnswer": "opt_q_quiz_1793843634614_23_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002352_60kpqv",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_24",
+      "userAnswer": "opt_q_quiz_1793843634614_24_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002358_pl4cv4",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_25",
+      "userAnswer": "opt_q_quiz_1793843634614_25_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002363_7d5jil",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_26",
+      "userAnswer": "opt_q_quiz_1793843634614_26_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002369_1k5ezg",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_27",
+      "userAnswer": "opt_q_quiz_1793843634614_27_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002374_w24qzz",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_28",
+      "userAnswer": "opt_q_quiz_1793843634614_28_3",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002381_vp2qjt",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_29",
+      "userAnswer": {
+        "dd_q_quiz_1793843634614_29_3": "Đặc trưng của dân tộc (quốc gia)",
+        "dd_q_quiz_1793843634614_29_5": "Đặc trưng của dân tộc (quốc gia)",
+        "dd_q_quiz_1793843634614_29_6": "Đặc trưng của dân tộc (quốc gia)",
+        "dd_q_quiz_1793843634614_29_1": "Đặc trưng của dân tộc (tộc người)",
+        "dd_q_quiz_1793843634614_29_2": "Đặc trưng của dân tộc (tộc người)",
+        "dd_q_quiz_1793843634614_29_4": "Đặc trưng của dân tộc (tộc người)"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002390_mxx777",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_30",
+      "userAnswer": {
+        "dd_q_quiz_1793843634614_30_2": "Nguồn gốc của tôn giáo",
+        "dd_q_quiz_1793843634614_30_3": "Nguồn gốc của tôn giáo",
+        "dd_q_quiz_1793843634614_30_6": "Nguồn gốc của tôn giáo",
+        "dd_q_quiz_1793843634614_30_5": "Yếu tố liên quan đến tôn giáo",
+        "dd_q_quiz_1793843634614_30_1": "Yếu tố liên quan đến tôn giáo",
+        "dd_q_quiz_1793843634614_30_4": "Yếu tố liên quan đến tôn giáo"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002397_ph45yt",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_31",
+      "userAnswer": {
+        "dd_q_quiz_1793843634614_31_3": "Dân tộc tộc người",
+        "dd_q_quiz_1793843634614_31_4": "Bình đẳng dân tộc",
+        "dd_q_quiz_1793843634614_31_2": "Lãnh thổ",
+        "dd_q_quiz_1793843634614_31_1": "Phương thức sinh hoạt kinh tế chung"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002402_ukjlnq",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_32",
+      "userAnswer": {
+        "stmt_32_2": "dung",
+        "stmt_32_1": "sai",
+        "stmt_32_3": "sai",
+        "stmt_32_4": "dung"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002408_2cae3r",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_33",
+      "userAnswer": {
+        "stmt_33_2": "dung",
+        "stmt_33_1": "dung",
+        "stmt_33_3": "sai",
+        "stmt_33_4": "dung"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002414_rfv2zv",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_34",
+      "userAnswer": {
+        "stmt_34_1": "dung",
+        "stmt_34_3": "sai",
+        "stmt_34_2": "sai",
+        "stmt_34_4": "sai"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002420_vqsdoo",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_35",
+      "userAnswer": {
+        "dd_q_quiz_1793843634614_35_7": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+        "dd_q_quiz_1793843634614_35_1": "Đặc trưng của dân tộc",
+        "dd_q_quiz_1793843634614_35_4": "Đặc trưng của dân tộc",
+        "dd_q_quiz_1793843634614_35_6": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+        "\r\nBản sắc văn hóa dân tộc\r\n\r\nNgôn ngữ riêng\r\n\r\nNội dung cương lĩnh dân tộc của Mác-Lênin\r\nLãnh thổ chung": "Nội dung cương lĩnh dân tộc của Mác-Lênin",
+        "dd_q_quiz_1793843634614_35_2": "Đặc trưng của dân tộc",
+        "dd_q_quiz_1793843634614_35_5": "Nội dung cương lĩnh dân tộc của Mác-Lênin"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002425_k6h91t",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_36",
+      "userAnswer": {
+        "dd_q_quiz_1793843634614_36_4": "Quyền bình đẳng dân tộc",
+        "dd_q_quiz_1793843634614_36_2": "Cơ sở pháp lý",
+        "dd_q_quiz_1793843634614_36_3": "Giai cấp công nhân",
+        "dd_q_quiz_1793843634614_36_1": "Liên hiệp công nhân các dân tộc lại"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002431_xy43it",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_37",
+      "userAnswer": [
+        "opt_q_quiz_1793843634614_37_4",
+        "opt_q_quiz_1793843634614_37_3"
+      ],
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002436_iamij1",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_38",
+      "userAnswer": {
+        "dd_q_quiz_1793843634614_38_2": "Tôn giáo",
+        "dd_q_quiz_1793843634614_38_3": "Mê muội",
+        "dd_q_quiz_1793843634614_38_4": "Tín ngưỡng",
+        "dd_q_quiz_1793843634614_38_1": "Mê tín dị đoan"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002442_vt02zu",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_39",
+      "userAnswer": {
+        "stmt_39_1": "sai",
+        "stmt_39_2": "dung",
+        "stmt_39_4": "dung",
+        "stmt_39_3": "sai"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793844002448_p4p7e1",
+      "attemptId": "att_1793843637518_ressqe",
+      "questionId": "q_quiz_1793843634614_40",
+      "userAnswer": {
+        "stmt_40_2": "dung",
+        "stmt_40_1": "sai",
+        "stmt_40_3": "sai",
+        "stmt_40_4": "dung"
+      },
+      "isCorrect": false
+    }
+  ],
   "battle_rooms": [],
   "reviews": []
 }

@@ -249,23 +249,18 @@ export default function ExamTakingPage({
       return !!ans;
     }
     if (q.type === 'true_false_matrix') {
-      const stmts = q.statements || [];
-      return ans && typeof ans === 'object' && Object.keys(ans).length === stmts.length;
+      return ans && typeof ans === 'object' && Object.keys(ans).length > 0;
     }
     if (q.type === 'multiple_choice') {
-      // STRICT REQUIREMENT: Only complete when exact required count is selected!
       const userSelected = Array.isArray(ans) ? ans : [];
-      return userSelected.length === (q.requiredCount || 2);
+      return userSelected.length > 0;
     }
     if (q.type === 'drag_drop_categorize') {
-      // Must categorize all items
-      const itemsCount = q.dragDropItems?.length || 0;
-      return ans && typeof ans === 'object' && Object.keys(ans).length === itemsCount;
+      // 2 bên không bằng nhau vẫn hoàn thành bình thường, chỉ cần có kéo thả thẻ
+      return ans && typeof ans === 'object' && Object.keys(ans).length > 0;
     }
     if (q.type === 'drag_drop_matching') {
-      // Must match all statements
-      const itemsCount = q.dragDropItems?.length || 0;
-      return ans && typeof ans === 'object' && Object.keys(ans).length === itemsCount;
+      return ans && typeof ans === 'object' && Object.keys(ans).length > 0;
     }
     return false;
   };
@@ -395,8 +390,8 @@ export default function ExamTakingPage({
         isAntiCheatActive={quizInfo?.antiCheatEnabled}
       />
 
-      {/* Main Question Card Area */}
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      {/* Main Question Card Area (Full Width, Spacious) */}
+      <main className="flex-1 w-full max-w-[98vw] 2xl:max-w-[1720px] mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-6">
         <QuestionCard
           question={currentQuestion}
           questionIndex={currentQuestionIndex}
@@ -405,6 +400,16 @@ export default function ExamTakingPage({
           onAnswerChange={handleAnswerChange}
           isMarkedForReview={isMarked}
           onToggleMarkForReview={handleToggleMarkForReview}
+          onNextQuestion={() => {
+            if (currentQuestionIndex < questions.length - 1) {
+              setCurrentQuestionIndex(prev => prev + 1);
+            }
+          }}
+          onPrevQuestion={() => {
+            if (currentQuestionIndex > 0) {
+              setCurrentQuestionIndex(prev => prev - 1);
+            }
+          }}
         />
       </main>
 
@@ -431,6 +436,7 @@ export default function ExamTakingPage({
         onClose={() => setIncompleteModalOpen(false)}
         incompleteQuestionIndices={incompleteIndices}
         onJumpToQuestion={(idx) => setCurrentQuestionIndex(idx)}
+        onConfirmSubmit={() => handleFinalSubmit(false)}
       />
 
       <SubmitConfirmModal

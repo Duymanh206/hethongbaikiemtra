@@ -23,7 +23,7 @@ export default function ExamHeader({
       {/* Red-white diagonal warning border at the very top edge */}
       <div className="exam-warning-border" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+      <div className="w-full max-w-[98vw] 2xl:max-w-[1720px] mx-auto px-4 sm:px-8 py-2.5">
         <div className="flex items-center justify-between gap-4">
           
           {/* Left: Avatar, Candidate Name (Hoàng Duy Mạnh), Student ID (dtc245200060) */}

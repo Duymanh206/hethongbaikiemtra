@@ -59,15 +59,15 @@ export default function DragDropCategorizeQuestion({
   };
 
   return (
-    <div className="space-y-6 mt-3">
-      {/* Top Pool: Light gray container matching Image 3 with blue pills */}
-      <div className="p-3.5 rounded-xl bg-slate-100/80 border border-slate-200/80 min-h-[56px] flex items-center">
+    <div className="space-y-6 mt-4 w-full">
+      {/* Top Pool: Light gray wide container matching Image 3 with blue pills */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-slate-100 border border-slate-200/90 min-h-[64px] flex items-center shadow-xs">
         {unplacedItems.length === 0 ? (
-          <div className="w-full text-center text-xs font-semibold text-emerald-600 py-1">
-            ✓ Đã kéo thả tất cả các thẻ vào các cột bên dưới!
+          <div className="w-full text-center text-sm font-semibold text-emerald-600 py-1.5 flex items-center justify-center gap-2">
+            <span>✓ Đã kéo thả tất cả các thẻ vào các cột bên dưới!</span>
           </div>
         ) : (
-          <div className="flex flex-wrap items-center gap-2.5 w-full">
+          <div className="flex flex-wrap items-center gap-3 w-full">
             {unplacedItems.map(item => {
               const isSelected = selectedTagId === item.id;
               return (
@@ -76,13 +76,13 @@ export default function DragDropCategorizeQuestion({
                   draggable
                   onDragStart={(e) => handleDragStart(e, item.id)}
                   onClick={() => handleTagClick(item.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium cursor-grab active:cursor-grabbing select-none transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium cursor-grab active:cursor-grabbing select-none transition-all ${
                     isSelected
                       ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400 scale-105'
-                      : 'bg-white text-blue-700 border border-blue-200 hover:border-blue-400 hover:bg-blue-50/50 shadow-xs'
+                      : 'bg-white text-blue-700 border border-blue-200 hover:border-blue-400 hover:bg-blue-50/70 shadow-xs'
                   }`}
                 >
-                  <GripVertical className="w-3.5 h-3.5 text-blue-400 shrink-0 opacity-70" />
+                  <GripVertical className="w-4 h-4 text-blue-400 shrink-0 opacity-70" />
                   <span>{item.itemText}</span>
                 </div>
               );
@@ -91,16 +91,16 @@ export default function DragDropCategorizeQuestion({
         )}
       </div>
 
-      {/* Bottom 2 Columns matching Image 3 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {/* Bottom Columns matching Image 3 (Large, wide drop zones across full width) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         {categories.map((cat, idx) => {
           const itemsInCat = dragDropItems.filter(item => placements[item.id] === cat);
           const isTargetActive = selectedTagId !== null;
 
           return (
-            <div key={idx} className="space-y-2">
+            <div key={idx} className="space-y-2.5 flex flex-col">
               {/* Column Title */}
-              <h4 className="text-xs sm:text-sm font-bold text-slate-800 leading-snug">
+              <h4 className="text-sm sm:text-base font-bold text-slate-800 leading-snug min-h-[32px] flex items-center">
                 {cat}
               </h4>
 
@@ -109,18 +109,18 @@ export default function DragDropCategorizeQuestion({
                 onDragOver={handleAllowDrop}
                 onDrop={(e) => handleDrop(e, cat)}
                 onClick={() => handleCategoryClick(cat)}
-                className={`min-h-[170px] rounded-xl border-2 border-dashed p-3.5 flex flex-col justify-between transition-all ${
+                className={`flex-1 min-h-[280px] sm:min-h-[340px] rounded-2xl border-2 border-dashed p-4 sm:p-5 flex flex-col justify-start transition-all ${
                   isTargetActive
-                    ? 'border-blue-400 bg-blue-50/40 cursor-pointer ring-1 ring-blue-300'
-                    : 'border-slate-300 bg-white/60 hover:border-slate-400'
+                    ? 'border-blue-400 bg-blue-50/40 cursor-pointer ring-2 ring-blue-300'
+                    : 'border-slate-300 bg-white/70 hover:border-slate-400'
                 }`}
               >
                 {/* Placed Items inside column */}
-                <div className="space-y-2">
+                <div className="space-y-2.5 w-full">
                   {itemsInCat.map(item => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-blue-50 text-blue-900 border border-blue-200 text-xs font-medium"
+                      className="flex items-center justify-between gap-3 p-3 rounded-xl bg-blue-50 text-blue-950 border border-blue-200 text-xs sm:text-sm font-medium shadow-xs"
                     >
                       <span className="leading-snug">{item.itemText}</span>
                       <button
@@ -129,18 +129,18 @@ export default function DragDropCategorizeQuestion({
                           e.stopPropagation();
                           handleRemoveFromCategory(item.id);
                         }}
-                        className="text-slate-400 hover:text-red-600 p-1 rounded transition-colors"
-                        title="Bỏ ra ngoài"
+                        className="text-slate-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-white transition-colors"
+                        title="Bỏ thẻ này ra ngoài"
                       >
-                        <X className="w-3.5 h-3.5" />
+                        <X className="w-4 h-4" />
                       </button>
                     </div>
                   ))}
                 </div>
 
-                {/* Empty dashed placeholder matching Image 3 */}
+                {/* Empty dashed placeholder matching user photo */}
                 {itemsInCat.length === 0 && (
-                  <div className="flex-1 flex flex-col items-center justify-center text-slate-400 text-xs py-8">
+                  <div className="flex-1 flex flex-col items-center justify-center text-slate-400 text-xs sm:text-sm py-12">
                     <span className="text-center font-medium">Kéo và thả các đáp án vào đây</span>
                   </div>
                 )}

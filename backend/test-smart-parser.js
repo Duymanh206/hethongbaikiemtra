@@ -52,3 +52,4 @@ result.forEach(q => {
     q.statements.forEach(s => console.log(`   ${s.text} => [${s.isCorrect}]`));
   }
 });
+
