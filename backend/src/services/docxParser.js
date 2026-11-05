@@ -260,6 +260,144 @@ export async function parseDocxBuffer(buffer, config = {}) {
   }
 
   function finalizeQuestion(q) {
+    // If no options were parsed from separate paragraphs, check if question content contains inline options, True/False, or Drag&Drop
+    if (q.options.length === 0) {
+      const fullText = q.content;
+
+      // 1. Check for Drag & Drop Categorization
+      if (fullText.toLowerCase().includes('kéo thả') && (fullText.toLowerCase().includes('vào các cột tương ứng') || fullText.toLowerCase().includes('vào cột tương ứng'))) {
+        const tableLines = fullText.split('\n').filter(l => l.includes('|'));
+        if (tableLines.length >= 2) {
+          const categories = tableLines[0].split('|').map(c => c.trim()).filter(Boolean);
+          const dataCells = tableLines[1].split('|').map(c => c.trim()).filter(Boolean);
+          const dragDropItems = [];
+          dataCells.forEach((cellText, colIdx) => {
+            const targetCol = categories[colIdx] || `Cột ${colIdx + 1}`;
+            const items = cellText.split(/\s{2,}|\t/).map(s => s.trim()).filter(Boolean);
+            items.forEach((itemStr, itemIdx) => {
+              dragDropItems.push({
+                id: `dd_${Date.now()}_${colIdx + 1}_${itemIdx + 1}`,
+                itemText: itemStr,
+                targetCategoryOrMatch: targetCol,
+                orderIndex: dragDropItems.length + 1
+              });
+            });
+          });
+          q.type = 'drag_drop_categorize';
+          q.instructionBadge = '(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng';
+          q.content = fullText.split('\n')[0].trim();
+          q.categories = categories;
+          q.dragDropItems = dragDropItems;
+          q.requiredCount = dragDropItems.length;
+          return;
+        }
+      }
+
+      // 2. Check for Drag & Drop Matching
+      if (fullText.toLowerCase().includes('kéo thả') && (fullText.toLowerCase().includes('khớp với') || fullText.toLowerCase().includes('tương ứng với các phát biểu') || fullText.toLowerCase().includes('dưới đây'))) {
+        const tableLines = fullText.split('\n').filter(l => l.includes('|'));
+        if (tableLines.length > 0) {
+          const dragDropItems = [];
+          const targets = new Set();
+          tableLines.forEach((row, idx) => {
+            const cells = row.split('|').map(c => c.trim()).filter(Boolean);
+            if (cells.length >= 2) {
+              targets.add(cells[1]);
+              dragDropItems.push({
+                id: `dd_match_${Date.now()}_${idx + 1}`,
+                itemText: cells[0],
+                targetCategoryOrMatch: cells[1],
+                orderIndex: idx + 1
+              });
+            }
+          });
+          q.type = 'drag_drop_matching';
+          q.instructionBadge = '(!) Kéo thẻ đáp án khớp với từng phát biểu';
+          q.content = fullText.split('\n')[0].trim();
+          q.dragDropItems = dragDropItems;
+          q.matchingTargets = Array.from(targets);
+          q.requiredCount = dragDropItems.length;
+          return;
+        }
+      }
+
+      // 3. Check for True / False Matrix
+      if (fullText.toLowerCase().includes('đúng hoặc sai') || fullText.toLowerCase().includes('đúng hay sai') || fullText.toLowerCase().includes('đúng/sai')) {
+        const lines = fullText.split('\n').map(l => l.trim()).filter(Boolean);
+        const prompt = lines[0] || 'Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:';
+        const statements = [];
+        const stmtRegex = /(?:^|\n)\s*(\d+)[\)\.]\s*(.*?)(?=(?:\n\s*\d+[\)\.]|$))/gs;
+        let match;
+        const rest = lines.slice(1).join('\n');
+        while ((match = stmtRegex.exec(rest)) !== null) {
+          const sNum = match[1];
+          let sText = match[2].trim();
+          let isCorrect = 'dung';
+          if (/(?:Đúng|\(Đúng\))\s*$/i.test(sText)) {
+            isCorrect = 'dung';
+            sText = sText.replace(/(?:Đúng|\(Đúng\))\s*$/i, '').trim();
+          } else if (/(?:Sai|\(Sai\))\s*$/i.test(sText)) {
+            isCorrect = 'sai';
+            sText = sText.replace(/(?:Sai|\(Sai\))\s*$/i, '').trim();
+          }
+          statements.push({
+            id: `tf_${Date.now()}_${sNum}`,
+            text: `${sNum}) ${sText}`,
+            isCorrect
+          });
+        }
+        if (statements.length > 0) {
+          q.type = 'true_false_matrix';
+          q.content = prompt;
+          q.instructionBadge = '(!) Chọn Đúng hoặc Sai cho mỗi phát biểu';
+          q.statements = statements;
+          q.requiredCount = statements.length;
+          return;
+        }
+      }
+
+      // 4. Check for inline options: "A. ... B. ... C. ... D. ..."
+      const firstOptIdx = fullText.search(/(?:^|\s|\?|[a-z0-9])([A-D])[.):]\s*/i);
+      if (firstOptIdx !== -1) {
+        const matchA = fullText.substring(firstOptIdx).match(/([A-D])[.):]\s*/i);
+        if (matchA) {
+          const realStart = firstOptIdx + matchA.index;
+          const cleanPrompt = fullText.substring(0, realStart).trim();
+          const optionsText = fullText.substring(realStart).trim();
+
+          const optionRegex = /([A-D])[.):]\s*(.*?)(?=(?:[A-D][.):]\s*|$))/gs;
+          let optMatch;
+          while ((optMatch = optionRegex.exec(optionsText)) !== null) {
+            const label = optMatch[1].toUpperCase();
+            const content = optMatch[2].trim();
+            q.options.push({
+              id: `opt_${Date.now()}_${label.toLowerCase()}`,
+              label,
+              content,
+              isCorrect: false,
+              orderIndex: q.options.length + 1
+            });
+          }
+          if (q.options.length > 0) {
+            q.content = cleanPrompt;
+          }
+        }
+      }
+    }
+
+    // Check multiple choice instruction in content
+    const multiMatch = q.content.match(/(?:chọn|Sinh viên chọn)\s*(\d+)\s*phương án/i);
+    if (multiMatch) {
+      const requiredCount = parseInt(multiMatch[1], 10);
+      q.type = 'multiple_choice';
+      q.requiredCount = requiredCount;
+      q.instructionBadge = `(!) Sinh viên chọn ${requiredCount} phương án đúng nhất`;
+      for (let i = 0; i < Math.min(requiredCount, q.options.length); i++) {
+        q.options[i].isCorrect = true;
+      }
+      return;
+    }
+
     const correctOptions = q.options.filter(o => o.isCorrect);
     const correctCount = correctOptions.length;
 
@@ -272,7 +410,6 @@ export async function parseDocxBuffer(buffer, config = {}) {
       q.requiredCount = 1;
       q.instructionBadge = null;
       if (correctCount === 0 && q.options.length > 0) {
-        // Fallback: if no formatting detected, default first option or keep false
         q.options[0].isCorrect = true;
       }
     }

@@ -6,7 +6,8 @@ import {
   getQuizExamQuestions,
   importDocxQuiz,
   createQuiz,
-  addReview
+  addReview,
+  parseQuizTextController
 } from '../controllers/quizController.js';
 
 const router = express.Router();
@@ -16,6 +17,7 @@ router.get('/', getAllQuizzes);
 router.get('/:id', getQuizById);
 router.get('/:id/exam', getQuizExamQuestions);
 router.post('/import-docx', upload.single('file'), importDocxQuiz);
+router.post('/parse-text', parseQuizTextController);
 router.post('/', createQuiz);
 router.post('/:id/reviews', addReview);
 

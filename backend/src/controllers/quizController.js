@@ -1,5 +1,6 @@
 import { db } from '../database/db.js';
 import { parseDocxBuffer } from '../services/docxParser.js';
+import { parseRawQuizText } from '../services/smartQuizParser.js';
 
 // Helper to shuffle array (Fisher-Yates)
 function shuffleArray(array) {
@@ -369,6 +370,100 @@ export const addReview = (req, res) => {
     db.update('quizzes', q => q.id === quizId, { avgRating: Number(avg) });
 
     res.json({ success: true, message: 'Đã gửi đánh giá thành công', data: review, avgRating: Number(avg) });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const parseQuizTextController = (req, res) => {
+  try {
+    const { rawText, title, category, saveDirectly = false } = req.body;
+    if (!rawText || !rawText.trim()) {
+      return res.status(400).json({ success: false, message: 'Nội dung văn bản trống' });
+    }
+
+    const parsedQuestions = parseRawQuizText(rawText);
+
+    if (saveDirectly === 'true' || saveDirectly === true) {
+      const quizId = `quiz_${Date.now()}`;
+      const newQuiz = {
+        id: quizId,
+        title: title || 'BÀI KIỂM TRA 15 PHÚT - TUẦN 1',
+        description: `Tạo từ văn bản đề thi (${parsedQuestions.length} câu hỏi)`,
+        category: category || 'Chủ nghĩa xã hội khoa học',
+        originalDocxName: 'DeThiNhapLieu.txt',
+        durationMinutes: 15,
+        passingScore: 5.0,
+        shuffleQuestions: false,
+        shuffleOptions: false,
+        antiCheatEnabled: true,
+        maxViolations: 3,
+        totalQuestions: parsedQuestions.length,
+        attemptsCount: 0,
+        avgRating: 5.0,
+        createdBy: req.body.author || 'Hoàng Duy Mạnh',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      db.insert('quizzes', newQuiz);
+
+      parsedQuestions.forEach((q, idx) => {
+        const qId = `q_${quizId}_${idx + 1}`;
+        db.insert('questions', {
+          id: qId,
+          quizId,
+          orderIndex: idx + 1,
+          type: q.type,
+          content: q.content,
+          instructionBadge: q.instructionBadge || null,
+          explanation: q.explanation || '',
+          points: q.points || 1.0,
+          requiredCount: q.requiredCount || 1,
+          categories: q.categories || [],
+          statements: q.statements || []
+        });
+
+        if (q.options && q.options.length > 0) {
+          q.options.forEach((opt, optIdx) => {
+            db.insert('question_options', {
+              id: `opt_${qId}_${optIdx + 1}`,
+              questionId: qId,
+              label: opt.label || String.fromCharCode(65 + optIdx),
+              content: opt.content,
+              isCorrect: !!opt.isCorrect,
+              orderIndex: optIdx + 1
+            });
+          });
+        }
+
+        if (q.dragDropItems && q.dragDropItems.length > 0) {
+          q.dragDropItems.forEach((dd, ddIdx) => {
+            db.insert('drag_drop_items', {
+              id: `dd_${qId}_${ddIdx + 1}`,
+              questionId: qId,
+              itemText: dd.itemText,
+              targetCategoryOrMatch: dd.targetCategoryOrMatch,
+              orderIndex: ddIdx + 1
+            });
+          });
+        }
+      });
+
+      return res.json({
+        success: true,
+        saved: true,
+        quizId,
+        totalQuestions: parsedQuestions.length,
+        message: `Đã tạo bài thi thành công (${parsedQuestions.length} câu hỏi)!`
+      });
+    }
+
+    res.json({
+      success: true,
+      totalQuestions: parsedQuestions.length,
+      questions: parsedQuestions
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
