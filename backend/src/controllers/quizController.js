@@ -52,9 +52,53 @@ export const getAllQuizzes = (req, res) => {
 export const getQuizById = (req, res) => {
   try {
     const { id } = req.params;
-    const quiz = db.findOne('quizzes', q => q.id === id);
+    let quiz = db.findOne('quizzes', q => q.id === id);
     if (!quiz) {
-      return res.status(404).json({ success: false, message: 'Không tìm thấy bài thi' });
+      if (id === 'composite_period60') {
+        quiz = {
+          id: 'composite_period60',
+          title: 'BÀI KIỂM TRA 1 TIẾT (60 PHÚT) - TỔNG HỢP 3 CHỦ ĐỀ',
+          category: 'Triết học & Lý luận chính trị',
+          description: 'Cấu trúc bài kiểm tra 1 tiết chuẩn: Ngẫu nhiên tổ hợp 3 chủ đề trong ngân hàng đề, phân bố đều 15 câu mỗi chủ đề (tổng cộng 45 câu), đa dạng câu hỏi trắc nghiệm đơn, nhiều lựa chọn, đúng sai và kéo thả.',
+          durationMinutes: 60,
+          totalQuestions: 45,
+          antiCheatEnabled: true,
+          shuffleQuestions: true,
+          shuffleOptions: true,
+          createdBy: 'Hệ thống Khảo thí',
+          createdAt: new Date().toISOString()
+        };
+        return res.json({
+          success: true,
+          data: cleanQuiz({
+            ...quiz,
+            reviews: []
+          })
+        });
+      } else if (id === 'composite_final45') {
+        quiz = {
+          id: 'composite_final45',
+          title: 'BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)',
+          category: 'Triết học & Lý luận chính trị',
+          description: 'Cấu trúc thi kết thúc học phần: 40 câu hỏi được phân bố đều từ tất cả các bài/chủ đề trong toàn bộ học phần môn học, thời gian làm bài 45 phút.',
+          durationMinutes: 45,
+          totalQuestions: 40,
+          antiCheatEnabled: true,
+          shuffleQuestions: true,
+          shuffleOptions: true,
+          createdBy: 'Hệ thống Khảo thí',
+          createdAt: new Date().toISOString()
+        };
+        return res.json({
+          success: true,
+          data: cleanQuiz({
+            ...quiz,
+            reviews: []
+          })
+        });
+      } else {
+        return res.status(404).json({ success: false, message: 'Không tìm thấy bài thi' });
+      }
     }
 
     const questions = db.find('questions', q => q.quizId === id);
@@ -76,22 +120,115 @@ export const getQuizById = (req, res) => {
 export const getQuizExamQuestions = (req, res) => {
   try {
     const { id } = req.params;
-    const quiz = db.findOne('quizzes', q => q.id === id);
-    if (!quiz) {
-      return res.status(404).json({ success: false, message: 'Không tìm thấy bài thi' });
-    }
+    const { mode } = req.query; // 'practice' | 'quiz15' | 'period60' | 'final45'
 
-    let questions = db.find('questions', q => q.quizId === id);
+    let quiz = null;
+    let questions = [];
+    let durationMinutes = 15;
+    let modeBadge = '';
 
-    // Shuffle questions if enabled
-    if (quiz.shuffleQuestions) {
+    // MODE 3: KIỂM TRA 1 TIẾT (60 PHÚT) - 3 CHỦ ĐỀ, MỖI CHỦ ĐỀ 15 CÂU = 45 CÂU
+    if (id === 'composite_period60' || mode === 'period60') {
+      const allQuizzes = db.find('quizzes', () => true);
+      const threeQuizzes = allQuizzes.slice(0, 3);
+      durationMinutes = 60;
+      modeBadge = 'KIỂM TRA 1 TIẾT (60 PHÚT - 3 CHỦ ĐỀ)';
+      quiz = {
+        id: 'composite_period60',
+        title: 'BÀI KIỂM TRA 1 TIẾT (60 PHÚT) - TỔNG HỢP 3 CHỦ ĐỀ',
+        durationMinutes: 60,
+        antiCheatEnabled: true,
+        maxViolations: 3,
+        mode: 'period60',
+        modeBadge
+      };
+
+      threeQuizzes.forEach((qItem, tIdx) => {
+        const qList = db.find('questions', item => item.quizId === qItem.id);
+        const sampled = shuffleArray(qList).slice(0, 15);
+        sampled.forEach(q => {
+          questions.push({
+            ...q,
+            topicName: `Chủ đề ${tIdx + 1}: ${qItem.title}`
+          });
+        });
+      });
+      // Mix questions
       questions = shuffleArray(questions);
     }
+    // MODE 4: KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU PHÂN BỐ TỪ TẤT CẢ BÀI HỌC)
+    else if (id === 'composite_final45' || mode === 'final45') {
+      const allQuizzes = db.find('quizzes', () => true);
+      durationMinutes = 45;
+      modeBadge = 'THI KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)';
+      quiz = {
+        id: 'composite_final45',
+        title: 'BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)',
+        durationMinutes: 45,
+        antiCheatEnabled: true,
+        maxViolations: 3,
+        mode: 'final45',
+        modeBadge
+      };
 
-    // Attach sanitized options and drag-drop items (HIDE isCorrect to prevent client inspection)
+      const perQuizCount = Math.floor(40 / Math.max(1, allQuizzes.length));
+      allQuizzes.forEach((qItem, idx) => {
+        const qList = db.find('questions', item => item.quizId === qItem.id);
+        const count = (idx === allQuizzes.length - 1) ? (40 - questions.length) : perQuizCount;
+        const sampled = shuffleArray(qList).slice(0, Math.min(count, qList.length));
+        sampled.forEach(q => {
+          questions.push({
+            ...q,
+            topicName: qItem.title
+          });
+        });
+      });
+      questions = shuffleArray(questions);
+    }
+    // MODE 1 & 2: SPECIFIC QUIZ
+    else {
+      quiz = db.findOne('quizzes', q => q.id === id);
+      if (!quiz) {
+        return res.status(404).json({ success: false, message: 'Không tìm thấy bài thi' });
+      }
+
+      let allQuestions = db.find('questions', q => q.quizId === id);
+
+      // MODE 2: KIỂM TRA 15 PHÚT - RANDOM 20 CÂU
+      if (mode === 'quiz15') {
+        durationMinutes = 15;
+        modeBadge = 'KIỂM TRA 15 PHÚT (RANDOM 20 CÂU)';
+        questions = shuffleArray(allQuestions).slice(0, 20);
+        quiz = {
+          ...quiz,
+          title: `BÀI KIỂM TRA 15 PHÚT - ${quiz.title}`,
+          durationMinutes: 15,
+          mode: 'quiz15',
+          modeBadge
+        };
+      }
+      // MODE 1: ÔN TẬP TỪNG CHỦ ĐỀ (TOÀN BỘ CÂU HỎI)
+      else if (mode === 'practice') {
+        durationMinutes = quiz.durationMinutes || 45;
+        modeBadge = 'ÔN TẬP CHỦ ĐỀ';
+        questions = allQuestions;
+        quiz = {
+          ...quiz,
+          title: `ÔN TẬP: ${quiz.title}`,
+          mode: 'practice',
+          modeBadge
+        };
+      }
+      // DEFAULT
+      else {
+        questions = quiz.shuffleQuestions ? shuffleArray(allQuestions) : allQuestions;
+      }
+    }
+
+    // Attach sanitized options, statements, and drag-drop items
     const sanitizedQuestions = questions.map((q, idx) => {
       let options = db.find('question_options', opt => opt.questionId === q.id);
-      if (quiz.shuffleOptions && options.length > 0) {
+      if (options.length > 0) {
         options = shuffleArray(options);
       }
 
@@ -110,19 +247,19 @@ export const getQuizExamQuestions = (req, res) => {
         orderIndex: d.orderIndex
       }));
 
-      // In drag_drop_matching, collect statement rows (itemText) and available targets to match
       const matchingTargets = q.type === 'drag_drop_matching' 
         ? shuffleArray([...new Set(dragDropItems.map(d => d.targetCategoryOrMatch))])
         : [];
 
       return {
         id: q.id,
-        orderIndex: idx + 1, // sequential index for exam display
+        orderIndex: idx + 1,
         originalOrderIndex: q.orderIndex,
         type: q.type,
         content: q.content,
+        topicName: q.topicName || '',
         instructionBadge: q.instructionBadge,
-        points: q.points,
+        points: q.points || 1,
         requiredCount: q.requiredCount,
         categories: q.categories || [],
         statements: (q.statements || []).map(s => ({ id: s.id, text: s.text })),
@@ -137,9 +274,11 @@ export const getQuizExamQuestions = (req, res) => {
       quiz: {
         id: quiz.id,
         title: quiz.title,
-        durationMinutes: quiz.durationMinutes,
-        antiCheatEnabled: quiz.antiCheatEnabled,
-        maxViolations: quiz.maxViolations
+        durationMinutes: durationMinutes || quiz.durationMinutes || 15,
+        antiCheatEnabled: quiz.antiCheatEnabled !== false,
+        maxViolations: quiz.maxViolations || 3,
+        mode: quiz.mode || mode || 'standard',
+        modeBadge: quiz.modeBadge || modeBadge || ''
       },
       questions: sanitizedQuestions
     });

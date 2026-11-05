@@ -5,10 +5,12 @@ import QuestionCard from '../components/QuestionCard';
 import IncompleteModal from '../components/IncompleteModal';
 import SubmitConfirmModal from '../components/SubmitConfirmModal';
 import AntiCheatModal from '../components/AntiCheatModal';
+import ReviewAnswersModal from '../components/ReviewAnswersModal';
 import { useAuth } from '../context/AuthContext';
 
 export default function ExamTakingPage({
   quizId,
+  mode = 'practice',
   onExamSubmitted,
   onCancelExam
 }) {
@@ -29,6 +31,7 @@ export default function ExamTakingPage({
   // Modals
   const [incompleteModalOpen, setIncompleteModalOpen] = useState(false);
   const [submitConfirmOpen, setSubmitConfirmOpen] = useState(false);
+  const [reviewAnswersOpen, setReviewAnswersOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Anti-Cheat State
@@ -44,7 +47,7 @@ export default function ExamTakingPage({
   answersRef.current = answers;
 
   // LocalStorage Key
-  const STORAGE_KEY = `exam_progress_${quizId}_${user?.studentId || 'guest'}`;
+  const STORAGE_KEY = `exam_progress_${quizId}_${mode}_${user?.studentId || 'guest'}`;
 
   // 1. Initialize Exam
   useEffect(() => {
@@ -52,8 +55,9 @@ export default function ExamTakingPage({
       try {
         setLoading(true);
 
-        // Fetch Exam Questions
-        const qRes = await fetch(`/api/quizzes/${quizId}/exam`);
+        // Fetch Exam Questions with Mode
+        const modeQuery = mode ? `?mode=${encodeURIComponent(mode)}` : '';
+        const qRes = await fetch(`/api/quizzes/${quizId}/exam${modeQuery}`);
         const qData = await qRes.json();
         if (!qData.success) {
           alert(qData.message || 'Không thể tải câu hỏi');
@@ -95,6 +99,9 @@ export default function ExamTakingPage({
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               quizId,
+              mode,
+              questionIds: qData.questions.map(q => q.id),
+              durationMinutes: qData.quiz.durationMinutes,
               studentId: user?.studentId || 'dtc245200060',
               candidateName: user?.fullName || 'Hoàng Duy Mạnh'
             })
@@ -129,7 +136,7 @@ export default function ExamTakingPage({
     }
 
     initExam();
-  }, [quizId]);
+  }, [quizId, mode]);
 
   // 2. Timer Countdown & Auto-Save Loop
   useEffect(() => {
@@ -416,21 +423,28 @@ export default function ExamTakingPage({
       {/* 1.1 Bottom Footer Bar */}
       <ExamFooter
         quizTitle={quizInfo?.title}
+        modeBadge={quizInfo?.modeBadge}
         totalQuestions={questions.length}
         currentIndex={currentQuestionIndex}
         onSelectQuestion={(idx) => setCurrentQuestionIndex(idx)}
         answers={answers}
         isQuestionCompleted={isQuestionCompleted}
         markedForReview={markedForReview}
-        onNextQuestion={() => {
-          if (currentQuestionIndex < questions.length - 1) {
-            setCurrentQuestionIndex(prev => prev + 1);
-          }
-        }}
+        onOpenReviewAnswers={() => setReviewAnswersOpen(true)}
         onSubmitClick={handleSubmitClick}
       />
 
       {/* Modals */}
+      <ReviewAnswersModal
+        isOpen={reviewAnswersOpen}
+        onClose={() => setReviewAnswersOpen(false)}
+        questions={questions}
+        answers={answers}
+        markedForReview={markedForReview}
+        onJumpToQuestion={(idx) => setCurrentQuestionIndex(idx)}
+        onSubmitExam={handleSubmitClick}
+      />
+
       <IncompleteModal
         isOpen={incompleteModalOpen}
         onClose={() => setIncompleteModalOpen(false)}

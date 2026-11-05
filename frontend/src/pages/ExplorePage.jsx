@@ -13,12 +13,15 @@ import {
   Layers,
   ChevronRight,
   TrendingUp,
-  Trash2
+  Trash2,
+  BookOpen,
+  Zap,
+  GraduationCap
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { fixMojibake, cleanDescription, cleanFilename } from '../utils/textEncoding';
 
-export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
+export default function ExplorePage({ onSelectQuiz, onStartExam, onStartBattleForQuiz }) {
   const { user } = useAuth();
   const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060';
 
@@ -135,8 +138,140 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
       </section>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20 space-y-6">
         
+        {/* 4 EXAM MODES SYSTEM BANNER (Theo yêu cầu chuẩn 4 cấu trúc đề thi) */}
+        <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/90 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span>
+                <h2 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight">
+                  4 Cấu Trúc Đề Thi & Ôn Tập Chuẩn Học Phần
+                </h2>
+              </div>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Lựa chọn đúng cấu trúc khảo thí: Ôn tập từng bài, Kiểm tra 15 phút, Kiểm tra 1 tiết (60 phút) hoặc Thi kết thúc học phần (45 phút)
+              </p>
+            </div>
+            <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-xl border border-blue-200/60 w-fit">
+              Khảo thí thông minh 2026
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Mode 1: Ôn tập từng bài chủ đề */}
+            <div className="bg-gradient-to-b from-sky-50/70 to-white rounded-2xl p-4 border border-sky-200/80 flex flex-col justify-between hover:shadow-md transition-all">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="w-8 h-8 rounded-xl bg-sky-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
+                    1
+                  </div>
+                  <span className="px-2 py-0.5 rounded-md bg-sky-100 text-sky-800 text-[10px] font-bold">
+                    TỰ DO / TOÀN BỘ CÂU
+                  </span>
+                </div>
+                <h3 className="font-extrabold text-sm text-slate-900 leading-snug">
+                  1. Ôn Tập Từng Chủ Đề
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Làm toàn bộ câu hỏi của từng bài học riêng biệt để ôn tập kỹ lưỡng, nắm vững các phát biểu và dạng câu hỏi.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-sky-100">
+                <span className="text-[11px] font-semibold text-sky-700 block">
+                  👉 Chọn bất kỳ bài thi bên dưới & bấm "Ôn tập"
+                </span>
+              </div>
+            </div>
+
+            {/* Mode 2: Kiểm tra 15 phút - Random 20 câu */}
+            <div className="bg-gradient-to-b from-amber-50/70 to-white rounded-2xl p-4 border border-amber-200/80 flex flex-col justify-between hover:shadow-md transition-all">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black text-xs shadow-xs">
+                    2
+                  </div>
+                  <span className="px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 text-[10px] font-bold">
+                    15 PHÚT / 20 CÂU RANDOM
+                  </span>
+                </div>
+                <h3 className="font-extrabold text-sm text-slate-900 leading-snug">
+                  2. Kiểm Tra 15 Phút
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Trích xuất ngẫu nhiên khoảng 20 câu hỏi từ bài tập/chủ đề được chọn, thời gian làm bài chuẩn 15 phút.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-amber-100">
+                <span className="text-[11px] font-semibold text-amber-700 block">
+                  ⚡ Chọn bài bên dưới & bấm "15 Phút"
+                </span>
+              </div>
+            </div>
+
+            {/* Mode 3: Kiểm tra 1 tiết 60 phút - 3 chủ đề, 15 câu/chủ đề = 45 câu */}
+            <div className="bg-gradient-to-b from-indigo-50/70 to-white rounded-2xl p-4 border border-indigo-200/80 flex flex-col justify-between hover:shadow-md transition-all relative overflow-hidden group">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
+                    3
+                  </div>
+                  <span className="px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 text-[10px] font-bold">
+                    60 PHÚT / 45 CÂU (3 CHỦ ĐỀ)
+                  </span>
+                </div>
+                <h3 className="font-extrabold text-sm text-slate-900 leading-snug">
+                  3. Kiểm Tra 1 Tiết (60 Phút)
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Hệ thống gắn 3 chủ đề ngẫu nhiên thành 1 bộ đề, mỗi chủ đề lấy đều 15 câu (tổng 45 câu), đầy đủ 4 dạng câu trả lời.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-indigo-100">
+                <button
+                  type="button"
+                  onClick={() => onStartExam ? onStartExam('composite_period60', 'period60') : onSelectQuiz('composite_period60')}
+                  className="w-full py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Play className="w-3.5 h-3.5 fill-white" />
+                  <span>Vào Thi 1 Tiết Ngay</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Mode 4: Thi kết thúc học phần - 45 phút, 40 câu từ toàn bộ học phần */}
+            <div className="bg-gradient-to-b from-rose-50/70 to-white rounded-2xl p-4 border border-rose-200/80 flex flex-col justify-between hover:shadow-md transition-all relative overflow-hidden group">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
+                    4
+                  </div>
+                  <span className="px-2 py-0.5 rounded-md bg-rose-100 text-rose-800 text-[10px] font-bold">
+                    45 PHÚT / 40 CÂU TOÀN MÔN
+                  </span>
+                </div>
+                <h3 className="font-extrabold text-sm text-slate-900 leading-snug">
+                  4. Thi Kết Thúc Học Phần
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Bộ đề 40 câu hỏi phân bố đều từ tất cả các bài theo học phần của môn học, thời gian làm bài 45 phút.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-rose-100">
+                <button
+                  type="button"
+                  onClick={() => onStartExam ? onStartExam('composite_final45', 'final45') : onSelectQuiz('composite_final45')}
+                  className="w-full py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-xs active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <GraduationCap className="w-3.5 h-3.5" />
+                  <span>Vào Thi Kết Thúc HP</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Filters and Sorting Bar */}
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
           
@@ -275,21 +410,35 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
 
                   </div>
 
-                  {/* 2 Main Action Buttons: [Bắt đầu làm bài] & [Tổ chức thi đấu] */}
-                  <div className="grid grid-cols-2 gap-2 mt-5 pt-4 border-t border-slate-100">
+                  {/* 3 Action Buttons: [Ôn tập] [15 Phút - 20 câu] [Thi đấu] */}
+                  <div className="grid grid-cols-3 gap-1.5 mt-5 pt-4 border-t border-slate-100">
                     <button
-                      onClick={() => onSelectQuiz(quiz.id)}
-                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs hover:shadow-blue-500/20 active:scale-95 transition-all cursor-pointer"
+                      type="button"
+                      onClick={() => onStartExam ? onStartExam(quiz.id, 'practice') : onSelectQuiz(quiz.id)}
+                      className="flex items-center justify-center gap-1 py-2 px-1 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold text-[11px] border border-sky-200/80 active:scale-95 transition-all cursor-pointer"
+                      title="Ôn tập toàn bộ câu hỏi của chủ đề này"
                     >
-                      <Play className="w-3.5 h-3.5 fill-white" />
-                      <span>Làm bài</span>
+                      <BookOpen className="w-3 h-3 text-sky-600 shrink-0" />
+                      <span>Ôn tập</span>
                     </button>
 
                     <button
-                      onClick={() => onStartBattleForQuiz(quiz.id)}
-                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs border border-indigo-200/80 active:scale-95 transition-all cursor-pointer"
+                      type="button"
+                      onClick={() => onStartExam ? onStartExam(quiz.id, 'quiz15') : onSelectQuiz(quiz.id)}
+                      className="flex items-center justify-center gap-1 py-2 px-1 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-[11px] shadow-xs active:scale-95 transition-all cursor-pointer"
+                      title="Kiểm tra 15 phút (Ngẫu nhiên 20 câu)"
                     >
-                      <Swords className="w-3.5 h-3.5 text-indigo-600" />
+                      <Zap className="w-3 h-3 fill-white shrink-0" />
+                      <span>15 Phút</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => onStartBattleForQuiz(quiz.id)}
+                      className="flex items-center justify-center gap-1 py-2 px-1 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-[11px] border border-indigo-200/80 active:scale-95 transition-all cursor-pointer"
+                      title="Tổ chức thi đấu đối kháng trực tiếp"
+                    >
+                      <Swords className="w-3 h-3 text-indigo-600 shrink-0" />
                       <span>Thi đấu</span>
                     </button>
                   </div>

@@ -13,7 +13,9 @@ import {
   User, 
   ArrowLeft,
   MessageSquare,
-  Trash2
+  Trash2,
+  BookOpen,
+  Zap
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { fixMojibake, cleanDescription, cleanFilename } from '../utils/textEncoding';
@@ -207,23 +209,43 @@ export default function QuizDetailPage({
             </div>
           </div>
 
-          {/* 2 Main Action Buttons */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100">
-            <button
-              onClick={() => onStartExam(quiz.id)}
-              className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm shadow-lg shadow-blue-600/30 active:scale-98 transition-all cursor-pointer"
-            >
-              <Play className="w-5 h-5 fill-white" />
-              <span>▶ BẮT ĐẦU LÀM BÀI</span>
-            </button>
+          {/* Exam Modes Selection Actions */}
+          <div className="space-y-3 pt-4 border-t border-slate-100">
+            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Chọn Chế Độ Khảo Thí & Thi Đấu:
+            </div>
 
-            <button
-              onClick={() => onStartBattle(quiz.id)}
-              className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold text-sm shadow-lg shadow-amber-500/25 active:scale-98 transition-all cursor-pointer"
-            >
-              <Swords className="w-5 h-5" />
-              <span>🏆 TỔ CHỨC THI ĐẤU (BATTLE)</span>
-            </button>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Option 1: Practice full topic */}
+              <button
+                type="button"
+                onClick={() => onStartExam(quiz.id, 'practice')}
+                className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-md shadow-sky-600/20 active:scale-98 transition-all cursor-pointer"
+              >
+                <BookOpen className="w-4 h-4" />
+                <span>📚 ÔN TẬP TOÀN BỘ ({quiz.totalQuestions} CÂU)</span>
+              </button>
+
+              {/* Option 2: 15-minute 20-question randomized test */}
+              <button
+                type="button"
+                onClick={() => onStartExam(quiz.id, 'quiz15')}
+                className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs shadow-md shadow-amber-500/20 active:scale-98 transition-all cursor-pointer"
+              >
+                <Zap className="w-4 h-4 fill-white" />
+                <span>⚡ KIỂM TRA 15 PHÚT (20 CÂU)</span>
+              </button>
+
+              {/* Option 3: Live battle */}
+              <button
+                type="button"
+                onClick={() => onStartBattle(quiz.id)}
+                className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs shadow-md shadow-indigo-600/20 active:scale-98 transition-all cursor-pointer"
+              >
+                <Swords className="w-4 h-4" />
+                <span>🏆 THI ĐẤU (BATTLE)</span>
+              </button>
+            </div>
           </div>
 
         </div>

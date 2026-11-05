@@ -29,6 +29,7 @@ function MainApp() {
   });
 
   const [selectedQuizId, setSelectedQuizId] = useState('quiz_cnxhkh_05');
+  const [selectedExamMode, setSelectedExamMode] = useState('practice');
   const [lastAttemptId, setLastAttemptId] = useState(null);
 
   // AUTHENTICATION GATE:
@@ -39,13 +40,15 @@ function MainApp() {
   }
 
   // Navigation handlers
-  const handleSelectQuiz = (quizId) => {
+  const handleSelectQuiz = (quizId, mode = 'practice') => {
     setSelectedQuizId(quizId);
+    setSelectedExamMode(mode);
     setActivePage('quiz-detail');
   };
 
-  const handleStartExam = (quizId) => {
+  const handleStartExam = (quizId, mode = 'practice') => {
     setSelectedQuizId(quizId);
+    setSelectedExamMode(mode);
     setActivePage('exam');
   };
 
@@ -79,6 +82,7 @@ function MainApp() {
         {activePage === 'explore' && (
           <ExplorePage
             onSelectQuiz={handleSelectQuiz}
+            onStartExam={handleStartExam}
             onStartBattleForQuiz={handleStartBattleForQuiz}
           />
         )}
@@ -95,6 +99,7 @@ function MainApp() {
         {activePage === 'exam' && (
           <ExamTakingPage
             quizId={selectedQuizId}
+            mode={selectedExamMode}
             onExamSubmitted={handleExamSubmitted}
             onCancelExam={() => setActivePage('explore')}
           />

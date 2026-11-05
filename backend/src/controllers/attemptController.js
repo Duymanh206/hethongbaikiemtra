@@ -2,26 +2,32 @@ import { db } from '../database/db.js';
 
 export const startAttempt = (req, res) => {
   try {
-    const { quizId, studentId = 'dtc245200060', candidateName = 'Nguyễn Văn An' } = req.body;
-    const quiz = db.findOne('quizzes', q => q.id === quizId);
+    const { quizId, studentId = 'dtc245200060', candidateName = 'Nguyễn Văn An', questionIds = [], durationMinutes } = req.body;
+    let quiz = db.findOne('quizzes', q => q.id === quizId);
     if (!quiz) {
-      return res.status(404).json({ success: false, message: 'Bài thi không tồn tại' });
+      if (quizId === 'composite_period60') {
+        quiz = { id: 'composite_period60', title: 'Bài Kiểm Tra 1 Tiết (60 Phút) - Ma Trận 3 Chủ Đề', durationMinutes: 60, antiCheatEnabled: true, maxViolations: 3 };
+      } else if (quizId === 'composite_final45') {
+        quiz = { id: 'composite_final45', title: 'Bài Kiểm Tra Kết Thúc Học Phần (45 Phút - 40 Câu)', durationMinutes: 45, antiCheatEnabled: true, maxViolations: 3 };
+      } else {
+        quiz = { id: quizId, title: 'Bài Kiểm Tra', durationMinutes: durationMinutes || 15, antiCheatEnabled: true, maxViolations: 3 };
+      }
     }
 
-    const questions = db.find('questions', q => q.quizId === quizId);
+    const totalDurationSeconds = ((durationMinutes || quiz.durationMinutes) || 15) * 60;
     const attemptId = `att_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
-    const totalDurationSeconds = (quiz.durationMinutes || 15) * 60;
 
     const newAttempt = {
       id: attemptId,
       quizId,
+      questionIds: Array.isArray(questionIds) && questionIds.length > 0 ? questionIds : null,
       userId: 'user_1',
       studentId: studentId.trim(),
       candidateName: candidateName.trim(),
       score: 0,
       maxScore: 10.0,
       correctCount: 0,
-      totalCount: questions.length,
+      totalCount: (Array.isArray(questionIds) && questionIds.length > 0) ? questionIds.length : (db.find('questions', q => q.quizId === quizId).length || 20),
       percentage: 0,
       startedAt: new Date().toISOString(),
       submittedAt: null,
@@ -141,8 +147,26 @@ export const submitAttempt = (req, res) => {
       return res.json({ success: true, message: 'Bài thi đã được nộp trước đó', attemptId: id });
     }
 
-    const quiz = db.findOne('quizzes', q => q.id === attempt.quizId);
-    const questions = db.find('questions', q => q.quizId === attempt.quizId);
+    let quiz = db.findOne('quizzes', q => q.id === attempt.quizId);
+    if (!quiz) {
+      if (attempt.quizId === 'composite_period60') {
+        quiz = { id: 'composite_period60', title: 'BÀI KIỂM TRA 1 TIẾT (60 PHÚT) - TỔNG HỢP 3 CHỦ ĐỀ', durationMinutes: 60 };
+      } else if (attempt.quizId === 'composite_final45') {
+        quiz = { id: 'composite_final45', title: 'BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)', durationMinutes: 45 };
+      } else {
+        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: 15 };
+      }
+    }
+
+    let questions = [];
+    if (attempt.questionIds && Array.isArray(attempt.questionIds) && attempt.questionIds.length > 0) {
+      questions = attempt.questionIds.map(qid => db.findOne('questions', q => q.id === qid)).filter(Boolean);
+    } else {
+      questions = db.find('questions', q => q.quizId === attempt.quizId);
+    }
+    if (questions.length === 0 && Object.keys(answers).length > 0) {
+      questions = Object.keys(answers).map(qid => db.findOne('questions', q => q.id === qid)).filter(Boolean);
+    }
     const allOptions = db.getTable('question_options');
     const allDragDrop = db.getTable('drag_drop_items');
 
@@ -231,9 +255,11 @@ export const submitAttempt = (req, res) => {
     });
 
     // Increment quiz attemptsCount
-    db.update('quizzes', q => q.id === attempt.quizId, {
-      attemptsCount: (quiz.attemptsCount || 0) + 1
-    });
+    if (db.findOne('quizzes', q => q.id === attempt.quizId)) {
+      db.update('quizzes', q => q.id === attempt.quizId, {
+        attemptsCount: (quiz.attemptsCount || 0) + 1
+      });
+    }
 
     res.json({
       success: true,
@@ -254,11 +280,30 @@ export const getAttemptResult = (req, res) => {
       return res.status(404).json({ success: false, message: 'Không tìm thấy kết quả bài thi' });
     }
 
-    const quiz = db.findOne('quizzes', q => q.id === attempt.quizId);
-    const questions = db.find('questions', q => q.quizId === attempt.quizId);
+    let quiz = db.findOne('quizzes', q => q.id === attempt.quizId);
+    if (!quiz) {
+      if (attempt.quizId === 'composite_period60') {
+        quiz = { id: 'composite_period60', title: 'BÀI KIỂM TRA 1 TIẾT (60 PHÚT) - TỔNG HỢP 3 CHỦ ĐỀ', durationMinutes: 60 };
+      } else if (attempt.quizId === 'composite_final45') {
+        quiz = { id: 'composite_final45', title: 'BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)', durationMinutes: 45 };
+      } else {
+        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: 15 };
+      }
+    }
+
     const allOptions = db.getTable('question_options');
     const allDragDrop = db.getTable('drag_drop_items');
     const answers = db.find('attempt_answers', ans => ans.attemptId === id);
+
+    let questions = [];
+    if (attempt.questionIds && Array.isArray(attempt.questionIds) && attempt.questionIds.length > 0) {
+      questions = attempt.questionIds.map(qid => db.findOne('questions', q => q.id === qid)).filter(Boolean);
+    } else {
+      questions = db.find('questions', q => q.quizId === attempt.quizId);
+    }
+    if (questions.length === 0 && answers.length > 0) {
+      questions = answers.map(a => db.findOne('questions', q => q.id === a.questionId)).filter(Boolean);
+    }
 
     // Build comprehensive review structure with correct vs user selected styling
     const detailedReview = questions.map((q, idx) => {
