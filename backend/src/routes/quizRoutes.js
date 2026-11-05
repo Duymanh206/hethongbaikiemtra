@@ -4,6 +4,7 @@ import {
   getAllQuizzes,
   getQuizById,
   getQuizExamQuestions,
+  getCoursesWithTopics,
   importDocxQuiz,
   createQuiz,
   addReview,
@@ -15,6 +16,7 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
 
 router.get('/', getAllQuizzes);
+router.get('/meta/courses-with-topics', getCoursesWithTopics);
 router.get('/:id', getQuizById);
 router.get('/:id/exam', getQuizExamQuestions);
 router.post('/import-docx', upload.single('file'), importDocxQuiz);

@@ -30,6 +30,7 @@ function MainApp() {
 
   const [selectedQuizId, setSelectedQuizId] = useState('quiz_cnxhkh_05');
   const [selectedExamMode, setSelectedExamMode] = useState('practice');
+  const [selectedTopicIds, setSelectedTopicIds] = useState([]);
   const [lastAttemptId, setLastAttemptId] = useState(null);
 
   // AUTHENTICATION GATE:
@@ -43,12 +44,14 @@ function MainApp() {
   const handleSelectQuiz = (quizId, mode = 'practice') => {
     setSelectedQuizId(quizId);
     setSelectedExamMode(mode);
+    setSelectedTopicIds([]);
     setActivePage('quiz-detail');
   };
 
-  const handleStartExam = (quizId, mode = 'practice') => {
+  const handleStartExam = (quizId, mode = 'practice', topicIds = []) => {
     setSelectedQuizId(quizId);
     setSelectedExamMode(mode);
+    setSelectedTopicIds(topicIds || []);
     setActivePage('exam');
   };
 
@@ -100,6 +103,7 @@ function MainApp() {
           <ExamTakingPage
             quizId={selectedQuizId}
             mode={selectedExamMode}
+            selectedTopicIds={selectedTopicIds}
             onExamSubmitted={handleExamSubmitted}
             onCancelExam={() => setActivePage('explore')}
           />

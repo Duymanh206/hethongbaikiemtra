@@ -1,7 +1,7 @@
 import { db } from '../database/db.js';
 import { parseDocxBuffer } from '../services/docxParser.js';
 import { parseRawQuizText } from '../services/smartQuizParser.js';
-import { fixMojibake, cleanDescription, cleanQuiz } from '../utils/textEncoding.js';
+import { fixMojibake, cleanDescription, cleanQuiz, getQuizSubjectName } from '../utils/textEncoding.js';
 
 // Helper to shuffle array (Fisher-Yates)
 function shuffleArray(array) {
@@ -117,72 +117,193 @@ export const getQuizById = (req, res) => {
   }
 };
 
+export const getCoursesWithTopics = (req, res) => {
+  try {
+    const allQuizzes = db.find('quizzes', () => true);
+    const groups = {};
+
+    allQuizzes.forEach(quiz => {
+      const subject = getQuizSubjectName(quiz);
+      if (!groups[subject]) {
+        groups[subject] = {
+          courseName: subject,
+          totalTopics: 0,
+          totalQuestions: 0,
+          topics: []
+        };
+      }
+      const questionsCount = db.find('questions', q => q.quizId === quiz.id).length;
+      groups[subject].totalTopics += 1;
+      groups[subject].totalQuestions += questionsCount;
+      groups[subject].topics.push({
+        id: quiz.id,
+        title: fixMojibake(quiz.title),
+        durationMinutes: quiz.durationMinutes || 15,
+        totalQuestions: questionsCount,
+        category: quiz.category
+      });
+    });
+
+    res.json({
+      success: true,
+      courses: Object.values(groups)
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export const getQuizExamQuestions = (req, res) => {
   try {
     const { id } = req.params;
-    const { mode } = req.query; // 'practice' | 'quiz15' | 'period60' | 'final45'
+    const { mode, quizIds, courseName } = req.query; // 'practice' | 'quiz15' | 'period60' | 'final45'
 
     let quiz = null;
     let questions = [];
     let durationMinutes = 15;
     let modeBadge = '';
 
-    // MODE 3: KIỂM TRA 1 TIẾT (60 PHÚT) - 3 CHỦ ĐỀ, MỖI CHỦ ĐỀ 15 CÂU = 45 CÂU
+    let selectedIds = [];
+    if (quizIds) {
+      selectedIds = (Array.isArray(quizIds) ? quizIds : String(quizIds).split(','))
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
+
+    const allQuizzes = db.find('quizzes', () => true);
+
+    // Helper: get quizzes strictly belonging to the SAME course (never mix courses!)
+    const getQuizzesForCourse = (targetCourse, requestedIds = []) => {
+      let candidateQuizzes = allQuizzes.filter(q => getQuizSubjectName(q) === targetCourse);
+      if (candidateQuizzes.length === 0) {
+        candidateQuizzes = allQuizzes;
+      }
+      if (requestedIds.length > 0) {
+        const filtered = candidateQuizzes.filter(q => requestedIds.includes(q.id));
+        if (filtered.length > 0) return filtered;
+      }
+      return candidateQuizzes;
+    };
+
+    // Determine target course (mon hoc)
+    let targetCourse = courseName;
+    if (!targetCourse && selectedIds.length > 0) {
+      const firstQuiz = db.findOne('quizzes', q => q.id === selectedIds[0]);
+      if (firstQuiz) targetCourse = getQuizSubjectName(firstQuiz);
+    }
+    if (!targetCourse) {
+      const counts = {};
+      allQuizzes.forEach(q => {
+        const s = getQuizSubjectName(q);
+        counts[s] = (counts[s] || 0) + 1;
+      });
+      targetCourse = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0] || 'Chủ nghĩa xã hội khoa học';
+    }
+
+    // MODE 3: KIỂM TRA 1 TIẾT (60 PHÚT) - TỐI ĐA 3 CHỦ ĐỀ CÙNG MÔN HỌC, TỔNG 45 CÂU
     if (id === 'composite_period60' || mode === 'period60') {
-      const allQuizzes = db.find('quizzes', () => true);
-      const threeQuizzes = allQuizzes.slice(0, 3);
       durationMinutes = 60;
-      modeBadge = 'KIỂM TRA 1 TIẾT (60 PHÚT - 3 CHỦ ĐỀ)';
+      modeBadge = 'KIỂM TRA 1 TIẾT (60 PHÚT - 45 CÂU)';
+      const relevantQuizzes = getQuizzesForCourse(targetCourse, selectedIds).slice(0, 3);
+
       quiz = {
         id: 'composite_period60',
-        title: 'BÀI KIỂM TRA 1 TIẾT (60 PHÚT) - TỔNG HỢP 3 CHỦ ĐỀ',
+        title: `BÀI KIỂM TRA 1 TIẾT (60 PHÚT) - MÔN: ${targetCourse.toUpperCase()}`,
         durationMinutes: 60,
         antiCheatEnabled: true,
         maxViolations: 3,
         mode: 'period60',
-        modeBadge
+        modeBadge,
+        courseName: targetCourse,
+        selectedTopicsCount: relevantQuizzes.length
       };
 
-      threeQuizzes.forEach((qItem, tIdx) => {
-        const qList = db.find('questions', item => item.quizId === qItem.id);
-        const sampled = shuffleArray(qList).slice(0, 15);
-        sampled.forEach(q => {
-          questions.push({
-            ...q,
-            topicName: `Chủ đề ${tIdx + 1}: ${qItem.title}`
-          });
-        });
-      });
-      // Mix questions
-      questions = shuffleArray(questions);
-    }
-    // MODE 4: KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU PHÂN BỐ TỪ TẤT CẢ BÀI HỌC)
-    else if (id === 'composite_final45' || mode === 'final45') {
-      const allQuizzes = db.find('quizzes', () => true);
-      durationMinutes = 45;
-      modeBadge = 'THI KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)';
-      quiz = {
-        id: 'composite_final45',
-        title: 'BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)',
-        durationMinutes: 45,
-        antiCheatEnabled: true,
-        maxViolations: 3,
-        mode: 'final45',
-        modeBadge
-      };
+      const totalTarget = 45;
+      const basePerTopic = Math.floor(totalTarget / Math.max(1, relevantQuizzes.length));
 
-      const perQuizCount = Math.floor(40 / Math.max(1, allQuizzes.length));
-      allQuizzes.forEach((qItem, idx) => {
+      relevantQuizzes.forEach((qItem, tIdx) => {
         const qList = db.find('questions', item => item.quizId === qItem.id);
-        const count = (idx === allQuizzes.length - 1) ? (40 - questions.length) : perQuizCount;
+        const count = (tIdx === relevantQuizzes.length - 1)
+          ? (totalTarget - questions.length)
+          : basePerTopic;
+
         const sampled = shuffleArray(qList).slice(0, Math.min(count, qList.length));
         sampled.forEach(q => {
           questions.push({
             ...q,
-            topicName: qItem.title
+            topicName: `${targetCourse} - ${qItem.title}`
           });
         });
       });
+
+      // Fill remaining if needed from same course
+      if (questions.length < totalTarget) {
+        const allCourseQuestions = [];
+        relevantQuizzes.forEach(qItem => {
+          const qList = db.find('questions', item => item.quizId === qItem.id);
+          allCourseQuestions.push(...qList);
+        });
+        const existingIds = new Set(questions.map(q => q.id));
+        const remaining = allCourseQuestions.filter(q => !existingIds.has(q.id));
+        const needed = totalTarget - questions.length;
+        shuffleArray(remaining).slice(0, needed).forEach(q => {
+          questions.push({ ...q, topicName: `${targetCourse}` });
+        });
+      }
+
+      questions = shuffleArray(questions);
+    }
+    // MODE 4: KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU, TỐI ĐA 9 CHỦ ĐỀ CÙNG MÔN HỌC)
+    else if (id === 'composite_final45' || mode === 'final45') {
+      durationMinutes = 45;
+      modeBadge = 'THI KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)';
+      const relevantQuizzes = getQuizzesForCourse(targetCourse, selectedIds).slice(0, 9);
+
+      quiz = {
+        id: 'composite_final45',
+        title: `BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT) - MÔN: ${targetCourse.toUpperCase()}`,
+        durationMinutes: 45,
+        antiCheatEnabled: true,
+        maxViolations: 3,
+        mode: 'final45',
+        modeBadge,
+        courseName: targetCourse,
+        selectedTopicsCount: relevantQuizzes.length
+      };
+
+      const totalTarget = 40;
+      const basePerTopic = Math.floor(totalTarget / Math.max(1, relevantQuizzes.length));
+
+      relevantQuizzes.forEach((qItem, idx) => {
+        const qList = db.find('questions', item => item.quizId === qItem.id);
+        const count = (idx === relevantQuizzes.length - 1)
+          ? (totalTarget - questions.length)
+          : basePerTopic;
+
+        const sampled = shuffleArray(qList).slice(0, Math.min(count, qList.length));
+        sampled.forEach(q => {
+          questions.push({
+            ...q,
+            topicName: `${targetCourse} - ${qItem.title}`
+          });
+        });
+      });
+
+      // Fill remaining if needed from same course
+      if (questions.length < totalTarget) {
+        const allCourseQuestions = [];
+        relevantQuizzes.forEach(qItem => {
+          const qList = db.find('questions', item => item.quizId === qItem.id);
+          allCourseQuestions.push(...qList);
+        });
+        const existingIds = new Set(questions.map(q => q.id));
+        const remaining = allCourseQuestions.filter(q => !existingIds.has(q.id));
+        const needed = totalTarget - questions.length;
+        shuffleArray(remaining).slice(0, needed).forEach(q => {
+          questions.push({ ...q, topicName: `${targetCourse}` });
+        });
+      }
+
       questions = shuffleArray(questions);
     }
     // MODE 1 & 2: SPECIFIC QUIZ

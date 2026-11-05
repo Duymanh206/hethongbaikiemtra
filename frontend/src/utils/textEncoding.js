@@ -63,12 +63,33 @@ export function cleanDescription(desc, title) {
   return decoded;
 }
 
+export function getQuizSubjectName(quiz) {
+  if (!quiz) return 'Môn học chung';
+  const text = `${quiz.title || ''} ${quiz.description || ''} ${quiz.category || ''}`.toLowerCase();
+  if (text.includes('trí tuệ nhân tạo') || text.includes('ai') || text.includes('cntt') || text.includes('công nghệ thông tin')) {
+    return 'Ứng dụng Trí tuệ Nhân tạo';
+  }
+  if (text.includes('chủ nghĩa xã hội') || text.includes('cnxhkh') || text.includes('triết học') || text.includes('lý luận')) {
+    return 'Chủ nghĩa xã hội khoa học';
+  }
+  if (text.includes('pháp luật') || text.includes('luật')) {
+    return 'Pháp luật đại cương';
+  }
+  if (text.includes('lịch sử đảng') || text.includes('đảng')) {
+    return 'Lịch sử Đảng Cộng sản Việt Nam';
+  }
+  return quiz.category || 'Môn học chung';
+}
+
 export function cleanQuiz(quiz) {
   if (!quiz) return quiz;
   const title = fixMojibake(quiz.title);
+  const subject = getQuizSubjectName(quiz);
   return {
     ...quiz,
     title: title,
+    subjectName: subject,
+    category: quiz.category || subject,
     originalDocxName: cleanFilename(quiz.originalDocxName, title),
     description: cleanDescription(quiz.description, title)
   };

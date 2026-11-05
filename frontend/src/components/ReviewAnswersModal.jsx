@@ -164,7 +164,10 @@ export default function ReviewAnswersModal({
                         Câu {idx + 1}
                       </span>
                       {q.topicName && (
-                        <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[10px] font-semibold border border-indigo-200/60 truncate max-w-[200px]">
+                        <span 
+                          className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[10px] font-semibold border border-indigo-200/60 truncate max-w-[380px]"
+                          title={q.topicName}
+                        >
                           {q.topicName}
                         </span>
                       )}

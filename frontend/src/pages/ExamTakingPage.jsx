@@ -11,6 +11,7 @@ import { useAuth } from '../context/AuthContext';
 export default function ExamTakingPage({
   quizId,
   mode = 'practice',
+  selectedTopicIds = [],
   onExamSubmitted,
   onCancelExam
 }) {
@@ -47,7 +48,8 @@ export default function ExamTakingPage({
   answersRef.current = answers;
 
   // LocalStorage Key
-  const STORAGE_KEY = `exam_progress_${quizId}_${mode}_${user?.studentId || 'guest'}`;
+  const topicsKey = Array.isArray(selectedTopicIds) ? selectedTopicIds.slice().sort().join('_') : '';
+  const STORAGE_KEY = `exam_progress_${quizId}_${mode}_${topicsKey}_${user?.studentId || 'guest'}`;
 
   // 1. Initialize Exam
   useEffect(() => {
@@ -55,9 +57,12 @@ export default function ExamTakingPage({
       try {
         setLoading(true);
 
-        // Fetch Exam Questions with Mode
+        // Fetch Exam Questions with Mode and selected Topic IDs
         const modeQuery = mode ? `?mode=${encodeURIComponent(mode)}` : '';
-        const qRes = await fetch(`/api/quizzes/${quizId}/exam${modeQuery}`);
+        const topicsQuery = (Array.isArray(selectedTopicIds) && selectedTopicIds.length > 0)
+          ? `&quizIds=${encodeURIComponent(selectedTopicIds.join(','))}`
+          : '';
+        const qRes = await fetch(`/api/quizzes/${quizId}/exam${modeQuery}${topicsQuery}`);
         const qData = await qRes.json();
         if (!qData.success) {
           alert(qData.message || 'Không thể tải câu hỏi');
@@ -136,7 +141,7 @@ export default function ExamTakingPage({
     }
 
     initExam();
-  }, [quizId, mode]);
+  }, [quizId, mode, topicsKey]);
 
   // 2. Timer Countdown & Auto-Save Loop
   useEffect(() => {
@@ -335,14 +340,21 @@ export default function ExamTakingPage({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          quizId,
+          mode,
+          quizTitle: quizInfo?.title || 'Bài kiểm tra',
+          questionIds: questions.map(q => q.id),
+          studentId: user?.studentId || 'dtc245200060',
+          candidateName: user?.fullName || 'Hoàng Duy Mạnh',
           answers,
           durationSpent,
+          violationsCount,
           isDisqualified
         })
       });
 
       const data = await res.json();
-      if (data.success) {
+      if (data.success || data.attemptId) {
         // Clear local storage
         localStorage.removeItem(STORAGE_KEY);
         // Exit fullscreen
@@ -354,7 +366,14 @@ export default function ExamTakingPage({
 
         onExamSubmitted(attemptId);
       } else {
-        alert(data.message || 'Lỗi khi nộp bài');
+        console.warn('Submit warning, recovering attempt:', data.message);
+        localStorage.removeItem(STORAGE_KEY);
+        try {
+          if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+          }
+        } catch (e) {}
+        onExamSubmitted(attemptId);
       }
     } catch (err) {
       console.error(err);

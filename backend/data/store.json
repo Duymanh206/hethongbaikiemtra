@@ -82,7 +82,7 @@
       "id": "quiz_1793843679161",
       "title": "ỨNG DỤNG TRÍ TUỆ NHÂN TẠO - BÀI 6",
       "description": "ỨNG DỤNG TRÍ TUỆ NHÂN TẠO - BÀI 6.docx",
-      "category": "Triết học & Lý luận chính trị",
+      "category": "Ứng dụng Trí tuệ Nhân tạo",
       "originalDocxName": "ỨNG DỤNG TRÍ TUỆ NHÂN TẠO - BÀI 6.docx",
       "durationMinutes": 15,
       "passingScore": 5,
@@ -95,13 +95,14 @@
       "avgRating": 5,
       "createdBy": "Hoàng Duy Mạnh",
       "createdAt": "2026-11-05T01:54:39.161Z",
-      "updatedAt": "2026-11-05T01:54:39.161Z"
+      "updatedAt": "2026-11-05T01:54:39.161Z",
+      "subjectName": "Ứng dụng Trí tuệ Nhân tạo"
     },
     {
       "id": "quiz_1793843634614",
       "title": "Chủ Nghĩa Xã Hội Khoa Học_Bài 5",
       "description": "Chủ Nghĩa Xã Hội Khoa Học_Bài 5.docx",
-      "category": "Triết học & Lý luận chính trị",
+      "category": "Chủ nghĩa xã hội khoa học",
       "originalDocxName": "Chủ_Nghĩa_Xã_Hội_Khoa_Học_Bài_5.docx",
       "durationMinutes": 15,
       "passingScore": 5,
@@ -114,7 +115,8 @@
       "avgRating": 5,
       "createdBy": "Hoàng Duy Mạnh",
       "createdAt": "2026-11-05T01:53:54.614Z",
-      "updatedAt": "2026-11-05T01:53:54.614Z"
+      "updatedAt": "2026-11-05T01:53:54.614Z",
+      "subjectName": "Chủ nghĩa xã hội khoa học"
     },
     {
       "id": "quiz_cnxhkh_05",
@@ -133,13 +135,14 @@
       "avgRating": 5,
       "createdBy": "Hoàng Duy Mạnh",
       "createdAt": "2026-11-05T01:46:25.436Z",
-      "updatedAt": "2026-11-05T01:46:25.438Z"
+      "updatedAt": "2026-11-05T01:46:25.438Z",
+      "subjectName": "Chủ nghĩa xã hội khoa học"
     },
     {
       "id": "quiz_1793848319292",
       "title": "Chủ Nghĩa Xã Hội Khoa Học_Bài 4",
       "description": "Chủ Nghĩa Xã Hội Khoa Học_Bài 4.docx",
-      "category": "Triết học & Lý luận chính trị",
+      "category": "Chủ nghĩa xã hội khoa học",
       "originalDocxName": "Chủ_Nghĩa_Xã_Hội_Khoa_Học_Bài_4.docx",
       "durationMinutes": 15,
       "passingScore": 5,
@@ -152,7 +155,8 @@
       "avgRating": 5,
       "createdBy": "Hoàng Duy Mạnh",
       "createdAt": "2026-11-05T03:11:59.292Z",
-      "updatedAt": "2026-11-05T03:11:59.292Z"
+      "updatedAt": "2026-11-05T03:11:59.292Z",
+      "subjectName": "Chủ nghĩa xã hội khoa học"
     }
   ],
   "questions": [

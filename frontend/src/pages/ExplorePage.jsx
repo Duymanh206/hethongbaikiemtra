@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { fixMojibake, cleanDescription, cleanFilename } from '../utils/textEncoding';
+import TopicSelectionModal from '../components/TopicSelectionModal';
 
 export default function ExplorePage({ onSelectQuiz, onStartExam, onStartBattleForQuiz }) {
   const { user } = useAuth();
@@ -30,6 +31,10 @@ export default function ExplorePage({ onSelectQuiz, onStartExam, onStartBattleFo
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState('most_taken'); // 'most_taken', 'newest', 'highest_rated'
+
+  // Topic Selection Modal State
+  const [topicModalOpen, setTopicModalOpen] = useState(false);
+  const [modalExamMode, setModalExamMode] = useState('period60'); // 'period60' | 'final45'
 
   const categories = [
     'Tất cả',
@@ -218,24 +223,27 @@ export default function ExplorePage({ onSelectQuiz, onStartExam, onStartBattleFo
                     3
                   </div>
                   <span className="px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 text-[10px] font-bold">
-                    60 PHÚT / 45 CÂU (3 CHỦ ĐỀ)
+                    60 PHÚT / 45 CÂU (TỐI ĐA 3 CHỦ ĐỀ)
                   </span>
                 </div>
                 <h3 className="font-extrabold text-sm text-slate-900 leading-snug">
                   3. Kiểm Tra 1 Tiết (60 Phút)
                 </h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Hệ thống gắn 3 chủ đề ngẫu nhiên thành 1 bộ đề, mỗi chủ đề lấy đều 15 câu (tổng 45 câu), đầy đủ 4 dạng câu trả lời.
+                  Tự chọn tối đa 3 chủ đề cùng môn học để hệ thống bốc ngẫu nhiên 15 câu/chủ đề (tổng 45 câu), đủ 4 dạng câu hỏi.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-indigo-100">
                 <button
                   type="button"
-                  onClick={() => onStartExam ? onStartExam('composite_period60', 'period60') : onSelectQuiz('composite_period60')}
+                  onClick={() => {
+                    setModalExamMode('period60');
+                    setTopicModalOpen(true);
+                  }}
                   className="w-full py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <Play className="w-3.5 h-3.5 fill-white" />
-                  <span>Vào Thi 1 Tiết Ngay</span>
+                  <span>Chọn Chủ Đề & Thi 1 Tiết</span>
                 </button>
               </div>
             </div>
@@ -248,24 +256,27 @@ export default function ExplorePage({ onSelectQuiz, onStartExam, onStartBattleFo
                     4
                   </div>
                   <span className="px-2 py-0.5 rounded-md bg-rose-100 text-rose-800 text-[10px] font-bold">
-                    45 PHÚT / 40 CÂU TOÀN MÔN
+                    45 PHÚT / 40 CÂU (TỐI ĐA 9 BÀI)
                   </span>
                 </div>
                 <h3 className="font-extrabold text-sm text-slate-900 leading-snug">
                   4. Thi Kết Thúc Học Phần
                 </h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Bộ đề 40 câu hỏi phân bố đều từ tất cả các bài theo học phần của môn học, thời gian làm bài 45 phút.
+                  Tự chọn tối đa 9 chủ đề cùng môn học để phân bố đồng đều 40 câu hỏi trích từ các bài đã chọn, làm bài 45 phút.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-rose-100">
                 <button
                   type="button"
-                  onClick={() => onStartExam ? onStartExam('composite_final45', 'final45') : onSelectQuiz('composite_final45')}
+                  onClick={() => {
+                    setModalExamMode('final45');
+                    setTopicModalOpen(true);
+                  }}
                   className="w-full py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-xs active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <GraduationCap className="w-3.5 h-3.5" />
-                  <span>Vào Thi Kết Thúc HP</span>
+                  <span>Chọn Chủ Đề & Thi Cuối Kỳ</span>
                 </button>
               </div>
             </div>
@@ -450,6 +461,19 @@ export default function ExplorePage({ onSelectQuiz, onStartExam, onStartBattleFo
         </div>
 
       </div>
+
+      {/* Topic Selection Modal for Mode 3 & Mode 4 */}
+      <TopicSelectionModal
+        isOpen={topicModalOpen}
+        onClose={() => setTopicModalOpen(false)}
+        mode={modalExamMode}
+        onConfirm={({ mode, selectedTopicIds, courseName }) => {
+          const compositeId = mode === 'period60' ? 'composite_period60' : 'composite_final45';
+          if (onStartExam) {
+            onStartExam(compositeId, mode, selectedTopicIds);
+          }
+        }}
+      />
     </div>
   );
 }
