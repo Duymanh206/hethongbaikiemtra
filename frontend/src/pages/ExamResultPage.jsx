@@ -15,6 +15,7 @@ import {
   Download
 } from 'lucide-react';
 import AIExplanationModal from '../components/AIExplanationModal';
+import { fixMojibake } from '../utils/textEncoding';
 
 export default function ExamResultPage({
   attemptId,
@@ -138,7 +139,7 @@ export default function ExamResultPage({
       <div className="bg-white border-b border-slate-200 py-8 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider">
-            {quiz.title}
+            {fixMojibake(quiz.title)}
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900">

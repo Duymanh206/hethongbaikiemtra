@@ -16,6 +16,7 @@ import {
   Trash2
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { fixMojibake, cleanDescription } from '../utils/textEncoding';
 
 export default function QuizDetailPage({
   quizId,
@@ -159,18 +160,18 @@ export default function QuizDetailPage({
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
-              {quiz.title}
+              {fixMojibake(quiz.title)}
             </h1>
 
             {quiz.originalDocxName && (
               <div className="flex items-center gap-2 text-xs font-mono text-slate-500 bg-slate-50 p-2.5 rounded-xl border border-slate-200/80 w-fit">
                 <FileText className="w-4 h-4 text-blue-600" />
-                <span>Nguồn file gốc: <strong>{quiz.originalDocxName}</strong></span>
+                <span>Nguồn file gốc: <strong>{fixMojibake(quiz.originalDocxName)}</strong></span>
               </div>
             )}
 
             <p className="text-sm text-slate-600 leading-relaxed pt-1">
-              {quiz.description}
+              {cleanDescription(quiz.description)}
             </p>
           </div>
 

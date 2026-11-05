@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { cleanQuiz } from '../utils/textEncoding.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -270,7 +271,11 @@ class Database {
       }
       if (fs.existsSync(STORE_PATH)) {
         const content = fs.readFileSync(STORE_PATH, 'utf-8');
-        return JSON.parse(content);
+        const parsed = JSON.parse(content);
+        if (Array.isArray(parsed.quizzes)) {
+          parsed.quizzes = parsed.quizzes.map(cleanQuiz);
+        }
+        return parsed;
       }
     } catch (err) {
       console.error('Error reading store.json, re-initializing with seed data:', err);

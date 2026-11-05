@@ -25,6 +25,7 @@ import {
   ShieldAlert
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { fixMojibake } from '../utils/textEncoding';
 
 export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
   const { user } = useAuth();
@@ -312,7 +313,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
                     className="w-full text-xs font-semibold p-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:border-amber-400 outline-none"
                   >
                     {quizzesList.map(q => (
-                      <option key={q.id} value={q.id}>{q.title}</option>
+                      <option key={q.id} value={q.id}>{fixMojibake(q.title)}</option>
                     ))}
                   </select>
                 </div>

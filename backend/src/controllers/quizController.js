@@ -1,6 +1,7 @@
 import { db } from '../database/db.js';
 import { parseDocxBuffer } from '../services/docxParser.js';
 import { parseRawQuizText } from '../services/smartQuizParser.js';
+import { fixMojibake, cleanDescription, cleanQuiz } from '../utils/textEncoding.js';
 
 // Helper to shuffle array (Fisher-Yates)
 function shuffleArray(array) {
@@ -42,7 +43,7 @@ export const getAllQuizzes = (req, res) => {
       quizzes.sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0));
     }
 
-    res.json({ success: true, count: quizzes.length, data: quizzes });
+    res.json({ success: true, count: quizzes.length, data: quizzes.map(cleanQuiz) });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -61,11 +62,11 @@ export const getQuizById = (req, res) => {
 
     res.json({
       success: true,
-      data: {
+      data: cleanQuiz({
         ...quiz,
         totalQuestions: questions.length,
         reviews
-      }
+      })
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -185,16 +186,23 @@ export const importDocxQuiz = async (req, res) => {
       detectByHighlight: detectByHighlight === 'true' || detectByHighlight === true
     };
 
+    // Decode original filename to prevent mojibake
+    const originalFilename = fixMojibake(req.file.originalname);
+
+    const cleanTitle = (title && title.trim()) 
+      ? fixMojibake(title.trim()) 
+      : originalFilename.replace(/\.docx$/i, '');
+
     const parsedResult = await parseDocxBuffer(req.file.buffer, config);
 
     if (saveDirectly === 'true' || saveDirectly === true) {
       const quizId = `quiz_${Date.now()}`;
       const newQuiz = {
         id: quizId,
-        title: title || req.file.originalname.replace(/\.docx$/i, ''),
-        description: `Import tự động từ file Word: ${req.file.originalname}`,
+        title: cleanTitle,
+        description: `Import tự động từ file Word: ${originalFilename}`,
         category: category || 'Chung',
-        originalDocxName: req.file.originalname,
+        originalDocxName: originalFilename,
         durationMinutes: 15,
         passingScore: 5.0,
         shuffleQuestions: true,
@@ -258,13 +266,14 @@ export const importDocxQuiz = async (req, res) => {
         saved: true,
         quizId,
         totalQuestions: parsedResult.questions.length,
-        message: `Đã tạo bài thi thành công từ file ${req.file.originalname}!`
+        fileName: originalFilename,
+        message: `Đã tạo bài thi thành công từ file ${originalFilename}!`
       });
     }
 
     res.json({
       success: true,
-      fileName: req.file.originalname,
+      fileName: originalFilename,
       totalQuestions: parsedResult.questions.length,
       questions: parsedResult.questions
     });
@@ -297,10 +306,10 @@ export const createQuiz = (req, res) => {
     const quizId = `quiz_${Date.now()}`;
     const newQuiz = {
       id: quizId,
-      title,
-      description: description || '',
+      title: fixMojibake(title),
+      description: cleanDescription(description || ''),
       category: category || 'Chung',
-      originalDocxName: null,
+      originalDocxName: req.body.originalDocxName ? fixMojibake(req.body.originalDocxName) : null,
       durationMinutes: Number(durationMinutes) || 15,
       passingScore: Number(passingScore) || 5.0,
       shuffleQuestions: !!shuffleQuestions,

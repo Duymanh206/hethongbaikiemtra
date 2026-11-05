@@ -16,6 +16,7 @@ import {
   Trash2
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { fixMojibake, cleanDescription } from '../utils/textEncoding';
 
 export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
   const { user } = useAuth();
@@ -231,20 +232,20 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
                       onClick={() => onSelectQuiz(quiz.id)}
                       className="font-bold text-base text-slate-900 group-hover:text-blue-600 transition-colors cursor-pointer line-clamp-2 leading-snug"
                     >
-                      {quiz.title}
+                      {fixMojibake(quiz.title)}
                     </h3>
 
                     {/* Original DOCX file tag */}
                     {quiz.originalDocxName && (
                       <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-500 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100 truncate">
                         <FileText className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-                        <span className="truncate">File gốc: {quiz.originalDocxName}</span>
+                        <span className="truncate">File gốc: {fixMojibake(quiz.originalDocxName)}</span>
                       </div>
                     )}
 
                     {/* Description */}
                     <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                      {quiz.description}
+                      {cleanDescription(quiz.description)}
                     </p>
 
                     {/* Stats pills */}
