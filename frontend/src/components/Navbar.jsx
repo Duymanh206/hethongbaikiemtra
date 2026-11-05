@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { 
   Sparkles, 
@@ -14,8 +14,11 @@ import {
   UserPlus,
   Menu, 
   X,
-  GraduationCap
+  GraduationCap,
+  ShieldCheck,
+  Bell
 } from 'lucide-react';
+import AdminApprovalModal from './AdminApprovalModal';
 
 export default function Navbar({ activePage, setActivePage }) {
   const { 
@@ -29,6 +32,26 @@ export default function Navbar({ activePage, setActivePage }) {
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [approvalModalOpen, setApprovalModalOpen] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
+
+  const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060' || user?.isAdmin;
+
+  // Poll for pending users count if Admin
+  useEffect(() => {
+    if (!isAdmin) return;
+    const fetchPending = () => {
+      fetch('/api/auth/pending-users')
+        .then(r => r.json())
+        .then(d => {
+          if (d.success) setPendingCount(d.pendingCount || 0);
+        })
+        .catch(() => {});
+    };
+    fetchPending();
+    const interval = setInterval(fetchPending, 10000);
+    return () => clearInterval(interval);
+  }, [isAdmin]);
 
   const navItems = [
     { id: 'explore', label: 'Khám phá', icon: Compass },
@@ -94,6 +117,24 @@ export default function Navbar({ activePage, setActivePage }) {
 
           {/* User Profile Area (Desktop) */}
           <div className="hidden sm:flex items-center gap-3">
+            
+            {/* Admin Approval Button (Hoàng Duy Mạnh) */}
+            {isAdmin && (
+              <button
+                onClick={() => setApprovalModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 border border-amber-300 text-xs font-bold transition-all shadow-xs"
+                title="Phê duyệt tài khoản đăng ký mới"
+              >
+                <ShieldCheck className="w-4 h-4 text-amber-600" />
+                <span>Duyệt đăng ký</span>
+                {pendingCount > 0 && (
+                  <span className="w-5 h-5 rounded-full bg-amber-600 text-white text-[10px] flex items-center justify-center font-black animate-pulse">
+                    {pendingCount}
+                  </span>
+                )}
+              </button>
+            )}
+
             {user ? (
               <>
                 <button
@@ -129,15 +170,42 @@ export default function Navbar({ activePage, setActivePage }) {
                       <div className="px-4 py-2.5 border-b border-slate-100 bg-slate-50/50">
                         <div className="flex items-center gap-2 mb-1">
                           <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded ${
-                            user.role === 'teacher' ? 'bg-indigo-100 text-indigo-800' : 'bg-blue-100 text-blue-800'
+                            isAdmin 
+                              ? 'bg-amber-100 text-amber-900' 
+                              : user.role === 'teacher' 
+                                ? 'bg-indigo-100 text-indigo-800' 
+                                : 'bg-blue-100 text-blue-800'
                           }`}>
-                            {user.role === 'teacher' ? 'GIẢNG VIÊN' : 'SINH VIÊN'}
+                            {isAdmin ? '👑 QUẢN TRỊ VIÊN' : user.role === 'teacher' ? 'GIẢNG VIÊN' : 'SINH VIÊN'}
                           </span>
                         </div>
                         <p className="text-sm font-bold text-slate-800">{user.fullName}</p>
                         <p className="text-xs font-mono text-blue-600">ID/MSSV: {user.studentId || user.username}</p>
                         {user.email && <p className="text-[11px] text-slate-400 truncate">{user.email}</p>}
                       </div>
+
+                      {/* Admin link inside dropdown */}
+                      {isAdmin && (
+                        <div className="py-1 border-b border-slate-100">
+                          <button
+                            onClick={() => {
+                              setUserDropdownOpen(false);
+                              setApprovalModalOpen(true);
+                            }}
+                            className="w-full text-left px-4 py-2 text-xs font-bold text-amber-700 hover:bg-amber-50 flex items-center justify-between"
+                          >
+                            <div className="flex items-center gap-2">
+                              <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+                              <span>Duyệt tài khoản mới</span>
+                            </div>
+                            {pendingCount > 0 && (
+                              <span className="px-1.5 py-0.5 rounded-full bg-amber-600 text-white text-[10px]">
+                                {pendingCount}
+                              </span>
+                            )}
+                          </button>
+                        </div>
+                      )}
 
                       <div className="py-1">
                         <button
@@ -183,7 +251,6 @@ export default function Navbar({ activePage, setActivePage }) {
                 </div>
               </>
             ) : (
-              /* If not logged in */
               <div className="flex items-center gap-2">
                 <button
                   onClick={openLogin}
@@ -206,6 +273,20 @@ export default function Navbar({ activePage, setActivePage }) {
 
           {/* Mobile hamburger */}
           <div className="lg:hidden flex items-center gap-2">
+            {isAdmin && (
+              <button
+                onClick={() => setApprovalModalOpen(true)}
+                className="p-1.5 rounded-lg bg-amber-500/20 text-amber-700 border border-amber-300 text-xs font-bold flex items-center gap-1"
+              >
+                <ShieldCheck className="w-4 h-4 text-amber-600" />
+                {pendingCount > 0 && (
+                  <span className="w-4 h-4 rounded-full bg-amber-600 text-white text-[9px] flex items-center justify-center font-bold">
+                    {pendingCount}
+                  </span>
+                )}
+              </button>
+            )}
+
             {!user && (
               <button
                 onClick={openLogin}
@@ -297,6 +378,12 @@ export default function Navbar({ activePage, setActivePage }) {
           })}
         </div>
       )}
+
+      {/* Admin Approval Modal */}
+      <AdminApprovalModal
+        isOpen={approvalModalOpen}
+        onClose={() => setApprovalModalOpen(false)}
+      />
     </header>
   );
 }

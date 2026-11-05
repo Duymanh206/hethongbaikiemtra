@@ -9,8 +9,6 @@ function generateRoomPin() {
 
 export function setupBattleSocket(io) {
   io.on('connection', socket => {
-    console.log(`Socket connected: ${socket.id}`);
-
     // Create Room
     socket.on('create_room', ({ quizId, scoringMode = 'total_points', hostName = 'Chủ phòng' }, callback) => {
       try {
@@ -38,6 +36,7 @@ export function setupBattleSocket(io) {
           timePerQuestion: 20, // 20s
           questionStartedAt: null,
           players: new Map(),
+          playerHistory: new Map(), // socketId -> array of { questionIndex, isCorrect, selectedOptionLabel, correctOptionLabel }
           roundAnswers: new Map(), // socketId -> { answer, timeMs, isCorrect, points }
           createdAt: Date.now()
         };
@@ -77,10 +76,12 @@ export function setupBattleSocket(io) {
         avatar: avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${socket.id}`,
         score: 0,
         correctAnswersCount: 0,
+        wrongAnswersCount: 0,
         streak: 0
       };
 
       room.players.set(socket.id, player);
+      room.playerHistory.set(socket.id, []);
       socket.join(pin);
       socket.roomPin = pin;
       socket.isHost = false;
@@ -134,6 +135,7 @@ export function setupBattleSocket(io) {
       const questions = db.find('questions', q => q.quizId === room.quizId);
       const currentQ = questions[room.currentQuestionIndex];
       const correctOpt = db.findOne('question_options', o => o.questionId === currentQ.id && o.isCorrect);
+      const chosenOpt = db.findOne('question_options', o => o.id === optionId);
 
       const isCorrect = correctOpt ? correctOpt.id === optionId : false;
       const timeSpentSec = Math.min(room.timePerQuestion, Math.max(0.1, (Date.now() - room.questionStartedAt) / 1000));
@@ -141,11 +143,9 @@ export function setupBattleSocket(io) {
       let pointsAwarded = 0;
       if (isCorrect) {
         if (room.scoringMode === 'total_points') {
-          // Speed-based: 500 + round(500 * (remaining / total))
           const remainingSec = Math.max(0, room.timePerQuestion - timeSpentSec);
           pointsAwarded = 500 + Math.round(500 * (remainingSec / room.timePerQuestion));
         } else {
-          // Fastest per question mode: 1 point for correct, 2 points for fastest
           pointsAwarded = 1;
         }
       }
@@ -154,12 +154,13 @@ export function setupBattleSocket(io) {
         socketId: socket.id,
         nickname: player.nickname,
         optionId,
+        chosenLabel: chosenOpt?.label || '',
         isCorrect,
         timeSpentSec,
         pointsAwarded
       });
 
-      // Notify host and players of answer count
+      // Notify answer count
       io.to(pin).emit('answer_received_count', {
         answeredCount: room.roundAnswers.size,
         totalPlayers: room.players.size
@@ -171,13 +172,7 @@ export function setupBattleSocket(io) {
       }
     });
 
-    // Host explicitly advances or reveals
-    socket.on('host_trigger_reveal', ({ pin }) => {
-      const room = activeBattles.get(pin);
-      if (!room || room.hostSocketId !== socket.id) return;
-      revealQuestionResults(io, room);
-    });
-
+    // Host triggers next question
     socket.on('host_next_question', ({ pin }) => {
       const room = activeBattles.get(pin);
       if (!room || room.hostSocketId !== socket.id) return;
@@ -210,7 +205,6 @@ function sendNextQuestion(io, room) {
   const questions = db.find('questions', q => q.quizId === room.quizId);
 
   if (room.currentQuestionIndex >= questions.length) {
-    // End battle, show final podium
     finishBattle(io, room);
     return;
   }
@@ -252,7 +246,7 @@ function revealQuestionResults(io, room) {
   const currentQ = questions[room.currentQuestionIndex];
   const correctOpt = db.findOne('question_options', o => o.questionId === currentQ.id && o.isCorrect);
 
-  // Compute round winners & fastest
+  // Compute round answers
   const answersList = Array.from(room.roundAnswers.values());
   const correctAnswers = answersList.filter(a => a.isCorrect);
   correctAnswers.sort((a, b) => a.timeSpentSec - b.timeSpentSec);
@@ -260,35 +254,61 @@ function revealQuestionResults(io, room) {
   let fastestPlayer = null;
   if (correctAnswers.length > 0) {
     fastestPlayer = correctAnswers[0];
-    // In fastest_per_question mode, give bonus point to fastest
     if (room.scoringMode === 'fastest_per_question') {
       fastestPlayer.pointsAwarded += 1;
     }
   }
 
-  // Apply points to players
-  for (const ans of answersList) {
-    const player = room.players.get(ans.socketId);
-    if (player) {
+  // Update each player's history & score
+  for (const [sId, player] of room.players.entries()) {
+    const ans = room.roundAnswers.get(sId);
+    const history = room.playerHistory.get(sId) || [];
+
+    if (ans) {
       if (ans.isCorrect) {
         player.score += ans.pointsAwarded;
         player.correctAnswersCount += 1;
         player.streak += 1;
       } else {
+        player.wrongAnswersCount = (player.wrongAnswersCount || 0) + 1;
         player.streak = 0;
       }
+      history.push({
+        questionIndex: room.currentQuestionIndex + 1,
+        questionContent: currentQ.content,
+        isCorrect: ans.isCorrect,
+        chosenLabel: ans.chosenLabel,
+        correctOptionLabel: correctOpt ? correctOpt.label : '',
+        correctOptionContent: correctOpt ? correctOpt.content : '',
+        pointsAwarded: ans.pointsAwarded
+      });
+    } else {
+      // Unanswered in time
+      player.wrongAnswersCount = (player.wrongAnswersCount || 0) + 1;
+      player.streak = 0;
+      history.push({
+        questionIndex: room.currentQuestionIndex + 1,
+        questionContent: currentQ.content,
+        isCorrect: false,
+        chosenLabel: 'Hết giờ (chưa chọn)',
+        correctOptionLabel: correctOpt ? correctOpt.label : '',
+        correctOptionContent: correctOpt ? correctOpt.content : '',
+        pointsAwarded: 0
+      });
     }
+    room.playerHistory.set(sId, history);
   }
 
-  // Sorted leaderboard
-  const leaderboard = Array.from(room.players.values()).sort((a, b) => {
+  // Leaderboard (used for Host only)
+  const fullLeaderboard = Array.from(room.players.values()).sort((a, b) => {
     if (room.scoringMode === 'fastest_per_question') {
       return b.correctAnswersCount - a.correctAnswersCount || b.score - a.score;
     }
     return b.score - a.score;
   });
 
-  io.to(room.pin).emit('question_result', {
+  // Emit to Host: full result + full leaderboard
+  io.to(room.hostSocketId).emit('question_result', {
     questionIndex: room.currentQuestionIndex + 1,
     correctOptionId: correctOpt ? correctOpt.id : null,
     correctOptionLabel: correctOpt ? correctOpt.label : '',
@@ -297,14 +317,35 @@ function revealQuestionResults(io, room) {
       nickname: fastestPlayer.nickname,
       time: fastestPlayer.timeSpentSec.toFixed(2)
     } : null,
-    leaderboard: leaderboard.slice(0, 10), // Top 10
-    isLastQuestion: room.currentQuestionIndex + 1 >= questions.length
+    leaderboard: fullLeaderboard,
+    isLastQuestion: room.currentQuestionIndex + 1 >= questions.length,
+    isHostView: true
   });
+
+  // Emit to each participant: ONLY their own score and whether they answered right/wrong!
+  for (const [sId, player] of room.players.entries()) {
+    const ans = room.roundAnswers.get(sId);
+    io.to(sId).emit('question_result', {
+      questionIndex: room.currentQuestionIndex + 1,
+      correctOptionId: correctOpt ? correctOpt.id : null,
+      correctOptionLabel: correctOpt ? correctOpt.label : '',
+      correctOptionContent: correctOpt ? correctOpt.content : '',
+      myResult: {
+        isCorrect: ans ? ans.isCorrect : false,
+        pointsAwarded: ans ? ans.pointsAwarded : 0,
+        myScore: player.score,
+        correctAnswersCount: player.correctAnswersCount
+      },
+      isLastQuestion: room.currentQuestionIndex + 1 >= questions.length,
+      isHostView: false
+    });
+  }
 }
 
 function finishBattle(io, room) {
   room.status = 'ended';
-  const leaderboard = Array.from(room.players.values()).sort((a, b) => {
+
+  const fullLeaderboard = Array.from(room.players.values()).sort((a, b) => {
     if (room.scoringMode === 'fastest_per_question') {
       return b.correctAnswersCount - a.correctAnswersCount || b.score - a.score;
     }
@@ -312,21 +353,41 @@ function finishBattle(io, room) {
   });
 
   const podium = {
-    first: leaderboard[0] || null,
-    second: leaderboard[1] || null,
-    third: leaderboard[2] || null
+    first: fullLeaderboard[0] || null,
+    second: fullLeaderboard[1] || null,
+    third: fullLeaderboard[2] || null
   };
 
-  io.to(room.pin).emit('battle_finished', {
+  // 1. Send complete results to Host (Người tạo phòng)
+  io.to(room.hostSocketId).emit('battle_finished', {
+    isHostView: true,
     podium,
-    leaderboard,
+    leaderboard: fullLeaderboard,
     scoringMode: room.scoringMode,
-    totalQuestions: room.questionCount
+    totalQuestions: room.questionCount,
+    totalParticipants: room.players.size
   });
 
-  // Clean up room after 10 minutes
+  // 2. Send restricted individual results to each Participant (Bên kia chỉ biết điểm & đúng sai của mình)
+  for (const [sId, player] of room.players.entries()) {
+    const history = room.playerHistory.get(sId) || [];
+    io.to(sId).emit('battle_finished', {
+      isHostView: false,
+      myResult: {
+        nickname: player.nickname,
+        myScore: player.score,
+        correctCount: player.correctAnswersCount,
+        wrongCount: room.questionCount - player.correctAnswersCount,
+        totalQuestions: room.questionCount,
+        percentage: Math.round((player.correctAnswersCount / room.questionCount) * 100),
+        answersBreakdown: history
+      },
+      totalQuestions: room.questionCount
+    });
+  }
+
+  // Clean up room after 15 minutes
   setTimeout(() => {
     activeBattles.delete(room.pin);
-  }, 10 * 60 * 1000);
+  }, 15 * 60 * 1000);
 }
-

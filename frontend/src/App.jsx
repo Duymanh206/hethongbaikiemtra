@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ExplorePage from './pages/ExplorePage';
@@ -18,7 +18,16 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 function MainApp() {
   const { user } = useAuth();
 
-  const [activePage, setActivePage] = useState('explore');
+  const [activePage, setActivePage] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('pin') || params.get('battle') || params.get('room')) {
+        return 'battle-lobby';
+      }
+    } catch {}
+    return 'explore';
+  });
+
   const [selectedQuizId, setSelectedQuizId] = useState('quiz_cnxhkh_05');
   const [lastAttemptId, setLastAttemptId] = useState(null);
 

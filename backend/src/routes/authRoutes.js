@@ -4,7 +4,10 @@ import {
   login, 
   getMe, 
   logout, 
-  switchRole 
+  switchRole,
+  approveAccountByLink,
+  getPendingUsers,
+  approveUserByAdmin
 } from '../controllers/authController.js';
 
 const router = express.Router();
@@ -15,5 +18,9 @@ router.get('/me', getMe);
 router.post('/logout', logout);
 router.post('/switch-role', switchRole);
 
-export default router;
+// Approval endpoints
+router.get('/approve', approveAccountByLink);
+router.get('/pending-users', getPendingUsers);
+router.post('/approve-user', approveUserByAdmin);
 
+export default router;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { 
   Sparkles, 
@@ -17,13 +17,17 @@ import {
   IdCard,
   Mail,
   GraduationCap,
-  Layers
+  Layers,
+  Swords
 } from 'lucide-react';
 
 export default function LoginPage() {
   const { login, register } = useAuth();
 
   const [activeTab, setActiveTab] = useState('login'); // 'login' | 'register'
+
+  // URL Invite PIN if present
+  const [invitedPin, setInvitedPin] = useState('');
 
   // Login form state
   const [loginUsername, setLoginUsername] = useState('');
@@ -44,11 +48,21 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [pendingNotice, setPendingNotice] = useState(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const pin = params.get('pin') || params.get('battle') || params.get('room');
+    if (pin) {
+      setInvitedPin(pin);
+    }
+  }, []);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
     setSuccessMessage('');
+    setPendingNotice(null);
 
     if (!loginUsername.trim()) {
       setErrorMessage('Vui lòng nhập Tên đăng nhập hoặc Mã sinh viên');
@@ -66,7 +80,11 @@ export default function LoginPage() {
     if (result.success) {
       setSuccessMessage(result.message || 'Đăng nhập thành công! Đang chuyển hướng...');
     } else {
-      setErrorMessage(result.message || 'Đăng nhập không thành công. Vui lòng kiểm tra lại');
+      if (result.pendingApproval) {
+        setPendingNotice(result.message);
+      } else {
+        setErrorMessage(result.message || 'Đăng nhập không thành công. Vui lòng kiểm tra lại');
+      }
     }
   };
 
@@ -74,6 +92,7 @@ export default function LoginPage() {
     e.preventDefault();
     setErrorMessage('');
     setSuccessMessage('');
+    setPendingNotice(null);
 
     if (!regFullName.trim()) {
       setErrorMessage('Vui lòng nhập Họ và tên');
@@ -104,7 +123,18 @@ export default function LoginPage() {
     setLoading(false);
 
     if (result.success) {
-      setSuccessMessage('Đăng ký tài khoản thành công! Đang vào hệ thống...');
+      if (result.pendingApproval) {
+        setPendingNotice(result.message);
+        // Reset form
+        setRegFullName('');
+        setRegUsername('');
+        setRegStudentId('');
+        setRegEmail('');
+        setRegPassword('');
+        setRegConfirmPassword('');
+      } else {
+        setSuccessMessage('Đăng ký tài khoản thành công!');
+      }
     } else {
       setErrorMessage(result.message || 'Đăng ký không thành công');
     }
@@ -113,7 +143,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-slate-100 flex flex-col justify-between selection:bg-blue-500 selection:text-white">
       
-      {/* Top Simple Header */}
+      {/* Top Header */}
       <header className="px-6 py-4 flex items-center justify-between border-b border-white/10 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
@@ -142,6 +172,14 @@ export default function LoginPage() {
           
           {/* Left Column: Intro & Features */}
           <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
+            
+            {invitedPin && (
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-amber-500/20 border border-amber-400 text-amber-300 text-xs font-bold animate-pulse">
+                <Swords className="w-4 h-4" />
+                <span>Bạn có lời mời vào Phòng Thi Đấu PIN #{invitedPin}! Hãy đăng nhập để tham gia.</span>
+              </div>
+            )}
+
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-semibold">
               <GraduationCap className="w-4 h-4 text-blue-400" />
               <span>Nền Tảng Thi Độc Quyền Dành Cho Sinh Viên & Giảng Viên</span>
@@ -165,7 +203,7 @@ export default function LoginPage() {
 
               <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs">
                 <ShieldCheck className="w-5 h-5 text-emerald-400 mb-2" />
-                <h4 className="text-xs font-bold text-white mb-0.5">Giám sát Proctoring</h4>
+                <h4 className="text-xs font-bold text-white mb-0.5">Giám sát bảo mật</h4>
                 <p className="text-[11px] text-slate-400 leading-tight">Toàn màn hình, cảnh báo chuyển tab gian lận</p>
               </div>
 
@@ -180,9 +218,9 @@ export default function LoginPage() {
             <div className="p-3 rounded-xl bg-blue-900/30 border border-blue-500/20 text-xs text-blue-200 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span>Thí sinh: <strong>Hoàng Duy Mạnh</strong> (Mã SV: <code className="font-mono bg-blue-950/60 px-1 py-0.5 rounded">dtc245200060</code>)</span>
+                <span>Quản trị viên: <strong>Hoàng Duy Mạnh</strong> (Mã SV: <code className="font-mono bg-blue-950/60 px-1 py-0.5 rounded">dtc245200060</code>)</span>
               </div>
-              <span className="text-[10px] text-blue-300/70 hidden sm:inline">Hệ thống khảo thí</span>
+              <span className="text-[10px] text-blue-300/70 hidden sm:inline">Phê duyệt tự động qua Email</span>
             </div>
           </div>
 
@@ -190,7 +228,6 @@ export default function LoginPage() {
           <div className="lg:col-span-6 w-full max-w-md mx-auto">
             <div className="bg-white rounded-3xl shadow-2xl shadow-black/40 border border-slate-100 overflow-hidden text-slate-800">
               
-              {/* Card top banner */}
               <div className="h-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 w-full" />
 
               <div className="p-6 sm:p-8">
@@ -231,6 +268,20 @@ export default function LoginPage() {
                     <span>Đăng ký mới</span>
                   </button>
                 </div>
+
+                {/* Pending Notice Alert */}
+                {pendingNotice && (
+                  <div className="mb-4 p-3.5 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs space-y-1">
+                    <div className="font-bold flex items-center gap-1.5 text-amber-800">
+                      <Clock className="w-4 h-4 text-amber-600 shrink-0" />
+                      <span>Đang chờ Quản trị viên phê duyệt:</span>
+                    </div>
+                    <p className="leading-relaxed text-[11px]">{pendingNotice}</p>
+                    <p className="text-[10px] text-amber-700 pt-1 italic">
+                      * Quản trị viên (Hoàng Duy Mạnh) đã nhận được email thông báo và sẽ bấm duyệt để bạn có thể vào làm bài.
+                    </p>
+                  </div>
+                )}
 
                 {/* Feedback Alerts */}
                 {errorMessage && (
@@ -317,7 +368,7 @@ export default function LoginPage() {
                         <span>💡 Tài khoản kiểm tra mẫu đã kích hoạt:</span>
                       </div>
                       <div className="flex items-center justify-between text-slate-600 pt-0.5">
-                        <span>• Sinh viên (Hoàng Duy Mạnh):</span>
+                        <span>• Quản trị viên & Sinh viên (Hoàng Duy Mạnh):</span>
                         <code className="bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-blue-600 font-bold">
                           dtc245200060 / 123
                         </code>
@@ -335,6 +386,11 @@ export default function LoginPage() {
                 {/* TAB 2: REGISTER */}
                 {activeTab === 'register' && (
                   <form onSubmit={handleRegisterSubmit} className="space-y-3">
+                    <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200 text-[11px] text-blue-800 flex items-start gap-1.5">
+                      <Mail className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                      <span>Sau khi bạn gửi đăng ký, hệ thống sẽ gửi email tới Quản trị viên Hoàng Duy Mạnh để xét duyệt kích hoạt tài khoản.</span>
+                    </div>
+
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">
                         Họ và tên thí sinh / Giảng viên
@@ -347,7 +403,7 @@ export default function LoginPage() {
                           type="text"
                           value={regFullName}
                           onChange={(e) => setRegFullName(e.target.value)}
-                          placeholder="VD: Hoàng Duy Mạnh"
+                          placeholder="VD: Nguyễn Văn An"
                           className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
                           required
                         />
@@ -363,7 +419,7 @@ export default function LoginPage() {
                           type="text"
                           value={regUsername}
                           onChange={(e) => setRegUsername(e.target.value)}
-                          placeholder="VD: manh206"
+                          placeholder="VD: an_nguyen"
                           className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
                           required
                         />
@@ -376,10 +432,23 @@ export default function LoginPage() {
                           type="text"
                           value={regStudentId}
                           onChange={(e) => setRegStudentId(e.target.value)}
-                          placeholder="VD: dtc245200060"
+                          placeholder="VD: dtc245200999"
                           className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
                         />
                       </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Email nhận thông báo
+                      </label>
+                      <input
+                        type="email"
+                        value={regEmail}
+                        onChange={(e) => setRegEmail(e.target.value)}
+                        placeholder="VD: an.nguyen@student.edu.vn"
+                        className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
+                      />
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
@@ -446,7 +515,7 @@ export default function LoginPage() {
                       disabled={loading}
                       className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-500/25 active:scale-98 transition-all disabled:opacity-50 mt-3"
                     >
-                      {loading ? 'Đang tạo tài khoản...' : 'Tạo Tài Khoản & Vào Hệ Thống'}
+                      {loading ? 'Đang gửi yêu cầu...' : 'Gửi Yêu Cầu Đăng Ký & Chờ Phê Duyệt'}
                     </button>
                   </form>
                 )}

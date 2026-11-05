@@ -16,7 +16,13 @@ import {
   ArrowRight, 
   Sparkles,
   QrCode,
-  Share2
+  Share2,
+  Copy,
+  Check,
+  Lock,
+  FileSpreadsheet,
+  ExternalLink,
+  ShieldAlert
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -39,6 +45,8 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
   const [isHost, setIsHost] = useState(false);
   const [players, setPlayers] = useState([]);
   const [qrDataUrl, setQrDataUrl] = useState('');
+  const [shareLink, setShareLink] = useState('');
+  const [copiedLink, setCopiedLink] = useState(false);
 
   // Playing question state
   const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -50,6 +58,15 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
   // Reveal & Podium State
   const [revealData, setRevealData] = useState(null);
   const [podiumData, setPodiumData] = useState(null);
+
+  // Check URL query for PIN on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const pin = params.get('pin') || params.get('battle') || params.get('room');
+    if (pin) {
+      setPinInput(pin);
+    }
+  }, []);
 
   // Initialize socket connection & fetch quizzes
   useEffect(() => {
@@ -95,7 +112,6 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
     socket.on('battle_finished', (finishedData) => {
       setPodiumData(finishedData);
       setStage('podium');
-      // Fire confetti celebration
       try {
         confetti({
           particleCount: 150,
@@ -135,14 +151,30 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
           setIsHost(true);
           setStage('host_lobby');
 
+          // Construct direct shareable URL
+          const link = `${window.location.origin}/?pin=${res.pin}`;
+          setShareLink(link);
+
           // Generate QR code for Room PIN
-          const joinUrl = `${window.location.origin}?pin=${res.pin}`;
-          QRCode.toDataURL(joinUrl).then(url => setQrDataUrl(url)).catch(() => {});
+          QRCode.toDataURL(link).then(url => setQrDataUrl(url)).catch(() => {});
         } else {
           alert(res.message);
         }
       }
     );
+  };
+
+  // Copy share link
+  const handleCopyLink = () => {
+    if (!shareLink) return;
+    navigator.clipboard.writeText(shareLink).then(() => {
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 3000);
+    }).catch(() => {
+      // Fallback
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 3000);
+    });
   };
 
   // Player joins room
@@ -154,7 +186,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
       'join_room',
       {
         pin: pinInput.trim(),
-        nickname: nicknameInput.trim() || 'Người chơi'
+        nickname: nicknameInput.trim() || user?.fullName || 'Người chơi'
       },
       (res) => {
         if (res.success) {
@@ -208,7 +240,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
               Thi Đấu Đối Kháng Trực Tiếp
             </h1>
             <p className="text-slate-400 text-sm max-w-xl mx-auto">
-              Tranh tài kiến thức cùng bạn bè và lớp học trong thời gian thực. Hỗ trợ đua tốc độ từng câu hoặc tích lũy tổng điểm xếp hạng!
+              Tạo link phòng thi đấu để mời bạn bè và cả lớp cùng làm bài. Người tạo phòng nắm toàn bộ bảng điểm, người tham gia biết điểm và đáp án đúng/sai của mình!
             </p>
           </div>
 
@@ -221,8 +253,8 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
                   <QrCode className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-white">Tham Gia Bằng Mã PIN</h3>
-                  <p className="text-xs text-slate-400">Không bắt buộc tài khoản</p>
+                  <h3 className="font-bold text-lg text-white">Tham Gia Bằng Mã PIN / Link</h3>
+                  <p className="text-xs text-slate-400">Tham gia ngay theo link mời</p>
                 </div>
               </div>
 
@@ -259,15 +291,15 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
               </form>
             </div>
 
-            {/* Host Room Card (Section 1.3 Spec) */}
+            {/* Host Room Card */}
             <div className="bg-slate-800/90 rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-xl space-y-5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950">
                   <Crown className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-white">Tạo Phòng Đấu Mới</h3>
-                  <p className="text-xs text-slate-400">Dành cho Giáo viên & Quản trò</p>
+                  <h3 className="font-bold text-lg text-white">Tạo Phòng Đấu & Lấy Link Mời</h3>
+                  <p className="text-xs text-slate-400">Tạo link để gửi cho mọi người cùng thi</p>
                 </div>
               </div>
 
@@ -285,7 +317,6 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
                   </select>
                 </div>
 
-                {/* SPEC REQUIREMENT: Host configures 2 scoring modes */}
                 <div>
                   <label className="block text-xs font-bold text-slate-300 mb-1.5">
                     Chế độ tính điểm:
@@ -320,7 +351,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
                         <Flame className="w-3.5 h-3.5 text-rose-400" />
                         <span>Nhanh nhất từng câu</span>
                       </div>
-                      <p className="text-[11px] leading-snug">Công bố ngay ai nhanh nhất sau mỗi câu; vinh danh kỷ lục.</p>
+                      <p className="text-[11px] leading-snug">Công bố ai nhanh nhất mỗi câu; vinh danh kỷ lục.</p>
                     </button>
                   </div>
                 </div>
@@ -328,9 +359,10 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
                 <button
                   type="button"
                   onClick={handleCreateRoom}
-                  className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/30 transition-all active:scale-98"
+                  className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/30 transition-all active:scale-98 flex items-center justify-center gap-2"
                 >
-                  Tạo Phòng & Lấy Mã PIN
+                  <Share2 className="w-4 h-4" />
+                  <span>Tạo Phòng & Lấy Link Mời</span>
                 </button>
               </div>
             </div>
@@ -342,32 +374,70 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
       {/* 2. LOBBY STAGE: HOST & PLAYER WAITING ROOM */}
       {(stage === 'host_lobby' || stage === 'player_lobby') && (
         <div className="max-w-4xl mx-auto px-4 py-12 text-center space-y-6">
-          <div className="bg-slate-800/90 rounded-3xl p-8 border border-slate-700 shadow-2xl space-y-6">
+          <div className="bg-slate-800/90 rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl space-y-6">
             
             <div className="space-y-2">
-              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">
-                Phòng Chờ Đấu Trường
+              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest flex items-center justify-center gap-1.5">
+                <Crown className="w-4 h-4" />
+                <span>{isHost ? 'Phòng Chờ Của Bạn (Chủ Phòng)' : 'Phòng Chờ Đấu Trường'}</span>
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-white">
                 {roomData?.quizTitle}
               </h2>
             </div>
 
-            {/* Big PIN Display & QR Code */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 py-4">
-              <div className="p-6 bg-slate-950 rounded-2xl border-2 border-amber-400 shadow-lg">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">
-                  MÃ PHÒNG (PIN)
-                </span>
-                <span className="text-4xl sm:text-6xl font-digital font-black text-amber-400 tracking-widest">
-                  {roomData?.pin}
-                </span>
+            {/* BIG PIN & SHARE LINK CARD */}
+            <div className="p-6 rounded-2xl bg-slate-950 border-2 border-amber-400 shadow-xl space-y-4">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-left">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                    MÃ PHÒNG (PIN)
+                  </span>
+                  <span className="text-4xl sm:text-6xl font-digital font-black text-amber-400 tracking-widest">
+                    {roomData?.pin}
+                  </span>
+                </div>
+
+                {qrDataUrl && (
+                  <div className="p-2.5 bg-white rounded-xl shadow-md flex items-center gap-3">
+                    <img src={qrDataUrl} alt="QR Code" className="w-20 h-20" />
+                    <div className="text-left">
+                      <span className="text-[11px] font-bold text-slate-900 block">Quét mã QR</span>
+                      <span className="text-[10px] text-slate-500 block">Vào phòng trực tiếp</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {qrDataUrl && (
-                <div className="p-3 bg-white rounded-2xl shadow-md">
-                  <img src={qrDataUrl} alt="QR Code" className="w-28 h-28" />
-                  <span className="text-[10px] font-bold text-slate-700 block mt-1">Quét mã vào phòng</span>
+              {/* Direct Link Sharing Box */}
+              {isHost && (
+                <div className="pt-3 border-t border-slate-800">
+                  <label className="block text-xs font-bold text-slate-300 text-left mb-1.5 flex items-center gap-1.5">
+                    <Share2 className="w-3.5 h-3.5 text-blue-400" />
+                    <span>Đường link gửi cho mọi người cùng làm:</span>
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      readOnly
+                      value={shareLink}
+                      className="flex-1 text-xs font-mono p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 outline-none select-all"
+                    />
+                    <button
+                      onClick={handleCopyLink}
+                      className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 ${
+                        copiedLink ? 'bg-emerald-600 text-white' : 'bg-blue-600 hover:bg-blue-500 text-white shadow-md shadow-blue-600/25'
+                      }`}
+                    >
+                      {copiedLink ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      <span>{copiedLink ? 'Đã sao chép link!' : 'Sao chép link'}</span>
+                    </button>
+                  </div>
+                  {copiedLink && (
+                    <p className="text-[11px] text-emerald-400 text-left mt-1 font-semibold animate-pulse">
+                      ✓ Đã copy link vào bộ nhớ tạm! Bạn hãy dán link này vào nhóm Zalo, Messenger để mọi người bấm vào cùng thi.
+                    </p>
+                  )}
                 </div>
               )}
             </div>
@@ -381,7 +451,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
 
               <div className="flex flex-wrap items-center justify-center gap-3 min-h-[50px]">
                 {players.length === 0 ? (
-                  <span className="text-xs text-slate-500 italic">Đang chờ thí sinh nhập mã PIN...</span>
+                  <span className="text-xs text-slate-500 italic">Đang chờ bạn bè bấm vào link hoặc nhập mã PIN...</span>
                 ) : (
                   players.map((p, idx) => (
                     <div
@@ -401,7 +471,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
               <div className="pt-4 border-t border-slate-700">
                 <button
                   onClick={handleHostStart}
-                  className="px-8 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base shadow-xl shadow-emerald-500/30 transition-all active:scale-95 flex items-center justify-center gap-2 mx-auto"
+                  className="px-8 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base shadow-xl shadow-emerald-500/30 transition-all active:scale-95 flex items-center justify-center gap-2 mx-auto cursor-pointer"
                 >
                   <Play className="w-5 h-5 fill-slate-950" />
                   <span>BẮT ĐẦU TRẬN ĐẤU NGAY</span>
@@ -494,7 +564,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
         </div>
       )}
 
-      {/* 4. REVEAL STAGE: QUESTION WINNER & LEADERBOARD REVEAL */}
+      {/* 4. REVEAL STAGE: HOST SEES LEADERBOARD, PARTICIPANT SEES OWN ACCURACY */}
       {stage === 'reveal' && revealData && (
         <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
           <div className="bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl text-center space-y-5">
@@ -509,52 +579,88 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
               </div>
             </div>
 
-            {/* Fastest Responder Announcement (Section 1.3 Spec) */}
-            {revealData.fastestPlayer && (
-              <div className="p-4 rounded-2xl bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-bold flex items-center justify-center gap-2">
-                <Flame className="w-5 h-5 text-amber-400 animate-bounce" />
-                <span>
-                  Nhanh nhất vòng này: <strong>{revealData.fastestPlayer.nickname}</strong> ({revealData.fastestPlayer.time} giây)!
-                </span>
-              </div>
-            )}
-
-            {/* Leaderboard Table */}
-            <div className="space-y-2 text-left">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">
-                Bảng xếp hạng trực tiếp (Top 5):
-              </span>
-              {revealData.leaderboard?.slice(0, 5).map((p, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-700 text-xs font-bold"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-slate-950 font-black ${
-                      idx === 0 ? 'bg-amber-400' : idx === 1 ? 'bg-slate-300' : idx === 2 ? 'bg-amber-600' : 'bg-slate-600 text-white'
-                    }`}>
-                      {idx + 1}
+            {/* HOST VIEW: FULL LEADERBOARD */}
+            {isHost ? (
+              <div className="space-y-4 pt-2">
+                {revealData.fastestPlayer && (
+                  <div className="p-4 rounded-2xl bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-bold flex items-center justify-center gap-2">
+                    <Flame className="w-5 h-5 text-amber-400 animate-bounce" />
+                    <span>
+                      Nhanh nhất vòng này: <strong>{revealData.fastestPlayer.nickname}</strong> ({revealData.fastestPlayer.time} giây)!
                     </span>
-                    <span>{p.nickname}</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-amber-400 font-mono">{p.score} điểm</span>
-                    <span className="text-slate-400 font-normal">({p.correctAnswersCount} câu đúng)</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+                )}
 
-            {/* Host advance button */}
-            {isHost && (
-              <div className="pt-4 border-t border-slate-700">
-                <button
-                  onClick={handleHostNextQuestion}
-                  className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 mx-auto"
-                >
-                  <span>{revealData.isLastQuestion ? 'Xem Xếp Hạng Chung Cuộc' : 'Sang Câu Tiếp Theo'}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
+                <div className="space-y-2 text-left">
+                  <span className="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-2 flex items-center gap-1.5">
+                    <Crown className="w-4 h-4" />
+                    <span>Bảng xếp hạng trực tiếp toàn phòng (Chỉ Chủ phòng thấy):</span>
+                  </span>
+                  {revealData.leaderboard?.map((p, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-700 text-xs font-bold"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-6 h-6 rounded-full flex items-center justify-center text-slate-950 font-black ${
+                          idx === 0 ? 'bg-amber-400' : idx === 1 ? 'bg-slate-300' : idx === 2 ? 'bg-amber-600' : 'bg-slate-600 text-white'
+                        }`}>
+                          {idx + 1}
+                        </span>
+                        <span>{p.nickname}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-amber-400 font-mono">{p.score} điểm</span>
+                        <span className="text-slate-400 font-normal">({p.correctAnswersCount} câu đúng)</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-4 border-t border-slate-700">
+                  <button
+                    onClick={handleHostNextQuestion}
+                    className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 mx-auto cursor-pointer"
+                  >
+                    <span>{revealData.isLastQuestion ? 'Xem Bảng Tổng Kết Trận Đấu' : 'Sang Câu Tiếp Theo'}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* PARTICIPANT VIEW: ONLY SEES OWN ACCURACY & SCORE */
+              <div className="space-y-4 pt-2">
+                <div className={`p-4 rounded-2xl border text-sm font-bold flex items-center justify-center gap-2 ${
+                  revealData.myResult?.isCorrect 
+                    ? 'bg-emerald-500/20 border-emerald-400/40 text-emerald-300' 
+                    : 'bg-rose-500/20 border-rose-400/40 text-rose-300'
+                }`}>
+                  {revealData.myResult?.isCorrect ? (
+                    <>
+                      <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                      <span>Bạn đã trả lời ĐÚNG! (+{revealData.myResult?.pointsAwarded || 0} điểm)</span>
+                    </>
+                  ) : (
+                    <>
+                      <XCircle className="w-5 h-5 text-rose-400" />
+                      <span>Bạn đã trả lời CHƯA ĐÚNG!</span>
+                    </>
+                  )}
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-between text-xs font-bold">
+                  <span className="text-slate-400">Điểm số hiện tại của bạn:</span>
+                  <span className="text-amber-400 font-mono text-base">{revealData.myResult?.myScore || 0} pts</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-700/60 text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
+                  <Lock className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Bảng điểm xếp hạng toàn phòng chỉ Chủ phòng (Người tạo) được quyền xem.</span>
+                </div>
+
+                <div className="text-xs text-slate-400 animate-pulse pt-2">
+                  ⏳ Đang đợi Chủ phòng chuyển sang câu tiếp theo...
+                </div>
               </div>
             )}
 
@@ -562,69 +668,205 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
         </div>
       )}
 
-      {/* 5. PODIUM STAGE: FINAL PODIUM CELEBRATION (Rank 1, 2, 3) */}
+      {/* 5. PODIUM & FINAL RESULTS: HOST VS PARTICIPANT */}
       {stage === 'podium' && podiumData && (
         <div className="max-w-4xl mx-auto px-4 py-12 text-center space-y-8">
           
           <div className="space-y-2">
             <Trophy className="w-16 h-16 text-amber-400 mx-auto animate-bounce" />
             <h1 className="text-3xl sm:text-4xl font-black text-white">
-              Vinh Danh Quán Quân Đấu Trường!
+              Trận Đấu Đã Kết Thúc!
             </h1>
-            <p className="text-xs text-slate-400">Trận đấu đã kết thúc xuất sắc</p>
+            <p className="text-xs text-slate-400">
+              {isHost ? 'Báo cáo tổng kết đầy đủ dành cho Chủ phòng' : 'Bảng điểm và đáp án chi tiết bài làm của bạn'}
+            </p>
           </div>
 
-          {/* Podium Steps (2nd, 1st, 3rd) */}
-          <div className="flex items-end justify-center gap-4 sm:gap-6 pt-8 pb-4">
-            
-            {/* Rank 2 (Silver) */}
-            <div className="flex flex-col items-center">
-              <span className="text-xs font-bold text-slate-300 mb-2 truncate max-w-[100px]">
-                {podiumData.podium.second?.nickname || 'Hạng 2'}
-              </span>
-              <div className="w-24 sm:w-28 h-36 bg-gradient-to-t from-slate-600 to-slate-400 rounded-t-2xl flex flex-col items-center justify-center shadow-lg border-t-2 border-slate-300">
-                <span className="text-2xl font-black text-slate-900">🥈 2</span>
-                <span className="text-xs font-mono font-bold text-slate-900 mt-1">
-                  {podiumData.podium.second?.score || 0} pts
-                </span>
-              </div>
-            </div>
+          {/* VIEW A: HOST (NGƯỜI TẠO RA) SEES COMPLETE RESULTS */}
+          {isHost ? (
+            <div className="space-y-8">
+              
+              {/* Podium Steps (2nd, 1st, 3rd) */}
+              <div className="flex items-end justify-center gap-4 sm:gap-6 pt-6 pb-2">
+                {/* Rank 2 */}
+                <div className="flex flex-col items-center">
+                  <span className="text-xs font-bold text-slate-300 mb-2 truncate max-w-[100px]">
+                    {podiumData.podium?.second?.nickname || 'Hạng 2'}
+                  </span>
+                  <div className="w-24 sm:w-28 h-36 bg-gradient-to-t from-slate-600 to-slate-400 rounded-t-2xl flex flex-col items-center justify-center shadow-lg border-t-2 border-slate-300">
+                    <span className="text-2xl font-black text-slate-900">🥈 2</span>
+                    <span className="text-xs font-mono font-bold text-slate-900 mt-1">
+                      {podiumData.podium?.second?.score || 0} pts
+                    </span>
+                  </div>
+                </div>
 
-            {/* Rank 1 (Gold) */}
-            <div className="flex flex-col items-center -mt-6">
-              <Crown className="w-8 h-8 text-amber-400 mb-1 animate-pulse" />
-              <span className="text-sm font-black text-amber-300 mb-2 truncate max-w-[120px]">
-                {podiumData.podium.first?.nickname || 'Quán quân'}
-              </span>
-              <div className="w-28 sm:w-36 h-48 bg-gradient-to-t from-amber-600 to-amber-400 rounded-t-2xl flex flex-col items-center justify-center shadow-2xl border-t-2 border-amber-200">
-                <span className="text-3xl font-black text-slate-950">🥇 1</span>
-                <span className="text-sm font-mono font-black text-slate-950 mt-1">
-                  {podiumData.podium.first?.score || 0} pts
-                </span>
-              </div>
-            </div>
+                {/* Rank 1 */}
+                <div className="flex flex-col items-center -mt-6">
+                  <Crown className="w-8 h-8 text-amber-400 mb-1 animate-pulse" />
+                  <span className="text-sm font-black text-amber-300 mb-2 truncate max-w-[120px]">
+                    {podiumData.podium?.first?.nickname || 'Quán quân'}
+                  </span>
+                  <div className="w-28 sm:w-36 h-48 bg-gradient-to-t from-amber-600 to-amber-400 rounded-t-2xl flex flex-col items-center justify-center shadow-2xl border-t-2 border-amber-200">
+                    <span className="text-3xl font-black text-slate-950">🥇 1</span>
+                    <span className="text-sm font-mono font-black text-slate-950 mt-1">
+                      {podiumData.podium?.first?.score || 0} pts
+                    </span>
+                  </div>
+                </div>
 
-            {/* Rank 3 (Bronze) */}
-            <div className="flex flex-col items-center">
-              <span className="text-xs font-bold text-amber-600 mb-2 truncate max-w-[100px]">
-                {podiumData.podium.third?.nickname || 'Hạng 3'}
-              </span>
-              <div className="w-24 sm:w-28 h-28 bg-gradient-to-t from-amber-800 to-amber-600 rounded-t-2xl flex flex-col items-center justify-center shadow-lg border-t-2 border-amber-500">
-                <span className="text-2xl font-black text-amber-200">🥉 3</span>
-                <span className="text-xs font-mono font-bold text-amber-200 mt-1">
-                  {podiumData.podium.third?.score || 0} pts
-                </span>
+                {/* Rank 3 */}
+                <div className="flex flex-col items-center">
+                  <span className="text-xs font-bold text-amber-600 mb-2 truncate max-w-[100px]">
+                    {podiumData.podium?.third?.nickname || 'Hạng 3'}
+                  </span>
+                  <div className="w-24 sm:w-28 h-28 bg-gradient-to-t from-amber-800 to-amber-600 rounded-t-2xl flex flex-col items-center justify-center shadow-lg border-t-2 border-amber-500">
+                    <span className="text-2xl font-black text-amber-200">🥉 3</span>
+                    <span className="text-xs font-mono font-bold text-amber-200 mt-1">
+                      {podiumData.podium?.third?.score || 0} pts
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
 
-          </div>
+              {/* Full Leaderboard Table (Host Only) */}
+              <div className="bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-xl text-left space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-700 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Crown className="w-5 h-5 text-amber-400" />
+                    <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                      Bảng Điểm Toàn Bộ Thí Sinh ({podiumData.leaderboard?.length || 0})
+                    </h3>
+                  </div>
+                  <span className="text-xs text-amber-300 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-400/30">
+                    Quyền hạn: Chủ phòng
+                  </span>
+                </div>
+
+                <div className="divide-y divide-slate-700/60">
+                  {podiumData.leaderboard?.map((p, idx) => (
+                    <div key={idx} className="py-3 flex items-center justify-between text-xs font-medium">
+                      <div className="flex items-center gap-3">
+                        <span className={`w-6 h-6 rounded-full flex items-center justify-center font-black ${
+                          idx === 0 ? 'bg-amber-400 text-slate-950' : idx === 1 ? 'bg-slate-300 text-slate-950' : idx === 2 ? 'bg-amber-600 text-slate-950' : 'bg-slate-700 text-white'
+                        }`}>
+                          {idx + 1}
+                        </span>
+                        <span className="font-bold text-white">{p.nickname}</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="text-slate-400">Số câu đúng: <strong className="text-emerald-400">{p.correctAnswersCount}</strong></span>
+                        <span className="text-amber-400 font-mono font-bold text-sm">{p.score} pts</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          ) : (
+            /* VIEW B: PARTICIPANT (BÊN KIA) ONLY SEES SCORE & RIGHT/WRONG ANSWERS */
+            <div className="space-y-6 text-left">
+              
+              {/* Personal Score Summary Card */}
+              <div className="bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl space-y-6">
+                <div className="text-center space-y-1">
+                  <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">
+                    Kết Quả Làm Bài Của Bạn
+                  </span>
+                  <h3 className="text-3xl font-black text-amber-400 font-mono">
+                    {podiumData.myResult?.myScore || 0} <span className="text-sm font-normal text-slate-400">điểm</span>
+                  </h3>
+                </div>
+
+                {/* Score Stats Grid */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-center">
+                    <span className="text-2xl font-black text-emerald-400 block">
+                      {podiumData.myResult?.correctCount || 0}
+                    </span>
+                    <span className="text-xs font-bold text-emerald-300">Câu Đúng</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-center">
+                    <span className="text-2xl font-black text-rose-400 block">
+                      {podiumData.myResult?.wrongCount || 0}
+                    </span>
+                    <span className="text-xs font-bold text-rose-300">Câu Chưa Đúng</span>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-center">
+                    <span className="text-2xl font-black text-blue-400 block">
+                      {podiumData.myResult?.percentage || 0}%
+                    </span>
+                    <span className="text-xs font-bold text-blue-300">Độ Chính Xác</span>
+                  </div>
+                </div>
+
+                {/* Notice that full leaderboard is restricted to host */}
+                <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-700 text-xs text-slate-400 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Lock className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Bảng điểm xếp hạng toàn phòng chỉ Người tạo phòng (Chủ phòng) được quyền xem.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Detailed Breakdown: Right / Wrong for each question */}
+              <div className="bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-xl space-y-4">
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>Chi Tiết Đáp Án Đúng / Sai Từng Câu Của Bạn:</span>
+                </h4>
+
+                <div className="space-y-3">
+                  {podiumData.myResult?.answersBreakdown?.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className={`p-4 rounded-2xl border transition-all text-xs space-y-2 ${
+                        item.isCorrect 
+                          ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200' 
+                          : 'bg-rose-950/30 border-rose-500/30 text-rose-200'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="font-bold text-white">
+                          Câu {item.questionIndex}: {item.questionContent}
+                        </span>
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-black shrink-0 ${
+                          item.isCorrect ? 'bg-emerald-500 text-slate-950' : 'bg-rose-500 text-white'
+                        }`}>
+                          {item.isCorrect ? 'ĐÚNG' : 'SAI'}
+                        </span>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px]">
+                        <span>
+                          Bạn đã chọn: <strong>{item.chosenLabel}</strong>
+                        </span>
+                        {!item.isCorrect && (
+                          <span className="text-emerald-400 font-bold">
+                            Đáp án đúng: {item.correctOptionLabel}. {item.correctOptionContent}
+                          </span>
+                        )}
+                        <span className="text-amber-400 font-mono ml-auto">
+                          +{item.pointsAwarded} pts
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          )}
 
           <div className="pt-6">
             <button
               onClick={() => setStage('menu')}
-              className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition-all active:scale-95"
+              className="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
             >
-              Chơi trận khác
+              Quay Lại Đấu Trường
             </button>
           </div>
 
@@ -634,4 +876,3 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
     </div>
   );
 }
-

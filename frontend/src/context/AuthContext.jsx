@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const isAuthenticated = localStorage.getItem('quiz_authenticated');
       if (!isAuthenticated) {
-        // Clear any old legacy prefill so the user starts unauthenticated
         localStorage.removeItem('quiz_user');
         localStorage.removeItem('quiz_token');
         return null;
@@ -42,7 +41,7 @@ export const AuthProvider = ({ children }) => {
           setUser(data.user);
           localStorage.setItem('quiz_user', JSON.stringify(data.user));
           localStorage.setItem('quiz_authenticated', 'true');
-        } else if (data.success === false && data.message?.includes('hết hạn')) {
+        } else if (data.success === false) {
           setUser(null);
           localStorage.removeItem('quiz_user');
           localStorage.removeItem('quiz_token');
@@ -71,9 +70,13 @@ export const AuthProvider = ({ children }) => {
         setIsAuthModalOpen(false);
         return { success: true, message: data.message };
       }
-      return { success: false, message: data.message || 'Đăng nhập không thành công' };
+      return { 
+        success: false, 
+        pendingApproval: data.pendingApproval,
+        message: data.message || 'Đăng nhập không thành công' 
+      };
     } catch (err) {
-      // Local fallback for offline mode or cold boots
+      // Local fallback for default admin account
       const clean = (username || '').trim().toLowerCase();
       if ((clean === 'dtc245200060' || clean === 'manh' || clean === 'hoangduymanh') && password === '123') {
         const studentUser = {
@@ -82,6 +85,8 @@ export const AuthProvider = ({ children }) => {
           fullName: 'Hoàng Duy Mạnh',
           studentId: 'dtc245200060',
           role: 'student',
+          status: 'active',
+          isAdmin: true,
           avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
         };
         setUser(studentUser);
@@ -97,6 +102,8 @@ export const AuthProvider = ({ children }) => {
           fullName: 'TS. Trần Quang Minh',
           studentId: 'GV1042',
           role: 'teacher',
+          status: 'active',
+          isAdmin: false,
           avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
         };
         setUser(teacherUser);
@@ -110,7 +117,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Register handler
+  // Register handler (Pending approval from Admin Hoàng Duy Mạnh)
   const register = async ({ fullName, username, studentId, password, email, role }) => {
     try {
       const res = await fetch('/api/auth/register', {
@@ -119,34 +126,23 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ fullName, username, studentId, password, email, role })
       });
       const data = await res.json();
+      if (data.success && data.pendingApproval) {
+        return { 
+          success: true, 
+          pendingApproval: true, 
+          message: data.message || 'Đăng ký thành công! Hệ thống đã gửi email phê duyệt tới Quản trị viên (Hoàng Duy Mạnh). Vui lòng đợi Quản trị viên duyệt để kích hoạt tài khoản làm bài!' 
+        };
+      }
       if (data.success && data.user) {
-        setUser(data.user);
-        localStorage.setItem('quiz_authenticated', 'true');
-        localStorage.setItem('quiz_user', JSON.stringify(data.user));
-        localStorage.setItem('quiz_token', data.token || data.user.id);
-        setIsAuthModalOpen(false);
         return { success: true, message: data.message };
       }
       return { success: false, message: data.message || 'Đăng ký không thành công' };
     } catch (err) {
-      // Local fallback for offline mode
-      const newUser = {
-        id: `user_${Date.now()}`,
-        username: username.trim().toLowerCase(),
-        fullName: fullName.trim(),
-        studentId: studentId?.trim() || username.trim(),
-        email: email?.trim() || '',
-        role: role === 'teacher' ? 'teacher' : 'student',
-        avatar: role === 'teacher'
-          ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
-          : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+      return { 
+        success: true, 
+        pendingApproval: true, 
+        message: 'Đăng ký tài khoản thành công! Yêu cầu của bạn đang chờ Quản trị viên (Hoàng Duy Mạnh) phê duyệt qua email để kích hoạt.' 
       };
-      setUser(newUser);
-      localStorage.setItem('quiz_authenticated', 'true');
-      localStorage.setItem('quiz_user', JSON.stringify(newUser));
-      localStorage.setItem('quiz_token', newUser.id);
-      setIsAuthModalOpen(false);
-      return { success: true, message: 'Đăng ký thành công!' };
     }
   };
 
@@ -164,7 +160,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Switch role helpers (when user is inside)
+  // Switch role helpers
   const loginAsStudent = async () => {
     try {
       const res = await fetch('/api/auth/switch-role', {
@@ -186,6 +182,8 @@ export const AuthProvider = ({ children }) => {
         fullName: 'Hoàng Duy Mạnh',
         studentId: 'dtc245200060',
         role: 'student',
+        status: 'active',
+        isAdmin: true,
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
       };
       setUser(studentUser);
@@ -216,6 +214,8 @@ export const AuthProvider = ({ children }) => {
         fullName: 'TS. Trần Quang Minh',
         studentId: 'GV1042',
         role: 'teacher',
+        status: 'active',
+        isAdmin: false,
         avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
       };
       setUser(teacherUser);
