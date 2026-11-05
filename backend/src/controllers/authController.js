@@ -393,42 +393,10 @@ export const logout = (req, res) => {
   });
 };
 
-// POST /api/auth/switch-role
+// POST /api/auth/switch-role (Disabled for security)
 export const switchRole = (req, res) => {
-  try {
-    const { targetRole } = req.body;
-    let user;
-
-    if (targetRole === 'teacher') {
-      user = db.findOne('users', u => u.role === 'teacher') || {
-        id: 'user_2',
-        username: 'giangvien',
-        fullName: 'TS. Trần Quang Minh',
-        studentId: 'GV1042',
-        role: 'teacher',
-        status: 'active',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
-      };
-    } else {
-      user = db.findOne('users', u => u.studentId === 'dtc245200060') || {
-        id: 'user_1',
-        username: 'dtc245200060',
-        fullName: 'Hoàng Duy Mạnh',
-        studentId: 'dtc245200060',
-        role: 'student',
-        status: 'active',
-        isAdmin: true,
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
-      };
-    }
-
-    res.json({
-      success: true,
-      message: `Đã chuyển sang tài khoản ${user.role === 'teacher' ? 'Giảng viên' : 'Sinh viên'}!`,
-      user: sanitizeUser(user),
-      token: user.id
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
+  return res.status(403).json({
+    success: false,
+    message: 'Chức năng chuyển đổi vai trò nhanh đã bị vô hiệu hóa vì lý do bảo mật. Vui lòng đăng nhập bằng đúng tài khoản của bạn.'
+  });
 };

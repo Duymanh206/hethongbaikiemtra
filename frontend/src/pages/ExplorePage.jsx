@@ -20,7 +20,7 @@ import { fixMojibake, cleanDescription } from '../utils/textEncoding';
 
 export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
   const { user } = useAuth();
-  const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060' || user?.isAdmin;
+  const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060';
 
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);

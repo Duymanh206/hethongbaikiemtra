@@ -25,9 +25,7 @@ export default function Navbar({ activePage, setActivePage }) {
     user, 
     logout, 
     openLogin, 
-    openRegister, 
-    loginAsStudent, 
-    loginAsTeacher 
+    openRegister
   } = useAuth();
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,7 +33,7 @@ export default function Navbar({ activePage, setActivePage }) {
   const [approvalModalOpen, setApprovalModalOpen] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
 
-  const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060' || user?.isAdmin;
+  const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060';
 
   // Poll for pending users count if Admin
   useEffect(() => {
@@ -220,30 +218,13 @@ export default function Navbar({ activePage, setActivePage }) {
                       <div className="py-1">
                         <button
                           onClick={() => {
-                            loginAsStudent();
+                            setActivePage('history');
                             setUserDropdownOpen(false);
                           }}
-                          className="w-full text-left px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between"
+                          className="w-full text-left px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2"
                         >
-                          <div className="flex items-center gap-2">
-                            <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
-                            <span>Sinh viên (dtc245200060)</span>
-                          </div>
-                          {user.role === 'student' && <span className="text-blue-600 font-bold">✓</span>}
-                        </button>
-                        
-                        <button
-                          onClick={() => {
-                            loginAsTeacher();
-                            setUserDropdownOpen(false);
-                          }}
-                          className="w-full text-left px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between"
-                        >
-                          <div className="flex items-center gap-2">
-                            <User className="w-3.5 h-3.5 text-indigo-600" />
-                            <span>Giảng viên (TS. Minh)</span>
-                          </div>
-                          {user.role === 'teacher' && <span className="text-blue-600 font-bold">✓</span>}
+                          <History className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Lịch sử bài thi của tôi</span>
                         </button>
                       </div>
 

@@ -25,7 +25,7 @@ export default function QuizDetailPage({
   onBackToExplore
 }) {
   const { user } = useAuth();
-  const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060' || user?.isAdmin;
+  const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060';
 
   const [quiz, setQuiz] = useState(null);
   const [loading, setLoading] = useState(true);

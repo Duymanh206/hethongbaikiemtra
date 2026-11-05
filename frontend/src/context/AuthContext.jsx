@@ -184,70 +184,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Switch role helpers
-  const loginAsStudent = async () => {
-    try {
-      const res = await fetch('/api/auth/switch-role', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ targetRole: 'student' })
-      });
-      const data = await res.json();
-      if (data.success && data.user) {
-        setUser(data.user);
-        localStorage.setItem('quiz_authenticated', 'true');
-        localStorage.setItem('quiz_user', JSON.stringify(data.user));
-        localStorage.setItem('quiz_token', data.token || data.user.id);
-      }
-    } catch {
-      const studentUser = {
-        id: 'user_1',
-        username: 'dtc245200060',
-        fullName: 'Hoàng Duy Mạnh',
-        studentId: 'dtc245200060',
-        role: 'student',
-        status: 'active',
-        isAdmin: true,
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
-      };
-      setUser(studentUser);
-      localStorage.setItem('quiz_authenticated', 'true');
-      localStorage.setItem('quiz_user', JSON.stringify(studentUser));
-      localStorage.setItem('quiz_token', studentUser.id);
-    }
-  };
-
-  const loginAsTeacher = async () => {
-    try {
-      const res = await fetch('/api/auth/switch-role', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ targetRole: 'teacher' })
-      });
-      const data = await res.json();
-      if (data.success && data.user) {
-        setUser(data.user);
-        localStorage.setItem('quiz_authenticated', 'true');
-        localStorage.setItem('quiz_user', JSON.stringify(data.user));
-        localStorage.setItem('quiz_token', data.token || data.user.id);
-      }
-    } catch {
-      const teacherUser = {
-        id: 'user_2',
-        username: 'giangvien',
-        fullName: 'TS. Trần Quang Minh',
-        studentId: 'GV1042',
-        role: 'teacher',
-        status: 'active',
-        isAdmin: false,
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'
-      };
-      setUser(teacherUser);
-      localStorage.setItem('quiz_authenticated', 'true');
-      localStorage.setItem('quiz_user', JSON.stringify(teacherUser));
-      localStorage.setItem('quiz_token', teacherUser.id);
-    }
-  };
+  // Fast switch role disabled for security
+  const loginAsStudent = async () => {};
+  const loginAsTeacher = async () => {};
 
   const openLogin = () => {
     setAuthModalTab('login');

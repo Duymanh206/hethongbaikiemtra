@@ -18,3 +18,4 @@ router.post('/submit-answer', submitAnswer);
 router.post('/finish', finishBattle);
 
 export default router;
+
