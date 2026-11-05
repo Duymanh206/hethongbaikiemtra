@@ -87,13 +87,6 @@ export function initAuthAccounts() {
       isAdmin: false
     });
   }
-
-  // 4. Activate all existing pending users
-  users.forEach(u => {
-    if (u.status === 'pending') {
-      db.update('users', user => user.id === u.id, { status: 'active' });
-    }
-  });
 }
 
 // POST /api/auth/register
@@ -146,7 +139,7 @@ export const register = async (req, res) => {
       email: email.trim() || `${cleanUsername}@student.edu.vn`,
       password: password.trim(),
       role: role === 'teacher' ? 'teacher' : 'student',
-      status: 'active', // Activated so new users can immediately log in & do quizzes as requested
+      status: 'pending', // Phải chờ Quản trị viên (Hoàng Duy Mạnh) phê duyệt mới được đăng nhập!
       isAdmin: false,
       approvalToken,
       avatar: role === 'teacher'
@@ -166,9 +159,9 @@ export const register = async (req, res) => {
 
     res.json({
       success: true,
-      message: 'Đăng ký tài khoản thành công! Bạn có thể đăng nhập ngay để làm bài thi.',
-      user: sanitizeUser(newUser),
-      token: newUser.id
+      pendingApproval: true,
+      message: 'Đăng ký tài khoản thành công! Thông báo đã được gửi tới Quản trị viên (Hoàng Duy Mạnh). Vui lòng đợi quản trị viên phê duyệt để kích hoạt tài khoản của bạn trước khi đăng nhập.',
+      user: sanitizeUser(newUser)
     });
   } catch (error) {
     console.error('Register error:', error);
@@ -230,10 +223,13 @@ export const login = async (req, res) => {
       });
     }
 
-    // If user status is pending, automatically activate them upon valid login
+    // If user status is pending, DO NOT allow login until Admin approves!
     if (user.status === 'pending') {
-      user.status = 'active';
-      db.update('users', u => u.id === user.id, { status: 'active' });
+      return res.status(403).json({
+        success: false,
+        pendingApproval: true,
+        message: 'Tài khoản của bạn đang chờ Quản trị viên (Hoàng Duy Mạnh) phê duyệt kích hoạt. Vui lòng đợi quản trị viên duyệt trước khi đăng nhập!'
+      });
     }
 
     // Enforce strict admin permission: ONLY dtc245200060
@@ -293,6 +289,15 @@ export const getMe = (req, res) => {
         success: false,
         user: null,
         message: 'Tài khoản đã bị khóa'
+      });
+    }
+
+    if (user.status === 'pending') {
+      return res.json({
+        success: false,
+        user: null,
+        pendingApproval: true,
+        message: 'Tài khoản đang chờ Quản trị viên (Hoàng Duy Mạnh) phê duyệt'
       });
     }
 

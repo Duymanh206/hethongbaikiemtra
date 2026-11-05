@@ -106,6 +106,18 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
         return u;
       }));
       setPendingUsers(prev => prev.filter(u => u.id !== targetUser.id && u.username !== targetUser.username));
+
+      // Synchronize client_registered_accounts in local storage
+      try {
+        const clientAccs = JSON.parse(localStorage.getItem('client_registered_accounts') || '[]');
+        const updatedAccs = clientAccs.map(cu => {
+          if (cu.id === targetUser.id || cu.username === targetUser.username || cu.studentId === targetUser.studentId) {
+            return { ...cu, status: newStatus };
+          }
+          return cu;
+        });
+        localStorage.setItem('client_registered_accounts', JSON.stringify(updatedAccs));
+      } catch {}
     } catch (err) {
       setMessage({ type: 'success', text: action === 'approve' ? 'Đã kích hoạt tài khoản thành công!' : 'Đã khóa tài khoản' });
     } finally {

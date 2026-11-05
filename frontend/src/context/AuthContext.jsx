@@ -71,24 +71,11 @@ export const AuthProvider = ({ children }) => {
         return { success: true, message: data.message };
       }
       if (data.pendingApproval) {
-        // Check if locally marked approved or in local registered accounts
-        const clean = (username || '').trim().toLowerCase();
-        try {
-          const clientAccs = JSON.parse(localStorage.getItem('client_registered_accounts') || '[]');
-          const matched = clientAccs.find(a => 
-            (a.username?.toLowerCase() === clean || a.studentId?.toLowerCase() === clean) && 
-            a.password === password
-          );
-          if (matched) {
-            const safeUser = { ...matched, status: 'active', isAdmin: false };
-            setUser(safeUser);
-            localStorage.setItem('quiz_authenticated', 'true');
-            localStorage.setItem('quiz_user', JSON.stringify(safeUser));
-            localStorage.setItem('quiz_token', safeUser.id);
-            setIsAuthModalOpen(false);
-            return { success: true, message: 'Đăng nhập thành công!' };
-          }
-        } catch {}
+        return { 
+          success: false, 
+          pendingApproval: true,
+          message: data.message || 'Tài khoản của bạn đang chờ Quản trị viên (Hoàng Duy Mạnh) phê duyệt kích hoạt. Vui lòng đợi quản trị viên duyệt trước khi đăng nhập!' 
+        };
       }
       return { 
         success: false, 
@@ -151,7 +138,7 @@ export const AuthProvider = ({ children }) => {
         return { success: true, message: 'Đăng nhập thành công!' };
       }
 
-      // Check client_registered_accounts fallback
+      // Check client_registered_accounts fallback only if already approved
       try {
         const clientAccs = JSON.parse(localStorage.getItem('client_registered_accounts') || '[]');
         const matched = clientAccs.find(a => 
@@ -159,6 +146,13 @@ export const AuthProvider = ({ children }) => {
           a.password === password
         );
         if (matched) {
+          if (matched.status !== 'active') {
+            return {
+              success: false,
+              pendingApproval: true,
+              message: 'Tài khoản của bạn đang chờ Quản trị viên (Hoàng Duy Mạnh) phê duyệt kích hoạt. Vui lòng đợi quản trị viên duyệt trước khi đăng nhập!'
+            };
+          }
           const safeUser = { ...matched, status: 'active', isAdmin: false };
           setUser(safeUser);
           localStorage.setItem('quiz_authenticated', 'true');
@@ -169,7 +163,7 @@ export const AuthProvider = ({ children }) => {
         }
       } catch {}
 
-      return { success: false, message: 'Lỗi kết nối máy chủ, vui lòng thử lại' };
+      return { success: false, message: 'Lỗi kết nối máy chủ hoặc thông tin đăng nhập không chính xác' };
     }
   };
 
@@ -183,12 +177,12 @@ export const AuthProvider = ({ children }) => {
       email: email ? email.trim() : `${username.trim().toLowerCase()}@student.edu.vn`,
       password: password.trim(),
       role: role === 'teacher' ? 'teacher' : 'student',
-      status: 'active',
+      status: 'pending', // Luôn ở trạng thái chờ Quản trị viên phê duyệt!
       isAdmin: false,
       createdAt: new Date().toISOString()
     };
 
-    // Store in client registered accounts for instant resilience
+    // Store in client registered accounts for Admin approval view
     try {
       const clientAccs = JSON.parse(localStorage.getItem('client_registered_accounts') || '[]');
       if (!clientAccs.some(u => u.username === candidateUser.username)) {
@@ -207,14 +201,16 @@ export const AuthProvider = ({ children }) => {
       if (data.success) {
         return { 
           success: true, 
-          message: data.message || 'Đăng ký tài khoản thành công! Bạn có thể đăng nhập ngay để làm bài thi.' 
+          pendingApproval: true,
+          message: data.message || 'Đăng ký tài khoản thành công! Thông báo đã được gửi tới Quản trị viên (Hoàng Duy Mạnh). Vui lòng đợi quản trị viên phê duyệt để kích hoạt tài khoản của bạn trước khi đăng nhập.' 
         };
       }
       return { success: false, message: data.message || 'Đăng ký không thành công' };
     } catch (err) {
       return { 
         success: true, 
-        message: 'Đăng ký tài khoản thành công! Bạn có thể đăng nhập ngay để làm bài thi.' 
+        pendingApproval: true,
+        message: 'Đăng ký tài khoản thành công! Thông báo đã được gửi tới Quản trị viên (Hoàng Duy Mạnh). Vui lòng đợi quản trị viên phê duyệt để kích hoạt tài khoản của bạn trước khi đăng nhập.' 
       };
     }
   };
