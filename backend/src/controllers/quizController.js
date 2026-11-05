@@ -1,5 +1,6 @@
 import { db } from '../database/db.js';
 import { englishFlashcards } from '../database/englishSeedData.js';
+import { englishCurriculumK12 } from '../database/englishCurriculumK12.js';
 import { parseDocxBuffer } from '../services/docxParser.js';
 import { parseRawQuizText } from '../services/smartQuizParser.js';
 import { fixMojibake, cleanDescription, cleanQuiz, getQuizSubjectName } from '../utils/textEncoding.js';
@@ -842,10 +843,68 @@ export const deleteQuiz = (req, res) => {
   }
 };
 
+// GET /api/quizzes/english/curriculum
+export const getEnglishCurriculum = (req, res) => {
+  try {
+    const { grade, level } = req.query;
+    let list = englishCurriculumK12;
+    if (grade) {
+      const gClean = grade.toLowerCase().replace(/lớp\s*/, '').trim();
+      const matched = list.find(g => g.grade.toLowerCase().includes(gClean));
+      if (matched) {
+        return res.json({ success: true, curriculum: matched });
+      }
+    }
+    if (level) {
+      list = list.filter(g => g.level === level);
+    }
+    res.json({ success: true, curriculum: list });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 // GET /api/quizzes/english/flashcards
 export const getEnglishFlashcards = (req, res) => {
   try {
-    const { level } = req.query; // 'primary' | 'secondary' | 'highschool'
+    const { level, grade, unitId } = req.query;
+
+    // 1. By Unit ID (e.g. g6_u1)
+    if (unitId) {
+      for (const g of englishCurriculumK12) {
+        const u = g.units?.find(item => item.id === unitId);
+        if (u && Array.isArray(u.vocabulary)) {
+          return res.json({
+            success: true,
+            unitId,
+            unitTitle: u.title,
+            grade: g.grade,
+            flashcards: u.vocabulary
+          });
+        }
+      }
+    }
+
+    // 2. By Grade (e.g. Lớp 1, Lớp 6)
+    if (grade) {
+      const gClean = grade.toLowerCase().replace(/lớp\s*/, '').trim();
+      const matched = englishCurriculumK12.find(g => g.grade.toLowerCase().includes(gClean));
+      if (matched) {
+        const gradeCards = [];
+        matched.units.forEach(u => {
+          if (Array.isArray(u.vocabulary)) gradeCards.push(...u.vocabulary);
+        });
+        if (gradeCards.length > 0) {
+          return res.json({
+            success: true,
+            grade: matched.grade,
+            flashcards: gradeCards
+          });
+        }
+      }
+    }
+
+    // 3. By Level
     if (level && englishFlashcards[level]) {
       return res.json({
         success: true,
@@ -853,15 +912,22 @@ export const getEnglishFlashcards = (req, res) => {
         flashcards: englishFlashcards[level]
       });
     }
-    const all = [
-      ...englishFlashcards.primary,
-      ...englishFlashcards.secondary,
-      ...englishFlashcards.highschool
-    ];
+
+    // 4. Default: all cards across curriculum
+    const all = [];
+    englishCurriculumK12.forEach(g => {
+      g.units?.forEach(u => {
+        if (Array.isArray(u.vocabulary)) all.push(...u.vocabulary);
+      });
+    });
+
     res.json({
       success: true,
-      flashcards: all,
-      grouped: englishFlashcards
+      flashcards: all.length > 0 ? all : [
+        ...englishFlashcards.primary,
+        ...englishFlashcards.secondary,
+        ...englishFlashcards.highschool
+      ]
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
