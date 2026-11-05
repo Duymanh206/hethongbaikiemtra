@@ -12,7 +12,9 @@ import {
   CheckCircle2, 
   XCircle,
   Share2,
-  Download
+  Download,
+  Volume2,
+  Headphones
 } from 'lucide-react';
 import AIExplanationModal from '../components/AIExplanationModal';
 import { fixMojibake } from '../utils/textEncoding';
@@ -307,8 +309,50 @@ export default function ExamResultPage({
                     {q.content}
                   </h4>
 
-                  {/* Single & Multiple Choice Options Display */}
-                  {(q.type === 'single_choice' || q.type === 'multiple_choice') && (
+                  {/* Reading Passage Preview if available */}
+                  {q.passageText && (
+                    <div className="mb-4 p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm text-slate-800 leading-relaxed max-h-64 overflow-y-auto">
+                      <div className="flex items-center gap-2 font-bold text-amber-900 mb-1.5 uppercase text-[11px] tracking-wider">
+                        <BookOpen className="w-3.5 h-3.5 text-amber-600" />
+                        <span>{q.passageTitle || 'Đoạn văn đọc hiểu'}</span>
+                      </div>
+                      <div className="whitespace-pre-line text-slate-700">
+                        {q.passageText}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Audio Listening Script if available */}
+                  {(q.audioUrl || q.listeningScript) && (
+                    <div className="mb-4 p-3 rounded-xl bg-blue-50/80 border border-blue-200 flex items-center justify-between gap-3 text-xs">
+                      <div className="flex items-center gap-2 text-blue-900 font-bold">
+                        <Headphones className="w-4 h-4 text-blue-600" />
+                        <span>Bài nghe Audio:</span>
+                        {q.listeningScript && <span className="font-normal text-slate-600 italic truncate max-w-md">"{q.listeningScript}"</span>}
+                      </div>
+                      {q.listeningScript && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if ('speechSynthesis' in window) {
+                              window.speechSynthesis.cancel();
+                              const u = new SpeechSynthesisUtterance(q.listeningScript);
+                              u.lang = 'en-US';
+                              u.rate = 0.9;
+                              window.speechSynthesis.speak(u);
+                            }
+                          }}
+                          className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] flex items-center gap-1 shrink-0 cursor-pointer"
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                          <span>Nghe lại</span>
+                        </button>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Single, Multiple Choice, Phonetics, Listening & Reading Comprehension Options Display */}
+                  {(q.type === 'single_choice' || q.type === 'multiple_choice' || q.type === 'phonetics' || q.type === 'listening' || q.type === 'reading_comprehension') && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {q.options?.map(opt => {
                         const isCorrectOption = opt.isCorrect;
@@ -332,9 +376,51 @@ export default function ExamResultPage({
                           >
                             <div className="flex items-start gap-2">
                               <span className="font-bold shrink-0">{opt.label}.</span>
-                              <span>{opt.content}</span>
+                              <span dangerouslySetInnerHTML={{ __html: opt.content }} />
                             </div>
                             {icon}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Sentence Rearrange Review */}
+                  {q.type === 'sentence_rearrange' && (
+                    <div className="space-y-2 mt-3 p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 text-xs">
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="text-slate-500 font-medium">Câu bạn sắp xếp:</span>
+                        <span className={`font-bold ${q.isCorrect ? 'text-emerald-700' : 'text-rose-700'}`}>
+                          {Array.isArray(q.userAnswer) ? q.userAnswer.join(' ') : (q.userAnswer || 'Chưa trả lời')}
+                        </span>
+                      </div>
+                      <div className="flex items-start justify-between gap-2 pt-2 border-t border-slate-200/60">
+                        <span className="text-slate-500 font-medium">Đáp án chuẩn:</span>
+                        <span className="font-bold text-emerald-700">
+                          {q.correctSentence || q.explanation}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Fill in the Blank Review */}
+                  {q.type === 'fill_blank' && (
+                    <div className="space-y-2 mt-3 p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 text-xs">
+                      <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                        Chi tiết điền khuyết:
+                      </div>
+                      {Array.isArray(q.blanks) && q.blanks.map((b, bIdx) => {
+                        const userVal = typeof q.userAnswer === 'object' && q.userAnswer 
+                          ? (q.userAnswer[`blank_${bIdx}`] || q.userAnswer[b.id] || 'Chưa điền')
+                          : (q.userAnswer || 'Chưa điền');
+                        const isBlankOk = String(userVal).trim().toLowerCase() === String(b.correctAnswer || b.text).trim().toLowerCase();
+                        return (
+                          <div key={bIdx} className={`p-2.5 rounded-lg border text-xs flex items-center justify-between ${isBlankOk ? 'bg-emerald-50/60 border-emerald-200' : 'bg-rose-50/60 border-rose-200'}`}>
+                            <span className="font-semibold text-slate-700">Chỗ trống ({bIdx + 1}):</span>
+                            <div className="flex items-center gap-3">
+                              <span>Bạn chọn: <strong className={isBlankOk ? 'text-emerald-700' : 'text-rose-700'}>{userVal}</strong></span>
+                              <span>Chuẩn: <strong className="text-emerald-700">{b.correctAnswer || b.text}</strong></span>
+                            </div>
                           </div>
                         );
                       })}

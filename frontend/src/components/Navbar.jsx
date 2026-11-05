@@ -18,7 +18,8 @@ import {
   ShieldCheck,
   Bell,
   Inbox,
-  Users
+  Users,
+  Headphones
 } from 'lucide-react';
 import AdminApprovalModal from './AdminApprovalModal';
 import AdminFeedbackModal from './AdminFeedbackModal';
@@ -75,6 +76,7 @@ export default function Navbar({ activePage, setActivePage }) {
 
   const navItems = [
     { id: 'explore', label: 'Khám phá', icon: Compass },
+    { id: 'english', label: 'Tiếng Anh K12', icon: Headphones, badge: 'Mới' },
     { id: 'create', label: 'Tạo quiz', icon: PlusCircle },
     { id: 'battle-lobby', label: 'Thi đấu', icon: Swords },
     { id: 'history', label: 'Lịch sử', icon: History },
@@ -121,14 +123,19 @@ export default function Navbar({ activePage, setActivePage }) {
                   <button
                     key={item.id}
                     onClick={() => setActivePage(item.id)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition-all ${
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold transition-all relative ${
                       isActive 
                         ? 'bg-blue-50 text-blue-700 shadow-2xs' 
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                   >
                     <Icon className={`w-4 h-4 ${isActive ? 'text-blue-600' : 'text-slate-400'}`} />
-                    {item.label}
+                    <span>{item.label}</span>
+                    {item.badge && (
+                      <span className="ml-0.5 px-1.5 py-0.2 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[10px] font-black rounded-full uppercase tracking-wider animate-pulse shadow-xs">
+                        {item.badge}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -407,12 +414,19 @@ export default function Navbar({ activePage, setActivePage }) {
                   setActivePage(item.id);
                   setMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold ${
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold ${
                   isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-700 hover:bg-slate-100'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-blue-600' : 'text-slate-400'}`} />
-                {item.label}
+                <div className="flex items-center gap-3">
+                  <Icon className={`w-5 h-5 ${isActive ? 'text-blue-600' : 'text-slate-400'}`} />
+                  <span>{item.label}</span>
+                </div>
+                {item.badge && (
+                  <span className="px-2 py-0.5 text-[10px] font-extrabold uppercase rounded-full bg-gradient-to-r from-amber-500 to-rose-500 text-white animate-pulse">
+                    {item.badge}
+                  </span>
+                )}
               </button>
             );
           })}

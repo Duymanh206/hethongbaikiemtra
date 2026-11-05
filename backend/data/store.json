@@ -157,6 +157,138 @@
       "createdAt": "2026-11-05T03:11:59.292Z",
       "updatedAt": "2026-11-05T03:11:59.292Z",
       "subjectName": "Chủ nghĩa xã hội khoa học"
+    },
+    {
+      "id": "quiz_eng_p1",
+      "title": "TIẾNG ANH LỚP 3 - UNIT 1 & 2: MY FAMILY & SCHOOL THINGS",
+      "description": "TIẾNG ANH LỚP 3 - UNIT 1 & 2: MY FAMILY & SCHOOL THINGS.docx",
+      "category": "Tiếng Anh Phổ Thông",
+      "level": "primary",
+      "grade": "Lớp 3",
+      "originalDocxName": "TiengAnh3_Unit1_2.docx",
+      "durationMinutes": 15,
+      "passingScore": 5,
+      "shuffleQuestions": false,
+      "shuffleOptions": true,
+      "antiCheatEnabled": false,
+      "maxViolations": 5,
+      "totalQuestions": 6,
+      "attemptsCount": 142,
+      "avgRating": 5,
+      "createdBy": "Ban Chuyên môn Tiểu học",
+      "createdAt": "2026-03-01T08:00:00.000Z",
+      "updatedAt": "2026-03-01T08:00:00.000Z",
+      "subjectName": "Tiếng Anh Phổ Thông"
+    },
+    {
+      "id": "quiz_eng_p2",
+      "title": "TIẾNG ANH LỚP 5 - UNIT 4: DAILY ROUTINES & HEALTHY HABITS",
+      "description": "TIẾNG ANH LỚP 5 - UNIT 4: DAILY ROUTINES & HEALTHY HABITS.docx",
+      "category": "Tiếng Anh Phổ Thông",
+      "level": "primary",
+      "grade": "Lớp 5",
+      "originalDocxName": "TiengAnh5_Unit4_Routines.docx",
+      "durationMinutes": 20,
+      "passingScore": 5,
+      "shuffleQuestions": false,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 5,
+      "attemptsCount": 98,
+      "avgRating": 4.9,
+      "createdBy": "Tổ Ngoại ngữ Tiểu học",
+      "createdAt": "2026-03-05T08:00:00.000Z",
+      "updatedAt": "2026-03-05T08:00:00.000Z",
+      "subjectName": "Tiếng Anh Phổ Thông"
+    },
+    {
+      "id": "quiz_eng_s1",
+      "title": "TIẾNG ANH LỚP 6 - GLOBAL SUCCESS: UNIT 1 MY NEW SCHOOL (15 PHÚT)",
+      "description": "TIẾNG ANH LỚP 6 - GLOBAL SUCCESS: UNIT 1 MY NEW SCHOOL (15 PHÚT).docx",
+      "category": "Tiếng Anh Phổ Thông",
+      "level": "secondary",
+      "grade": "Lớp 6",
+      "originalDocxName": "GlobalSuccess_Grade6_Unit1.docx",
+      "durationMinutes": 15,
+      "passingScore": 5,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 6,
+      "attemptsCount": 230,
+      "avgRating": 4.8,
+      "createdBy": "Nhóm Tác giả Global Success",
+      "createdAt": "2026-03-10T09:00:00.000Z",
+      "updatedAt": "2026-03-10T09:00:00.000Z",
+      "subjectName": "Tiếng Anh Phổ Thông"
+    },
+    {
+      "id": "quiz_eng_s2",
+      "title": "TIẾNG ANH LỚP 9 - ĐỀ KIỂM TRA 1 TIẾT & LUYỆN THI VÀO LỚP 10",
+      "description": "TIẾNG ANH LỚP 9 - ĐỀ KIỂM TRA 1 TIẾT & LUYỆN THI VÀO LỚP 10.docx",
+      "category": "Tiếng Anh Phổ Thông",
+      "level": "secondary",
+      "grade": "Lớp 9",
+      "originalDocxName": "DeThiVao10_TiengAnh9_45P.docx",
+      "durationMinutes": 45,
+      "passingScore": 5,
+      "shuffleQuestions": false,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 6,
+      "attemptsCount": 312,
+      "avgRating": 4.9,
+      "createdBy": "Hội đồng Khảo thí THCS",
+      "createdAt": "2026-03-12T10:00:00.000Z",
+      "updatedAt": "2026-03-12T10:00:00.000Z",
+      "subjectName": "Tiếng Anh Phổ Thông"
+    },
+    {
+      "id": "quiz_eng_h1",
+      "title": "TIẾNG ANH LỚP 11 - UNIT 1: A LONG AND HEALTHY LIFE",
+      "description": "Chương trình THPT mới. Luyện tập từ vựng y tế, tuổi thọ, động từ khuyết thiếu (modal verbs), bài đọc hiểu về chế độ ăn uống khoa học.",
+      "category": "Tiếng Anh Phổ Thông",
+      "level": "highschool",
+      "grade": "Lớp 11",
+      "originalDocxName": "Grade11_HealthyLife_Unit1.docx",
+      "durationMinutes": 30,
+      "passingScore": 5,
+      "shuffleQuestions": false,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 5,
+      "attemptsCount": 185,
+      "avgRating": 4.9,
+      "createdBy": "Bộ môn Ngoại ngữ THPT",
+      "createdAt": "2026-03-15T14:00:00.000Z",
+      "updatedAt": "2026-03-15T14:00:00.000Z",
+      "subjectName": "Tiếng Anh Phổ Thông"
+    },
+    {
+      "id": "quiz_eng_thpt_qg",
+      "title": "ĐỀ THI THỬ TỐT NGHIỆP THPT QUỐC GIA 2026 - MÔN TIẾNG ANH (CẤU TRÚC MỚI)",
+      "description": "ĐỀ THI THỬ TỐT NGHIỆP THPT QUỐC GIA 2026 - MÔN TIẾNG ANH (CẤU TRÚC MỚI).docx",
+      "category": "Tiếng Anh Phổ Thông",
+      "level": "highschool",
+      "grade": "Lớp 12",
+      "originalDocxName": "DeThiThuTHPTQG_2026_ChuanMoi.docx",
+      "durationMinutes": 50,
+      "passingScore": 5,
+      "shuffleQuestions": false,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 7,
+      "attemptsCount": 520,
+      "avgRating": 5,
+      "createdBy": "Hội đồng Soạn thảo Đề thi THPT Quốc gia",
+      "createdAt": "2026-03-18T08:00:00.000Z",
+      "updatedAt": "2026-03-18T08:00:00.000Z",
+      "subjectName": "Tiếng Anh Phổ Thông"
     }
   ],
   "questions": [
@@ -2471,6 +2603,137 @@
       "requiredCount": 2,
       "categories": [],
       "statements": []
+    },
+    {
+      "id": "q_eng_p1_1",
+      "quizId": "quiz_eng_p1",
+      "orderIndex": 1,
+      "type": "listening",
+      "content": "Listen to the audio track and choose the correct picture / member mentioned:",
+      "instructionBadge": "🎧 Câu hỏi Nghe hiểu - Bấm phát âm thanh bên dưới",
+      "listeningScript": "Hello, my name is Nam. This is my grandfather. He is seventy years old, and he loves reading books in the garden.",
+      "points": 1
+    },
+    {
+      "id": "q_eng_p1_2",
+      "quizId": "quiz_eng_p1",
+      "orderIndex": 2,
+      "type": "sentence_rearrange",
+      "content": "Sắp xếp các từ bị xáo trộn dưới đây thành một câu hoàn chỉnh:",
+      "instructionBadge": "🧩 Sắp xếp từ thành câu - Bấm các từ theo thứ tự đúng",
+      "scrambledWords": [
+        "This",
+        "my",
+        "is",
+        "school",
+        "new"
+      ],
+      "correctSentence": "this is my new school",
+      "explanation": "Cấu trúc giới thiệu đồ vật/nơi chốn: This is + tính từ sở hữu + danh từ (This is my new school).",
+      "points": 1
+    },
+    {
+      "id": "q_eng_p1_3",
+      "quizId": "quiz_eng_p1",
+      "orderIndex": 3,
+      "type": "single_choice",
+      "content": "What is this? Look at the definition: \"A piece of plastic or wood used for measuring things or drawing straight lines.\"",
+      "instructionBadge": "Đồ dùng học tập cơ bản",
+      "points": 1
+    },
+    {
+      "id": "q_eng_s1_1",
+      "quizId": "quiz_eng_s1",
+      "orderIndex": 1,
+      "type": "phonetics",
+      "content": "Mark the letter A, B, C, or D to indicate the word whose underlined part differs from the other three in pronunciation:",
+      "instructionBadge": "🔊 Ngữ âm - Tìm từ có phần gạch chân phát âm khác",
+      "points": 1,
+      "explanation": "Trong từ \"chemistry\", phần gạch chân \"ch\" phát âm là /k/, trong khi các từ còn lại phát âm là /tʃ/."
+    },
+    {
+      "id": "q_eng_s1_2",
+      "quizId": "quiz_eng_s1",
+      "orderIndex": 2,
+      "type": "phonetics",
+      "content": "Mark the letter A, B, C, or D to indicate the word whose underlined part differs from the other three in pronunciation (ending -s):",
+      "instructionBadge": "🔊 Phát âm đuôi -s/-es",
+      "points": 1,
+      "explanation": "\"pens\" có đuôi -s phát âm là /z/ vì đi sau âm hữu thanh /n/. Các từ còn lại phát âm là /s/ vì đi sau âm vô thanh /k, t, p/."
+    },
+    {
+      "id": "q_eng_s1_3",
+      "quizId": "quiz_eng_s1",
+      "orderIndex": 3,
+      "type": "single_choice",
+      "content": "At our school, students ________ uniforms on Mondays and Wednesdays.",
+      "instructionBadge": "Thì Hiện tại đơn (Present Simple)",
+      "points": 1
+    },
+    {
+      "id": "q_eng_thpt_1",
+      "quizId": "quiz_eng_thpt_qg",
+      "orderIndex": 1,
+      "type": "phonetics",
+      "content": "Mark the letter A, B, C, or D to indicate the word whose underlined part differs from the other three in pronunciation:",
+      "instructionBadge": "Phát âm nguyên âm & phụ âm chuẩn đề THPT Quốc gia",
+      "points": 1,
+      "explanation": "Từ \"that\" có phần gạch chân phát âm là /ð/, các từ còn lại phát âm là /θ/."
+    },
+    {
+      "id": "q_eng_thpt_2",
+      "quizId": "quiz_eng_thpt_qg",
+      "orderIndex": 2,
+      "type": "phonetics",
+      "content": "Mark the letter A, B, C, or D to indicate the word that differs from the other three in the position of primary stress:",
+      "instructionBadge": "Trọng âm từ có 2 và 3 âm tiết",
+      "points": 1,
+      "explanation": "\"follow\" có trọng âm rơi vào âm tiết thứ 1. Các từ còn lại có trọng âm rơi vào âm tiết thứ 2."
+    },
+    {
+      "id": "q_eng_thpt_3",
+      "quizId": "quiz_eng_thpt_qg",
+      "orderIndex": 3,
+      "type": "reading_comprehension",
+      "passageTitle": "ĐOẠN VĂN ĐỌC HIỂU 1 (READING PASSAGE 1 - AI & FUTURE JOBS)",
+      "passageText": "Artificial Intelligence (AI) is transforming the landscape of modern employment at an unprecedented pace. From automating mundane clerical tasks to diagnosing intricate medical conditions, algorithms are increasingly capable of performing duties once thought uniquely human.\n\nWhile some fear that widespread automation will inevitably lead to rampant unemployment, economic historians point out that technological revolutions have historically created more jobs than they destroyed. The industrial revolution, for instance, eliminated artisanal crafts but birthed expansive manufacturing and logistics sectors.\n\nToday, the emerging demand is not for workers who compete with machines, but for those who can collaborate with them. Skills such as critical thinking, creative problem-solving, and emotional intelligence have become invaluable currencies in the labor market. Educational institutions worldwide are consequently redesigning their curricula to equip future generations with interdisciplinary competencies.",
+      "content": "According to paragraph 2, what do economic historians argue regarding technological revolutions?",
+      "instructionBadge": "📖 Đọc hiểu đoạn văn Split View - Đối chiếu trực tiếp với bài đọc bên trái",
+      "points": 1,
+      "explanation": "Dẫn chứng trong đoạn 2: \"...economic historians point out that technological revolutions have historically created more jobs than they destroyed.\""
+    },
+    {
+      "id": "q_eng_thpt_4",
+      "quizId": "quiz_eng_thpt_qg",
+      "orderIndex": 4,
+      "type": "reading_comprehension",
+      "passageTitle": "ĐOẠN VĂN ĐỌC HIỂU 1 (READING PASSAGE 1 - AI & FUTURE JOBS)",
+      "passageText": "Artificial Intelligence (AI) is transforming the landscape of modern employment at an unprecedented pace. From automating mundane clerical tasks to diagnosing intricate medical conditions, algorithms are increasingly capable of performing duties once thought uniquely human.\n\nWhile some fear that widespread automation will inevitably lead to rampant unemployment, economic historians point out that technological revolutions have historically created more jobs than they destroyed. The industrial revolution, for instance, eliminated artisanal crafts but birthed expansive manufacturing and logistics sectors.\n\nToday, the emerging demand is not for workers who compete with machines, but for those who can collaborate with them. Skills such as critical thinking, creative problem-solving, and emotional intelligence have become invaluable currencies in the labor market. Educational institutions worldwide are consequently redesigning their curricula to equip future generations with interdisciplinary competencies.",
+      "content": "The word \"unprecedented\" in paragraph 1 is closest in meaning to:",
+      "instructionBadge": "📖 Tìm từ đồng nghĩa trong ngữ cảnh bài đọc",
+      "points": 1,
+      "explanation": "\"unprecedented\" có nghĩa là chưa từng có tiền lệ, chưa từng xảy ra trước đây (never experienced before)."
+    },
+    {
+      "id": "q_eng_thpt_5",
+      "quizId": "quiz_eng_thpt_qg",
+      "orderIndex": 5,
+      "type": "sentence_rearrange",
+      "content": "Arrange the following fragments to create a coherent English sentence from a formal announcement:",
+      "instructionBadge": "Sắp xếp câu trật tự logic (Cấu trúc mới Đề thi tốt nghiệp)",
+      "scrambledWords": [
+        "All",
+        "students",
+        "must",
+        "submit",
+        "their",
+        "assignments",
+        "before",
+        "Friday"
+      ],
+      "correctSentence": "all students must submit their assignments before friday",
+      "explanation": "Cấu trúc: All students (Chủ ngữ) + must submit (Động từ khuyết thiếu) + their assignments (Tân ngữ) + before Friday (Trạng từ chỉ thời gian).",
+      "points": 1
     }
   ],
   "question_options": [
@@ -6377,6 +6640,294 @@
       "content": "Nội dung giáo dục",
       "isCorrect": false,
       "orderIndex": 4
+    },
+    {
+      "id": "opt_ep1_1a",
+      "questionId": "q_eng_p1_1",
+      "label": "A",
+      "content": "Grandfather (Ông nội/ngoại)",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_ep1_1b",
+      "questionId": "q_eng_p1_1",
+      "label": "B",
+      "content": "Grandmother (Bà)",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_ep1_1c",
+      "questionId": "q_eng_p1_1",
+      "label": "C",
+      "content": "Brother (Anh/Em trai)",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_ep1_1d",
+      "questionId": "q_eng_p1_1",
+      "label": "D",
+      "content": "Father (Bố)",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_ep1_3a",
+      "questionId": "q_eng_p1_3",
+      "label": "A",
+      "content": "A ruler (Cái thước kẻ)",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_ep1_3b",
+      "questionId": "q_eng_p1_3",
+      "label": "B",
+      "content": "An eraser (Cục tẩy)",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_ep1_3c",
+      "questionId": "q_eng_p1_3",
+      "label": "C",
+      "content": "A pencil sharpener (Cái gọt bút chì)",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_ep1_3d",
+      "questionId": "q_eng_p1_3",
+      "label": "D",
+      "content": "A school bag (Cặp sách)",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_1a",
+      "questionId": "q_eng_s1_1",
+      "label": "A",
+      "content": "<u>ch</u>ildren",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_1b",
+      "questionId": "q_eng_s1_1",
+      "label": "B",
+      "content": "<u>ch</u>emistry",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_1c",
+      "questionId": "q_eng_s1_1",
+      "label": "C",
+      "content": "<u>ch</u>air",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_1d",
+      "questionId": "q_eng_s1_1",
+      "label": "D",
+      "content": "<u>ch</u>eck",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_2a",
+      "questionId": "q_eng_s1_2",
+      "label": "A",
+      "content": "book<u>s</u>",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_2b",
+      "questionId": "q_eng_s1_2",
+      "label": "B",
+      "content": "cat<u>s</u>",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_2c",
+      "questionId": "q_eng_s1_2",
+      "label": "C",
+      "content": "pen<u>s</u>",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_2d",
+      "questionId": "q_eng_s1_2",
+      "label": "D",
+      "content": "lamp<u>s</u>",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_3a",
+      "questionId": "q_eng_s1_3",
+      "label": "A",
+      "content": "wear",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_3b",
+      "questionId": "q_eng_s1_3",
+      "label": "B",
+      "content": "wears",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_3c",
+      "questionId": "q_eng_s1_3",
+      "label": "C",
+      "content": "is wearing",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_es1_3d",
+      "questionId": "q_eng_s1_3",
+      "label": "D",
+      "content": "wore",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_1a",
+      "questionId": "q_eng_thpt_1",
+      "label": "A",
+      "content": "<u>th</u>ink",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_1b",
+      "questionId": "q_eng_thpt_1",
+      "label": "B",
+      "content": "<u>th</u>ank",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_1c",
+      "questionId": "q_eng_thpt_1",
+      "label": "C",
+      "content": "<u>th</u>at",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_1d",
+      "questionId": "q_eng_thpt_1",
+      "label": "D",
+      "content": "<u>th</u>in",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_2a",
+      "questionId": "q_eng_thpt_2",
+      "label": "A",
+      "content": "promote",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_2b",
+      "questionId": "q_eng_thpt_2",
+      "label": "B",
+      "content": "attract",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_2c",
+      "questionId": "q_eng_thpt_2",
+      "label": "C",
+      "content": "follow",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_2d",
+      "questionId": "q_eng_thpt_2",
+      "label": "D",
+      "content": "decide",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_3a",
+      "questionId": "q_eng_thpt_3",
+      "label": "A",
+      "content": "They have historically created more jobs than they eradicated.",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_3b",
+      "questionId": "q_eng_thpt_3",
+      "label": "B",
+      "content": "They exclusively harmed low-skilled manufacturing workers.",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_3c",
+      "questionId": "q_eng_thpt_3",
+      "label": "C",
+      "content": "They immediately eliminated the need for formal education.",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_3d",
+      "questionId": "q_eng_thpt_3",
+      "label": "D",
+      "content": "They caused permanent economic stagnation in modern society.",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_4a",
+      "questionId": "q_eng_thpt_4",
+      "label": "A",
+      "content": "unmatched / never experienced before",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_4b",
+      "questionId": "q_eng_thpt_4",
+      "label": "B",
+      "content": "predictable and steady",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_4c",
+      "questionId": "q_eng_thpt_4",
+      "label": "C",
+      "content": "slow and insignificant",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_eth_4d",
+      "questionId": "q_eng_thpt_4",
+      "label": "D",
+      "content": "questionable and hazardous",
+      "isCorrect": false,
+      "orderIndex": 1
     }
   ],
   "drag_drop_items": [
@@ -8173,6 +8724,116 @@
       "rejectLink": "http://localhost:5000/api/auth/approve?userId=user_1793865104374&token=369c75f74cbe1f43694db917807aa0c77341f2e5369cc1b7&action=reject",
       "status": "pending",
       "createdAt": "2026-11-05T07:51:44.403Z"
+    }
+  ],
+  "flashcards": [
+    {
+      "word": "Family",
+      "ipa": "/ˈfæm.əl.i/",
+      "type": "noun",
+      "meaning": "Gia đình, tổ ấm",
+      "example": "My family has five people: my parents, my brother, my sister, and me.",
+      "exampleVi": "Gia đình mình có 5 người: bố mẹ, anh trai, em gái và mình.",
+      "imageUrl": "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Grandfather",
+      "ipa": "/ˈɡræn.fɑː.ðər/",
+      "type": "noun",
+      "meaning": "Ông nội, ông ngoại",
+      "example": "My grandfather likes watering flowers in the morning.",
+      "exampleVi": "Ông của mình thích tưới hoa vào mỗi buổi sáng.",
+      "imageUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Schoolbag",
+      "ipa": "/ˈskuːl.bæɡ/",
+      "type": "noun",
+      "meaning": "Cặp sách, ba lô học sinh",
+      "example": "I put my textbooks and pencil case into my schoolbag.",
+      "exampleVi": "Mình cất sách giáo khoa và hộp bút vào trong cặp sách.",
+      "imageUrl": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Animal",
+      "ipa": "/ˈæn.ɪ.məl/",
+      "type": "noun",
+      "meaning": "Động vật, con vật cưng",
+      "example": "Dogs and dolphins are very smart animals.",
+      "exampleVi": "Chó và cá heo là những loài động vật rất thông minh.",
+      "imageUrl": "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Uniform",
+      "ipa": "/ˈjuː.nɪ.fɔːm/",
+      "type": "noun",
+      "meaning": "Bộ đồng phục trường học",
+      "example": "We wear our school uniform with pride every Monday morning.",
+      "exampleVi": "Chúng mình tự hào mặc đồng phục trường vào mỗi sáng thứ Hai.",
+      "imageUrl": "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Chemistry",
+      "ipa": "/ˈkem.ɪ.stri/",
+      "type": "noun",
+      "meaning": "Môn hóa học (âm ch phát âm là /k/)",
+      "example": "We conduct exciting experiments in the chemistry laboratory.",
+      "exampleVi": "Chúng mình thực hiện các thí nghiệm thú vị trong phòng thí nghiệm hóa học.",
+      "imageUrl": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Community",
+      "ipa": "/kəˈmjuː.nə.ti/",
+      "type": "noun",
+      "meaning": "Cộng đồng cư dân",
+      "example": "Volunteers are helping clean up the local community park.",
+      "exampleVi": "Các tình nguyện viên đang giúp dọn dẹp công viên cộng đồng địa phương.",
+      "imageUrl": "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Environment",
+      "ipa": "/ɪnˈvaɪ.rən.mənt/",
+      "type": "noun",
+      "meaning": "Môi trường sinh thái",
+      "example": "Planting more trees is vital for protecting our environment.",
+      "exampleVi": "Trồng thêm nhiều cây xanh là điều thiết yếu để bảo vệ môi trường.",
+      "imageUrl": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Unprecedented",
+      "ipa": "/ʌnˈpres.ɪ.den.tɪd/",
+      "type": "adjective",
+      "meaning": "Chưa từng có tiền lệ, chưa từng xảy ra",
+      "example": "The rapid rise of AI is bringing unprecedented changes to education.",
+      "exampleVi": "Sự trỗi dậy nhanh chóng của AI đang mang lại những thay đổi chưa từng có tiền lệ cho giáo dục.",
+      "imageUrl": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Longevity",
+      "ipa": "/lɒnˈdʒev.ə.ti/",
+      "type": "noun",
+      "meaning": "Tuổi thọ cao, sự sống lâu",
+      "example": "A balanced diet and regular exercise are closely linked to longevity.",
+      "exampleVi": "Chế độ ăn cân đối và tập thể dục thường xuyên gắn liền với tuổi thọ cao.",
+      "imageUrl": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Collaborate",
+      "ipa": "/kəˈlæb.ə.reɪt/",
+      "type": "verb",
+      "meaning": "Hợp tác, cộng tác",
+      "example": "Students need to collaborate effectively to solve multidisciplinary problems.",
+      "exampleVi": "Học sinh cần hợp tác hiệu quả để giải quyết các vấn đề liên ngành.",
+      "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&auto=format&fit=crop&q=80"
+    },
+    {
+      "word": "Biodiversity",
+      "ipa": "/ˌbaɪ.əʊ.daɪˈvɜː.sə.ti/",
+      "type": "noun",
+      "meaning": "Sự đa dạng sinh học",
+      "example": "Conserving tropical rainforests is crucial to maintaining global biodiversity.",
+      "exampleVi": "Bảo tồn rừng nhiệt đới có ý nghĩa sống còn để duy trì đa dạng sinh học toàn cầu.",
+      "imageUrl": "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400&auto=format&fit=crop&q=80"
     }
   ]
 }

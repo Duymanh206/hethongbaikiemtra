@@ -318,6 +318,7 @@ export async function parseDocxBuffer(buffer, config = {}) {
     let rm;
     const runs = [];
     let fullText = '';
+    let formattedText = '';
     while ((rm = rRegex.exec(pXml)) !== null) {
       const rContent = rm[1];
       const tMatch = rContent.match(/<w:t(?: [^>]*)?>([^<]*)<\/w:t>/);
@@ -325,20 +326,29 @@ export async function parseDocxBuffer(buffer, config = {}) {
       if (!text) continue;
       fullText += text;
       const isBold = /<w:b(?:\/| [^>]*\/>)/.test(rContent);
+      const isItalic = /<w:i(?:\/| [^>]*\/>)/.test(rContent);
       const isUnderline = /<w:u(?:\/| [^>]*\/>)/.test(rContent);
       const colorMatch = rContent.match(/<w:color [^>]*w:val="([^"]+)"/);
       const highlightMatch = rContent.match(/<w:highlight [^>]*w:val="([^"]+)"/);
       const shdMatch = rContent.match(/<w:shd [^>]*w:fill="([^"]+)"/);
+
+      let chunk = text;
+      if (isUnderline) chunk = `<u>${chunk}</u>`;
+      if (isItalic) chunk = `<i>${chunk}</i>`;
+      formattedText += chunk;
+
       runs.push({
         text,
+        formattedText: chunk,
         isBold,
+        isItalic,
         isUnderline,
         color: colorMatch ? colorMatch[1] : null,
         highlight: highlightMatch ? highlightMatch[1] : null,
         shading: shdMatch ? shdMatch[1] : null
       });
     }
-    return { fullText: fullText.trim(), runs };
+    return { fullText: fullText.trim(), formattedText: formattedText.trim(), runs };
   }
 
   function parseTable(tblXml) {

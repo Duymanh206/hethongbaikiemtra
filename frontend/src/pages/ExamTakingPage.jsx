@@ -258,8 +258,14 @@ export default function ExamTakingPage({
     if (!q) return false;
     const ans = answers[q.id];
 
-    if (q.type === 'single_choice') {
+    if (q.type === 'single_choice' || q.type === 'phonetics' || q.type === 'listening' || q.type === 'reading_comprehension') {
       return !!ans;
+    }
+    if (q.type === 'sentence_rearrange') {
+      return Array.isArray(ans) ? ans.length > 0 : !!ans;
+    }
+    if (q.type === 'fill_blank') {
+      return typeof ans === 'object' && ans !== null ? Object.keys(ans).length > 0 : !!ans;
     }
     if (q.type === 'true_false_matrix') {
       return ans && typeof ans === 'object' && Object.keys(ans).length > 0;

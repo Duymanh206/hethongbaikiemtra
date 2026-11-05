@@ -63,6 +63,9 @@ export function cleanDescription(desc, title) {
 export function getQuizSubjectName(quiz) {
   if (!quiz) return 'Môn học chung';
   const text = `${quiz.title || ''} ${quiz.description || ''} ${quiz.category || ''}`.toLowerCase();
+  if (text.includes('tiếng anh') || text.includes('english') || text.includes('thpt qg') || text.includes('global success') || text.includes('k12')) {
+    return 'Tiếng Anh Phổ Thông';
+  }
   if (text.includes('trí tuệ nhân tạo') || text.includes('ai') || text.includes('cntt') || text.includes('công nghệ thông tin')) {
     return 'Ứng dụng Trí tuệ Nhân tạo';
   }

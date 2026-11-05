@@ -11,6 +11,8 @@ import HistoryPage from './pages/HistoryPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import GuidePage from './pages/GuidePage';
 import FeedbackPage from './pages/FeedbackPage';
+import EnglishK12Page from './pages/EnglishK12Page';
+import QuickDictionaryPopup from './components/english/QuickDictionaryPopup';
 import LoginPage from './pages/LoginPage';
 import AuthModal from './components/AuthModal';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -90,6 +92,14 @@ function MainApp() {
           />
         )}
 
+        {activePage === 'english' && (
+          <EnglishK12Page
+            onSelectQuiz={handleSelectQuiz}
+            onStartExam={handleStartExam}
+            onStartBattleForQuiz={handleStartBattleForQuiz}
+          />
+        )}
+
         {activePage === 'quiz-detail' && (
           <QuizDetailPage
             quizId={selectedQuizId}
@@ -156,6 +166,9 @@ function MainApp() {
 
       {/* Global Authentication Modal (Login / Register) */}
       <AuthModal />
+
+      {/* Global Instant English Dictionary Tooltip for quick lookups */}
+      <QuickDictionaryPopup />
 
     </div>
   );

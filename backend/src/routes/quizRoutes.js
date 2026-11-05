@@ -9,13 +9,15 @@ import {
   createQuiz,
   addReview,
   parseQuizTextController,
-  deleteQuiz
+  deleteQuiz,
+  getEnglishFlashcards
 } from '../controllers/quizController.js';
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 25 * 1024 * 1024 } });
 
 router.get('/', getAllQuizzes);
+router.get('/english/flashcards', getEnglishFlashcards);
 router.get('/meta/courses-with-topics', getCoursesWithTopics);
 router.get('/:id', getQuizById);
 router.get('/:id/exam', getQuizExamQuestions);

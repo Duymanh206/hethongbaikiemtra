@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { cleanQuiz } from '../utils/textEncoding.js';
+import { englishQuizzes, englishQuestions, englishFlashcards } from './englishSeedData.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -255,7 +256,65 @@ class Database {
   constructor() {
     this.ensureDataDir();
     this.data = this.loadData();
+    this.ensureEnglishSeedData();
     this.syncFromCloud().catch(() => {});
+  }
+
+  ensureEnglishSeedData() {
+    try {
+      const quizzes = this.getTable('quizzes');
+      const questions = this.getTable('questions');
+      const options = this.getTable('question_options');
+
+      let changed = false;
+      for (const eq of englishQuizzes) {
+        if (!quizzes.some(q => q.id === eq.id)) {
+          quizzes.push(cleanQuiz(eq));
+          changed = true;
+        }
+      }
+
+      for (const q of englishQuestions) {
+        if (!questions.some(item => item.id === q.id)) {
+          const { options: qOpts, ...qData } = q;
+          questions.push(qData);
+          if (Array.isArray(qOpts) && qOpts.length > 0) {
+            for (const opt of qOpts) {
+              if (!options.some(o => o.id === opt.id)) {
+                options.push({
+                  id: opt.id,
+                  questionId: q.id,
+                  label: opt.label,
+                  content: opt.content,
+                  isCorrect: !!opt.isCorrect,
+                  orderIndex: opt.orderIndex || 1
+                });
+              }
+            }
+          }
+          changed = true;
+        }
+      }
+
+      const flashcardsTable = this.getTable('flashcards');
+      if (flashcardsTable.length === 0) {
+        const allCards = [
+          ...(englishFlashcards.primary || []),
+          ...(englishFlashcards.secondary || []),
+          ...(englishFlashcards.highschool || [])
+        ];
+        for (const card of allCards) {
+          flashcardsTable.push(card);
+        }
+        changed = true;
+      }
+
+      if (changed) {
+        this.saveData();
+      }
+    } catch (e) {
+      console.warn('Failed to ensure English seed data:', e);
+    }
   }
 
   async syncFromCloud() {

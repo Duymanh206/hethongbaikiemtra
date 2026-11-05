@@ -219,10 +219,36 @@ export const submitAttempt = (req, res) => {
       const qAnswer = answers[q.id];
       let isCorrect = false;
 
-      if (q.type === 'single_choice') {
+      if (q.type === 'single_choice' || q.type === 'phonetics' || q.type === 'listening' || q.type === 'reading_comprehension') {
         const correctOpt = allOptions.find(o => o.questionId === q.id && o.isCorrect);
         if (qAnswer && correctOpt && qAnswer === correctOpt.id) {
           isCorrect = true;
+        }
+      } else if (q.type === 'sentence_rearrange') {
+        // qAnswer can be array of words or joined string
+        const userSentence = Array.isArray(qAnswer) 
+          ? qAnswer.join(' ').trim().toLowerCase() 
+          : String(qAnswer || '').trim().toLowerCase();
+        const targetSentence = String(q.correctSentence || q.explanation || '').trim().toLowerCase();
+        if (userSentence && targetSentence && userSentence === targetSentence) {
+          isCorrect = true;
+        }
+      } else if (q.type === 'fill_blank') {
+        // qAnswer can be { blank_0: 'word' } or string
+        if (typeof qAnswer === 'object' && qAnswer !== null) {
+          const blanks = q.blanks || [];
+          if (blanks.length > 0) {
+            const allBlanksCorrect = blanks.every((b, bIdx) => {
+              const userVal = String(qAnswer[`blank_${bIdx}`] || qAnswer[b.id] || '').trim().toLowerCase();
+              const correctVal = String(b.correctAnswer || b.text || '').trim().toLowerCase();
+              return userVal && userVal === correctVal;
+            });
+            if (allBlanksCorrect) isCorrect = true;
+          }
+        } else if (qAnswer) {
+          const userVal = String(qAnswer).trim().toLowerCase();
+          const targetVal = String(q.correctAnswer || q.explanation || '').trim().toLowerCase();
+          if (userVal === targetVal) isCorrect = true;
         }
       } else if (q.type === 'multiple_choice') {
         const correctOpts = allOptions.filter(o => o.questionId === q.id && o.isCorrect).map(o => o.id);
@@ -371,12 +397,13 @@ export const getAttemptResult = (req, res) => {
       const userAnswer = userAnsObj ? userAnsObj.userAnswer : null;
       const isCorrect = userAnsObj ? userAnsObj.isCorrect : false;
 
+      const isSinglePick = q.type === 'single_choice' || q.type === 'phonetics' || q.type === 'listening' || q.type === 'reading_comprehension';
       const qOptions = allOptions.filter(o => o.questionId === q.id).map(o => ({
         id: o.id,
         label: o.label,
         content: o.content,
         isCorrect: o.isCorrect,
-        isUserSelected: q.type === 'single_choice'
+        isUserSelected: isSinglePick
           ? userAnswer === o.id
           : Array.isArray(userAnswer) && userAnswer.includes(o.id)
       }));
@@ -417,6 +444,15 @@ export const getAttemptResult = (req, res) => {
         statements: qStatements,
         options: qOptions,
         dragDropItems: qDragDrop,
+        // English-specific attributes
+        passageText: q.passageText,
+        passageTitle: q.passageTitle,
+        audioUrl: q.audioUrl,
+        listeningScript: q.listeningScript,
+        scrambledWords: q.scrambledWords,
+        correctSentence: q.correctSentence,
+        blanks: q.blanks,
+        imageUrl: q.imageUrl,
         isCorrect,
         userAnswer
       };

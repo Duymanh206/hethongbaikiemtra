@@ -34,10 +34,11 @@ export default function SingleChoiceQuestion({
               {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white"></span>}
             </span>
 
-            {/* Content text */}
-            <span className="flex-1 text-xs sm:text-sm leading-relaxed">
-              {opt.content}
-            </span>
+            {/* Content text with underline and formatting support */}
+            <span 
+              className="flex-1 text-xs sm:text-sm leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: opt.content }}
+            />
           </button>
         );
       })}

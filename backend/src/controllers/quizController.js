@@ -1,4 +1,5 @@
 import { db } from '../database/db.js';
+import { englishFlashcards } from '../database/englishSeedData.js';
 import { parseDocxBuffer } from '../services/docxParser.js';
 import { parseRawQuizText } from '../services/smartQuizParser.js';
 import { fixMojibake, cleanDescription, cleanQuiz, getQuizSubjectName } from '../utils/textEncoding.js';
@@ -393,7 +394,16 @@ export const getQuizExamQuestions = (req, res) => {
         statements: (q.statements || []).map(s => ({ id: s.id, text: s.text })),
         options: sanitizedOptions,
         dragDropItems: shuffleArray(sanitizedDragDrop),
-        matchingTargets
+        matchingTargets,
+        // English K12 specialized question attributes
+        passageText: q.passageText || null,
+        passageTitle: q.passageTitle || null,
+        audioUrl: q.audioUrl || null,
+        listeningScript: q.listeningScript || null,
+        scrambledWords: q.scrambledWords || null,
+        correctSentence: q.correctSentence || null,
+        blanks: q.blanks || null,
+        imageUrl: q.imageUrl || null
       };
     });
 
@@ -828,6 +838,32 @@ export const deleteQuiz = (req, res) => {
     });
   } catch (error) {
     console.error('deleteQuiz error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// GET /api/quizzes/english/flashcards
+export const getEnglishFlashcards = (req, res) => {
+  try {
+    const { level } = req.query; // 'primary' | 'secondary' | 'highschool'
+    if (level && englishFlashcards[level]) {
+      return res.json({
+        success: true,
+        level,
+        flashcards: englishFlashcards[level]
+      });
+    }
+    const all = [
+      ...englishFlashcards.primary,
+      ...englishFlashcards.secondary,
+      ...englishFlashcards.highschool
+    ];
+    res.json({
+      success: true,
+      flashcards: all,
+      grouped: englishFlashcards
+    });
+  } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
