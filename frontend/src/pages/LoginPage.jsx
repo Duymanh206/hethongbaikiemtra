@@ -18,11 +18,16 @@ import {
   Mail,
   GraduationCap,
   Layers,
-  Swords
+  Swords,
+  Send,
+  Copy,
+  Check,
+  Loader2,
+  ExternalLink
 } from 'lucide-react';
 
 export default function LoginPage() {
-  const { login, register } = useAuth();
+  const { login, register, resendApproval } = useAuth();
 
   const [activeTab, setActiveTab] = useState('login'); // 'login' | 'register'
 
@@ -44,11 +49,16 @@ export default function LoginPage() {
   const [regRole, setRegRole] = useState('student');
   const [showRegPassword, setShowRegPassword] = useState(false);
 
-  // Status
+  // Status & 1-touch Approval states
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [pendingNotice, setPendingNotice] = useState(null);
+  const [pendingApprovalLink, setPendingApprovalLink] = useState('');
+  const [pendingUser, setPendingUser] = useState(null);
+  const [isSendingReminder, setIsSendingReminder] = useState(false);
+  const [reminderSuccess, setReminderSuccess] = useState('');
+  const [copiedLink, setCopiedLink] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -63,6 +73,7 @@ export default function LoginPage() {
     setErrorMessage('');
     setSuccessMessage('');
     setPendingNotice(null);
+    setReminderSuccess('');
 
     if (!loginUsername.trim()) {
       setErrorMessage('Vui lòng nhập Tên đăng nhập hoặc Mã sinh viên');
@@ -82,6 +93,8 @@ export default function LoginPage() {
     } else {
       if (result.pendingApproval) {
         setPendingNotice(result.message);
+        if (result.approvalLink) setPendingApprovalLink(result.approvalLink);
+        if (result.user) setPendingUser(result.user);
       } else {
         setErrorMessage(result.message || 'Đăng nhập không thành công. Vui lòng kiểm tra lại');
       }
@@ -93,6 +106,7 @@ export default function LoginPage() {
     setErrorMessage('');
     setSuccessMessage('');
     setPendingNotice(null);
+    setReminderSuccess('');
 
     if (!regFullName.trim()) {
       setErrorMessage('Vui lòng nhập Họ và tên');
@@ -125,6 +139,8 @@ export default function LoginPage() {
     if (result.success) {
       if (result.pendingApproval) {
         setPendingNotice(result.message);
+        if (result.approvalLink) setPendingApprovalLink(result.approvalLink);
+        if (result.user) setPendingUser(result.user);
         setLoginUsername(regUsername);
         setActiveTab('login');
       } else {
@@ -141,6 +157,46 @@ export default function LoginPage() {
       setRegConfirmPassword('');
     } else {
       setErrorMessage(result.message || 'Đăng ký không thành công');
+    }
+  };
+
+  // Automated 1-touch reminder to Admin email
+  const handleResendApprovalEmail = async () => {
+    const targetUser = loginUsername || pendingUser?.username || regUsername;
+    if (!targetUser) return;
+    setIsSendingReminder(true);
+    setReminderSuccess('');
+    try {
+      const res = await resendApproval(targetUser);
+      if (res.success) {
+        setReminderSuccess(res.message || 'Đã gửi email nhắc duyệt tới Quản trị viên (manhvipsv@gmail.com)!');
+        if (res.approvalLink) {
+          setPendingApprovalLink(res.approvalLink);
+        }
+      } else {
+        setErrorMessage(res.message || 'Không thể gửi email nhắc duyệt');
+      }
+    } catch {
+      setErrorMessage('Lỗi khi gửi email thông báo nhắc duyệt');
+    } finally {
+      setIsSendingReminder(false);
+    }
+  };
+
+  // Copy 1-touch activation link for Zalo / SMS
+  const handleCopyActivationLink = () => {
+    const target = loginUsername || pendingUser?.username || 'user';
+    const link = pendingApprovalLink || `${window.location.origin}/api/auth/approve?userId=${encodeURIComponent(target)}&action=approve`;
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).then(() => {
+        setCopiedLink(true);
+        setTimeout(() => setCopiedLink(false), 3500);
+      }).catch(() => {
+        prompt('Sao chép liên kết kích hoạt này gửi cho Quản trị viên Hoàng Duy Mạnh:', link);
+      });
+    } else {
+      prompt('Sao chép liên kết kích hoạt này gửi cho Quản trị viên Hoàng Duy Mạnh:', link);
     }
   };
 
@@ -275,25 +331,85 @@ export default function LoginPage() {
 
                 {/* Pending Notice Alert */}
                 {pendingNotice && (
-                  <div className="mb-4 p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs space-y-2.5">
-                    <div className="font-bold flex items-center gap-1.5 text-amber-800">
-                      <Clock className="w-4 h-4 text-amber-600 shrink-0" />
-                      <span>Đang chờ Quản trị viên phê duyệt:</span>
+                  <div className="mb-5 p-4 sm:p-5 rounded-2xl bg-amber-50/90 border border-amber-300 text-amber-900 text-xs space-y-3 shadow-xs">
+                    <div className="flex items-center justify-between">
+                      <div className="font-extrabold flex items-center gap-1.5 text-amber-900 text-sm">
+                        <Clock className="w-4 h-4 text-amber-600 shrink-0" />
+                        <span>Đang chờ Quản trị viên phê duyệt:</span>
+                      </div>
+                      <span className="px-2.5 py-0.5 rounded-full bg-amber-200/90 text-amber-900 text-[10px] font-bold uppercase tracking-wider">
+                        Kích hoạt 1 chạm
+                      </span>
                     </div>
-                    <p className="leading-relaxed text-[11px]">{pendingNotice}</p>
-                    
-                    <a
-                      href={`mailto:manhvipsv@gmail.com?subject=${encodeURIComponent('[Quizz. PRO] Yêu cầu phê duyệt tài khoản mới')}&body=${encodeURIComponent('Kính gửi Quản trị viên Hoàng Duy Mạnh,\n\nVui lòng phê duyệt tài khoản đăng ký mới để tôi có thể làm bài trên hệ thống.')}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-xs transition-all active:scale-95 cursor-pointer"
-                    >
-                      <Mail className="w-3.5 h-3.5" />
-                      <span>Gửi email nhắc duyệt tới manhvipsv@gmail.com</span>
-                    </a>
 
-                    <p className="text-[10px] text-amber-700 italic">
-                      * Quản trị viên Hoàng Duy Mạnh chỉ cần đăng nhập tài khoản là có thể bấm "Duyệt đăng ký" ngay trên thanh menu hệ thống.
+                    <p className="leading-relaxed text-[12px] text-amber-950 font-medium">
+                      {pendingNotice}
+                    </p>
+
+                    {/* Action Buttons */}
+                    <div className="space-y-2 pt-1">
+                      {/* Button 1: Dispatch email via FormSubmit & Resend to manhvipsv@gmail.com */}
+                      <button
+                        type="button"
+                        disabled={isSendingReminder}
+                        onClick={handleResendApprovalEmail}
+                        className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-xs transition-all active:scale-98 disabled:opacity-60 cursor-pointer"
+                      >
+                        {isSendingReminder ? (
+                          <>
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            <span>Đang gửi email tới manhvipsv@gmail.com...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-3.5 h-3.5" />
+                            <span>⚡ Gửi email nhắc Quản trị viên duyệt (manhvipsv@gmail.com)</span>
+                          </>
+                        )}
+                      </button>
+
+                      <div className="grid grid-cols-2 gap-2">
+                        {/* Button 2: Open mail app */}
+                        <a
+                          href={`mailto:manhvipsv@gmail.com?subject=${encodeURIComponent(`[Quizz. PRO] Yêu cầu phê duyệt tài khoản: ${pendingUser?.fullName || loginUsername} (${pendingUser?.studentId || loginUsername})`)}&body=${encodeURIComponent(`Kính gửi Quản trị viên Hoàng Duy Mạnh,\n\nTôi vừa đăng ký tài khoản tham gia kiểm tra trắc nghiệm:\n- Họ và tên: ${pendingUser?.fullName || loginUsername}\n- Mã sinh viên: ${pendingUser?.studentId || loginUsername}\n- Tên tài khoản: ${loginUsername || pendingUser?.username}\n\n👉 Bấm vào đường link sau để PHÊ DUYỆT & KÍCH HOẠT tài khoản cho tôi ngay:\n${pendingApprovalLink || `${window.location.origin}/api/auth/approve?userId=${encodeURIComponent(loginUsername || pendingUser?.username || 'user')}&action=approve`}\n\nXin trân trọng cảm ơn!`)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-white hover:bg-amber-100/70 text-amber-900 border border-amber-300/80 font-bold text-[11px] transition-all text-center"
+                        >
+                          <Mail className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                          <span>Mở ứng dụng Mail</span>
+                        </a>
+
+                        {/* Button 3: Copy 1-touch activation link for Zalo */}
+                        <button
+                          type="button"
+                          onClick={handleCopyActivationLink}
+                          className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-white hover:bg-amber-100/70 text-amber-900 border border-amber-300/80 font-bold text-[11px] transition-all text-center cursor-pointer"
+                        >
+                          {copiedLink ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                              <span className="text-emerald-700 font-bold">Đã chép link!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                              <span>Chép link gửi Zalo</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+
+                    {reminderSuccess && (
+                      <div className="p-2.5 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-900 text-[11px] font-semibold flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span>{reminderSuccess}</span>
+                      </div>
+                    )}
+
+                    <p className="text-[10px] text-amber-800/90 italic leading-relaxed pt-1 border-t border-amber-200/80">
+                      💡 <b>Tiện ích:</b> Quản trị viên Hoàng Duy Mạnh chỉ cần mở email và bấm nút <b>"✓ ĐỒNG Ý PHÊ DUYỆT TÀI KHOẢN"</b> trong email là tài khoản của bạn được kích hoạt ngay lập tức mà Quản trị viên không cần phải đăng nhập vào hệ thống!
                     </p>
                   </div>
                 )}

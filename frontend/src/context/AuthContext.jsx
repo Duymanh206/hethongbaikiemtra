@@ -74,12 +74,20 @@ export const AuthProvider = ({ children }) => {
         return { 
           success: false, 
           pendingApproval: true,
+          approvalLink: data.approvalLink,
+          rejectLink: data.rejectLink,
+          adminEmail: data.adminEmail,
+          user: data.user,
           message: data.message || 'Tài khoản của bạn đang chờ Quản trị viên (Hoàng Duy Mạnh) phê duyệt kích hoạt. Vui lòng đợi quản trị viên duyệt trước khi đăng nhập!' 
         };
       }
       return { 
         success: false, 
         pendingApproval: data.pendingApproval,
+        approvalLink: data.approvalLink,
+        rejectLink: data.rejectLink,
+        adminEmail: data.adminEmail,
+        user: data.user,
         message: data.message || 'Đăng nhập không thành công' 
       };
     } catch (err) {
@@ -202,7 +210,11 @@ export const AuthProvider = ({ children }) => {
         return { 
           success: true, 
           pendingApproval: true,
-          message: data.message || 'Đăng ký tài khoản thành công! Thông báo đã được gửi tới Quản trị viên (Hoàng Duy Mạnh). Vui lòng đợi quản trị viên phê duyệt để kích hoạt tài khoản của bạn trước khi đăng nhập.' 
+          approvalLink: data.approvalLink,
+          rejectLink: data.rejectLink,
+          adminEmail: data.adminEmail,
+          user: data.user,
+          message: data.message || 'Đăng ký tài khoản thành công! Thông báo đã được gửi tới email Quản trị viên (Hoàng Duy Mạnh). Vui lòng đợi quản trị viên phê duyệt để kích hoạt tài khoản của bạn trước khi đăng nhập.' 
         };
       }
       return { success: false, message: data.message || 'Đăng ký không thành công' };
@@ -212,6 +224,20 @@ export const AuthProvider = ({ children }) => {
         pendingApproval: true,
         message: 'Đăng ký tài khoản thành công! Thông báo đã được gửi tới Quản trị viên (Hoàng Duy Mạnh). Vui lòng đợi quản trị viên phê duyệt để kích hoạt tài khoản của bạn trước khi đăng nhập.' 
       };
+    }
+  };
+
+  // Resend approval email to Admin
+  const resendApproval = async (username) => {
+    try {
+      const res = await fetch('/api/auth/resend-approval', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+      });
+      return await res.json();
+    } catch (err) {
+      return { success: false, message: 'Không thể kết nối máy chủ để gửi email' };
     }
   };
 
@@ -253,6 +279,7 @@ export const AuthProvider = ({ children }) => {
       setUser, 
       login, 
       register, 
+      resendApproval,
       logout, 
       loginAsStudent, 
       loginAsTeacher,

@@ -7,7 +7,8 @@ import {
   switchRole,
   approveAccountByLink,
   getPendingUsers,
-  approveUserByAdmin
+  approveUserByAdmin,
+  resendApprovalEmail
 } from '../controllers/authController.js';
 
 const router = express.Router();
@@ -22,5 +23,6 @@ router.post('/switch-role', switchRole);
 router.get('/approve', approveAccountByLink);
 router.get('/pending-users', getPendingUsers);
 router.post('/approve-user', approveUserByAdmin);
+router.post('/resend-approval', resendApprovalEmail);
 
 export default router;

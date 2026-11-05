@@ -114,7 +114,38 @@ export async function sendAdminApprovalEmail({ user, approvalLink, rejectLink })
     console.error('Failed to log notification:', err);
   }
 
-  // 2. Dispatch real email via Resend API if API key is provided
+  // 2. Dispatch real email via FormSubmit API (Sends directly to manhvipsv@gmail.com with zero configuration)
+  try {
+    const fsRes = await fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: emailSubject,
+        _template: 'box',
+        _captcha: 'false',
+        'TIÊU ĐỀ': 'YÊU CẦU PHÊ DUYỆT TÀI KHOẢN MỚI',
+        'Kính gửi': 'Quản trị viên Hoàng Duy Mạnh',
+        'Họ và tên thí sinh': user.fullName,
+        'Mã sinh viên (MSSV)': user.studentId,
+        'Tên tài khoản': user.username,
+        'Email thí sinh': user.email || 'Chưa cung cấp',
+        'Vai trò': roleText,
+        'Thời gian đăng ký': timestamp,
+        '👉 BẤM VÀO ĐÂY ĐỂ PHÊ DUYỆT NGAY': approvalLink,
+        '👉 BẤM VÀO ĐÂY ĐỂ TỪ CHỐI': rejectLink
+      }),
+      signal: AbortSignal.timeout(6000)
+    });
+    const fsJson = await fsRes.json().catch(() => ({}));
+    console.log(`[EMAIL DISPATCHED VIA FORMSUBMIT] Sent to ${ADMIN_EMAIL}:`, fsJson);
+  } catch (err) {
+    console.warn('[FORMSUBMIT DISPATCH NOTICE]', err.message);
+  }
+
+  // 3. Dispatch real email via Resend API if API key is provided
   if (process.env.RESEND_API_KEY) {
     try {
       await fetch('https://api.resend.com/emails', {
