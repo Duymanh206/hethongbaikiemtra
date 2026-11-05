@@ -14,7 +14,10 @@ import {
   Eye,
   Save,
   Check,
-  X
+  X,
+  Edit3,
+  HelpCircle,
+  AlertCircle
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -34,10 +37,11 @@ export default function CreateQuizPage({ onQuizCreated }) {
   const [quizTitle, setQuizTitle] = useState('');
   const [quizCategory, setQuizCategory] = useState('Triết học & Lý luận chính trị');
 
-  // Parser Result Preview
+  // Parser Result Preview & Editor
   const [parsing, setParsing] = useState(false);
   const [previewQuestions, setPreviewQuestions] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [editingQuestionIdx, setEditingQuestionIdx] = useState(null);
 
   // Visual Builder State
   const [builderTitle, setBuilderTitle] = useState('');
@@ -76,6 +80,7 @@ export default function CreateQuizPage({ onQuizCreated }) {
     }
   };
 
+  // Parse DOCX
   const handleParseDocx = async (saveDirectly = false) => {
     if (!file) {
       alert('Vui lòng chọn file .docx');
@@ -125,6 +130,240 @@ export default function CreateQuizPage({ onQuizCreated }) {
     }
   };
 
+  // ==================== QUESTION EDITING HANDLERS ====================
+  const handleUpdateQuestion = (qIndex, field, value) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      copy[qIndex] = { ...copy[qIndex], [field]: value };
+      return copy;
+    });
+  };
+
+  const handleToggleOptionCorrect = (qIndex, optIndex) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const options = (q.options || []).map((opt, idx) => {
+        if (q.type === 'single_choice') {
+          return { ...opt, isCorrect: idx === optIndex };
+        } else {
+          return idx === optIndex ? { ...opt, isCorrect: !opt.isCorrect } : opt;
+        }
+      });
+      q.options = options;
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleUpdateOptionText = (qIndex, optIndex, newContent) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const options = [...(q.options || [])];
+      options[optIndex] = { ...options[optIndex], content: newContent };
+      q.options = options;
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleAddOption = (qIndex) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const options = [...(q.options || [])];
+      const nextLabel = String.fromCharCode(65 + options.length);
+      options.push({ label: nextLabel, content: '', isCorrect: false });
+      q.options = options;
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleDeleteOption = (qIndex, optIndex) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const options = (q.options || []).filter((_, idx) => idx !== optIndex).map((opt, idx) => ({
+        ...opt,
+        label: String.fromCharCode(65 + idx)
+      }));
+      q.options = options;
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleToggleStatementCorrect = (qIndex, sIndex, value) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const statements = [...(q.statements || [])];
+      statements[sIndex] = { ...statements[sIndex], isCorrect: value };
+      q.statements = statements;
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleUpdateStatementText = (qIndex, sIndex, newText) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const statements = [...(q.statements || [])];
+      statements[sIndex] = { ...statements[sIndex], text: newText };
+      q.statements = statements;
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleAddStatement = (qIndex) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const statements = [...(q.statements || [])];
+      statements.push({
+        id: `tf_${Date.now()}_${statements.length + 1}`,
+        text: '',
+        isCorrect: 'dung'
+      });
+      q.statements = statements;
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleDeleteStatement = (qIndex, sIndex) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      q.statements = (q.statements || []).filter((_, idx) => idx !== sIndex);
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleUpdateCategory = (qIndex, cIndex, newTitle) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const oldCat = q.categories[cIndex];
+      const categories = [...(q.categories || [])];
+      categories[cIndex] = newTitle;
+      q.categories = categories;
+
+      q.dragDropItems = (q.dragDropItems || []).map(item => 
+        item.targetCategoryOrMatch === oldCat ? { ...item, targetCategoryOrMatch: newTitle } : item
+      );
+
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleUpdateDragItem = (qIndex, dIndex, newText, newTarget) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const items = [...(q.dragDropItems || [])];
+      items[dIndex] = {
+        ...items[dIndex],
+        itemText: newText !== undefined ? newText : items[dIndex].itemText,
+        targetCategoryOrMatch: newTarget !== undefined ? newTarget : items[dIndex].targetCategoryOrMatch
+      };
+      q.dragDropItems = items;
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleAddDragItem = (qIndex, targetCategory) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      const items = [...(q.dragDropItems || [])];
+      items.push({
+        id: `dd_${Date.now()}_${items.length + 1}`,
+        itemText: '',
+        targetCategoryOrMatch: targetCategory || (q.categories?.[0] || 'Cột 1')
+      });
+      q.dragDropItems = items;
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleDeleteDragItem = (qIndex, dIndex) => {
+    setPreviewQuestions(prev => {
+      const copy = [...prev];
+      const q = { ...copy[qIndex] };
+      q.dragDropItems = (q.dragDropItems || []).filter((_, idx) => idx !== dIndex);
+      copy[qIndex] = q;
+      return copy;
+    });
+  };
+
+  const handleDeleteQuestion = (qIndex) => {
+    if (!window.confirm(`Bạn có chắc chắn muốn xóa Câu ${qIndex + 1}?`)) return;
+    setPreviewQuestions(prev => prev.filter((_, idx) => idx !== qIndex));
+  };
+
+  const handleAddNewQuestion = () => {
+    setPreviewQuestions(prev => [
+      ...(prev || []),
+      {
+        orderIndex: (prev?.length || 0) + 1,
+        type: 'single_choice',
+        content: '',
+        points: 1.0,
+        options: [
+          { label: 'A', content: '', isCorrect: true },
+          { label: 'B', content: '', isCorrect: false },
+          { label: 'C', content: '', isCorrect: false },
+          { label: 'D', content: '', isCorrect: false }
+        ]
+      }
+    ]);
+  };
+
+  // Save edited questions to DB
+  const handleSaveEditedQuiz = async () => {
+    if (!previewQuestions || previewQuestions.length === 0) {
+      alert('Không có câu hỏi nào để lưu');
+      return;
+    }
+    setIsSaving(true);
+    try {
+      const res = await fetch('/api/quizzes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: quizTitle || file?.name?.replace(/\.docx$/i, '') || 'Bài kiểm tra',
+          description: `Đề thi nhập từ file Word (${previewQuestions.length} câu hỏi)`,
+          category: quizCategory,
+          durationMinutes: 15,
+          antiCheatEnabled: true,
+          questions: previewQuestions,
+          createdBy: user?.fullName || 'Quản trị viên'
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('Đã lưu bài thi và các câu hỏi chỉnh sửa thành công!');
+        onQuizCreated(data.quizId);
+      } else {
+        alert(data.message || 'Lỗi khi lưu bài thi');
+      }
+    } catch (e) {
+      alert('Lỗi kết nối máy chủ');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Visual Builder Save
   const handleSaveBuilderQuiz = async () => {
     if (!builderTitle.trim()) {
       alert('Vui lòng nhập tiêu đề bài thi');
@@ -158,123 +397,74 @@ export default function CreateQuizPage({ onQuizCreated }) {
         alert(data.message || 'Lỗi khi lưu');
       }
     } catch (e) {
-      console.error(e);
-      alert('Lỗi kết nối');
+      alert('Lỗi kết nối máy chủ');
     } finally {
       setIsSaving(false);
     }
   };
 
-  // Builder Helper: Add new question
-  const handleAddBuilderQuestion = (type) => {
-    const newIdx = builderQuestions.length + 1;
-    let newQ = {
-      id: `q_b_${Date.now()}`,
-      type,
-      content: `Câu hỏi ${newIdx}: Nội dung câu hỏi mới`,
-      points: 1.0,
-      options: []
-    };
-
-    if (type === 'single_choice' || type === 'multiple_choice') {
-      newQ.options = [
-        { label: 'A', content: 'Phương án A', isCorrect: true },
-        { label: 'B', content: 'Phương án B', isCorrect: false },
-        { label: 'C', content: 'Phương án C', isCorrect: false },
-        { label: 'D', content: 'Phương án D', isCorrect: false }
-      ];
-      if (type === 'multiple_choice') {
-        newQ.requiredCount = 2;
-        newQ.instructionBadge = '(!) Chọn 2 phương án đúng nhất';
-        newQ.options[1].isCorrect = true;
-      }
-    } else if (type === 'drag_drop_categorize') {
-      newQ.categories = ['1) Cột Nhóm 1', '2) Cột Nhóm 2'];
-      newQ.instructionBadge = '(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng';
-      newQ.dragDropItems = [
-        { itemText: 'Thẻ phân loại A', targetCategoryOrMatch: '1) Cột Nhóm 1' },
-        { itemText: 'Thẻ phân loại B', targetCategoryOrMatch: '2) Cột Nhóm 2' }
-      ];
-    } else if (type === 'drag_drop_matching') {
-      newQ.instructionBadge = '(!) Kéo thẻ đáp án vào ô trống viền nét đứt bên phải phát biểu';
-      newQ.dragDropItems = [
-        { itemText: 'Mệnh đề phát biểu 1', targetCategoryOrMatch: 'Khái niệm tương ứng 1' },
-        { itemText: 'Mệnh đề phát biểu 2', targetCategoryOrMatch: 'Khái niệm tương ứng 2' }
-      ];
-    }
-
-    setBuilderQuestions([...builderQuestions, newQ]);
-  };
-
   return (
-    <div className="min-h-screen bg-slate-50 pb-24">
-      
-      {/* Page Header */}
-      <div className="bg-white border-b border-slate-200 py-8 px-4 sm:px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
-                Trung tâm Khảo thí & Soạn đề
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-                Tạo Bài Thi & Đấu Trường Mới
-              </h1>
-            </div>
-
-            {/* Method Tabs */}
-            <div className="flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
-              <button
-                onClick={() => setActiveTab('docx')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === 'docx' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <Upload className="w-4 h-4" />
-                <span>1. Tải file Word (.docx) tự động</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('builder')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === 'builder' ? 'bg-white text-blue-700 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <Layers className="w-4 h-4" />
-                <span>2. Soạn thủ công (Visual Builder)</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 mt-8">
+    <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto space-y-8">
         
-        {/* METHOD 1: DOCX PARSER WITH ADVANCED FORMAT CONFIGURATION */}
+        {/* Page Header */}
+        <div className="text-center space-y-2">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider">
+            <Sparkles className="w-4 h-4 text-blue-600" />
+            <span>Trình Nhập Đề & Soạn Thảo Đa Định Dạng</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            Tạo & Tải Đề Thi Mới
+          </h1>
+          <p className="text-sm text-slate-500 max-w-xl mx-auto">
+            Hỗ trợ nhập trực tiếp từ file Word (.docx) hoặc soạn thảo thủ công. Cho phép chỉnh sửa bất kỳ câu hỏi nào để chuẩn xác 100% trước khi lưu!
+          </p>
+        </div>
+
+        {/* Tab Switcher */}
+        <div className="flex bg-white p-1.5 rounded-2xl shadow-xs border border-slate-200 max-w-md mx-auto">
+          <button
+            onClick={() => setActiveTab('docx')}
+            className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+              activeTab === 'docx' 
+                ? 'bg-blue-600 text-white shadow-xs' 
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Upload className="w-4 h-4" />
+            <span>Nhập từ file Word (.docx)</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('builder')}
+            className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+              activeTab === 'builder' 
+                ? 'bg-blue-600 text-white shadow-xs' 
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Settings className="w-4 h-4" />
+            <span>Tạo thủ công</span>
+          </button>
+        </div>
+
+        {/* ===================== TAB 1: DOCX PARSER WITH FULL EDITING ===================== */}
         {activeTab === 'docx' && (
           <div className="space-y-6">
             
             {/* Upload & Config Box */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200 space-y-6">
               
-              <div className="flex items-center gap-2 pb-4 border-b border-slate-100">
-                <Settings className="w-5 h-5 text-blue-600" />
-                <h3 className="font-bold text-base text-slate-900">
-                  Cấu hình Bóc tách File Word (.docx) Chuẩn Xác
-                </h3>
-              </div>
-
-              {/* Basic Info */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                    Tên bài thi / Môn học
+                    Tiêu đề bài kiểm tra
                   </label>
                   <input
                     type="text"
                     value={quizTitle}
                     onChange={(e) => setQuizTitle(e.target.value)}
-                    placeholder="VD: CHỦ NGHĨA XÃ HỘI KHOA HỌC - BÀI 5"
+                    placeholder="VD: BÀI KIỂM TRA 15 PHÚT - BÀI 5"
                     className="w-full text-xs font-medium p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500"
                   />
                 </div>
@@ -299,7 +489,7 @@ export default function CreateQuizPage({ onQuizCreated }) {
               {/* File Dropzone */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                  Chọn hoặc Kéo thả tệp Word (.docx)
+                  Chọn tệp Word (.docx)
                 </label>
                 <div className="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-2xl p-6 text-center bg-slate-50/50 hover:bg-blue-50/20 transition-colors">
                   <input
@@ -315,23 +505,22 @@ export default function CreateQuizPage({ onQuizCreated }) {
                       {file ? file.name : 'Bấm vào đây để chọn tệp .docx'}
                     </span>
                     <span className="text-[11px] text-slate-400 mt-1">
-                      Hệ thống tự động nhận diện câu hỏi bắt đầu bằng "Câu 1:", "Câu 2:"...
+                      Hệ thống tự động nhận diện tất cả định dạng câu hỏi (Đúng/Sai, kéo thả, trắc nghiệm đơn)
                     </span>
                   </label>
                 </div>
               </div>
 
-              {/* SPEC REQUIREMENT: Configurable correct answer detection options */}
+              {/* Rules detection pills */}
               <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-4">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-blue-600" />
                   <span className="text-xs font-bold text-blue-950 uppercase tracking-wider">
-                    Quy tắc nhận diện đáp án đúng trong file Word (chọn được nhiều):
+                    Quy tắc nhận diện đáp án đúng trong file Word:
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {/* Option 1: Bold */}
                   <label className="flex items-center gap-2.5 p-3 rounded-xl bg-white border border-slate-200 cursor-pointer">
                     <input
                       type="checkbox"
@@ -342,7 +531,6 @@ export default function CreateQuizPage({ onQuizCreated }) {
                     <span className="text-xs font-bold text-slate-800">Chữ in đậm (Bold)</span>
                   </label>
 
-                  {/* Option 2: Underline */}
                   <label className="flex items-center gap-2.5 p-3 rounded-xl bg-white border border-slate-200 cursor-pointer">
                     <input
                       type="checkbox"
@@ -353,7 +541,6 @@ export default function CreateQuizPage({ onQuizCreated }) {
                     <span className="text-xs font-bold text-slate-800">Gạch chân (Underline)</span>
                   </label>
 
-                  {/* Option 3: Color / Highlight */}
                   <label className="flex items-center gap-2.5 p-3 rounded-xl bg-white border border-slate-200 cursor-pointer">
                     <input
                       type="checkbox"
@@ -368,11 +555,10 @@ export default function CreateQuizPage({ onQuizCreated }) {
                   </label>
                 </div>
 
-                {/* Color Selector Pills (Red, Yellow, Green, Blue, Custom) */}
                 {(detectByColor || detectByHighlight) && (
                   <div className="pt-2 border-t border-blue-100 space-y-2">
                     <span className="text-[11px] font-bold text-slate-600">
-                      Chọn các gam màu đánh dấu đáp án đúng:
+                      Chọn gam màu đánh dấu đáp án:
                     </span>
                     <div className="flex flex-wrap items-center gap-2">
                       {[
@@ -399,28 +585,9 @@ export default function CreateQuizPage({ onQuizCreated }) {
                           </button>
                         );
                       })}
-
-                      {/* Color Picker for "Màu khác" */}
-                      <div className="flex items-center gap-2 px-2.5 py-1 rounded-xl bg-white border border-slate-200">
-                        <input
-                          type="checkbox"
-                          checked={includeCustomColor}
-                          onChange={(e) => setIncludeCustomColor(e.target.checked)}
-                          className="w-3.5 h-3.5 rounded text-blue-600"
-                        />
-                        <span className="text-xs font-medium text-slate-700">Màu khác:</span>
-                        <input
-                          type="color"
-                          value={customColor}
-                          onChange={(e) => setCustomColor(e.target.value)}
-                          className="w-6 h-6 rounded cursor-pointer border-0 p-0"
-                        />
-                        <span className="text-[11px] font-mono text-slate-400">{customColor}</span>
-                      </div>
                     </div>
                   </div>
                 )}
-
               </div>
 
               {/* Action buttons */}
@@ -429,115 +596,313 @@ export default function CreateQuizPage({ onQuizCreated }) {
                   type="button"
                   onClick={() => handleParseDocx(false)}
                   disabled={parsing || !file}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs active:scale-95 transition-all disabled:opacity-50"
+                  className="flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 active:scale-95 transition-all disabled:opacity-50 cursor-pointer"
                 >
-                  <Eye className="w-4 h-4 text-slate-500" />
-                  <span>{parsing ? 'Đang đọc...' : 'Bóc tách & Xem trước'}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleParseDocx(true)}
-                  disabled={parsing || !file}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 active:scale-95 transition-all disabled:opacity-50"
-                >
-                  <Save className="w-4 h-4" />
-                  <span>Lưu bài thi vào hệ thống</span>
+                  <Eye className="w-4 h-4" />
+                  <span>{parsing ? 'Đang đọc & bóc tách...' : 'Bóc Tách & Chỉnh Sửa Câu Hỏi'}</span>
                 </button>
               </div>
 
             </div>
 
-            {/* Live Preview of parsed questions */}
+            {/* ===================== INTERACTIVE QUESTION EDITOR ===================== */}
             {previewQuestions && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200 space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                    <span>Kết quả bóc tách thành công ({previewQuestions.length} câu hỏi)</span>
-                  </h3>
-                  <button
-                    onClick={() => handleParseDocx(true)}
-                    className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs"
-                  >
-                    Xác nhận & Lưu ngay
-                  </button>
+              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200 space-y-6">
+                
+                {/* Header bar */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+                  <div>
+                    <h3 className="font-black text-lg text-slate-900 flex items-center gap-2">
+                      <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                      <span>Kết Quả Bóc Tách: {previewQuestions.length} Câu Hỏi</span>
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      💡 Bạn có thể trực tiếp <strong>sửa nội dung, đổi đáp án đúng, thêm/xóa phương án</strong> bên dưới để chuẩn xác 100% trước khi lưu!
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <button
+                      type="button"
+                      onClick={handleAddNewQuestion}
+                      className="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-all"
+                    >
+                      <Plus className="w-4 h-4 text-slate-600" />
+                      <span>Thêm câu hỏi mới</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleSaveEditedQuiz}
+                      disabled={isSaving}
+                      className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-md shadow-emerald-600/25 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>{isSaving ? 'Đang lưu...' : 'Xác Nhận & Lưu Bài Thi'}</span>
+                    </button>
+                  </div>
                 </div>
 
-                <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
-                  {previewQuestions.map((q, idx) => (
-                    <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-blue-700">Câu {q.orderIndex || idx + 1}:</span>
-                        <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-bold">
-                          {q.type}
-                        </span>
+                {/* Questions List with inline editing */}
+                <div className="space-y-6">
+                  {previewQuestions.map((q, qIdx) => (
+                    <div 
+                      key={qIdx} 
+                      className="p-5 sm:p-6 rounded-2xl bg-slate-50/70 border border-slate-200/90 shadow-2xs hover:border-blue-300 transition-all space-y-4"
+                    >
+                      {/* Question Header & Controls */}
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+                        <div className="flex items-center gap-3">
+                          <span className="w-7 h-7 rounded-lg bg-blue-600 text-white font-black text-xs flex items-center justify-center">
+                            {qIdx + 1}
+                          </span>
+                          <span className="font-bold text-sm text-slate-800">
+                            Câu {qIdx + 1}:
+                          </span>
+
+                          {/* Question Type Selector */}
+                          <select
+                            value={q.type}
+                            onChange={(e) => handleUpdateQuestion(qIdx, 'type', e.target.value)}
+                            className="text-xs font-bold px-2.5 py-1 rounded-lg border border-slate-300 bg-white text-blue-700 outline-none focus:ring-1 focus:ring-blue-500"
+                          >
+                            <option value="single_choice">Trắc nghiệm 1 đáp án</option>
+                            <option value="multiple_choice">Trắc nghiệm nhiều đáp án</option>
+                            <option value="true_false_matrix">Đúng / Sai theo mệnh đề</option>
+                            <option value="drag_drop_categorize">Kéo thả phân loại vào cột</option>
+                            <option value="drag_drop_matching">Kéo thả ghép nối</option>
+                          </select>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteQuestion(qIdx)}
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                            title="Xóa câu hỏi này"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
-                      <p className="font-semibold text-slate-900">{q.content}</p>
-                      
-                      {/* DẠNG 1 & 2: Single Choice & Multiple Choice */}
-                      {q.options && q.options.length > 0 && (
-                        <div className="space-y-1.5 pt-1">
-                          <div className="text-[11px] font-semibold text-slate-500">
-                            {q.type === 'multiple_choice' ? `Chọn ${q.requiredCount || 2} phương án đúng` : 'Chọn 1 đáp án đúng'}:
+
+                      {/* Question Content Input */}
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-600 mb-1">
+                          Nội dung câu hỏi:
+                        </label>
+                        <textarea
+                          rows={2}
+                          value={q.content}
+                          onChange={(e) => handleUpdateQuestion(qIdx, 'content', e.target.value)}
+                          className="w-full text-xs font-medium p-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed"
+                          placeholder="Nhập nội dung câu hỏi..."
+                        />
+                      </div>
+
+                      {/* ================= TYPE 1 & 2: Single Choice / Multiple Choice Options ================= */}
+                      {(q.type === 'single_choice' || q.type === 'multiple_choice') && (
+                        <div className="space-y-2 pt-1">
+                          <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+                            <span>Các phương án lựa chọn (Bấm vào nút tròn để chọn ĐÁP ÁN ĐÚNG):</span>
+                            <button
+                              type="button"
+                              onClick={() => handleAddOption(qIdx)}
+                              className="text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Thêm phương án</span>
+                            </button>
                           </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            {q.options?.map((opt, optIdx) => (
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            {(q.options || []).map((opt, optIdx) => (
                               <div
                                 key={optIdx}
-                                className={`p-2.5 rounded-xl border flex items-center justify-between text-xs transition-all ${
+                                className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all ${
                                   opt.isCorrect 
-                                    ? 'bg-emerald-50/90 border-emerald-400 text-emerald-950 font-bold shadow-xs' 
-                                    : 'bg-white border-slate-200 text-slate-700'
+                                    ? 'bg-emerald-50/90 border-emerald-400 ring-1 ring-emerald-400' 
+                                    : 'bg-white border-slate-200'
                                 }`}
                               >
-                                <span className="flex-1">{opt.label}. {opt.content}</span>
+                                {/* Correct Answer Selector Toggle */}
+                                <button
+                                  type="button"
+                                  onClick={() => handleToggleOptionCorrect(qIdx, optIdx)}
+                                  className={`w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 cursor-pointer transition-all ${
+                                    opt.isCorrect 
+                                      ? 'bg-emerald-600 text-white shadow-xs' 
+                                      : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-300'
+                                  }`}
+                                  title={opt.isCorrect ? 'Đáp án đúng (Bấm để bỏ)' : 'Bấm để đặt làm đáp án đúng'}
+                                >
+                                  {opt.isCorrect ? <Check className="w-3.5 h-3.5" /> : opt.label}
+                                </button>
+
+                                {/* Option Text Input */}
+                                <input
+                                  type="text"
+                                  value={opt.content}
+                                  onChange={(e) => handleUpdateOptionText(qIdx, optIdx, e.target.value)}
+                                  className="flex-1 text-xs font-medium bg-transparent border-none outline-none text-slate-900"
+                                  placeholder={`Nội dung phương án ${opt.label}...`}
+                                />
+
                                 {opt.isCorrect && (
-                                  <span className="flex items-center gap-1 text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 shrink-0 ml-2">
-                                    <Check className="w-3 h-3 text-emerald-700" />
-                                    Đáp án đúng
+                                  <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-200 text-emerald-900 shrink-0">
+                                    ĐÚNG
                                   </span>
                                 )}
+
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteOption(qIdx, optIdx)}
+                                  className="text-slate-300 hover:text-red-500 p-1"
+                                  title="Xóa phương án này"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                </button>
                               </div>
                             ))}
                           </div>
                         </div>
                       )}
 
-                      {/* DẠNG 3: Drag & Drop Categorization (Kéo thả phân loại) */}
-                      {q.type === 'drag_drop_categorize' && (
-                        <div className="space-y-2 pt-1">
-                          <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center justify-between">
-                            <span>Phân loại đáp án vào các cột tương ứng:</span>
-                            <span className="text-emerald-700 font-extrabold">✓ Đã nhận diện {q.dragDropItems?.length || 0} thẻ</span>
+                      {/* ================= TYPE 3: True / False Statements Matrix ================= */}
+                      {q.type === 'true_false_matrix' && (
+                        <div className="space-y-2.5 pt-1">
+                          <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
+                            <span>Các phát biểu / mệnh đề (Chọn ĐÚNG hoặc SAI cho mỗi phát biểu):</span>
+                            <button
+                              type="button"
+                              onClick={() => handleAddStatement(qIdx)}
+                              className="text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Thêm mệnh đề</span>
+                            </button>
                           </div>
+
+                          <div className="space-y-2">
+                            {(q.statements || []).map((stmt, sIdx) => {
+                              const isDung = stmt.isCorrect === 'dung' || stmt.isCorrect === true;
+                              return (
+                                <div
+                                  key={stmt.id || sIdx}
+                                  className="p-2.5 rounded-xl bg-white border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5"
+                                >
+                                  <div className="flex items-center gap-2 flex-1 w-full">
+                                    <span className="w-5 h-5 rounded-full bg-slate-100 text-slate-700 font-bold text-[10px] flex items-center justify-center shrink-0">
+                                      {sIdx + 1}
+                                    </span>
+                                    <input
+                                      type="text"
+                                      value={stmt.text}
+                                      onChange={(e) => handleUpdateStatementText(qIdx, sIdx, e.target.value)}
+                                      className="flex-1 text-xs font-medium bg-transparent border-none outline-none text-slate-900"
+                                      placeholder="Nội dung phát biểu..."
+                                    />
+                                  </div>
+
+                                  {/* True / False Toggle Buttons */}
+                                  <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleToggleStatementCorrect(qIdx, sIdx, 'dung')}
+                                      className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                                        isDung 
+                                          ? 'bg-emerald-600 text-white shadow-xs' 
+                                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                                      }`}
+                                    >
+                                      ✓ ĐÚNG
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => handleToggleStatementCorrect(qIdx, sIdx, 'sai')}
+                                      className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                                        !isDung 
+                                          ? 'bg-rose-600 text-white shadow-xs' 
+                                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                                      }`}
+                                    >
+                                      ✕ SAI
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => handleDeleteStatement(qIdx, sIdx)}
+                                      className="text-slate-300 hover:text-red-500 p-1"
+                                      title="Xóa mệnh đề này"
+                                    >
+                                      <X className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* ================= TYPE 4: Drag & Drop Categorization ================= */}
+                      {q.type === 'drag_drop_categorize' && (
+                        <div className="space-y-3 pt-1">
+                          <div className="text-[11px] font-bold text-slate-600">
+                            Phân loại thẻ vào các cột tương ứng:
+                          </div>
+
+                          {/* Columns */}
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             {(q.categories || []).map((cat, cIdx) => {
                               const itemsInCat = (q.dragDropItems || []).filter(item => item.targetCategoryOrMatch === cat);
                               return (
-                                <div key={cIdx} className="p-3 rounded-xl border border-blue-200 bg-blue-50/40 space-y-2">
-                                  <div className="font-bold text-xs text-blue-900 border-b border-blue-200/60 pb-1.5 flex items-center justify-between">
-                                    <span>Cột {cIdx + 1}: {cat}</span>
-                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-extrabold">
-                                      {itemsInCat.length} thẻ
-                                    </span>
+                                <div key={cIdx} className="p-3.5 rounded-xl border border-blue-200 bg-blue-50/40 space-y-2.5">
+                                  <div>
+                                    <label className="block text-[10px] font-bold text-blue-800 uppercase mb-1">
+                                      Tên Cột {cIdx + 1}:
+                                    </label>
+                                    <input
+                                      type="text"
+                                      value={cat}
+                                      onChange={(e) => handleUpdateCategory(qIdx, cIdx, e.target.value)}
+                                      className="w-full text-xs font-bold p-1.5 rounded-lg border border-blue-200 bg-white"
+                                    />
                                   </div>
+
+                                  {/* Items inside column */}
                                   <div className="space-y-1.5">
-                                    {itemsInCat.map((item, iIdx) => (
-                                      <div
-                                        key={iIdx}
-                                        className="p-1.5 rounded-lg bg-white border border-emerald-300 text-emerald-950 font-medium text-[11px] flex items-center justify-between shadow-2xs"
-                                      >
-                                        <span>• {item.itemText}</span>
-                                        <span className="text-[10px] font-bold text-emerald-700 flex items-center gap-0.5">
-                                          <Check className="w-3 h-3 text-emerald-600 shrink-0" />
-                                          Đúng
-                                        </span>
-                                      </div>
-                                    ))}
-                                    {itemsInCat.length === 0 && (
-                                      <div className="text-[11px] text-slate-400 italic py-1">Chưa có thẻ nào</div>
-                                    )}
+                                    {itemsInCat.map((item, dIdx) => {
+                                      const globalDIdx = (q.dragDropItems || []).indexOf(item);
+                                      return (
+                                        <div key={dIdx} className="p-2 rounded-lg bg-white border border-emerald-300 flex items-center justify-between gap-2 shadow-2xs">
+                                          <input
+                                            type="text"
+                                            value={item.itemText}
+                                            onChange={(e) => handleUpdateDragItem(qIdx, globalDIdx, e.target.value)}
+                                            className="flex-1 text-xs text-slate-800 font-medium bg-transparent border-none outline-none"
+                                            placeholder="Nội dung thẻ kéo thả..."
+                                          />
+                                          <button
+                                            type="button"
+                                            onClick={() => handleDeleteDragItem(qIdx, globalDIdx)}
+                                            className="text-slate-300 hover:text-red-500"
+                                          >
+                                            <X className="w-3.5 h-3.5" />
+                                          </button>
+                                        </div>
+                                      );
+                                    })}
+
+                                    <button
+                                      type="button"
+                                      onClick={() => handleAddDragItem(qIdx, cat)}
+                                      className="w-full py-1.5 rounded-lg border border-dashed border-blue-300 text-blue-600 hover:bg-blue-100/50 text-[11px] font-bold flex items-center justify-center gap-1"
+                                    >
+                                      <Plus className="w-3 h-3" />
+                                      <span>Thêm thẻ vào cột này</span>
+                                    </button>
                                   </div>
                                 </div>
                               );
@@ -546,228 +911,102 @@ export default function CreateQuizPage({ onQuizCreated }) {
                         </div>
                       )}
 
-                      {/* DẠNG 4: Drag & Drop Matching (Kéo thả ghép nối) */}
-                      {q.type === 'drag_drop_matching' && (
-                        <div className="space-y-2 pt-1">
-                          <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center justify-between">
-                            <span>Ghép nối phát biểu với đáp án:</span>
-                            <span className="text-emerald-700 font-extrabold">✓ Đã nhận diện {q.dragDropItems?.length || 0} cặp</span>
-                          </div>
-                          <div className="space-y-2">
-                            {(q.dragDropItems || []).map((item, mIdx) => (
-                              <div
-                                key={mIdx}
-                                className="p-2.5 rounded-xl border border-slate-200 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 shadow-2xs"
-                              >
-                                <span className="font-semibold text-slate-800 text-xs flex-1">
-                                  {mIdx + 1}. {item.itemText}
-                                </span>
-                                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-900 font-bold text-[11px] shrink-0">
-                                  <span>Ghép với: <strong>{item.targetCategoryOrMatch}</strong></span>
-                                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* DẠNG 5: True / False Matrix (Đúng hoặc Sai) */}
-                      {q.type === 'true_false_matrix' && (
-                        <div className="space-y-2 pt-1">
-                          <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center justify-between">
-                            <span>Mệnh đề Đúng / Sai:</span>
-                            <span className="text-emerald-700 font-extrabold">✓ Đã nhận diện {q.statements?.length || 0} phát biểu</span>
-                          </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            {(q.statements || []).map((stmt, sIdx) => {
-                              const isDung = stmt.correctAnswer === 'Đúng' || stmt.isCorrect === true || stmt.correctAnswer === 'dung';
-                              return (
-                                <div
-                                  key={sIdx}
-                                  className="p-2.5 rounded-xl border border-slate-200 bg-white flex items-center justify-between gap-2 shadow-2xs"
-                                >
-                                  <span className="font-semibold text-slate-800 text-xs leading-snug flex-1">
-                                    {stmt.text}
-                                  </span>
-                                  <span
-                                    className={`px-2.5 py-1 rounded-lg text-[11px] font-extrabold flex items-center gap-1 shrink-0 ${
-                                      isDung 
-                                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
-                                        : 'bg-rose-100 text-rose-800 border border-rose-300'
-                                    }`}
-                                  >
-                                    {isDung ? <Check className="w-3 h-3 text-emerald-700" /> : <X className="w-3 h-3 text-rose-700" />}
-                                    {isDung ? 'ĐÚNG' : 'SAI'}
-                                  </span>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
                     </div>
                   ))}
                 </div>
+
+                {/* Bottom confirmation bar */}
+                <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={handleAddNewQuestion}
+                    className="px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs flex items-center gap-1.5"
+                  >
+                    <Plus className="w-4 h-4 text-blue-600" />
+                    <span>Thêm câu hỏi mới</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleSaveEditedQuiz}
+                    disabled={isSaving}
+                    className="px-8 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-md shadow-emerald-600/30 active:scale-95 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                  >
+                    <Save className="w-4 h-4" />
+                    <span>{isSaving ? 'Đang lưu vào hệ thống...' : 'Xác Nhận & Lưu Toàn Bộ Đề Thi'}</span>
+                  </button>
+                </div>
+
               </div>
             )}
 
           </div>
         )}
 
-        {/* METHOD 2: VISUAL BUILDER (ALL 4 QUESTION TYPES) */}
+        {/* ===================== TAB 2: VISUAL BUILDER ===================== */}
         {activeTab === 'builder' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200 space-y-6">
-            
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-              <h3 className="font-bold text-base text-slate-900">
-                Visual Builder - Soạn Câu Hỏi Tương Tác Trực Quan
-              </h3>
-              <button
-                onClick={handleSaveBuilderQuiz}
-                disabled={isSaving}
-                className="flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition-all active:scale-95"
-              >
-                <Save className="w-4 h-4" />
-                <span>{isSaving ? 'Đang lưu...' : 'Lưu bài thi'}</span>
-              </button>
-            </div>
-
-            {/* Quiz Settings */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="sm:col-span-2">
-                <label className="block text-xs font-bold text-slate-700 mb-1">Tiêu đề bài thi</label>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">Tiêu đề bài thi</label>
                 <input
                   type="text"
                   value={builderTitle}
                   onChange={(e) => setBuilderTitle(e.target.value)}
-                  placeholder="Nhập tên bài thi..."
+                  placeholder="VD: Kiểm tra kiến thức chương 1"
                   className="w-full text-xs font-medium p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500"
                 />
               </div>
+
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Thời lượng (phút)</label>
-                <input
-                  type="number"
-                  value={builderDuration}
-                  onChange={(e) => setBuilderDuration(e.target.value)}
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">Mô tả bài thi</label>
+                <textarea
+                  rows={2}
+                  value={builderDescription}
+                  onChange={(e) => setBuilderDescription(e.target.value)}
+                  placeholder="Mô tả nội dung trọng tâm bài thi..."
                   className="w-full text-xs font-medium p-3 rounded-xl border border-slate-200 outline-none focus:border-blue-500"
                 />
               </div>
-            </div>
 
-            {/* Questions List */}
-            <div className="space-y-4 pt-4 border-t border-slate-100">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  Danh sách câu hỏi ({builderQuestions.length})
-                </span>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Danh mục</label>
+                  <select
+                    value={builderCategory}
+                    onChange={(e) => setBuilderCategory(e.target.value)}
+                    className="w-full text-xs font-medium p-3 rounded-xl border border-slate-200 bg-white"
+                  >
+                    <option>Triết học & Lý luận chính trị</option>
+                    <option>Khoa học Pháp lý</option>
+                    <option>Lịch sử & Chính trị</option>
+                    <option>Kinh tế & Quản trị</option>
+                    <option>Công nghệ thông tin</option>
+                  </select>
+                </div>
 
-                {/* Add Question Dropdown Buttons */}
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleAddBuilderQuestion('single_choice')}
-                    className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs"
-                  >
-                    + 1 Đáp án (Single)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleAddBuilderQuestion('multiple_choice')}
-                    className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs"
-                  >
-                    + Nhiều đáp án (Multiple)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleAddBuilderQuestion('drag_drop_categorize')}
-                    className="px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs"
-                  >
-                    + Kéo thả phân cột
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleAddBuilderQuestion('drag_drop_matching')}
-                    className="px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs"
-                  >
-                    + Kéo thả ghép nối
-                  </button>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Thời gian làm bài (phút)</label>
+                  <input
+                    type="number"
+                    value={builderDuration}
+                    onChange={(e) => setBuilderDuration(e.target.value)}
+                    className="w-full text-xs font-medium p-3 rounded-xl border border-slate-200"
+                  />
                 </div>
               </div>
-
-              {builderQuestions.map((q, qIdx) => (
-                <div key={q.id} className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-xs text-blue-700">Câu {qIdx + 1} ({q.type})</span>
-                    <button
-                      onClick={() => setBuilderQuestions(builderQuestions.filter((_, i) => i !== qIdx))}
-                      className="text-slate-400 hover:text-red-600 p-1 rounded-md"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  <input
-                    type="text"
-                    value={q.content}
-                    onChange={(e) => {
-                      const updated = [...builderQuestions];
-                      updated[qIdx].content = e.target.value;
-                      setBuilderQuestions(updated);
-                    }}
-                    className="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 bg-white"
-                  />
-
-                  {/* Options editor */}
-                  {q.options && q.options.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                      {q.options.map((opt, optIdx) => (
-                        <div key={optIdx} className="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-200">
-                          <input
-                            type="checkbox"
-                            checked={opt.isCorrect}
-                            onChange={(e) => {
-                              const updated = [...builderQuestions];
-                              if (q.type === 'single_choice') {
-                                updated[qIdx].options.forEach(o => o.isCorrect = false);
-                              }
-                              updated[qIdx].options[optIdx].isCorrect = e.target.checked;
-                              setBuilderQuestions(updated);
-                            }}
-                            className="w-4 h-4 rounded text-blue-600"
-                          />
-                          <span className="font-bold text-xs">{opt.label}.</span>
-                          <input
-                            type="text"
-                            value={opt.content}
-                            onChange={(e) => {
-                              const updated = [...builderQuestions];
-                              updated[qIdx].options[optIdx].content = e.target.value;
-                              setBuilderQuestions(updated);
-                            }}
-                            className="w-full text-xs outline-none"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Drag drop preview info */}
-                  {q.type === 'drag_drop_categorize' && (
-                    <div className="p-3 bg-white rounded-xl border text-xs text-slate-500">
-                      Cột: {q.categories?.join(' | ')} ({q.dragDropItems?.length || 0} thẻ phân loại)
-                    </div>
-                  )}
-                  {q.type === 'drag_drop_matching' && (
-                    <div className="p-3 bg-white rounded-xl border text-xs text-slate-500">
-                      Ghép nối: {q.dragDropItems?.map(d => `${d.itemText} ➔ ${d.targetCategoryOrMatch}`).join('; ')}
-                    </div>
-                  )}
-                </div>
-              ))}
             </div>
 
+            <div className="pt-4 border-t border-slate-100 flex justify-end">
+              <button
+                type="button"
+                onClick={handleSaveBuilderQuiz}
+                disabled={isSaving}
+                className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/25 active:scale-95 transition-all"
+              >
+                {isSaving ? 'Đang lưu...' : 'Lưu & Xuất bản bài thi'}
+              </button>
+            </div>
           </div>
         )}
 
@@ -775,4 +1014,3 @@ export default function CreateQuizPage({ onQuizCreated }) {
     </div>
   );
 }
-

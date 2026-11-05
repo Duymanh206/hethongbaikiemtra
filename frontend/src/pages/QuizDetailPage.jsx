@@ -12,8 +12,10 @@ import {
   FileText, 
   User, 
   ArrowLeft,
-  MessageSquare
+  MessageSquare,
+  Trash2
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function QuizDetailPage({
   quizId,
@@ -21,9 +23,13 @@ export default function QuizDetailPage({
   onStartBattle,
   onBackToExplore
 }) {
+  const { user } = useAuth();
+  const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060' || user?.isAdmin;
+
   const [quiz, setQuiz] = useState(null);
   const [loading, setLoading] = useState(true);
   const [reported, setReported] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (!quizId) return;
@@ -38,6 +44,34 @@ export default function QuizDetailPage({
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
   }, [quizId]);
+
+  const handleDeleteQuiz = async () => {
+    if (!window.confirm(`Bạn có chắc chắn muốn xóa vĩnh viễn bài thi:\n"${quiz.title}"?\n\nThao tác này sẽ xóa toàn bộ câu hỏi và kết quả thi liên quan.`)) {
+      return;
+    }
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/quizzes/${quiz.id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user?.id,
+          username: user?.username || user?.studentId
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert(data.message);
+        onBackToExplore();
+      } else {
+        alert(data.message || 'Xóa bài thi thất bại');
+      }
+    } catch (err) {
+      alert('Lỗi kết nối máy chủ');
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -72,17 +106,31 @@ export default function QuizDetailPage({
             <span>Quay lại trang Khám phá</span>
           </button>
 
-          <button
-            onClick={() => {
-              setReported(true);
-              alert('Cảm ơn bạn. Báo cáo của bạn đã được gửi tới Ban Khảo thí để kiểm tra.');
-            }}
-            disabled={reported}
-            className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-rose-600 transition-colors"
-          >
-            <AlertCircle className="w-3.5 h-3.5" />
-            <span>{reported ? 'Đã báo cáo' : 'Báo cáo sai sót đề'}</span>
-          </button>
+          <div className="flex items-center gap-3">
+            {isAdmin && (
+              <button
+                onClick={handleDeleteQuiz}
+                disabled={deleting}
+                className="flex items-center gap-1.5 text-xs font-bold text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-xl border border-red-200 transition-all cursor-pointer"
+                title="Xóa bài thi (Chỉ Quản trị viên)"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>{deleting ? 'Đang xóa...' : 'Xóa bài thi này'}</span>
+              </button>
+            )}
+
+            <button
+              onClick={() => {
+                setReported(true);
+                alert('Cảm ơn bạn. Báo cáo của bạn đã được gửi tới Ban Khảo thí để kiểm tra.');
+              }}
+              disabled={reported}
+              className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-rose-600 transition-colors"
+            >
+              <AlertCircle className="w-3.5 h-3.5" />
+              <span>{reported ? 'Đã báo cáo' : 'Báo cáo sai sót đề'}</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -143,10 +191,10 @@ export default function QuizDetailPage({
               </p>
             </div>
             <div>
-              <span className="text-[11px] font-bold text-slate-400 uppercase">Điểm chuẩn đạt</span>
+              <span className="text-[11px] font-bold text-slate-400 uppercase">Lượt làm</span>
               <p className="text-lg font-black text-slate-800 flex items-center gap-1.5 mt-0.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>&gt;= {quiz.passingScore || 5.0} / 10</span>
+                <span>{quiz.attemptsCount || 0} lượt</span>
               </p>
             </div>
             <div>
@@ -158,11 +206,11 @@ export default function QuizDetailPage({
             </div>
           </div>
 
-          {/* 2 Main Action Buttons (Section 1.3 Spec) */}
+          {/* 2 Main Action Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100">
             <button
               onClick={() => onStartExam(quiz.id)}
-              className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm shadow-lg shadow-blue-600/30 active:scale-98 transition-all"
+              className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm shadow-lg shadow-blue-600/30 active:scale-98 transition-all cursor-pointer"
             >
               <Play className="w-5 h-5 fill-white" />
               <span>▶ BẮT ĐẦU LÀM BÀI</span>
@@ -170,7 +218,7 @@ export default function QuizDetailPage({
 
             <button
               onClick={() => onStartBattle(quiz.id)}
-              className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold text-sm shadow-lg shadow-amber-500/25 active:scale-98 transition-all"
+              className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold text-sm shadow-lg shadow-amber-500/25 active:scale-98 transition-all cursor-pointer"
             >
               <Swords className="w-5 h-5" />
               <span>🏆 TỔ CHỨC THI ĐẤU (BATTLE)</span>
@@ -198,27 +246,17 @@ export default function QuizDetailPage({
             <p className="text-xs text-slate-400 italic">Chưa có đánh giá nào cho bài thi này.</p>
           ) : (
             <div className="space-y-4">
-              {quiz.reviews?.map(rev => (
-                <div key={rev.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+              {quiz.reviews?.map((rev, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-800 font-bold text-xs flex items-center justify-center">
-                        {rev.userName?.charAt(0) || 'U'}
-                      </div>
-                      <span className="text-xs font-bold text-slate-800">{rev.userName}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      {Array.from({ length: rev.rating || 5 }).map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                    <span className="font-bold text-xs text-slate-800">{rev.userName}</span>
+                    <div className="flex items-center gap-0.5 text-amber-500">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className={`w-3.5 h-3.5 ${i < rev.rating ? 'fill-amber-400' : 'text-slate-200'}`} />
                       ))}
                     </div>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    {rev.comment}
-                  </p>
-                  <span className="text-[10px] text-slate-400 block pt-1">
-                    {new Date(rev.createdAt).toLocaleDateString('vi-VN')}
-                  </span>
+                  <p className="text-xs text-slate-600">{rev.comment}</p>
                 </div>
               ))}
             </div>
@@ -229,4 +267,3 @@ export default function QuizDetailPage({
     </div>
   );
 }
-

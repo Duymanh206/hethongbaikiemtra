@@ -7,7 +7,8 @@ import {
   importDocxQuiz,
   createQuiz,
   addReview,
-  parseQuizTextController
+  parseQuizTextController,
+  deleteQuiz
 } from '../controllers/quizController.js';
 
 const router = express.Router();
@@ -21,5 +22,8 @@ router.post('/parse-text', parseQuizTextController);
 router.post('/', createQuiz);
 router.post('/:id/reviews', addReview);
 
-export default router;
+// Delete quiz (Admin-only)
+router.delete('/:id', deleteQuiz);
+router.post('/:id/delete', deleteQuiz);
 
+export default router;

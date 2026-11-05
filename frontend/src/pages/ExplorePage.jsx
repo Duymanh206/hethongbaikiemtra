@@ -12,10 +12,15 @@ import {
   Calendar,
   Layers,
   ChevronRight,
-  TrendingUp
+  TrendingUp,
+  Trash2
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
+  const { user } = useAuth();
+  const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060' || user?.isAdmin;
+
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,6 +61,32 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
     fetchQuizzes();
   };
 
+  // Delete quiz (Admin-only)
+  const handleDeleteQuiz = async (quizId, quizTitle) => {
+    if (!window.confirm(`Bạn có chắc chắn muốn xóa vĩnh viễn bài thi:\n"${quizTitle}"?\n\nThao tác này sẽ xóa toàn bộ câu hỏi và kết quả thi liên quan.`)) {
+      return;
+    }
+    try {
+      const res = await fetch(`/api/quizzes/${quizId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user?.id,
+          username: user?.username || user?.studentId
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert(data.message);
+        setQuizzes(prev => prev.filter(q => q.id !== quizId));
+      } else {
+        alert(data.message || 'Xóa bài thi thất bại');
+      }
+    } catch (err) {
+      alert('Lỗi kết nối máy chủ');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       
@@ -77,7 +108,7 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
           </h1>
 
           <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Luyện thi trắc nghiệm thông minh, hỗ trợ 4 dạng câu hỏi tương tác kéo thả phân cột, ghép nối phát biểu, cùng chế độ đấu trường trực tiếp tốc độ cao.
+            Luyện thi trắc nghiệm thông minh, hỗ trợ đầy đủ các dạng câu hỏi chọn phương án, Đúng/Sai ma trận, kéo thả phân loại cột và chế độ thi đấu trực tiếp.
           </p>
 
           {/* Search Box */}
@@ -94,7 +125,7 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
             </div>
             <button
               type="submit"
-              className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-600/40 transition-all active:scale-95"
+              className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-600/40 transition-all active:scale-95 cursor-pointer"
             >
               Tìm kiếm
             </button>
@@ -162,18 +193,36 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
               {quizzes.map(quiz => (
                 <div
                   key={quiz.id}
-                  className="bg-white rounded-3xl border border-slate-200/90 hover:border-blue-400 p-6 shadow-xs hover:shadow-xl transition-all duration-200 flex flex-col justify-between group"
+                  className="bg-white rounded-3xl border border-slate-200/90 hover:border-blue-400 p-6 shadow-xs hover:shadow-xl transition-all duration-200 flex flex-col justify-between group relative"
                 >
                   <div className="space-y-3.5">
                     
-                    {/* Header tags */}
+                    {/* Header tags & Admin delete button */}
                     <div className="flex items-center justify-between gap-2">
-                      <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 font-bold text-[11px] truncate max-w-[200px]">
+                      <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 font-bold text-[11px] truncate max-w-[180px]">
                         {quiz.category || 'Môn học'}
                       </span>
-                      <div className="flex items-center gap-1 text-xs font-bold text-amber-500">
-                        <Star className="w-4 h-4 fill-amber-400" />
-                        <span>{quiz.avgRating ? Number(quiz.avgRating).toFixed(1) : '5.0'}</span>
+                      
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 text-xs font-bold text-amber-500">
+                          <Star className="w-4 h-4 fill-amber-400" />
+                          <span>{quiz.avgRating ? Number(quiz.avgRating).toFixed(1) : '5.0'}</span>
+                        </div>
+
+                        {/* Admin Delete Action */}
+                        {isAdmin && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteQuiz(quiz.id, quiz.title);
+                            }}
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                            title="Xóa bài thi này (Chỉ Admin)"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        )}
                       </div>
                     </div>
 
@@ -185,7 +234,7 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
                       {quiz.title}
                     </h3>
 
-                    {/* Original DOCX file tag (Section 1.3 spec requirement) */}
+                    {/* Original DOCX file tag */}
                     {quiz.originalDocxName && (
                       <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-500 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100 truncate">
                         <FileText className="w-3.5 h-3.5 text-blue-500 shrink-0" />
@@ -229,7 +278,7 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
                   <div className="grid grid-cols-2 gap-2 mt-5 pt-4 border-t border-slate-100">
                     <button
                       onClick={() => onSelectQuiz(quiz.id)}
-                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs hover:shadow-blue-500/20 active:scale-95 transition-all"
+                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs hover:shadow-blue-500/20 active:scale-95 transition-all cursor-pointer"
                     >
                       <Play className="w-3.5 h-3.5 fill-white" />
                       <span>Làm bài</span>
@@ -237,7 +286,7 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
 
                     <button
                       onClick={() => onStartBattleForQuiz(quiz.id)}
-                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs border border-indigo-200/80 active:scale-95 transition-all"
+                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs border border-indigo-200/80 active:scale-95 transition-all cursor-pointer"
                     >
                       <Swords className="w-3.5 h-3.5 text-indigo-600" />
                       <span>Thi đấu</span>
@@ -254,4 +303,3 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
     </div>
   );
 }
-

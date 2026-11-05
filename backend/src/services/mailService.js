@@ -167,3 +167,4 @@ export async function sendAdminApprovalEmail({ user, approvalLink, rejectLink })
 
   return { success: true, emailSentTo: ADMIN_EMAIL };
 }
+

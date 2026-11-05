@@ -329,7 +329,8 @@ export const createQuiz = (req, res) => {
         explanation: q.explanation || '',
         points: Number(q.points) || 1.0,
         requiredCount: Number(q.requiredCount) || 1,
-        categories: q.categories || []
+        categories: q.categories || [],
+        statements: q.statements || []
       });
 
       if (q.options && q.options.length > 0) {
@@ -493,4 +494,56 @@ export const parseQuizTextController = (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// DELETE /api/quizzes/:id (Admin-only deletion)
+export const deleteQuiz = (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId, username, adminKey } = req.body || {};
+
+    const callerId = req.headers['x-user-id'] || userId;
+    const callerName = req.headers['x-username'] || username;
+
+    const user = db.findOne('users', u => 
+      (callerId && (u.id === callerId || u.studentId === callerId || u.username === callerId)) ||
+      (callerName && (u.username === callerName || u.studentId === callerName))
+    );
+
+    const isAdmin = user 
+      ? (user.isAdmin || user.studentId === 'dtc245200060' || user.username === 'dtc245200060' || user.role === 'admin')
+      : (callerId === 'dtc245200060' || callerName === 'dtc245200060' || adminKey === 'dtc245200060');
+
+    if (!isAdmin) {
+      return res.status(403).json({
+        success: false,
+        message: 'Chỉ Quản trị viên (Hoàng Duy Mạnh - dtc245200060) mới có quyền xóa bài thi!'
+      });
+    }
+
+    const quiz = db.findOne('quizzes', q => q.id === id);
+    if (!quiz) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy bài thi cần xóa' });
+    }
+
+    // Delete associated question options, drag-drop items, questions, attempts, reviews
+    const questions = db.find('questions', q => q.quizId === id);
+    const questionIds = new Set(questions.map(q => q.id));
+
+    db.delete('question_options', opt => questionIds.has(opt.questionId));
+    db.delete('drag_drop_items', dd => questionIds.has(dd.questionId));
+    db.delete('questions', q => q.quizId === id);
+    db.delete('exam_attempts', a => a.quizId === id);
+    db.delete('reviews', r => r.quizId === id);
+    db.delete('quizzes', q => q.id === id);
+
+    res.json({
+      success: true,
+      message: `Đã xóa vĩnh viễn bài thi "${quiz.title}" thành công!`
+    });
+  } catch (error) {
+    console.error('deleteQuiz error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 
