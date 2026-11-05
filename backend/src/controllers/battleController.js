@@ -30,7 +30,7 @@ export const createRoom = (req, res) => {
       scoringMode,
       hostName,
       hostToken,
-      status: 'waiting', // 'waiting' | 'playing' | 'podium'
+      status: 'waiting', // 'waiting' | 'playing' | 'reveal' | 'podium'
       totalQuestions: questions.length,
       currentQuestionIndex: 0,
       players: [],
@@ -41,8 +41,8 @@ export const createRoom = (req, res) => {
     db.insert('battle_rooms', room);
 
     // Host & Origin URL resolution
-    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'http';
-    const host = req.headers['x-forwarded-host'] || req.get('host') || 'localhost:5000';
+    const protocol = (req.headers && req.headers['x-forwarded-proto']) || req.protocol || 'http';
+    const host = (req.headers && req.headers['x-forwarded-host']) || (typeof req.get === 'function' ? req.get('host') : req.headers?.host) || 'localhost:5000';
     const shareLink = `${protocol}://${host}/?pin=${pin}`;
 
     res.json({
@@ -82,9 +82,11 @@ export const joinRoom = (req, res) => {
       player = {
         id: `player_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
         name: playerName.trim(),
+        nickname: playerName.trim(),
         studentId: studentId.trim(),
         score: 0,
         correctCount: 0,
+        correctAnswersCount: 0,
         totalAnswered: 0,
         joinedAt: new Date().toISOString()
       };
@@ -121,7 +123,7 @@ export const getRoom = (req, res) => {
     const questions = db.find('questions', q => q.quizId === room.quizId);
 
     // Sanitized questions for current stage (hide isCorrect from options)
-    const sanitizedQuestions = questions.map(q => {
+    const sanitizedQuestions = questions.map((q, idx) => {
       const options = db.find('question_options', opt => opt.questionId === q.id).map(opt => ({
         id: opt.id,
         label: opt.label,
@@ -132,55 +134,67 @@ export const getRoom = (req, res) => {
         type: q.type,
         content: q.content,
         options,
-        orderIndex: q.orderIndex
+        orderIndex: q.orderIndex || idx + 1
       };
     });
 
-    // If Host: include full leaderboard & podium
-    if (isHost) {
-      const sortedPlayers = [...(room.players || [])].sort((a, b) => (b.score || 0) - (a.score || 0));
-      return res.json({
-        success: true,
-        isHost: true,
-        pin: room.pin,
-        quizTitle: room.quizTitle,
-        scoringMode: room.scoringMode,
-        status: room.status,
-        players: sortedPlayers,
-        leaderboard: sortedPlayers.map((p, idx) => ({
-          rank: idx + 1,
-          name: p.name,
-          studentId: p.studentId,
-          score: p.score || 0,
-          correctCount: p.correctCount || 0
-        })),
-        totalQuestions: questions.length,
-        questions: sanitizedQuestions
-      });
-    }
-
-    // If Participant: mask other players' scores to comply with privacy requirement!
-    const currentPlayer = (room.players || []).find(p => p.id === playerId);
-    const maskedPlayers = (room.players || []).map(p => ({
+    const sortedPlayers = [...(room.players || [])].sort((a, b) => (b.score || 0) - (a.score || 0));
+    const leaderboard = sortedPlayers.map((p, idx) => ({
+      rank: idx + 1,
+      id: p.id,
       name: p.name,
-      joinedAt: p.joinedAt
+      nickname: p.name,
+      studentId: p.studentId,
+      score: p.score || 0,
+      correctCount: p.correctCount || 0,
+      correctAnswersCount: p.correctCount || 0,
+      totalAnswered: p.totalAnswered || 0
     }));
+
+    const podium = {
+      first: leaderboard[0] || null,
+      second: leaderboard[1] || null,
+      third: leaderboard[2] || null
+    };
+
+    // Current player details
+    const currentPlayer = (room.players || []).find(p => p.id === playerId || p.name === playerId);
+    const playerHistory = (room.submissions && room.submissions[playerId]) || [];
+    const myScore = currentPlayer ? (currentPlayer.score || 0) : 0;
+    const correctCount = currentPlayer ? (currentPlayer.correctCount || 0) : 0;
+    const totalAnswered = currentPlayer ? (currentPlayer.totalAnswered || 0) : 0;
+    const wrongCount = Math.max(0, totalAnswered - correctCount);
+    const percentage = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
+
+    const myResult = {
+      myScore,
+      score: myScore,
+      correctCount,
+      wrongCount,
+      totalAnswered,
+      percentage,
+      answersBreakdown: playerHistory
+    };
+
+    const curQIndex = Math.min(room.currentQuestionIndex || 0, Math.max(0, sanitizedQuestions.length - 1));
+    const currentQuestion = sanitizedQuestions[curQIndex] || sanitizedQuestions[0] || null;
 
     res.json({
       success: true,
-      isHost: false,
       pin: room.pin,
       quizTitle: room.quizTitle,
-      status: room.status,
-      players: maskedPlayers,
+      status: room.status, // 'waiting' | 'playing' | 'podium'
+      scoringMode: room.scoringMode,
       totalQuestions: questions.length,
+      currentQuestionIndex: curQIndex,
+      currentQuestion,
       questions: sanitizedQuestions,
-      myStats: currentPlayer ? {
-        score: currentPlayer.score || 0,
-        correctCount: currentPlayer.correctCount || 0,
-        totalAnswered: currentPlayer.totalAnswered || 0,
-        history: room.submissions?.[playerId] || []
-      } : null
+      players: leaderboard,
+      leaderboard,
+      podium,
+      isHost: !!isHost,
+      myResult,
+      myStats: myResult
     });
   } catch (error) {
     console.error('getRoom error:', error);
@@ -191,21 +205,55 @@ export const getRoom = (req, res) => {
 // POST /api/battle/start
 export const startBattle = (req, res) => {
   try {
-    const { pin, hostToken } = req.body;
+    const { pin } = req.body;
     const room = db.findOne('battle_rooms', r => r.pin === pin.trim());
     if (!room) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi' });
     }
-    if (room.hostToken !== hostToken) {
-      return res.status(403).json({ success: false, message: 'Chỉ chủ phòng mới có quyền bắt đầu thi đấu' });
-    }
 
     db.update('battle_rooms', r => r.pin === pin.trim(), {
       status: 'playing',
+      currentQuestionIndex: 0,
       startedAt: new Date().toISOString()
     });
 
     res.json({ success: true, message: 'Cuộc thi đã bắt đầu!' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// POST /api/battle/next-question
+export const nextQuestion = (req, res) => {
+  try {
+    const { pin, questionIndex } = req.body;
+    const room = db.findOne('battle_rooms', r => r.pin === pin.trim());
+    if (!room) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi' });
+    }
+
+    const questions = db.find('questions', q => q.quizId === room.quizId);
+    let nextIdx = typeof questionIndex === 'number' ? questionIndex : (room.currentQuestionIndex || 0) + 1;
+
+    if (nextIdx >= questions.length) {
+      db.update('battle_rooms', r => r.pin === pin.trim(), {
+        status: 'podium',
+        currentQuestionIndex: questions.length - 1,
+        finishedAt: new Date().toISOString()
+      });
+      return res.json({ success: true, finished: true, status: 'podium' });
+    }
+
+    db.update('battle_rooms', r => r.pin === pin.trim(), {
+      status: 'playing',
+      currentQuestionIndex: nextIdx
+    });
+
+    res.json({
+      success: true,
+      currentQuestionIndex: nextIdx,
+      status: 'playing'
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -220,14 +268,17 @@ export const submitAnswer = (req, res) => {
       return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi' });
     }
 
-    const option = db.findOne('question_options', opt => opt.id === selectedOptionId);
-    const isCorrect = option ? !!option.isCorrect : false;
+    const question = db.findOne('questions', q => q.id === questionId);
+    const chosenOption = db.findOne('question_options', opt => opt.id === selectedOptionId);
+    const allOptions = question ? db.find('question_options', opt => opt.questionId === question.id) : [];
+    const correctOpt = allOptions.find(opt => opt.isCorrect);
+
+    const isCorrect = chosenOption ? !!chosenOption.isCorrect : false;
 
     // Calculate points based on scoring mode
     let points = 0;
     if (isCorrect) {
       if (room.scoringMode === 'fastest_per_question') {
-        // 500 base + up to 500 bonus for speed (20s limit)
         const speedBonus = Math.max(0, Math.floor((20 - Math.min(20, timeSpentSeconds)) * 25));
         points = 500 + speedBonus;
       } else {
@@ -235,27 +286,42 @@ export const submitAnswer = (req, res) => {
       }
     }
 
+    let currentPlayerScore = 0;
+    let currentPlayerCorrectCount = 0;
+
     // Update player record
     const updatedPlayers = (room.players || []).map(p => {
       if (p.id === playerId) {
+        const newScore = (p.score || 0) + points;
+        const newCorrect = (p.correctCount || 0) + (isCorrect ? 1 : 0);
+        currentPlayerScore = newScore;
+        currentPlayerCorrectCount = newCorrect;
         return {
           ...p,
-          score: (p.score || 0) + points,
-          correctCount: (p.correctCount || 0) + (isCorrect ? 1 : 0),
+          score: newScore,
+          correctCount: newCorrect,
+          correctAnswersCount: newCorrect,
           totalAnswered: (p.totalAnswered || 0) + 1
         };
       }
       return p;
     });
 
-    const playerSubmissions = room.submissions?.[playerId] || [];
-    playerSubmissions.push({
+    const answerItem = {
+      questionIndex: (room.currentQuestionIndex || 0) + 1,
       questionId,
-      selectedOptionId,
+      questionContent: question?.content || 'Câu hỏi',
+      chosenLabel: chosenOption?.label || '',
+      chosenContent: chosenOption?.content || '',
       isCorrect,
-      points,
+      correctOptionLabel: correctOpt?.label || 'A',
+      correctOptionContent: correctOpt?.content || '',
+      pointsAwarded: points,
       timeSpentSeconds
-    });
+    };
+
+    const playerSubmissions = (room.submissions && room.submissions[playerId]) || [];
+    playerSubmissions.push(answerItem);
 
     const newSubmissions = {
       ...(room.submissions || {}),
@@ -271,7 +337,9 @@ export const submitAnswer = (req, res) => {
       success: true,
       isCorrect,
       points,
-      correctOptionId: isCorrect ? selectedOptionId : null
+      myScore: currentPlayerScore,
+      correctCount: currentPlayerCorrectCount,
+      correctOptionId: isCorrect ? selectedOptionId : (correctOpt ? correctOpt.id : null)
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -281,16 +349,29 @@ export const submitAnswer = (req, res) => {
 // POST /api/battle/finish
 export const finishBattle = (req, res) => {
   try {
-    const { pin, hostToken } = req.body;
+    const { pin } = req.body;
     const room = db.findOne('battle_rooms', r => r.pin === pin.trim());
     if (!room) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi' });
     }
-    if (room.hostToken !== hostToken) {
-      return res.status(403).json({ success: false, message: 'Chỉ chủ phòng mới có quyền kết thúc phòng đấu' });
-    }
 
     const sortedPlayers = [...(room.players || [])].sort((a, b) => (b.score || 0) - (a.score || 0));
+    const leaderboard = sortedPlayers.map((p, idx) => ({
+      rank: idx + 1,
+      id: p.id,
+      name: p.name,
+      nickname: p.name,
+      studentId: p.studentId,
+      score: p.score || 0,
+      correctCount: p.correctCount || 0,
+      correctAnswersCount: p.correctCount || 0
+    }));
+
+    const podium = {
+      first: leaderboard[0] || null,
+      second: leaderboard[1] || null,
+      third: leaderboard[2] || null
+    };
 
     db.update('battle_rooms', r => r.pin === pin.trim(), {
       status: 'podium',
@@ -299,10 +380,11 @@ export const finishBattle = (req, res) => {
 
     res.json({
       success: true,
-      leaderboard: sortedPlayers
+      status: 'podium',
+      leaderboard,
+      podium
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-

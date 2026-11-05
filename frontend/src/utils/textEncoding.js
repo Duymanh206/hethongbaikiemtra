@@ -8,35 +8,68 @@ const cp1252Map = {
   0x0153: 0x9C, 0x017E: 0x9E, 0x0178: 0x9F
 };
 
-export function fixMojibake(str) {
-  if (!str || typeof str !== 'string') return str || '';
+export function fixMojibake(str, fallbackTitle) {
+  if (!str || typeof str !== 'string') return fallbackTitle ? `${fallbackTitle}.docx` : (str || '');
   if (!/[Ãá»áºÄâ]/.test(str)) return str;
+
   try {
+    // Normalization: replace common broken mojibake pairs (e.g. \u00c3 followed by space -> \u00c3\u00a0)
+    let s = str.replace(/\u00c3 /g, '\u00c3\u00a0');
     const bytes = [];
-    for (let i = 0; i < str.length; i++) {
-      const code = str.charCodeAt(i);
+    for (let i = 0; i < s.length; i++) {
+      const code = s.charCodeAt(i);
       if (code <= 0xFF) {
         bytes.push(code);
       } else if (cp1252Map[code]) {
         bytes.push(cp1252Map[code]);
       } else {
-        return str;
+        bytes.push(code & 0xFF);
       }
     }
-    const decoder = new TextDecoder('utf-8', { fatal: true });
-    return decoder.decode(new Uint8Array(bytes));
+    const decoder = new TextDecoder('utf-8');
+    const decoded = decoder.decode(new Uint8Array(bytes));
+    
+    // If still contains glitched characters and fallbackTitle is provided, fall back
+    if (/[Ãá»áºÄâ]|\uFFFD/.test(decoded) && fallbackTitle) {
+      return `${fallbackTitle}.docx`;
+    }
+    return decoded;
   } catch (e) {
+    if (fallbackTitle) return `${fallbackTitle}.docx`;
     return str;
   }
 }
 
-export function cleanDescription(desc) {
-  if (!desc || typeof desc !== 'string') return desc || '';
+export function cleanFilename(filename, fallbackTitle) {
+  if (!filename && fallbackTitle) return `${fallbackTitle}.docx`;
+  if (!filename) return 'Tai_lieu_kiem_tra.docx';
+  return fixMojibake(filename, fallbackTitle);
+}
+
+export function cleanDescription(desc, title) {
+  if (!desc || typeof desc !== 'string') {
+    return title ? `Đề thi trắc nghiệm môn: ${title}` : 'Đề thi trắc nghiệm';
+  }
   const prefix = 'Import tự động từ file Word: ';
   if (desc.startsWith(prefix)) {
     const fn = desc.slice(prefix.length);
-    return prefix + fixMojibake(fn);
+    const cleanFn = cleanFilename(fn, title);
+    return `Import tự động từ tài liệu: ${cleanFn}`;
   }
-  return fixMojibake(desc);
+  const decoded = fixMojibake(desc, title);
+  if (/[Ãá»áºÄâ]|\uFFFD/.test(decoded) && title) {
+    return `Đề thi trắc nghiệm môn: ${title}`;
+  }
+  return decoded;
 }
 
+export function cleanQuiz(quiz) {
+  if (!quiz) return quiz;
+  const title = fixMojibake(quiz.title);
+  return {
+    ...quiz,
+    title: title,
+    originalDocxName: cleanFilename(quiz.originalDocxName, title),
+    description: cleanDescription(quiz.description, title)
+  };
+}

@@ -4,6 +4,7 @@ import {
   joinRoom,
   getRoom,
   startBattle,
+  nextQuestion,
   submitAnswer,
   finishBattle
 } from '../controllers/battleController.js';
@@ -14,6 +15,7 @@ router.post('/create-room', createRoom);
 router.post('/join-room', joinRoom);
 router.get('/room/:pin', getRoom);
 router.post('/start', startBattle);
+router.post('/next-question', nextQuestion);
 router.post('/submit-answer', submitAnswer);
 router.post('/finish', finishBattle);
 

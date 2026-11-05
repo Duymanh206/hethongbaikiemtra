@@ -16,7 +16,7 @@ import {
   Trash2
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { fixMojibake, cleanDescription } from '../utils/textEncoding';
+import { fixMojibake, cleanDescription, cleanFilename } from '../utils/textEncoding';
 
 export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
   const { user } = useAuth();
@@ -239,13 +239,13 @@ export default function ExplorePage({ onSelectQuiz, onStartBattleForQuiz }) {
                     {quiz.originalDocxName && (
                       <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-500 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100 truncate">
                         <FileText className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-                        <span className="truncate">File gốc: {fixMojibake(quiz.originalDocxName)}</span>
+                        <span className="truncate">File gốc: {cleanFilename(quiz.originalDocxName, quiz.title)}</span>
                       </div>
                     )}
 
                     {/* Description */}
                     <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                      {cleanDescription(quiz.description)}
+                      {cleanDescription(quiz.description, quiz.title)}
                     </p>
 
                     {/* Stats pills */}

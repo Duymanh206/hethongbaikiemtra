@@ -187,7 +187,15 @@ export const importDocxQuiz = async (req, res) => {
     };
 
     // Decode original filename to prevent mojibake
-    const originalFilename = fixMojibake(req.file.originalname);
+    let originalFilename = req.file.originalname;
+    try {
+      if (/[Ãá»áºÄâ]/.test(originalFilename)) {
+        originalFilename = Buffer.from(req.file.originalname, 'latin1').toString('utf-8');
+      }
+    } catch (e) {
+      originalFilename = fixMojibake(req.file.originalname);
+    }
+    originalFilename = fixMojibake(originalFilename);
 
     const cleanTitle = (title && title.trim()) 
       ? fixMojibake(title.trim()) 

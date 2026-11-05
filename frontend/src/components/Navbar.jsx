@@ -16,9 +16,12 @@ import {
   X,
   GraduationCap,
   ShieldCheck,
-  Bell
+  Bell,
+  Inbox,
+  Users
 } from 'lucide-react';
 import AdminApprovalModal from './AdminApprovalModal';
+import AdminFeedbackModal from './AdminFeedbackModal';
 
 export default function Navbar({ activePage, setActivePage }) {
   const { 
@@ -31,14 +34,17 @@ export default function Navbar({ activePage, setActivePage }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [approvalModalOpen, setApprovalModalOpen] = useState(false);
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
+  const [unreadFeedbackCount, setUnreadFeedbackCount] = useState(0);
 
   const isAdmin = user?.studentId === 'dtc245200060' || user?.username === 'dtc245200060';
 
-  // Poll for pending users count if Admin
+  // Poll for pending users count and unread feedbacks if Admin
   useEffect(() => {
     if (!isAdmin) return;
-    const fetchPending = () => {
+    const fetchAdminStats = () => {
+      // 1. Pending users
       fetch('/api/auth/pending-users')
         .then(r => r.json())
         .then(d => {
@@ -49,15 +55,21 @@ export default function Navbar({ activePage, setActivePage }) {
           } catch {}
           setPendingCount(count);
         })
-        .catch(() => {
-          try {
-            const clientPending = JSON.parse(localStorage.getItem('client_pending_users') || '[]');
-            setPendingCount(clientPending.length);
-          } catch {}
-        });
+        .catch(() => {});
+
+      // 2. Unread feedbacks
+      fetch('/api/feedback/all')
+        .then(r => r.json())
+        .then(d => {
+          if (d.success && typeof d.unreadCount === 'number') {
+            setUnreadFeedbackCount(d.unreadCount);
+          }
+        })
+        .catch(() => {});
     };
-    fetchPending();
-    const interval = setInterval(fetchPending, 5000);
+
+    fetchAdminStats();
+    const interval = setInterval(fetchAdminStats, 5000);
     return () => clearInterval(interval);
   }, [isAdmin]);
 
@@ -126,21 +138,43 @@ export default function Navbar({ activePage, setActivePage }) {
           {/* User Profile Area (Desktop) */}
           <div className="hidden sm:flex items-center gap-3">
             
-            {/* Admin Approval Button (Hoàng Duy Mạnh) */}
+            {/* Admin Buttons (Hoàng Duy Mạnh) */}
             {isAdmin && (
-              <button
-                onClick={() => setApprovalModalOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 border border-amber-300 text-xs font-bold transition-all shadow-xs"
-                title="Phê duyệt tài khoản đăng ký mới"
-              >
-                <ShieldCheck className="w-4 h-4 text-amber-600" />
-                <span>Duyệt đăng ký</span>
-                {pendingCount > 0 && (
-                  <span className="w-5 h-5 rounded-full bg-amber-600 text-white text-[10px] flex items-center justify-center font-black animate-pulse">
-                    {pendingCount}
-                  </span>
-                )}
-              </button>
+              <div className="flex items-center gap-2">
+                {/* Account Management */}
+                <button
+                  type="button"
+                  onClick={() => setApprovalModalOpen(true)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold transition-all shadow-xs cursor-pointer"
+                  title="Quản lý tài khoản thành viên & Phê duyệt"
+                >
+                  <Users className="w-4 h-4 text-blue-600" />
+                  <span className="hidden md:inline">Quản lý tài khoản</span>
+                  <span className="md:hidden">Tài khoản</span>
+                  {pendingCount > 0 && (
+                    <span className="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] flex items-center justify-center font-black animate-pulse">
+                      {pendingCount}
+                    </span>
+                  )}
+                </button>
+
+                {/* Feedback Mailbox */}
+                <button
+                  type="button"
+                  onClick={() => setFeedbackModalOpen(true)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold transition-all shadow-xs cursor-pointer"
+                  title="Hòm thư góp ý & Báo cáo lỗi"
+                >
+                  <Inbox className="w-4 h-4 text-amber-600" />
+                  <span className="hidden md:inline">Hòm thư góp ý</span>
+                  <span className="md:hidden">Hòm thư</span>
+                  {unreadFeedbackCount > 0 && (
+                    <span className="w-5 h-5 rounded-full bg-amber-600 text-white text-[10px] flex items-center justify-center font-black animate-pulse">
+                      {unreadFeedbackCount}
+                    </span>
+                  )}
+                </button>
+              </div>
             )}
 
             {user ? (
@@ -265,17 +299,32 @@ export default function Navbar({ activePage, setActivePage }) {
           {/* Mobile hamburger */}
           <div className="lg:hidden flex items-center gap-2">
             {isAdmin && (
-              <button
-                onClick={() => setApprovalModalOpen(true)}
-                className="p-1.5 rounded-lg bg-amber-500/20 text-amber-700 border border-amber-300 text-xs font-bold flex items-center gap-1"
-              >
-                <ShieldCheck className="w-4 h-4 text-amber-600" />
-                {pendingCount > 0 && (
-                  <span className="w-4 h-4 rounded-full bg-amber-600 text-white text-[9px] flex items-center justify-center font-bold">
-                    {pendingCount}
-                  </span>
-                )}
-              </button>
+              <>
+                <button
+                  onClick={() => setApprovalModalOpen(true)}
+                  className="p-1.5 rounded-lg bg-blue-500/20 text-blue-700 border border-blue-300 text-xs font-bold flex items-center gap-1"
+                  title="Quản lý tài khoản"
+                >
+                  <Users className="w-4 h-4 text-blue-600" />
+                  {pendingCount > 0 && (
+                    <span className="w-4 h-4 rounded-full bg-blue-600 text-white text-[9px] flex items-center justify-center font-bold">
+                      {pendingCount}
+                    </span>
+                  )}
+                </button>
+                <button
+                  onClick={() => setFeedbackModalOpen(true)}
+                  className="p-1.5 rounded-lg bg-amber-500/20 text-amber-700 border border-amber-300 text-xs font-bold flex items-center gap-1"
+                  title="Hòm thư góp ý"
+                >
+                  <Inbox className="w-4 h-4 text-amber-600" />
+                  {unreadFeedbackCount > 0 && (
+                    <span className="w-4 h-4 rounded-full bg-amber-600 text-white text-[9px] flex items-center justify-center font-bold">
+                      {unreadFeedbackCount}
+                    </span>
+                  )}
+                </button>
+              </>
             )}
 
             {!user && (
@@ -370,10 +419,16 @@ export default function Navbar({ activePage, setActivePage }) {
         </div>
       )}
 
-      {/* Admin Approval Modal */}
+      {/* Admin Approval & Member Management Modal */}
       <AdminApprovalModal
         isOpen={approvalModalOpen}
         onClose={() => setApprovalModalOpen(false)}
+      />
+
+      {/* Admin Feedback Mailbox Modal */}
+      <AdminFeedbackModal
+        isOpen={feedbackModalOpen}
+        onClose={() => setFeedbackModalOpen(false)}
       />
     </header>
   );
