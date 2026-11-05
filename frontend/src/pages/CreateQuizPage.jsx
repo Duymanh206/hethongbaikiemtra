@@ -13,7 +13,8 @@ import {
   ArrowRight,
   Eye,
   Save,
-  Check
+  Check,
+  X
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -474,21 +475,137 @@ export default function CreateQuizPage({ onQuizCreated }) {
                       </div>
                       <p className="font-semibold text-slate-900">{q.content}</p>
                       
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                        {q.options?.map((opt, optIdx) => (
-                          <div
-                            key={optIdx}
-                            className={`p-2 rounded-lg border flex items-center justify-between ${
-                              opt.isCorrect 
-                                ? 'bg-emerald-50 border-emerald-300 text-emerald-950 font-bold' 
-                                : 'bg-white border-slate-200 text-slate-700'
-                            }`}
-                          >
-                            <span>{opt.label}. {opt.content}</span>
-                            {opt.isCorrect && <Check className="w-3.5 h-3.5 text-emerald-700" />}
+                      {/* DẠNG 1 & 2: Single Choice & Multiple Choice */}
+                      {(q.type === 'single_choice' || q.type === 'multiple_choice' || (q.options && q.options.length > 0)) && (
+                        <div className="space-y-1.5 pt-1">
+                          <div className="text-[11px] font-semibold text-slate-500">
+                            {q.type === 'multiple_choice' ? `Chọn ${q.requiredCount || 2} phương án đúng` : 'Chọn 1 đáp án đúng'}:
                           </div>
-                        ))}
-                      </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {q.options?.map((opt, optIdx) => (
+                              <div
+                                key={optIdx}
+                                className={`p-2.5 rounded-xl border flex items-center justify-between text-xs transition-all ${
+                                  opt.isCorrect 
+                                    ? 'bg-emerald-50/90 border-emerald-400 text-emerald-950 font-bold shadow-xs' 
+                                    : 'bg-white border-slate-200 text-slate-700'
+                                }`}
+                              >
+                                <span className="flex-1">{opt.label}. {opt.content}</span>
+                                {opt.isCorrect && (
+                                  <span className="flex items-center gap-1 text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 shrink-0 ml-2">
+                                    <Check className="w-3 h-3 text-emerald-700" />
+                                    Đáp án đúng
+                                  </span>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* DẠNG 3: Drag & Drop Categorization (Kéo thả phân loại) */}
+                      {q.type === 'drag_drop_categorize' && (
+                        <div className="space-y-2 pt-1">
+                          <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center justify-between">
+                            <span>Phân loại đáp án vào các cột tương ứng:</span>
+                            <span className="text-emerald-700 font-extrabold">✓ Đã nhận diện {q.dragDropItems?.length || 0} thẻ</span>
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {(q.categories || []).map((cat, cIdx) => {
+                              const itemsInCat = (q.dragDropItems || []).filter(item => item.targetCategoryOrMatch === cat);
+                              return (
+                                <div key={cIdx} className="p-3 rounded-xl border border-blue-200 bg-blue-50/40 space-y-2">
+                                  <div className="font-bold text-xs text-blue-900 border-b border-blue-200/60 pb-1.5 flex items-center justify-between">
+                                    <span>Cột {cIdx + 1}: {cat}</span>
+                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-extrabold">
+                                      {itemsInCat.length} thẻ
+                                    </span>
+                                  </div>
+                                  <div className="space-y-1.5">
+                                    {itemsInCat.map((item, iIdx) => (
+                                      <div
+                                        key={iIdx}
+                                        className="p-1.5 rounded-lg bg-white border border-emerald-300 text-emerald-950 font-medium text-[11px] flex items-center justify-between shadow-2xs"
+                                      >
+                                        <span>• {item.itemText}</span>
+                                        <span className="text-[10px] font-bold text-emerald-700 flex items-center gap-0.5">
+                                          <Check className="w-3 h-3 text-emerald-600 shrink-0" />
+                                          Đúng
+                                        </span>
+                                      </div>
+                                    ))}
+                                    {itemsInCat.length === 0 && (
+                                      <div className="text-[11px] text-slate-400 italic py-1">Chưa có thẻ nào</div>
+                                    )}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* DẠNG 4: Drag & Drop Matching (Kéo thả ghép nối) */}
+                      {q.type === 'drag_drop_matching' && (
+                        <div className="space-y-2 pt-1">
+                          <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center justify-between">
+                            <span>Ghép nối phát biểu với đáp án:</span>
+                            <span className="text-emerald-700 font-extrabold">✓ Đã nhận diện {q.dragDropItems?.length || 0} cặp</span>
+                          </div>
+                          <div className="space-y-2">
+                            {(q.dragDropItems || []).map((item, mIdx) => (
+                              <div
+                                key={mIdx}
+                                className="p-2.5 rounded-xl border border-slate-200 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 shadow-2xs"
+                              >
+                                <span className="font-semibold text-slate-800 text-xs flex-1">
+                                  {mIdx + 1}. {item.itemText}
+                                </span>
+                                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-900 font-bold text-[11px] shrink-0">
+                                  <span>Ghép với: <strong>{item.targetCategoryOrMatch}</strong></span>
+                                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* DẠNG 5: True / False Matrix (Đúng hoặc Sai) */}
+                      {q.type === 'true_false_matrix' && (
+                        <div className="space-y-2 pt-1">
+                          <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center justify-between">
+                            <span>Mệnh đề Đúng / Sai:</span>
+                            <span className="text-emerald-700 font-extrabold">✓ Đã nhận diện {q.statements?.length || 0} phát biểu</span>
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            {(q.statements || []).map((stmt, sIdx) => {
+                              const isDung = stmt.correctAnswer === 'Đúng' || stmt.isCorrect === true || stmt.correctAnswer === 'dung';
+                              return (
+                                <div
+                                  key={sIdx}
+                                  className="p-2.5 rounded-xl border border-slate-200 bg-white flex items-center justify-between gap-2 shadow-2xs"
+                                >
+                                  <span className="font-semibold text-slate-800 text-xs leading-snug flex-1">
+                                    {stmt.text}
+                                  </span>
+                                  <span
+                                    className={`px-2.5 py-1 rounded-lg text-[11px] font-extrabold flex items-center gap-1 shrink-0 ${
+                                      isDung 
+                                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
+                                        : 'bg-rose-100 text-rose-800 border border-rose-300'
+                                    }`}
+                                  >
+                                    {isDung ? <Check className="w-3 h-3 text-emerald-700" /> : <X className="w-3 h-3 text-rose-700" />}
+                                    {isDung ? 'ĐÚNG' : 'SAI'}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
