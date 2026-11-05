@@ -4,7 +4,7 @@
   "description": "Nền tảng Thi Trắc Nghiệm Trực Tuyến & Thi Đấu Thời Gian Thực (Online Quiz & Real-time Battle Platform)",
   "type": "module",
   "scripts": {
-    "build": "npm --prefix frontend install && npm --prefix frontend run build",
+    "build": "npm --prefix frontend install && npm --prefix frontend run build && node -e \"import('fs').then(fs => { const code = 'import app from \\'../../backend/src/app.js\\'; export default app;'; fs.writeFileSync('frontend/dist/index.js', code); fs.writeFileSync('frontend/dist/app.js', code); fs.writeFileSync('frontend/dist/server.js', code); })\"",
     "start": "node backend/src/server.js",
     "server": "node --watch backend/src/server.js",
     "client": "npm --prefix frontend run dev",
