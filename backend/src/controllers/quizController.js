@@ -165,9 +165,20 @@ export const importDocxQuiz = async (req, res) => {
       category = 'Chung'
     } = req.body;
 
+    let parsedSelectedColors = ['red', 'yellow', 'green', 'blue'];
+    try {
+      if (typeof selectedColors === 'string') {
+        parsedSelectedColors = JSON.parse(selectedColors);
+      } else if (Array.isArray(selectedColors)) {
+        parsedSelectedColors = selectedColors;
+      }
+    } catch {
+      parsedSelectedColors = ['red', 'yellow', 'green', 'blue'];
+    }
+
     const config = {
       detectByColor: detectByColor === 'true' || detectByColor === true,
-      selectedColors: typeof selectedColors === 'string' ? JSON.parse(selectedColors) : selectedColors,
+      selectedColors: parsedSelectedColors,
       customColorHex,
       detectByBold: detectByBold === 'true' || detectByBold === true,
       detectByUnderline: detectByUnderline === 'true' || detectByUnderline === true,
