@@ -29,8 +29,8 @@ export default function AuthModal() {
   } = useAuth();
 
   // Login form state
-  const [loginUsername, setLoginUsername] = useState('dtc245200060');
-  const [loginPassword, setLoginPassword] = useState('123');
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
   const [showLoginPassword, setShowLoginPassword] = useState(false);
 
   // Register form state
@@ -118,26 +118,6 @@ export default function AuthModal() {
     } else {
       setErrorMessage(result.message || 'Đăng ký không thành công');
     }
-  };
-
-  const handleQuickLoginStudent = async () => {
-    setLoading(true);
-    await loginAsStudent();
-    setLoading(false);
-    setSuccessMessage('Đã đăng nhập tài khoản Sinh viên: Hoàng Duy Mạnh!');
-    setTimeout(() => {
-      closeAuthModal();
-    }, 400);
-  };
-
-  const handleQuickLoginTeacher = async () => {
-    setLoading(true);
-    await loginAsTeacher();
-    setLoading(false);
-    setSuccessMessage('Đã đăng nhập tài khoản Giảng viên: TS. Trần Quang Minh!');
-    setTimeout(() => {
-      closeAuthModal();
-    }, 400);
   };
 
   return (
@@ -259,7 +239,7 @@ export default function AuthModal() {
                     type={showLoginPassword ? 'text' : 'password'}
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
-                    placeholder="Mật khẩu (mặc định: 123)"
+                    placeholder="Nhập mật khẩu"
                     className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs text-slate-900 font-medium placeholder:text-slate-400"
                     required
                   />
@@ -280,40 +260,6 @@ export default function AuthModal() {
               >
                 {loading ? 'Đang xử lý...' : 'Đăng Nhập Ngay'}
               </button>
-
-              {/* Quick Login Options */}
-              <div className="pt-3 border-t border-slate-100">
-                <span className="block text-[11px] font-semibold text-slate-400 text-center mb-2">
-                  Hoặc đăng nhập nhanh 1-chạm:
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={handleQuickLoginStudent}
-                    disabled={loading}
-                    className="p-2 rounded-xl border border-blue-200 bg-blue-50/50 hover:bg-blue-100/60 text-blue-900 text-left transition-all active:scale-95"
-                  >
-                    <div className="text-[11px] font-bold flex items-center gap-1">
-                      <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
-                      <span>Hoàng Duy Mạnh</span>
-                    </div>
-                    <div className="text-[10px] text-blue-600 font-mono">dtc245200060 (Sinh viên)</div>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleQuickLoginTeacher}
-                    disabled={loading}
-                    className="p-2 rounded-xl border border-indigo-200 bg-indigo-50/50 hover:bg-indigo-100/60 text-indigo-900 text-left transition-all active:scale-95"
-                  >
-                    <div className="text-[11px] font-bold flex items-center gap-1">
-                      <User className="w-3.5 h-3.5 text-indigo-600" />
-                      <span>TS. Trần Quang Minh</span>
-                    </div>
-                    <div className="text-[10px] text-indigo-600 font-mono">GV1042 (Giảng viên)</div>
-                  </button>
-                </div>
-              </div>
             </form>
           )}
 
@@ -459,3 +405,4 @@ export default function AuthModal() {
     </div>
   );
 }
+

@@ -16,3 +16,4 @@ router.post('/logout', logout);
 router.post('/switch-role', switchRole);
 
 export default router;
+

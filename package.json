@@ -2,12 +2,23 @@
   "name": "online-quiz-battle-platform",
   "version": "1.0.0",
   "description": "Nền tảng Thi Trắc Nghiệm Trực Tuyến & Thi Đấu Thời Gian Thực (Online Quiz & Real-time Battle Platform)",
+  "type": "module",
   "scripts": {
+    "build": "npm --prefix frontend install && npm --prefix frontend run build",
     "start": "node backend/src/server.js",
     "server": "node --watch backend/src/server.js",
     "client": "npm --prefix frontend run dev",
-    "build:client": "npm --prefix frontend run build",
-    "test:docx": "node backend/test-docx.js"
+    "build:client": "npm --prefix frontend run build"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "fast-xml-parser": "^4.5.0",
+    "jszip": "^3.10.1",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.8.1",
+    "uuid": "^11.0.3",
+    "xlsx": "^0.18.5"
   },
   "keywords": [
     "online-quiz",
@@ -16,9 +27,9 @@
     "docx-parser",
     "proctoring",
     "react",
-    "express"
+    "express",
+    "vercel"
   ],
-  "author": "Senior Full-Stack Architect",
+  "author": "Duymanh206",
   "license": "MIT"
 }
-

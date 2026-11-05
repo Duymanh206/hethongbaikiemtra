@@ -4,8 +4,12 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DATA_DIR = path.join(__dirname, '..', '..', 'data');
-const STORE_PATH = path.join(DATA_DIR, 'store.json');
+
+const IS_VERCEL = !!process.env.VERCEL;
+const BUNDLED_DATA_DIR = path.join(__dirname, '..', '..', 'data');
+const BUNDLED_STORE_PATH = path.join(BUNDLED_DATA_DIR, 'store.json');
+const DATA_DIR = IS_VERCEL ? '/tmp' : BUNDLED_DATA_DIR;
+const STORE_PATH = IS_VERCEL ? path.join('/tmp', 'store.json') : BUNDLED_STORE_PATH;
 
 // Initial seed data with the exact requirements
 const initialData = {
@@ -259,6 +263,11 @@ class Database {
 
   loadData() {
     try {
+      if (IS_VERCEL && !fs.existsSync(STORE_PATH) && fs.existsSync(BUNDLED_STORE_PATH)) {
+        const bundled = fs.readFileSync(BUNDLED_STORE_PATH, 'utf-8');
+        this.ensureDataDir();
+        fs.writeFileSync(STORE_PATH, bundled, 'utf-8');
+      }
       if (fs.existsSync(STORE_PATH)) {
         const content = fs.readFileSync(STORE_PATH, 'utf-8');
         return JSON.parse(content);
