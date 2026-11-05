@@ -1,3 +1,5 @@
+import { extractOptionsUniversal } from './docxParser.js';
+
 /**
  * Smart Quiz Parser for:
  * 1. Single Choice & Multiple Choice (supports inline "A. ... B. ... C. ... D. ..." or multiline)
@@ -255,6 +257,28 @@ function parseTrueFalseMatrix(text, qNum) {
 // Handles inline "A. ... B. ... C. ... D. ..." or multiline
 // -------------------------------------------------------------
 function parseStandardChoiceQuestion(text, qNum) {
+  // First attempt: use universal option extractor
+  const universalRes = extractOptionsUniversal(text);
+  if (universalRes && universalRes.options.length >= 2) {
+    return {
+      id: `q_gen_${qNum}`,
+      orderIndex: qNum,
+      type: universalRes.type,
+      content: universalRes.prompt,
+      instructionBadge: universalRes.instructionBadge,
+      explanation: 'Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.',
+      points: universalRes.type === 'multiple_choice' ? 1.5 : 1.0,
+      requiredCount: universalRes.requiredCount,
+      options: universalRes.options.map((opt, idx) => ({
+        id: `opt_${qNum}_${opt.label.toLowerCase()}`,
+        label: opt.label,
+        content: opt.content,
+        isCorrect: opt.isCorrect,
+        orderIndex: idx + 1
+      }))
+    };
+  }
+
   // Check if multiple choice required count is indicated in prompt
   // e.g. "Sinh viên chọn 2 phương án đúng nhất" or "Chọn 2 phương án đúng nhất"
   const multiMatch = text.match(/(?:chọn|Sinh viên chọn)\s*(\d+)\s*phương án/i);

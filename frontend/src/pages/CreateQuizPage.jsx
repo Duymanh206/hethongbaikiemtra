@@ -476,7 +476,7 @@ export default function CreateQuizPage({ onQuizCreated }) {
                       <p className="font-semibold text-slate-900">{q.content}</p>
                       
                       {/* DẠNG 1 & 2: Single Choice & Multiple Choice */}
-                      {(q.type === 'single_choice' || q.type === 'multiple_choice' || (q.options && q.options.length > 0)) && (
+                      {q.options && q.options.length > 0 && (
                         <div className="space-y-1.5 pt-1">
                           <div className="text-[11px] font-semibold text-slate-500">
                             {q.type === 'multiple_choice' ? `Chọn ${q.requiredCount || 2} phương án đúng` : 'Chọn 1 đáp án đúng'}:
