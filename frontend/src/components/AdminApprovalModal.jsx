@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { 
   ShieldCheck, 
   X, 
@@ -78,17 +79,18 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  return (
+  // Use React Portal to mount directly into document.body to escape header backdrop-blur
+  return ReactDOM.createPortal(
     <div 
-      className="fixed inset-0 z-50 overflow-y-auto p-4 sm:p-6 flex items-center justify-center bg-slate-900/70 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150 overflow-y-auto"
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden text-slate-800 my-auto flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-150"
+        className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden text-slate-800 my-auto flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-150"
         onClick={e => e.stopPropagation()}
       >
         {/* Header gradient bar */}
-        <div className="h-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 w-full shrink-0" />
+        <div className="h-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 w-full shrink-0" />
 
         {/* Header Top Bar */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between shrink-0 bg-white">
@@ -108,6 +110,7 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
 
           <div className="flex items-center gap-2">
             <button
+              type="button"
               onClick={fetchPendingUsers}
               disabled={loading}
               className="p-2 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-all text-xs font-bold flex items-center gap-1.5 cursor-pointer"
@@ -118,6 +121,7 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
             </button>
 
             <button
+              type="button"
               onClick={onClose}
               className="p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors cursor-pointer"
               title="Đóng cửa sổ (Esc)"
@@ -198,6 +202,7 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
                   {/* Actions */}
                   <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 justify-end">
                     <button
+                      type="button"
                       onClick={() => handleAction(u.id, 'reject')}
                       disabled={actionLoadingId === u.id}
                       className="px-3.5 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 border border-red-200 transition-all disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
@@ -207,6 +212,7 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
                     </button>
 
                     <button
+                      type="button"
                       onClick={() => handleAction(u.id, 'approve')}
                       disabled={actionLoadingId === u.id}
                       className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs shadow-emerald-600/20 transition-all disabled:opacity-50 flex items-center gap-1.5 active:scale-95 cursor-pointer"
@@ -246,6 +252,7 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
