@@ -8,7 +8,30 @@
       "email": "dtc245200060@student.edu.vn",
       "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
       "role": "student",
-      "createdAt": "2026-03-01T08:00:00.000Z"
+      "createdAt": "2026-03-01T08:00:00.000Z",
+      "password": "123"
+    },
+    {
+      "id": "user_2",
+      "username": "giangvien",
+      "fullName": "TS. Trần Quang Minh",
+      "studentId": "GV1042",
+      "email": "tqminh@edu.vn",
+      "password": "123",
+      "role": "teacher",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "createdAt": "2026-02-15T09:30:00.000Z"
+    },
+    {
+      "id": "user_1793849359413",
+      "username": "student_8798",
+      "fullName": "Nguyễn Văn Test",
+      "studentId": "dtc_8798",
+      "email": "student_8798@student.edu.vn",
+      "password": "123",
+      "role": "student",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "createdAt": "2026-11-05T03:29:19.413Z"
     }
   ],
   "quizzes": [
@@ -32,6 +55,25 @@
       "updatedAt": "2026-11-05T01:54:39.161Z"
     },
     {
+      "id": "quiz_1793843634614",
+      "title": "Chủ Nghĩa Xã Hội Khoa Học_Bài 5",
+      "description": "Import tự động từ file Word: Chá»§ NghÄ©a XÃ£ Há»i Khoa Há»c_BÃ i 5.docx",
+      "category": "Triết học & Lý luận chính trị",
+      "originalDocxName": "Chá»§ NghÄ©a XÃ£ Há»i Khoa Há»c_BÃ i 5.docx",
+      "durationMinutes": 15,
+      "passingScore": 5,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 40,
+      "attemptsCount": 1,
+      "avgRating": 5,
+      "createdBy": "Hoàng Duy Mạnh",
+      "createdAt": "2026-11-05T01:53:54.614Z",
+      "updatedAt": "2026-11-05T01:53:54.614Z"
+    },
+    {
       "id": "quiz_cnxhkh_05",
       "title": "BÀI KIỂM TRA 15 PHÚT - TUẦN 1",
       "description": "Chủ nghĩa xã hội khoa học - Bài 5: Vấn đề dân tộc và tôn giáo trong thời kỳ quá độ lên CNXH",
@@ -51,23 +93,23 @@
       "updatedAt": "2026-11-05T01:46:25.438Z"
     },
     {
-      "id": "quiz_1793843634614",
-      "title": "Chủ Nghĩa Xã Hội Khoa Học_Bài 5",
-      "description": "Import tự động từ file Word: Chá»§ NghÄ©a XÃ£ Há»i Khoa Há»c_BÃ i 5.docx",
+      "id": "quiz_1793848319292",
+      "title": "Chủ Nghĩa Xã Hội Khoa Học_Bài 4",
+      "description": "Import tự động từ file Word: Chá»§ NghÄ©a XÃ£ Há»i Khoa Há»c_BÃ i 4.docx",
       "category": "Triết học & Lý luận chính trị",
-      "originalDocxName": "Chá»§ NghÄ©a XÃ£ Há»i Khoa Há»c_BÃ i 5.docx",
+      "originalDocxName": "Chá»§ NghÄ©a XÃ£ Há»i Khoa Há»c_BÃ i 4.docx",
       "durationMinutes": 15,
       "passingScore": 5,
       "shuffleQuestions": true,
       "shuffleOptions": true,
       "antiCheatEnabled": true,
       "maxViolations": 3,
-      "totalQuestions": 40,
+      "totalQuestions": 41,
       "attemptsCount": 1,
       "avgRating": 5,
       "createdBy": "Hoàng Duy Mạnh",
-      "createdAt": "2026-11-05T01:53:54.614Z",
-      "updatedAt": "2026-11-05T01:53:54.614Z"
+      "createdAt": "2026-11-05T03:11:59.292Z",
+      "updatedAt": "2026-11-05T03:11:59.292Z"
     }
   ],
   "questions": [
@@ -1766,6 +1808,620 @@
       "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
       "points": 1,
       "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_1",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 1,
+      "type": "single_choice",
+      "content": "Trong thời kỳ quá độ lên chủ nghĩa xã hội, cơ cấu xã hội - giai cấp biến đổi trong mối quan hệ nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_2",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 2,
+      "type": "single_choice",
+      "content": "Dưới góc độ chính trị - xã hội, môn Chủ nghĩa xã hội khoa học tập trung nghiên cứu cơ cấu xã hội nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_3",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 3,
+      "type": "multiple_choice",
+      "content": "Vì sao cơ cấu xã hội giai cấp có vị trí quan trọng hàng đầu, chi phối các loại hình cơ cấu xã hội khác?",
+      "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 2,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_4",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 4,
+      "type": "single_choice",
+      "content": "Theo C.Mác và Ph.Ăngghen, nhiều cuộc đấu tranh của giai cấp công nhân ở châu Âu, nhất là ở nước Anh và Pháp từ giữa thế kỷ XIX thất bại là do:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_5",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 5,
+      "type": "single_choice",
+      "content": "V.I. Lênin đã xem liên minh giữa giai cấp, tầng lớp nào là một hình thức “liên minh đặc biệt” trong giai đoạn giành chính quyền và xây dựng chủ nghĩa xã hội?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_6",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 6,
+      "type": "single_choice",
+      "content": "Yếu tố quyết định sự liên minh giữa giai cấp công nhân, giai cấp nông dân và tầng lớp trí thức là:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_7",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 7,
+      "type": "single_choice",
+      "content": "Theo quan điểm của chủ nghĩa Mác – Lênin, trong thời kỳ quá độ lên chủ nghĩa xã hội, giai cấp công nhân, giai cấp nông dân và tầng lớp lao động khác được coi là:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_8",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 8,
+      "type": "single_choice",
+      "content": "Xét dưới góc độ chính trị, trong cuộc đấu tranh giai cấp của các giai cấp có lợi ích đối lập nhau đặt ra nhu cầu tất yếu khách quan mỗi giai cấp đứng ở vị trí trung tâm đều phải:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_9",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 9,
+      "type": "multiple_choice",
+      "content": "Vì sao giai cấp công nhân, nông dân và đội ngũ trí thức cần liên minh với nhau trong thời kỳ quá độ lên chủ nghĩa xã hội?",
+      "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 2,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_10",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 10,
+      "type": "single_choice",
+      "content": "Cơ cấu xã hội – giai cấp ở Việt Nam thời kỳ quá độ lên chủ nghĩa xã hội bao gồm mấy giai cấp, tầng lớp?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_11",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 11,
+      "type": "single_choice",
+      "content": "Trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam, sự biến đổi của cơ cấu xã hội – giai cấp bị chi phối bởi biến đổi của cơ cấu nào:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_12",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 12,
+      "type": "single_choice",
+      "content": "Lực lượng nào là lực lượng lao động sáng tạo đặc biệt quan trọng trong tiến trình đẩy mạnh công nghiệp hóa, hiện đại hóa đất nước và hội nhập quốc tế, xây dựng kinh tế tri thức, phát triển nền văn hóa Việt Nam tiên tiến, đậm đà bản sắc dân tộc?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_13",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 13,
+      "type": "single_choice",
+      "content": "Trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam, giai cấp nào là lực lượng đi đầu thực hiện nhiệm vụ trung tâm phát triển kinh tế, tiến hành công nghiệp hoá, hiện đại hoá đất nước?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_14",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 14,
+      "type": "single_choice",
+      "content": "Chọn ý sai về nội dung kinh tế của liên minh giữa giai cấp công nhân với giai cấp nông dân và các tầng lớp lao động khác trong trong cách mạng xã hội chủ nghĩa:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_15",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 15,
+      "type": "single_choice",
+      "content": "Vận dụng kiến thức về vai trò của thế hệ trẻ, hãy xác định mục tiêu chính của việc giáo dục chính trị, tư tưởng cho thanh niên trong giai đoạn hiện nay ở Việt Nam là gì?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_16",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 16,
+      "type": "single_choice",
+      "content": "Trong thời kỳ quá độ lên chủ nghĩa xã hội, cơ cấu xã hội – giai cấp thường xuyên biến đổi theo mấy quy luật cơ bản?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_17",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 17,
+      "type": "single_choice",
+      "content": "Xét về mặt kinh tế, trong thời kỳ quá độ lên chủ nghĩa xã hội, cơ cấu xã hội – giai cấp biến đổi phức tạp, đa dạng, làm xuất hiện các tầng lớp mới là do:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_18",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 18,
+      "type": "single_choice",
+      "content": "Theo V.I. Lênin, đâu là vấn đề mang tính nguyên tắc để đảm bảo cho thắng lợi của cuộc cách mạng xã hội chủ nghĩa tháng Mười Nga năm 1917?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_19",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 19,
+      "type": "single_choice",
+      "content": "Nội dung cơ bản quyết định nhất, là cơ sở vật chất – kỹ thuật của liên minh giai cấp, tầng lớp trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam là nội dung nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_20",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 20,
+      "type": "single_choice",
+      "content": "Nội dung chính trị của liên minh giai cấp, tầng lớp trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam thể hiện việc giữ vững lập trường chính trị - tư tưởng của giai cấp, tầng lớp nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_21",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 21,
+      "type": "single_choice",
+      "content": "Chọn đáp án đúng điền vào chỗ trống cho câu sau:\"Cơ cấu xã hội – giai cấp là hệ thống các ……., tồn tại khách quan trong một chế độ xã hội nhất định...\"",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_22",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 22,
+      "type": "single_choice",
+      "content": "Trong cách mạng xã hội chủ nghĩa, dưới sự lãnh đạo của Đảng Cộng sản, giai cấp công nhân phải liên minh với giai cấp, tầng lớp nào?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_23",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 23,
+      "type": "single_choice",
+      "content": "Nội dung kinh tế của liên minh giai cấp, tầng lớp trong thời kỳ quá độ lên chủ nghĩa xã hội ở Việt Nam là gì?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_24",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 24,
+      "type": "single_choice",
+      "content": "Trong cơ cấu xã hội – giai cấp của thời kỳ quá độ lên chủ nghĩa xã hội, lực lượng tiêu biểu cho phương thức sản xuất mới giữ vai trò chủ đạo, tiên phong trong quá trình công nghiệp hoá, hiện đại hoá đất nước là:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_25",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 25,
+      "type": "single_choice",
+      "content": "Theo C. Mác – Ph. Ăngghen, “người bạn đồng minh tự nhiên” của giai cấp công nhân là ai?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_26",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 26,
+      "type": "single_choice",
+      "content": "Trong cơ cấu xã hội của thời kỳ quá độ lên chủ nghĩa xã hội, cơ cấu xã hội nào giữ vị trí quan trọng hàng đầu, chi phối các loại hình cơ cấu xã hội khác?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_27",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 27,
+      "type": "single_choice",
+      "content": "Hiện nay ở Việt Nam, lực lượng xã hội đặc biệt được Đảng ta chủ trương xây dựng thành một đội ngũ vững mạnh là:",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_28",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 28,
+      "type": "single_choice",
+      "content": "Chọn phương án trả lời đúng nhất để điền vào chỗ trống cho câu sau:\"Trước sự liên minh của các đại biểu khoa học..., giới kỹ thuật, không một thế lực đen tối nào đứng vững được\"",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_29",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 29,
+      "type": "multiple_choice",
+      "content": "Những lực lượng nào sau đây là trung tâm trong cơ cấu xã hội - giai cấp ở Việt Nam trong thời kỳ quá độ lên chủ nghĩa xã hội?",
+      "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 2,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_30",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 30,
+      "type": "drag_drop_matching",
+      "content": "Kéo thả các đáp án đúng ứng với từng phát biểu sau đây về vị trí, vai trò của các giai cấp, tầng lớp trong cơ cấu xã hội – giai cấp ở Việt Nam trong thời kỳ quá độ lên chủ nghĩa xã hội:",
+      "instructionBadge": "(!) Kéo và thả các đáp án đúng vào ô tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_31",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 31,
+      "type": "true_false_matrix",
+      "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
+      "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": [
+        {
+          "id": "stmt_31_1",
+          "indexNumber": 1,
+          "text": "1) Nâng cao dân trí là chính sách hỗ trợ cơ cấu xã hội - giai cấp.",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_31_2",
+          "indexNumber": 2,
+          "text": "2) Cơ cấu xã hội - giai cấp ở Việt Nam không biến đổi.",
+          "correctAnswer": "Sai"
+        },
+        {
+          "id": "stmt_31_3",
+          "indexNumber": 3,
+          "text": "3) Chính sách việc làm không hỗ trợ cơ cấu xã hội - giai cấp.",
+          "correctAnswer": "Sai"
+        },
+        {
+          "id": "stmt_31_4",
+          "indexNumber": 4,
+          "text": "4) Đội ngũ doanh nhân là tầng lớp mới trong cơ cấu xã hội - giai cấp.",
+          "correctAnswer": "Đúng"
+        }
+      ]
+    },
+    {
+      "id": "q_quiz_1793848319292_32",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 32,
+      "type": "true_false_matrix",
+      "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
+      "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": [
+        {
+          "id": "stmt_32_1",
+          "indexNumber": 1,
+          "text": "1) Tầng lớp phụ nữ không tham gia cơ cấu xã hội - giai cấp.",
+          "correctAnswer": "Sai"
+        },
+        {
+          "id": "stmt_32_2",
+          "indexNumber": 2,
+          "text": "2) Chính sách tôn giáo là chính sách chính hỗ trợ cơ cấu xã hội - giai cấp.",
+          "correctAnswer": "Sai"
+        },
+        {
+          "id": "stmt_32_3",
+          "indexNumber": 3,
+          "text": "3) Đội ngũ trí thức đóng vai trò quan trọng trong cơ cấu xã hội - giai cấp.",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_32_4",
+          "indexNumber": 4,
+          "text": "4) Giai cấp công nhân là trung tâm trong cơ cấu xã hội - giai cấp ở Việt Nam.",
+          "correctAnswer": "Đúng"
+        }
+      ]
+    },
+    {
+      "id": "q_quiz_1793848319292_33",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 33,
+      "type": "single_choice",
+      "content": "Chọn cụm từ thích hợp điền vào chỗ trống của câu sau:\"Cơ cấu xã hội là những ...... cùng toàn bộ những mối quan hệ xã hội do sự tác động lẫn nhau của các cộng đồng ấy tạo nên\".",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_34",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 34,
+      "type": "drag_drop_categorize",
+      "content": "Kéo thả các yếu tố liên quan đến cơ cấu xã hội - giai cấp ở Việt Nam trong thời kỳ quá độ lên chủ nghĩa xã hội vào các cột tương ứng:",
+      "instructionBadge": "(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 7,
+      "categories": [
+        "Chính sách hỗ trợ",
+        "Giai cấp/tầng lớp trong cơ cấu xã hội"
+      ],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_35",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 35,
+      "type": "multiple_choice",
+      "content": "Những tầng lớp nào sau đây tham gia cơ cấu xã hội - giai cấp ở Việt Nam?",
+      "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 2,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_36",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 36,
+      "type": "multiple_choice",
+      "content": "Những phương hướng nào sau đây củng cố liên minh giai cấp, tầng lớp ở Việt Nam trong thời kỳ quá độ lên chủ nghĩa xã hội?",
+      "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 2,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_37",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 37,
+      "type": "drag_drop_categorize",
+      "content": "Kéo thả các yếu tố liên quan đến liên minh giai cấp, tầng lớp ở Việt Nam trong thời kỳ quá độ lên chủ nghĩa xã hội vào các cột tương ứng:",
+      "instructionBadge": "(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 8,
+      "categories": [
+        "Nội dung/phương hướng của liên minh",
+        "Thành phần/yếu tố của liên minh"
+      ],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_38",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 38,
+      "type": "single_choice",
+      "content": "Trong thời kỳ quá độ lên chủ nghĩa xã hội, cơ cấu xã hội – giai cấp gồm mấy giai cấp, tầng lớp cơ bản?",
+      "instructionBadge": null,
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 1,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_39",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 39,
+      "type": "true_false_matrix",
+      "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
+      "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": [
+        {
+          "id": "stmt_39_1",
+          "indexNumber": 1,
+          "text": "1) Nội dung tôn giáo là nội dung chính của liên minh giai cấp, tầng lớp.",
+          "correctAnswer": "Sai"
+        },
+        {
+          "id": "stmt_39_2",
+          "indexNumber": 2,
+          "text": "2) Đồng thuận xã hội là mục tiêu của liên minh giai cấp, tầng lớp ở Việt Nam.",
+          "correctAnswer": "Đúng"
+        },
+        {
+          "id": "stmt_39_3",
+          "indexNumber": 3,
+          "text": "3) Đội ngũ doanh nhân không tham gia liên minh giai cấp, tầng lớp.",
+          "correctAnswer": "Sai"
+        },
+        {
+          "id": "stmt_39_4",
+          "indexNumber": 4,
+          "text": "4) Xây dựng Nhà nước pháp quyền xã hội chủ nghĩa của nhân dân, do nhân dân, vì nhân dân là nội dung văn hoá của liên minh giai cấp, tầng lớp ở Việt Nam.",
+          "correctAnswer": "Sai"
+        }
+      ]
+    },
+    {
+      "id": "q_quiz_1793848319292_40",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 40,
+      "type": "drag_drop_matching",
+      "content": "Kéo thả các khái niệm khớp với các phát biểu về cơ cấu xã hội - giai cấp ở Việt Nam trong thời kỳ quá độ lên chủ nghĩa xã hội dưới đây:",
+      "instructionBadge": "(!) Kéo và thả các đáp án đúng vào ô tương ứng",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 4,
+      "categories": [],
+      "statements": []
+    },
+    {
+      "id": "q_quiz_1793848319292_41",
+      "quizId": "quiz_1793848319292",
+      "orderIndex": 41,
+      "type": "multiple_choice",
+      "content": "Những nội dung nào sau đây là nội dung cơ bản của liên minh giai cấp, tầng lớp ở Việt Nam trong thời kỳ quá độ lên chủ nghĩa xã hội?",
+      "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
+      "explanation": "Đáp án được nhận diện từ định dạng gốc trong văn bản.",
+      "points": 1,
+      "requiredCount": 2,
       "categories": [],
       "statements": []
     }
@@ -4586,6 +5242,1094 @@
       "content": "pgvector -- vì PostgreSQL có sẵn full-text search và tự động kết hợp tối ưu với vector search mà không cần cấu hình",
       "isCorrect": false,
       "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_1_1",
+      "questionId": "q_quiz_1793848319292_1",
+      "label": "A",
+      "content": "Vừa đấu tranh, vừa bài xích lẫn nhau",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_1_2",
+      "questionId": "q_quiz_1793848319292_1",
+      "label": "B",
+      "content": "Vừa đấu tranh, vừa liên minh, từng bước xóa bỏ bất bình đẳng xã hội dẫn đến sự xích lại gần nhau",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_1_3",
+      "questionId": "q_quiz_1793848319292_1",
+      "label": "C",
+      "content": "Vừa thống nhất, vừa bình đẳng với nhau",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_1_4",
+      "questionId": "q_quiz_1793848319292_1",
+      "label": "D",
+      "content": "Vừa liên minh, cấu kết các giai cấp, tầng lớp quy mô để đàn áp các lớn giai cấp, tầng lớp quy mô nhỏ",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_2_1",
+      "questionId": "q_quiz_1793848319292_2",
+      "label": "A",
+      "content": "Cơ cấu xã hội – dân cư",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_2_2",
+      "questionId": "q_quiz_1793848319292_2",
+      "label": "B",
+      "content": "Cơ cấu xã hội – nghề nghiệp",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_2_3",
+      "questionId": "q_quiz_1793848319292_2",
+      "label": "C",
+      "content": "Cơ cấu xã hội – giai cấp",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_2_4",
+      "questionId": "q_quiz_1793848319292_2",
+      "label": "D",
+      "content": "Cơ cấu xã hội – dân tộc",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_3_1",
+      "questionId": "q_quiz_1793848319292_3",
+      "label": "A",
+      "content": "Vì cơ cấu xã hội – giai cấp liên quan đến các đảng phái chính trị và nhà nước; đến quyền sở hữu tư liệu sản xuất",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_3_2",
+      "questionId": "q_quiz_1793848319292_3",
+      "label": "B",
+      "content": "Vì cơ cấu xã hội – giai cấp liên quan đến nhiều giai cấp giàu có trong xã hội",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_3_3",
+      "questionId": "q_quiz_1793848319292_3",
+      "label": "C",
+      "content": "Vì cơ cấu xã hội – giai cấp liên quan đến quản lý tổ chức lao động, vấn đề phân phối thu nhập",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_3_4",
+      "questionId": "q_quiz_1793848319292_3",
+      "label": "D",
+      "content": "Vì cơ cấu xã hội – giai cấp liên quan đến các tổ chức tà đạo, các băng nhóm xã hội đen lớn trong xã hội",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_4_1",
+      "questionId": "q_quiz_1793848319292_4",
+      "label": "A",
+      "content": "Không tổ chức liên minh với tầng lớp trí thức",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_4_2",
+      "questionId": "q_quiz_1793848319292_4",
+      "label": "B",
+      "content": "Không tổ chức liên minh với giai cấp tư sản",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_4_3",
+      "questionId": "q_quiz_1793848319292_4",
+      "label": "C",
+      "content": "Không tổ chức liên minh với giai cấp nông dân",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_4_4",
+      "questionId": "q_quiz_1793848319292_4",
+      "label": "D",
+      "content": "Không tổ chức liên minh với tầng lớp tiểu chủ",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_5_1",
+      "questionId": "q_quiz_1793848319292_5",
+      "label": "A",
+      "content": "Giai cấp công nhân với giai cấp nông dân và tầng lớp trí thức",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_5_2",
+      "questionId": "q_quiz_1793848319292_5",
+      "label": "B",
+      "content": "Giai cấp công nhân với giai cấp nông dân và tầng lớp tiểu tư sản",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_5_3",
+      "questionId": "q_quiz_1793848319292_5",
+      "label": "C",
+      "content": "Giai cấp công nhân với giai cấp nông dân và các tầng lớp xã hội khác",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_5_4",
+      "questionId": "q_quiz_1793848319292_5",
+      "label": "D",
+      "content": "Giai cấp công nhân với tầng lớp trí thức và doanh nhân",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_6_1",
+      "questionId": "q_quiz_1793848319292_6",
+      "label": "A",
+      "content": "Do có những lợi ích cơ bản thống nhất với nhau",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_6_2",
+      "questionId": "q_quiz_1793848319292_6",
+      "label": "B",
+      "content": "Do giai cấp công nhân mong muốn",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_6_3",
+      "questionId": "q_quiz_1793848319292_6",
+      "label": "C",
+      "content": "Do có cùng một kẻ thù là giai cấp tư sản",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_6_4",
+      "questionId": "q_quiz_1793848319292_6",
+      "label": "D",
+      "content": "Do giai cấp công nhân muốn trở thành giai cấp thống trị",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_7_1",
+      "questionId": "q_quiz_1793848319292_7",
+      "label": "A",
+      "content": "Lực lượng sản xuất cơ bản, lực lượng chính trị - xã hội to lớn",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_7_2",
+      "questionId": "q_quiz_1793848319292_7",
+      "label": "B",
+      "content": "Lực lượng ngoại giao to lớn",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_7_3",
+      "questionId": "q_quiz_1793848319292_7",
+      "label": "C",
+      "content": "Lực lượng vũ trang cơ bản",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_7_4",
+      "questionId": "q_quiz_1793848319292_7",
+      "label": "D",
+      "content": "Lực lượng kém phát triển",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_8_1",
+      "questionId": "q_quiz_1793848319292_8",
+      "label": "A",
+      "content": "Liên minh với các giai cấp, tầng lớp xã hội khác có những lợi ích phù hợp với mình",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_8_2",
+      "questionId": "q_quiz_1793848319292_8",
+      "label": "B",
+      "content": "Liên minh với các giai cấp, tầng lớp xã hội khác mà giai cấp đứng ở vị trí trung tâm được lợi nhiều hơn",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_8_3",
+      "questionId": "q_quiz_1793848319292_8",
+      "label": "C",
+      "content": "Liên minh với các giai cấp, tầng lớp xã hội khác có những lợi ích đối lập với mình",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_8_4",
+      "questionId": "q_quiz_1793848319292_8",
+      "label": "D",
+      "content": "Liên minh với các giai cấp, tầng lớp xã hội khác có tiềm lực kinh tế lớn hơn mình",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_9_1",
+      "questionId": "q_quiz_1793848319292_9",
+      "label": "A",
+      "content": "Vì giai cấp công nhân với giai cấp nông dân và đội ngũ trí thức có sự thống nhất chung về lợi ích",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_9_2",
+      "questionId": "q_quiz_1793848319292_9",
+      "label": "B",
+      "content": "Vì xuất phát từ yêu cầu khách quan của quá trình đẩy mạnh công nghiệp hoá, hiện đại hoá và chuyển dịch cơ cấu kinh tế từ một nền sản xuất nhỏ, nông nghiệp là chủ yếu sang sản xuất hàng hoá lớn",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_9_3",
+      "questionId": "q_quiz_1793848319292_9",
+      "label": "C",
+      "content": "Vì giai cấp công nhân bắt buộc các giai cấp nông dân, tầng lớp trí thức liên minh với mình",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_9_4",
+      "questionId": "q_quiz_1793848319292_9",
+      "label": "D",
+      "content": "Vì các giai cấp, tầng lớp muốn có đông lực lượng để tổ chức các hoạt động văn hoá, xã hội",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_10_1",
+      "questionId": "q_quiz_1793848319292_10",
+      "label": "A",
+      "content": "3",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_10_2",
+      "questionId": "q_quiz_1793848319292_10",
+      "label": "B",
+      "content": "4",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_10_3",
+      "questionId": "q_quiz_1793848319292_10",
+      "label": "C",
+      "content": "5",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_10_4",
+      "questionId": "q_quiz_1793848319292_10",
+      "label": "D",
+      "content": "6",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_11_1",
+      "questionId": "q_quiz_1793848319292_11",
+      "label": "A",
+      "content": "Cơ cấu xã hội - dân tộc",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_11_2",
+      "questionId": "q_quiz_1793848319292_11",
+      "label": "B",
+      "content": "Cơ cấu xã hội – tôn giáo",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_11_3",
+      "questionId": "q_quiz_1793848319292_11",
+      "label": "C",
+      "content": "Cơ cấu xã hội - dân cư",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_11_4",
+      "questionId": "q_quiz_1793848319292_11",
+      "label": "D",
+      "content": "Cơ cấu kinh tế",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_12_1",
+      "questionId": "q_quiz_1793848319292_12",
+      "label": "A",
+      "content": "Công nhân",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_12_2",
+      "questionId": "q_quiz_1793848319292_12",
+      "label": "B",
+      "content": "Nông dân",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_12_3",
+      "questionId": "q_quiz_1793848319292_12",
+      "label": "C",
+      "content": "Trí thức",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_12_4",
+      "questionId": "q_quiz_1793848319292_12",
+      "label": "D",
+      "content": "Thanh niên",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_13_1",
+      "questionId": "q_quiz_1793848319292_13",
+      "label": "A",
+      "content": "Giai cấp công nhân",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_13_2",
+      "questionId": "q_quiz_1793848319292_13",
+      "label": "B",
+      "content": "Giai cấp nông dân",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_13_3",
+      "questionId": "q_quiz_1793848319292_13",
+      "label": "C",
+      "content": "Đội ngũ trí thức",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_13_4",
+      "questionId": "q_quiz_1793848319292_13",
+      "label": "D",
+      "content": "Đội ngũ doanh nhân",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_14_1",
+      "questionId": "q_quiz_1793848319292_14",
+      "label": "A",
+      "content": "Ứng dụng khoa học kỹ thuật vào sản xuất nông nghiệp",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_14_2",
+      "questionId": "q_quiz_1793848319292_14",
+      "label": "B",
+      "content": "Xây dựng hệ thống chính sách phát triển nông nghiệp, nông dân, nông thôn",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_14_3",
+      "questionId": "q_quiz_1793848319292_14",
+      "label": "C",
+      "content": "Xây dựng hệ thống chính sách an sinh xã hội",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_14_4",
+      "questionId": "q_quiz_1793848319292_14",
+      "label": "D",
+      "content": "Thực hiện hợp đồng kinh tế giữa doanh nghiệp nhà nước và nông dân.",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_15_1",
+      "questionId": "q_quiz_1793848319292_15",
+      "label": "A",
+      "content": "Để tăng cường quyền lực của nhà nước",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_15_2",
+      "questionId": "q_quiz_1793848319292_15",
+      "label": "B",
+      "content": "Để hình thành thế hệ thanh niên có phẩm chất tốt đẹp, có khí phách và quyết tâm hành động",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_15_3",
+      "questionId": "q_quiz_1793848319292_15",
+      "label": "C",
+      "content": "Để giảm thiểu sự tham gia của thanh niên vào các hoạt động xã hội",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_15_4",
+      "questionId": "q_quiz_1793848319292_15",
+      "label": "D",
+      "content": "Để kiểm soát các hoạt động kinh tế của thanh niên",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_16_1",
+      "questionId": "q_quiz_1793848319292_16",
+      "label": "A",
+      "content": "3",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_16_2",
+      "questionId": "q_quiz_1793848319292_16",
+      "label": "B",
+      "content": "5",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_16_3",
+      "questionId": "q_quiz_1793848319292_16",
+      "label": "C",
+      "content": "2",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_16_4",
+      "questionId": "q_quiz_1793848319292_16",
+      "label": "D",
+      "content": "4",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_17_1",
+      "questionId": "q_quiz_1793848319292_17",
+      "label": "A",
+      "content": "Tồn tại nhiều giai cấp, tầng lớp",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_17_2",
+      "questionId": "q_quiz_1793848319292_17",
+      "label": "B",
+      "content": "Cơ cấu kinh tế đa dạng, phức tạp",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_17_3",
+      "questionId": "q_quiz_1793848319292_17",
+      "label": "C",
+      "content": "Kinh tế chậm phát triển",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_17_4",
+      "questionId": "q_quiz_1793848319292_17",
+      "label": "D",
+      "content": "Các giai cấp có nhiều tư liệu sản xuất quyết định",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_18_1",
+      "questionId": "q_quiz_1793848319292_18",
+      "label": "A",
+      "content": "Liên minh công, nông và trí thức",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_18_2",
+      "questionId": "q_quiz_1793848319292_18",
+      "label": "B",
+      "content": "Liên minh giữa giai cấp công nhân, tầng lớp tư sản tiến bộ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_18_3",
+      "questionId": "q_quiz_1793848319292_18",
+      "label": "C",
+      "content": "Liên minh giữa giai cấp vô sản và nông dân",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_18_4",
+      "questionId": "q_quiz_1793848319292_18",
+      "label": "D",
+      "content": "Liên minh giữa giai cấp công nhân, tầng lớp tiểu tư sản",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_19_1",
+      "questionId": "q_quiz_1793848319292_19",
+      "label": "A",
+      "content": "Nội dung chính trị của liên minh",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_19_2",
+      "questionId": "q_quiz_1793848319292_19",
+      "label": "B",
+      "content": "Nội dung kinh tế của liên minh",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_19_3",
+      "questionId": "q_quiz_1793848319292_19",
+      "label": "C",
+      "content": "Nội dung xã hội của liên minh",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_19_4",
+      "questionId": "q_quiz_1793848319292_19",
+      "label": "D",
+      "content": "Nội dung văn hoá của liên minh",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_20_1",
+      "questionId": "q_quiz_1793848319292_20",
+      "label": "A",
+      "content": "Giai cấp tư sản",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_20_2",
+      "questionId": "q_quiz_1793848319292_20",
+      "label": "B",
+      "content": "Tầng lớp trí thức",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_20_3",
+      "questionId": "q_quiz_1793848319292_20",
+      "label": "C",
+      "content": "Giai cấp công nhân",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_20_4",
+      "questionId": "q_quiz_1793848319292_20",
+      "label": "D",
+      "content": "Giai cấp nông dân",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_21_1",
+      "questionId": "q_quiz_1793848319292_21",
+      "label": "A",
+      "content": "Cá nhân / tập thể",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_21_2",
+      "questionId": "q_quiz_1793848319292_21",
+      "label": "B",
+      "content": "Đội ngũ / tầng lớp",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_21_3",
+      "questionId": "q_quiz_1793848319292_21",
+      "label": "C",
+      "content": "Giai cấp / tầng lớp",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_21_4",
+      "questionId": "q_quiz_1793848319292_21",
+      "label": "D",
+      "content": "Tập đoàn / lực lượng sản xuất",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_22_1",
+      "questionId": "q_quiz_1793848319292_22",
+      "label": "A",
+      "content": "Giai cấp tư sản",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_22_2",
+      "questionId": "q_quiz_1793848319292_22",
+      "label": "B",
+      "content": "Giai cấp nông dân và các tầng lớp nhân dân lao động",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_22_3",
+      "questionId": "q_quiz_1793848319292_22",
+      "label": "C",
+      "content": "Giai cấp vô sản đại công nghiệp",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_22_4",
+      "questionId": "q_quiz_1793848319292_22",
+      "label": "D",
+      "content": "Giai cấp vô sản",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_23_1",
+      "questionId": "q_quiz_1793848319292_23",
+      "label": "A",
+      "content": "Đẩy mạnh công nghiệp hoá, hiện đại hoá đất nước gắn với phát triển kinh tế tri thức, phát triển bền vững",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_23_2",
+      "questionId": "q_quiz_1793848319292_23",
+      "label": "B",
+      "content": "Xây dựng nền văn hóa tiên tiến, đậm đà bản sắc dân tộc, đồng thời tiếp thu những tinh hoa, giá trị văn hoá của nhân loại và thời đại",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_23_3",
+      "questionId": "q_quiz_1793848319292_23",
+      "label": "C",
+      "content": "Giữ vững lập trường tư tưởng của giai cấp công nhân, giữ vững vai trò lãnh đạo của Đảng",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_23_4",
+      "questionId": "q_quiz_1793848319292_23",
+      "label": "D",
+      "content": "Tăng cường phát triển kinh tế kết hợp với phát triển quân sự gắn với phát triển ngoại giao",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_24_1",
+      "questionId": "q_quiz_1793848319292_24",
+      "label": "A",
+      "content": "Tầng lớp trí thức",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_24_2",
+      "questionId": "q_quiz_1793848319292_24",
+      "label": "B",
+      "content": "Đội ngũ doanh nhân",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_24_3",
+      "questionId": "q_quiz_1793848319292_24",
+      "label": "C",
+      "content": "Giai cấp công nhân",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_24_4",
+      "questionId": "q_quiz_1793848319292_24",
+      "label": "D",
+      "content": "Giai cấp nông dân",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_25_1",
+      "questionId": "q_quiz_1793848319292_25",
+      "label": "A",
+      "content": "Giai cấp nông dân",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_25_2",
+      "questionId": "q_quiz_1793848319292_25",
+      "label": "B",
+      "content": "Đội ngũ doanh nhân",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_25_3",
+      "questionId": "q_quiz_1793848319292_25",
+      "label": "C",
+      "content": "Tầng lớp trí thức",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_25_4",
+      "questionId": "q_quiz_1793848319292_25",
+      "label": "D",
+      "content": "Nhân dân lao động",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_26_1",
+      "questionId": "q_quiz_1793848319292_26",
+      "label": "A",
+      "content": "Cơ cấu xã hội - nghề nghiệp",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_26_2",
+      "questionId": "q_quiz_1793848319292_26",
+      "label": "B",
+      "content": "Cơ cấu xã hội - tôn giáo",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_26_3",
+      "questionId": "q_quiz_1793848319292_26",
+      "label": "C",
+      "content": "Cơ cấu xã hội - dân tộc",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_26_4",
+      "questionId": "q_quiz_1793848319292_26",
+      "label": "D",
+      "content": "Cơ cấu xã hội - giai cấp",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_27_1",
+      "questionId": "q_quiz_1793848319292_27",
+      "label": "A",
+      "content": "Trí thức",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_27_2",
+      "questionId": "q_quiz_1793848319292_27",
+      "label": "B",
+      "content": "Công nhân",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_27_3",
+      "questionId": "q_quiz_1793848319292_27",
+      "label": "C",
+      "content": "Doanh nhân",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_27_4",
+      "questionId": "q_quiz_1793848319292_27",
+      "label": "D",
+      "content": "Thanh niên",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_28_1",
+      "questionId": "q_quiz_1793848319292_28",
+      "label": "A",
+      "content": "Giai cấp tư sản",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_28_2",
+      "questionId": "q_quiz_1793848319292_28",
+      "label": "B",
+      "content": "Giai cấp vô sản",
+      "isCorrect": true,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_28_3",
+      "questionId": "q_quiz_1793848319292_28",
+      "label": "C",
+      "content": "Giai cấp tiểu tư sản",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_28_4",
+      "questionId": "q_quiz_1793848319292_28",
+      "label": "D",
+      "content": "Giai cấp nông dân",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_29_1",
+      "questionId": "q_quiz_1793848319292_29",
+      "label": "A",
+      "content": "Giai cấp nông dân",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_29_2",
+      "questionId": "q_quiz_1793848319292_29",
+      "label": "B",
+      "content": "Nhóm người cao tuổi",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_29_3",
+      "questionId": "q_quiz_1793848319292_29",
+      "label": "C",
+      "content": "Giai cấp công nhân",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_29_4",
+      "questionId": "q_quiz_1793848319292_29",
+      "label": "D",
+      "content": "Nhóm tín đồ tôn giáo",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_33_1",
+      "questionId": "q_quiz_1793848319292_33",
+      "label": "A",
+      "content": "Cộng đồng người",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_33_2",
+      "questionId": "q_quiz_1793848319292_33",
+      "label": "B",
+      "content": "Cộng đồng dân cư",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_33_3",
+      "questionId": "q_quiz_1793848319292_33",
+      "label": "C",
+      "content": "Cộng đồng nghề nghiệp",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_33_4",
+      "questionId": "q_quiz_1793848319292_33",
+      "label": "D",
+      "content": "Cộng đồng dân tộc",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_35_1",
+      "questionId": "q_quiz_1793848319292_35",
+      "label": "A",
+      "content": "Phụ nữ",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_35_2",
+      "questionId": "q_quiz_1793848319292_35",
+      "label": "B",
+      "content": "Nhóm học sinh",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_35_3",
+      "questionId": "q_quiz_1793848319292_35",
+      "label": "C",
+      "content": "Thanh niên",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_35_4",
+      "questionId": "q_quiz_1793848319292_35",
+      "label": "D",
+      "content": "Tín đồ tôn giáo",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_36_1",
+      "questionId": "q_quiz_1793848319292_36",
+      "label": "A",
+      "content": "Tăng vai trò tôn giáo đối với các giai cấp, tầng lớp.",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_36_2",
+      "questionId": "q_quiz_1793848319292_36",
+      "label": "B",
+      "content": "Giảm vai trò kinh tế trong xã hội.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_36_3",
+      "questionId": "q_quiz_1793848319292_36",
+      "label": "C",
+      "content": "Phát huy tính thiên đoàn kết.",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_36_4",
+      "questionId": "q_quiz_1793848319292_36",
+      "label": "D",
+      "content": "Tạo sự đồng thuận giữa các lực lượng.",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_38_1",
+      "questionId": "q_quiz_1793848319292_38",
+      "label": "A",
+      "content": "5",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_38_2",
+      "questionId": "q_quiz_1793848319292_38",
+      "label": "B",
+      "content": "6",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_38_3",
+      "questionId": "q_quiz_1793848319292_38",
+      "label": "C",
+      "content": "3",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_38_4",
+      "questionId": "q_quiz_1793848319292_38",
+      "label": "D",
+      "content": "4",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_41_1",
+      "questionId": "q_quiz_1793848319292_41",
+      "label": "A",
+      "content": "Nội dung chính trị",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_41_2",
+      "questionId": "q_quiz_1793848319292_41",
+      "label": "B",
+      "content": "Nội dung tôn giáo",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_41_3",
+      "questionId": "q_quiz_1793848319292_41",
+      "label": "C",
+      "content": "Nội dung kinh tế",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "opt_q_quiz_1793848319292_41_4",
+      "questionId": "q_quiz_1793848319292_41",
+      "label": "D",
+      "content": "Nội dung giáo dục",
+      "isCorrect": false,
+      "orderIndex": 4
     }
   ],
   "drag_drop_items": [
@@ -5022,6 +6766,167 @@
       "itemText": "Là sự phản ánh niềm tin mù quáng của một số người vào các lực lượng siêu nhiên",
       "targetCategoryOrMatch": "Mê tín dị đoan",
       "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_30_1",
+      "questionId": "q_quiz_1793848319292_30",
+      "itemText": "Đội ngũ doanh nhân được Đảng ta chủ trương xây dựng thành một ______.",
+      "targetCategoryOrMatch": "Đội ngũ vững mạnh",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_30_2",
+      "questionId": "q_quiz_1793848319292_30",
+      "itemText": "Đội ngũ trí thức là lực lượng ______.",
+      "targetCategoryOrMatch": "Sáng tạo đặc biệt",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_30_3",
+      "questionId": "q_quiz_1793848319292_30",
+      "itemText": "Giai cấp nông dân cùng với nông nghiệp, nông thôn có vị trí ______.",
+      "targetCategoryOrMatch": "Chiến lược quan trọng",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_30_4",
+      "questionId": "q_quiz_1793848319292_30",
+      "itemText": "Giai cấp công nhân Việt Nam có vai trò ______.",
+      "targetCategoryOrMatch": "Đặc biệt quan trọng",
+      "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_34_1",
+      "questionId": "q_quiz_1793848319292_34",
+      "itemText": "Bảo vệ quyền lợi",
+      "targetCategoryOrMatch": "Chính sách hỗ trợ",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_34_2",
+      "questionId": "q_quiz_1793848319292_34",
+      "itemText": "Chính sách an sinh xã hội",
+      "targetCategoryOrMatch": "Chính sách hỗ trợ",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_34_3",
+      "questionId": "q_quiz_1793848319292_34",
+      "itemText": "Phát triển nông thôn mới",
+      "targetCategoryOrMatch": "Chính sách hỗ trợ",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_34_4",
+      "questionId": "q_quiz_1793848319292_34",
+      "itemText": "Nâng cao dân trí",
+      "targetCategoryOrMatch": "Chính sách hỗ trợ",
+      "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_34_5",
+      "questionId": "q_quiz_1793848319292_34",
+      "itemText": "Giai cấp công nhân",
+      "targetCategoryOrMatch": "Giai cấp/tầng lớp trong cơ cấu xã hội",
+      "orderIndex": 5
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_34_6",
+      "questionId": "q_quiz_1793848319292_34",
+      "itemText": "Đội ngũ trí thức",
+      "targetCategoryOrMatch": "Giai cấp/tầng lớp trong cơ cấu xã hội",
+      "orderIndex": 6
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_34_7",
+      "questionId": "q_quiz_1793848319292_34",
+      "itemText": "Giai cấp nông dân",
+      "targetCategoryOrMatch": "Giai cấp/tầng lớp trong cơ cấu xã hội",
+      "orderIndex": 7
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_37_1",
+      "questionId": "q_quiz_1793848319292_37",
+      "itemText": "Nội dung chính trị",
+      "targetCategoryOrMatch": "Nội dung/phương hướng của liên minh",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_37_2",
+      "questionId": "q_quiz_1793848319292_37",
+      "itemText": "Nội dung kinh tế",
+      "targetCategoryOrMatch": "Nội dung/phương hướng của liên minh",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_37_3",
+      "questionId": "q_quiz_1793848319292_37",
+      "itemText": "Xóa đói giảm nghèo",
+      "targetCategoryOrMatch": "Nội dung/phương hướng của liên minh",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_37_4",
+      "questionId": "q_quiz_1793848319292_37",
+      "itemText": "Tăng cường liên minh",
+      "targetCategoryOrMatch": "Nội dung/phương hướng của liên minh",
+      "orderIndex": 4
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_37_5",
+      "questionId": "q_quiz_1793848319292_37",
+      "itemText": "Đảng Cộng sản",
+      "targetCategoryOrMatch": "Nội dung/phương hướng của liên minh",
+      "orderIndex": 5
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_37_6",
+      "questionId": "q_quiz_1793848319292_37",
+      "itemText": "Giai cấp nông dân",
+      "targetCategoryOrMatch": "Thành phần/yếu tố của liên minh",
+      "orderIndex": 6
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_37_7",
+      "questionId": "q_quiz_1793848319292_37",
+      "itemText": "Giai cấp công nhân",
+      "targetCategoryOrMatch": "Thành phần/yếu tố của liên minh",
+      "orderIndex": 7
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_37_8",
+      "questionId": "q_quiz_1793848319292_37",
+      "itemText": "Tầng lớp phụ nữ",
+      "targetCategoryOrMatch": "Thành phần/yếu tố của liên minh",
+      "orderIndex": 8
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_40_1",
+      "questionId": "q_quiz_1793848319292_40",
+      "itemText": "Lực lượng mới trong cơ cấu xã hội – giai cấp:",
+      "targetCategoryOrMatch": "Đội ngũ doanh nhân",
+      "orderIndex": 1
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_40_2",
+      "questionId": "q_quiz_1793848319292_40",
+      "itemText": "Chính sách hỗ trợ cơ cấu xã hội – giai cấp:",
+      "targetCategoryOrMatch": "Chính sách an sinh xã hội",
+      "orderIndex": 2
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_40_3",
+      "questionId": "q_quiz_1793848319292_40",
+      "itemText": "Lực lượng quan trọng trong cơ cấu xã hội – giai cấp",
+      "targetCategoryOrMatch": "Đội ngũ trí thức",
+      "orderIndex": 3
+    },
+    {
+      "id": "dd_q_quiz_1793848319292_40_4",
+      "questionId": "q_quiz_1793848319292_40",
+      "itemText": "Giai cấp trung tâm trong cơ cấu xã hội – giai cấp",
+      "targetCategoryOrMatch": "Giai cấp công nhân",
+      "orderIndex": 4
     }
   ],
   "exam_attempts": [
@@ -5220,6 +7125,87 @@
       },
       "markedForReview": [],
       "lastSyncAt": "2026-11-05T01:55:57.223Z"
+    },
+    {
+      "id": "att_1793848323925_silvm7",
+      "quizId": "quiz_1793848319292",
+      "userId": "user_1",
+      "studentId": "dtc245200060",
+      "candidateName": "Hoàng Duy Mạnh",
+      "score": 0.7,
+      "maxScore": 10,
+      "correctCount": 3,
+      "totalCount": 41,
+      "percentage": 7,
+      "startedAt": "2026-11-05T03:12:03.925Z",
+      "submittedAt": "2026-11-05T03:13:46.159Z",
+      "durationSeconds": 101,
+      "remainingSeconds": 810,
+      "isSubmitted": true,
+      "status": "completed",
+      "violationsCount": 0,
+      "violationLogs": [],
+      "savedAnswers": {
+        "q_quiz_1793848319292_27": "opt_q_quiz_1793848319292_27_3",
+        "q_quiz_1793848319292_19": "opt_q_quiz_1793848319292_19_4",
+        "q_quiz_1793848319292_6": "opt_q_quiz_1793848319292_6_4",
+        "q_quiz_1793848319292_12": "opt_q_quiz_1793848319292_12_4",
+        "q_quiz_1793848319292_15": "opt_q_quiz_1793848319292_15_2",
+        "q_quiz_1793848319292_34": {
+          "dd_q_quiz_1793848319292_34_6": "Chính sách hỗ trợ",
+          "dd_q_quiz_1793848319292_34_2": "Chính sách hỗ trợ",
+          "dd_q_quiz_1793848319292_34_7": "Chính sách hỗ trợ",
+          "dd_q_quiz_1793848319292_34_4": "Giai cấp/tầng lớp trong cơ cấu xã hội",
+          "dd_q_quiz_1793848319292_34_3": "Giai cấp/tầng lớp trong cơ cấu xã hội",
+          "dd_q_quiz_1793848319292_34_1": "Giai cấp/tầng lớp trong cơ cấu xã hội",
+          "dd_q_quiz_1793848319292_34_5": "Giai cấp/tầng lớp trong cơ cấu xã hội"
+        },
+        "q_quiz_1793848319292_29": [
+          "opt_q_quiz_1793848319292_29_4",
+          "opt_q_quiz_1793848319292_29_3"
+        ],
+        "q_quiz_1793848319292_13": "opt_q_quiz_1793848319292_13_1",
+        "q_quiz_1793848319292_20": "opt_q_quiz_1793848319292_20_4",
+        "q_quiz_1793848319292_32": {
+          "stmt_32_1": "sai",
+          "stmt_32_3": "dung",
+          "stmt_32_4": "sai",
+          "stmt_32_2": "dung"
+        },
+        "q_quiz_1793848319292_31": {
+          "stmt_31_1": "dung",
+          "stmt_31_3": "sai",
+          "stmt_31_4": "dung",
+          "stmt_31_2": "dung"
+        },
+        "q_quiz_1793848319292_9": [
+          "opt_q_quiz_1793848319292_9_2",
+          "opt_q_quiz_1793848319292_9_4"
+        ],
+        "q_quiz_1793848319292_8": "opt_q_quiz_1793848319292_8_2",
+        "q_quiz_1793848319292_38": "opt_q_quiz_1793848319292_38_1",
+        "q_quiz_1793848319292_33": "opt_q_quiz_1793848319292_33_4",
+        "q_quiz_1793848319292_21": "opt_q_quiz_1793848319292_21_4",
+        "q_quiz_1793848319292_3": [
+          "opt_q_quiz_1793848319292_3_4",
+          "opt_q_quiz_1793848319292_3_1"
+        ],
+        "q_quiz_1793848319292_22": "opt_q_quiz_1793848319292_22_4",
+        "q_quiz_1793848319292_39": {
+          "stmt_39_1": "sai",
+          "stmt_39_3": "sai",
+          "stmt_39_4": "dung",
+          "stmt_39_2": "dung"
+        },
+        "q_quiz_1793848319292_40": {
+          "dd_q_quiz_1793848319292_40_4": "Giai cấp công nhân",
+          "dd_q_quiz_1793848319292_40_2": "Đội ngũ trí thức",
+          "dd_q_quiz_1793848319292_40_3": "Chính sách an sinh xã hội",
+          "dd_q_quiz_1793848319292_40_1": "Đội ngũ doanh nhân"
+        }
+      },
+      "markedForReview": [],
+      "lastSyncAt": "2026-11-05T03:13:33.942Z"
     }
   ],
   "attempt_answers": [
@@ -5782,6 +7768,335 @@
         "stmt_40_3": "sai",
         "stmt_40_4": "dung"
       },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425853_mjobq3",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_1",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425862_huuj32",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_2",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425871_ii4hys",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_3",
+      "userAnswer": [
+        "opt_q_quiz_1793848319292_3_4",
+        "opt_q_quiz_1793848319292_3_1"
+      ],
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425880_caoumj",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_4",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425887_n1ywol",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_5",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425894_fxr96j",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_6",
+      "userAnswer": "opt_q_quiz_1793848319292_6_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425901_743tby",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_7",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425908_1go5nc",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_8",
+      "userAnswer": "opt_q_quiz_1793848319292_8_2",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425916_i83m6o",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_9",
+      "userAnswer": [
+        "opt_q_quiz_1793848319292_9_2",
+        "opt_q_quiz_1793848319292_9_4"
+      ],
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425923_97xnyg",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_10",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425930_8q6efv",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_11",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425937_24gqnq",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_12",
+      "userAnswer": "opt_q_quiz_1793848319292_12_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425945_kedxed",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_13",
+      "userAnswer": "opt_q_quiz_1793848319292_13_1",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793848425952_e3dp8x",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_14",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425959_q3pknt",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_15",
+      "userAnswer": "opt_q_quiz_1793848319292_15_2",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793848425966_44adb2",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_16",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425973_8gq2cc",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_17",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425981_9z0l2c",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_18",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425988_0qhpto",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_19",
+      "userAnswer": "opt_q_quiz_1793848319292_19_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848425996_qqleg7",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_20",
+      "userAnswer": "opt_q_quiz_1793848319292_20_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426003_bvvvft",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_21",
+      "userAnswer": "opt_q_quiz_1793848319292_21_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426010_vpoc88",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_22",
+      "userAnswer": "opt_q_quiz_1793848319292_22_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426018_lq2a79",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_23",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426025_alngpj",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_24",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426033_m0235c",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_25",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426040_4e4v4e",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_26",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426047_5ffkec",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_27",
+      "userAnswer": "opt_q_quiz_1793848319292_27_3",
+      "isCorrect": true
+    },
+    {
+      "id": "ans_1793848426055_nur1kn",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_28",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426061_umzn51",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_29",
+      "userAnswer": [
+        "opt_q_quiz_1793848319292_29_4",
+        "opt_q_quiz_1793848319292_29_3"
+      ],
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426069_ct5p4e",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_30",
+      "userAnswer": {
+        "dd_q_quiz_1793848319292_30_1": "Đặc biệt quan trọng",
+        "dd_q_quiz_1793848319292_30_3": "Chiến lược quan trọng",
+        "dd_q_quiz_1793848319292_30_4": "Đội ngũ vững mạnh",
+        "dd_q_quiz_1793848319292_30_2": "Sáng tạo đặc biệt"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426077_t8izki",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_31",
+      "userAnswer": {
+        "stmt_31_1": "dung",
+        "stmt_31_3": "sai",
+        "stmt_31_4": "dung",
+        "stmt_31_2": "dung"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426084_1afhla",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_32",
+      "userAnswer": {
+        "stmt_32_1": "sai",
+        "stmt_32_3": "dung",
+        "stmt_32_4": "sai",
+        "stmt_32_2": "dung"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426092_ofujze",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_33",
+      "userAnswer": "opt_q_quiz_1793848319292_33_4",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426098_nfz1v1",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_34",
+      "userAnswer": {
+        "dd_q_quiz_1793848319292_34_6": "Chính sách hỗ trợ",
+        "dd_q_quiz_1793848319292_34_2": "Chính sách hỗ trợ",
+        "dd_q_quiz_1793848319292_34_7": "Chính sách hỗ trợ",
+        "dd_q_quiz_1793848319292_34_4": "Giai cấp/tầng lớp trong cơ cấu xã hội",
+        "dd_q_quiz_1793848319292_34_3": "Giai cấp/tầng lớp trong cơ cấu xã hội",
+        "dd_q_quiz_1793848319292_34_1": "Giai cấp/tầng lớp trong cơ cấu xã hội",
+        "dd_q_quiz_1793848319292_34_5": "Giai cấp/tầng lớp trong cơ cấu xã hội"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426106_5fsk15",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_35",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426114_42f0jl",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_36",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426121_lbgvke",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_37",
+      "userAnswer": null,
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426128_h4ta7b",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_38",
+      "userAnswer": "opt_q_quiz_1793848319292_38_1",
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426136_3zcuqk",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_39",
+      "userAnswer": {
+        "stmt_39_1": "sai",
+        "stmt_39_3": "sai",
+        "stmt_39_4": "dung",
+        "stmt_39_2": "dung"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426144_owm4ru",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_40",
+      "userAnswer": {
+        "dd_q_quiz_1793848319292_40_4": "Giai cấp công nhân",
+        "dd_q_quiz_1793848319292_40_2": "Đội ngũ trí thức",
+        "dd_q_quiz_1793848319292_40_3": "Chính sách an sinh xã hội",
+        "dd_q_quiz_1793848319292_40_1": "Đội ngũ doanh nhân"
+      },
+      "isCorrect": false
+    },
+    {
+      "id": "ans_1793848426151_32c07z",
+      "attemptId": "att_1793848323925_silvm7",
+      "questionId": "q_quiz_1793848319292_41",
+      "userAnswer": null,
       "isCorrect": false
     }
   ],

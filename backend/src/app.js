@@ -3,14 +3,19 @@ import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import authRoutes from './routes/authRoutes.js';
 import quizRoutes from './routes/quizRoutes.js';
 import attemptRoutes from './routes/attemptRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 import { db } from './database/db.js';
+import { initAuthAccounts } from './controllers/authController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Initialize default student & teacher accounts
+initAuthAccounts();
 
 const app = express();
 
@@ -27,23 +32,8 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Current user profile endpoint (dtc245200060 - Nguyễn Văn An)
-app.get('/api/auth/me', (req, res) => {
-  const user = db.findOne('users', u => u.id === 'user_1');
-  res.json({
-    success: true,
-    user: user || {
-      id: 'user_1',
-      username: 'dtc245200060',
-      fullName: 'Nguyễn Văn An',
-      studentId: 'dtc245200060',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-      role: 'student'
-    }
-  });
-});
-
 // API Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/quizzes', quizRoutes);
 app.use('/api/attempts', attemptRoutes);
 app.use('/api/analytics', analyticsRoutes);

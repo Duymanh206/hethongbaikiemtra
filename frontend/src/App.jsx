@@ -11,6 +11,7 @@ import HistoryPage from './pages/HistoryPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import GuidePage from './pages/GuidePage';
 import FeedbackPage from './pages/FeedbackPage';
+import AuthModal from './components/AuthModal';
 import { AuthProvider } from './context/AuthContext';
 
 function MainApp() {
@@ -124,6 +125,9 @@ function MainApp() {
 
       {/* Standard Footer (Hidden during exam taking mode) */}
       {!isExamMode && <Footer />}
+
+      {/* Global Authentication Modal (Login / Register) */}
+      <AuthModal />
 
     </div>
   );

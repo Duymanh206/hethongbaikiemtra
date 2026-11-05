@@ -96,7 +96,7 @@ export default function ExamTakingPage({
             body: JSON.stringify({
               quizId,
               studentId: user?.studentId || 'dtc245200060',
-              candidateName: user?.fullName || 'Nguyễn Văn An'
+              candidateName: user?.fullName || 'Hoàng Duy Mạnh'
             })
           });
           const attData = await attRes.json();
@@ -379,7 +379,7 @@ export default function ExamTakingPage({
       {/* 1.1 Top Header Bar */}
       <ExamHeader
         candidate={{
-          name: user?.fullName || 'Nguyễn Văn An',
+          name: user?.fullName || 'Hoàng Duy Mạnh',
           studentId: user?.studentId || 'dtc245200060',
           avatar: user?.avatar
         }}
