@@ -248,6 +248,10 @@ export default function ExamTakingPage({
     if (q.type === 'single_choice') {
       return !!ans;
     }
+    if (q.type === 'true_false_matrix') {
+      const stmts = q.statements || [];
+      return ans && typeof ans === 'object' && Object.keys(ans).length === stmts.length;
+    }
     if (q.type === 'multiple_choice') {
       // STRICT REQUIREMENT: Only complete when exact required count is selected!
       const userSelected = Array.isArray(ans) ? ans : [];

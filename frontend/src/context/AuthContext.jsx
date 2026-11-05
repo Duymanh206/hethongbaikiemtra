@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
     id: 'user_1',
     username: 'dtc245200060',
-    fullName: 'Nguyễn Văn An',
+    fullName: 'Hoàng Duy Mạnh',
     studentId: 'dtc245200060',
     role: 'student',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'

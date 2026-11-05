@@ -184,6 +184,13 @@ export const submitAttempt = (req, res) => {
           const allMatch = items.every(item => qAnswer[item.id] === item.targetCategoryOrMatch);
           if (allMatch) isCorrect = true;
         }
+      } else if (q.type === 'true_false_matrix') {
+        // qAnswer is { 'tf_1': 'dung' | 'sai', ... }
+        const stmts = q.statements || [];
+        if (qAnswer && typeof qAnswer === 'object' && Object.keys(qAnswer).length === stmts.length) {
+          const allMatch = stmts.every(s => qAnswer[s.id] === s.isCorrect);
+          if (allMatch) isCorrect = true;
+        }
       }
 
       if (isCorrect) correctQuestionsCount++;
@@ -269,6 +276,14 @@ export const getAttemptResult = (req, res) => {
         userPlacedTarget: userAnswer && typeof userAnswer === 'object' ? userAnswer[d.id] : null
       }));
 
+      const qStatements = (q.statements || []).map(s => ({
+        id: s.id,
+        text: s.text,
+        correctValue: s.isCorrect,
+        userSelectedValue: userAnswer && typeof userAnswer === 'object' ? userAnswer[s.id] : null,
+        isStatementCorrect: userAnswer && typeof userAnswer === 'object' ? userAnswer[s.id] === s.isCorrect : false
+      }));
+
       return {
         id: q.id,
         orderIndex: idx + 1,
@@ -279,6 +294,7 @@ export const getAttemptResult = (req, res) => {
         points: q.points,
         requiredCount: q.requiredCount,
         categories: q.categories || [],
+        statements: qStatements,
         options: qOptions,
         dragDropItems: qDragDrop,
         isCorrect,

@@ -123,6 +123,7 @@ export const getQuizExamQuestions = (req, res) => {
         points: q.points,
         requiredCount: q.requiredCount,
         categories: q.categories || [],
+        statements: (q.statements || []).map(s => ({ id: s.id, text: s.text })),
         options: sanitizedOptions,
         dragDropItems: shuffleArray(sanitizedDragDrop),
         matchingTargets

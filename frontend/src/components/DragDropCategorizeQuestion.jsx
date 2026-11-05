@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { GripVertical, X, Check, ArrowDown, HelpCircle } from 'lucide-react';
+import { GripVertical, X } from 'lucide-react';
 
 export default function DragDropCategorizeQuestion({
   dragDropItems = [],
-  categories = ['1) Điều kiện khách quan...', '2) Điều kiện chủ quan...'],
+  categories = [
+    '1) Điều kiện khách quan quy định sứ mệnh lịch sử của giai cấp công nhân:',
+    '2) Điều kiện chủ quan để giai cấp công nhân thực hiện được sứ mệnh lịch sử:'
+  ],
   placements = {}, // { itemId: categoryName }
   onUpdatePlacements
 }) {
   const [draggedItemId, setDraggedItemId] = useState(null);
-  const [selectedTagId, setSelectedTagId] = useState(null); // For tap/click placement
+  const [selectedTagId, setSelectedTagId] = useState(null);
 
-  // Unplaced items in top bank
+  // Unplaced items in the top bank
   const unplacedItems = dragDropItems.filter(item => !placements[item.id]);
 
   const handleDragStart = (e, itemId) => {
@@ -41,13 +44,8 @@ export default function DragDropCategorizeQuestion({
     onUpdatePlacements(updated);
   };
 
-  // Click-to-place helper (mobile friendly)
   const handleTagClick = (itemId) => {
-    if (selectedTagId === itemId) {
-      setSelectedTagId(null);
-    } else {
-      setSelectedTagId(itemId);
-    }
+    setSelectedTagId(prev => (prev === itemId ? null : itemId));
   };
 
   const handleCategoryClick = (category) => {
@@ -61,28 +59,15 @@ export default function DragDropCategorizeQuestion({
   };
 
   return (
-    <div className="space-y-6 mt-4">
-      {/* Top Pool: Keywords / Pills */}
-      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
-              Ngân hàng thẻ đáp án ({unplacedItems.length} thẻ chưa xếp)
-            </span>
-          </div>
-          <span className="text-[11px] text-slate-400 italic flex items-center gap-1">
-            <HelpCircle className="w-3.5 h-3.5" />
-            Kéo thả hoặc chạm chọn thẻ rồi chạm vào cột bên dưới
-          </span>
-        </div>
-
+    <div className="space-y-6 mt-3">
+      {/* Top Pool: Light gray container matching Image 3 with blue pills */}
+      <div className="p-3.5 rounded-xl bg-slate-100/80 border border-slate-200/80 min-h-[56px] flex items-center">
         {unplacedItems.length === 0 ? (
-          <div className="py-4 text-center text-xs font-medium text-emerald-600 bg-emerald-50 rounded-xl border border-emerald-200">
-            ✓ Đã phân loại toàn bộ các thẻ vào các cột bên dưới!
+          <div className="w-full text-center text-xs font-semibold text-emerald-600 py-1">
+            ✓ Đã kéo thả tất cả các thẻ vào các cột bên dưới!
           </div>
         ) : (
-          <div className="flex flex-wrap gap-2.5 min-h-[48px]">
+          <div className="flex flex-wrap items-center gap-2.5 w-full">
             {unplacedItems.map(item => {
               const isSelected = selectedTagId === item.id;
               return (
@@ -91,15 +76,14 @@ export default function DragDropCategorizeQuestion({
                   draggable
                   onDragStart={(e) => handleDragStart(e, item.id)}
                   onClick={() => handleTagClick(item.id)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold cursor-grab active:cursor-grabbing select-none transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium cursor-grab active:cursor-grabbing select-none transition-all ${
                     isSelected
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30 scale-105 ring-2 ring-blue-400'
-                      : 'bg-blue-50 text-blue-900 border border-blue-200 hover:bg-blue-100 hover:border-blue-300'
+                      ? 'bg-blue-600 text-white shadow-md ring-2 ring-blue-400 scale-105'
+                      : 'bg-white text-blue-700 border border-blue-200 hover:border-blue-400 hover:bg-blue-50/50 shadow-xs'
                   }`}
                 >
-                  <GripVertical className="w-3.5 h-3.5 opacity-60 shrink-0" />
+                  <GripVertical className="w-3.5 h-3.5 text-blue-400 shrink-0 opacity-70" />
                   <span>{item.itemText}</span>
-                  {isSelected && <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded">Đã chọn</span>}
                 </div>
               );
             })}
@@ -107,70 +91,59 @@ export default function DragDropCategorizeQuestion({
         )}
       </div>
 
-      {/* Bottom Drop Columns */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Bottom 2 Columns matching Image 3 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {categories.map((cat, idx) => {
           const itemsInCat = dragDropItems.filter(item => placements[item.id] === cat);
           const isTargetActive = selectedTagId !== null;
 
           return (
-            <div
-              key={idx}
-              onDragOver={handleAllowDrop}
-              onDrop={(e) => handleDrop(e, cat)}
-              onClick={() => handleCategoryClick(cat)}
-              className={`rounded-2xl border-2 transition-all p-4 flex flex-col justify-between min-h-[220px] ${
-                isTargetActive
-                  ? 'border-blue-400 bg-blue-50/30 hover:bg-blue-50/60 cursor-pointer ring-1 ring-blue-300'
-                  : 'border-slate-200 bg-white'
-              }`}
-            >
-              <div>
-                {/* Column Header */}
-                <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-                  <h4 className="font-bold text-sm text-slate-800 flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-black">
-                      {idx + 1}
-                    </span>
-                    <span>{cat}</span>
-                  </h4>
-                  <span className="text-xs font-mono font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
-                    {itemsInCat.length}
-                  </span>
-                </div>
+            <div key={idx} className="space-y-2">
+              {/* Column Title */}
+              <h4 className="text-xs sm:text-sm font-bold text-slate-800 leading-snug">
+                {cat}
+              </h4>
 
-                {/* Placed Items in this column */}
+              {/* Dashed Drop Zone Container */}
+              <div
+                onDragOver={handleAllowDrop}
+                onDrop={(e) => handleDrop(e, cat)}
+                onClick={() => handleCategoryClick(cat)}
+                className={`min-h-[170px] rounded-xl border-2 border-dashed p-3.5 flex flex-col justify-between transition-all ${
+                  isTargetActive
+                    ? 'border-blue-400 bg-blue-50/40 cursor-pointer ring-1 ring-blue-300'
+                    : 'border-slate-300 bg-white/60 hover:border-slate-400'
+                }`}
+              >
+                {/* Placed Items inside column */}
                 <div className="space-y-2">
                   {itemsInCat.map(item => (
                     <div
                       key={item.id}
-                      className="group flex items-start justify-between gap-2 p-2.5 rounded-xl bg-blue-50/80 border border-blue-200 text-xs text-blue-950 font-medium animate-in fade-in zoom-in-95"
+                      className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-blue-50 text-blue-900 border border-blue-200 text-xs font-medium"
                     >
-                      <span className="leading-relaxed">{item.itemText}</span>
+                      <span className="leading-snug">{item.itemText}</span>
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleRemoveFromCategory(item.id);
                         }}
-                        className="text-slate-400 hover:text-red-600 p-1 rounded-md hover:bg-white transition-colors"
-                        title="Bỏ khỏi cột này"
+                        className="text-slate-400 hover:text-red-600 p-1 rounded transition-colors"
+                        title="Bỏ ra ngoài"
                       >
                         <X className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   ))}
                 </div>
-              </div>
 
-              {/* Dashed drop hint box */}
-              <div className={`mt-3 py-3 border-2 border-dashed rounded-xl flex items-center justify-center gap-2 text-xs font-medium transition-colors ${
-                isTargetActive
-                  ? 'border-blue-400 text-blue-600 bg-blue-50/60'
-                  : 'border-slate-200 text-slate-400 bg-slate-50/50'
-              }`}>
-                <ArrowDown className="w-4 h-4 animate-bounce" />
-                <span>Kéo và thả các đáp án vào đây</span>
+                {/* Empty dashed placeholder matching Image 3 */}
+                {itemsInCat.length === 0 && (
+                  <div className="flex-1 flex flex-col items-center justify-center text-slate-400 text-xs py-8">
+                    <span className="text-center font-medium">Kéo và thả các đáp án vào đây</span>
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -179,4 +152,3 @@ export default function DragDropCategorizeQuestion({
     </div>
   );
 }
-

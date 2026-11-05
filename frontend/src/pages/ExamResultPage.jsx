@@ -313,9 +313,6 @@ export default function ExamResultPage({
                         const isCorrectOption = opt.isCorrect;
                         const isUserPicked = opt.isUserSelected;
 
-                        // Requirement 1.2:
-                        // Đáp án đúng: tô nền xanh lá + viền xanh lá + icon ✓
-                        // Đáp án người dùng chọn sai: tô nền đỏ nhạt + viền đỏ + icon ✕
                         let styleClass = 'bg-white border-slate-200 text-slate-700';
                         let icon = null;
 
@@ -337,6 +334,31 @@ export default function ExamResultPage({
                               <span>{opt.content}</span>
                             </div>
                             {icon}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* True / False Matrix Review */}
+                  {q.type === 'true_false_matrix' && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                      {q.statements?.map(stmt => {
+                        const isStmtOk = stmt.isStatementCorrect;
+                        const userVal = stmt.userSelectedValue === 'dung' ? 'Đúng' : stmt.userSelectedValue === 'sai' ? 'Sai' : 'Chưa chọn';
+                        const correctVal = stmt.correctValue === 'dung' ? 'Đúng' : 'Sai';
+                        return (
+                          <div
+                            key={stmt.id}
+                            className={`p-3 rounded-xl border text-xs leading-relaxed flex flex-col justify-between ${
+                              isStmtOk ? 'bg-emerald-50/70 border-emerald-300' : 'bg-rose-50/70 border-rose-300'
+                            }`}
+                          >
+                            <div className="font-semibold text-slate-800 mb-2">{stmt.text}</div>
+                            <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 text-[11px]">
+                              <span>Bạn chọn: <strong className={isStmtOk ? 'text-emerald-700' : 'text-rose-700'}>{userVal}</strong></span>
+                              <span>Chuẩn: <strong className="text-emerald-700">{correctVal}</strong></span>
+                            </div>
                           </div>
                         );
                       })}
