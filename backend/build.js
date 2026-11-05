@@ -10,8 +10,8 @@ console.log('[BACKEND-BUILD] Preparing backend output directory for Vercel...');
 const distDir = path.join(__dirname, 'dist');
 fs.mkdirSync(distDir, { recursive: true });
 
-// 1. Entrypoint server code
-const serverCode = `import app from '../src/app.js';\nexport default app;\n`;
+// 1. Entrypoint server code explicitly importing express for Vercel Express analyzer
+const serverCode = `import express from 'express';\nimport app from '../src/app.js';\nexport default app;\n`;
 fs.writeFileSync(path.join(distDir, 'index.js'), serverCode);
 fs.writeFileSync(path.join(distDir, 'app.js'), serverCode);
 fs.writeFileSync(path.join(distDir, 'server.js'), serverCode);

@@ -12,8 +12,8 @@ const backendDist = path.join(rootDir, 'backend', 'dist');
 
 console.log('[POST-BUILD] Ensuring dist directories exist across root and backend...');
 
-// Server entrypoint fallback code
-const serverCode = `import app from '../../backend/src/app.js';\nexport default app;\n`;
+// Server entrypoint code explicitly importing express
+const serverCode = `import express from 'express';\nimport app from '../../backend/src/app.js';\nexport default app;\n`;
 
 // 1. Put entrypoint files in frontend/dist if it exists
 if (fs.existsSync(frontendDist)) {
@@ -31,7 +31,6 @@ if (fs.existsSync(frontendDist)) {
 
   console.log('[POST-BUILD] Successfully synced dist to root/dist and backend/dist!');
 } else {
-  // If frontendDist does not exist, create minimal fallback dist in all locations
   [frontendDist, rootDist, backendDist].forEach(d => {
     fs.mkdirSync(d, { recursive: true });
     fs.writeFileSync(path.join(d, 'index.html'), '<!DOCTYPE html><html><body><h1>Quizz System</h1></body></html>');

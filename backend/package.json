@@ -2,7 +2,7 @@
   "name": "online-quiz-battle-backend",
   "version": "1.0.0",
   "description": "Online Quiz & Real-time Battle Platform Backend",
-  "main": "src/server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "build": "node build.js",
