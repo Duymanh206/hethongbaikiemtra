@@ -32,12 +32,21 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// API Routes
+// API Routes (supports both /api/path and /path when behind Vercel serverless proxy)
 app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+
 app.use('/api/quizzes', quizRoutes);
+app.use('/quizzes', quizRoutes);
+
 app.use('/api/attempts', attemptRoutes);
+app.use('/attempts', attemptRoutes);
+
 app.use('/api/analytics', analyticsRoutes);
+app.use('/analytics', analyticsRoutes);
+
 app.use('/api/ai', aiRoutes);
+app.use('/ai', aiRoutes);
 
 // Serve frontend static build if available
 const frontendDistPath = path.join(__dirname, '..', '..', 'frontend', 'dist');
