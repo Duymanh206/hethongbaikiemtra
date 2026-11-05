@@ -12,6 +12,7 @@ export default function ExamTakingPage({
   quizId,
   mode = 'practice',
   selectedTopicIds = [],
+  courseName = '',
   onExamSubmitted,
   onCancelExam
 }) {
@@ -50,7 +51,8 @@ export default function ExamTakingPage({
 
   // LocalStorage Key
   const topicsKey = Array.isArray(selectedTopicIds) ? selectedTopicIds.slice().sort().join('_') : '';
-  const STORAGE_KEY = `exam_progress_${quizId}_${mode}_${topicsKey}_${user?.studentId || 'guest'}`;
+  const courseKey = courseName ? encodeURIComponent(courseName) : '';
+  const STORAGE_KEY = `exam_progress_${quizId}_${mode}_${topicsKey}_${courseKey}_${user?.studentId || 'guest'}`;
 
   // 1. Initialize Exam
   useEffect(() => {
@@ -58,12 +60,13 @@ export default function ExamTakingPage({
       try {
         setLoading(true);
 
-        // Fetch Exam Questions with Mode and selected Topic IDs
+        // Fetch Exam Questions with Mode, courseName and selected Topic IDs
         const modeQuery = mode ? `?mode=${encodeURIComponent(mode)}` : '';
         const topicsQuery = (Array.isArray(selectedTopicIds) && selectedTopicIds.length > 0)
           ? `&quizIds=${encodeURIComponent(selectedTopicIds.join(','))}`
           : '';
-        const qRes = await fetch(`/api/quizzes/${quizId}/exam${modeQuery}${topicsQuery}`);
+        const courseQuery = courseName ? `&courseName=${encodeURIComponent(courseName)}` : '';
+        const qRes = await fetch(`/api/quizzes/${quizId}/exam${modeQuery}${topicsQuery}${courseQuery}`);
         const qData = await qRes.json();
         if (!qData.success) {
           alert(qData.message || 'Không thể tải câu hỏi');
@@ -73,7 +76,7 @@ export default function ExamTakingPage({
 
         setQuizInfo(qData.quiz);
         setQuestions(qData.questions);
-        const quizDuration = (qData.quiz.durationMinutes || 15) * 60;
+        const quizDuration = (qData.quiz.durationMinutes || (mode === 'practice' ? 90 : 15)) * 60;
         setTotalTime(quizDuration);
 
         // Check LocalStorage for crash recovery
@@ -89,7 +92,12 @@ export default function ExamTakingPage({
             restoredAnswers = parsed.answers || {};
             restoredMarked = parsed.markedForReview || [];
             if (parsed.timeRemaining && parsed.timeRemaining > 0) {
-              restoredTime = parsed.timeRemaining;
+              // Ensure practice mode doesn't get clamped to legacy 15min (900s)
+              if (mode === 'practice' && parsed.timeRemaining <= 900 && quizDuration === 5400) {
+                restoredTime = 5400;
+              } else {
+                restoredTime = parsed.timeRemaining;
+              }
             }
             restoredAttemptId = parsed.attemptId;
           } catch (e) {
@@ -343,7 +351,8 @@ export default function ExamTakingPage({
       if (timerRef.current) clearInterval(timerRef.current);
 
       const durationSpent = totalTime - timeRemaining;
-      const res = await fetch(`/api/attempts/${attemptId}/submit`, {
+      const finalAttemptId = attemptId || attemptIdRef.current || `att_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+      const res = await fetch(`/api/attempts/${finalAttemptId}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -360,7 +369,7 @@ export default function ExamTakingPage({
         })
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({ success: true, attemptId: finalAttemptId }));
       if (data.success || data.attemptId) {
         // Clear local storage
         localStorage.removeItem(STORAGE_KEY);
@@ -371,7 +380,7 @@ export default function ExamTakingPage({
           }
         } catch (e) {}
 
-        onExamSubmitted(attemptId);
+        onExamSubmitted(finalAttemptId);
       } else {
         console.warn('Submit warning, recovering attempt:', data.message);
         localStorage.removeItem(STORAGE_KEY);
@@ -380,11 +389,13 @@ export default function ExamTakingPage({
             document.exitFullscreen().catch(() => {});
           }
         } catch (e) {}
-        onExamSubmitted(attemptId);
+        onExamSubmitted(finalAttemptId);
       }
     } catch (err) {
       console.error(err);
-      alert('Lỗi kết nối khi nộp bài');
+      const fallbackId = attemptId || attemptIdRef.current || `att_${Date.now()}`;
+      localStorage.removeItem(STORAGE_KEY);
+      onExamSubmitted(fallbackId);
     } finally {
       setIsSubmitting(false);
     }

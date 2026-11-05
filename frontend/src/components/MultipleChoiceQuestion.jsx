@@ -39,7 +39,7 @@ export default function MultipleChoiceQuestion({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
         {options.map((opt, idx) => {
           const isSelected = selectedOptionIds.includes(opt.id);
-          const letter = opt.label || String.fromCharCode(65 + idx);
+          const letter = String.fromCharCode(65 + idx);
 
           return (
             <button

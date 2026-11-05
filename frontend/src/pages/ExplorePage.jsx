@@ -470,7 +470,7 @@ export default function ExplorePage({ onSelectQuiz, onStartExam, onStartBattleFo
         onConfirm={({ mode, selectedTopicIds, courseName }) => {
           const compositeId = mode === 'period60' ? 'composite_period60' : 'composite_final45';
           if (onStartExam) {
-            onStartExam(compositeId, mode, selectedTopicIds);
+            onStartExam(compositeId, mode, selectedTopicIds, courseName);
           }
         }}
       />

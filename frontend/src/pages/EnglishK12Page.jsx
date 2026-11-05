@@ -362,34 +362,93 @@ export default function EnglishK12Page({
           </div>
         </div>
 
-        {/* US_EDU MASTER GOOGLE DRIVE BANNER */}
+        {/* US_EDU MASTER GOOGLE DRIVE BANNER & TEXTBOOK LIBRARY */}
         {(activeCurriculumSystem === 'usedu' || activeCurriculumSystem === 'all') && (
-          <div className="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/5 rounded-3xl p-4 sm:p-5 border border-amber-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">📁</span>
-                <span className="font-extrabold text-sm sm:text-base text-amber-950">
-                  Kho Học Liệu & Giáo Trình Chuẩn Mỹ (Google Drive: US_EDU)
-                </span>
-                <span className="px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 text-[10px] font-black uppercase">
-                  G01 - G12
-                </span>
+          <div className="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/5 rounded-3xl p-5 sm:p-6 border border-amber-200/90 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">📁</span>
+                  <span className="font-extrabold text-base sm:text-lg text-amber-950">
+                    Kho Học Liệu & Thư Viện Giáo Trình Chuẩn Mỹ (Google Drive: US_EDU)
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-amber-300 text-amber-950 text-[10px] font-black uppercase">
+                    12 Khối Lớp • 72 Chuyên Đề
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
+                  Tích hợp trực tiếp từ Google Drive <code>15PofJBFW3ymrm41AojESeKMuGvHVg7Y8</code>. Bao gồm đầy đủ sách điện tử PDF nguyên bản và hệ thống âm thanh Audio Sound Studio tương ứng.
+                </p>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
-                Bao gồm toàn bộ file PDF và âm thanh bản ngữ: <strong>California Science Leveled Readers</strong>, <strong>Scott Foresman ELL Readers</strong>, <strong>Math Concept Readers</strong>, <strong>Writer's Choice Grammar</strong>, và <strong>McDougal Littell Literature</strong> (từ Lớp 1 đến Lớp 12).
-              </p>
+
+              <a
+                href={googleDriveRootUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-xs shadow-md shadow-amber-500/20 transition-all cursor-pointer shrink-0 active:scale-95"
+              >
+                <FolderOpen className="w-4 h-4" />
+                <span>Mở Toàn Bộ Drive US_EDU</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
 
-            <a
-              href={googleDriveRootUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-xs shadow-md shadow-amber-500/20 transition-all cursor-pointer shrink-0 active:scale-95"
-            >
-              <FolderOpen className="w-4 h-4" />
-              <span>Mở Kho Google Drive Gốc</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
+            {/* 6 Textbook Collections Quick Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 pt-2 border-t border-amber-200/60">
+              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
+                <div>
+                  <div className="text-base">🔬</div>
+                  <h6 className="font-black text-xs text-slate-900 leading-tight">California Science</h6>
+                  <p className="text-[10px] text-slate-500 line-clamp-2">Khoa học Đời sống, Trái đất & Vật lý (G1 - G8)</p>
+                </div>
+                <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md w-fit">Leveled Readers</span>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
+                <div>
+                  <div className="text-base">📖</div>
+                  <h6 className="font-black text-xs text-slate-900 leading-tight">Scott Foresman</h6>
+                  <p className="text-[10px] text-slate-500 line-clamp-2">Đọc hiểu Reading Street & ELL Readers (G1 - G6)</p>
+                </div>
+                <span className="text-[10px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md w-fit">Reading Street</span>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
+                <div>
+                  <div className="text-base">📐</div>
+                  <h6 className="font-black text-xs text-slate-900 leading-tight">Math Concept Readers</h6>
+                  <p className="text-[10px] text-slate-500 line-clamp-2">Toán tư duy song ngữ trực quan (G1 - G6)</p>
+                </div>
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md w-fit">Math Readers</span>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
+                <div>
+                  <div className="text-base">✍️</div>
+                  <h6 className="font-black text-xs text-slate-900 leading-tight">Writer's Choice</h6>
+                  <p className="text-[10px] text-slate-500 line-clamp-2">Ngữ pháp & Viết luận học thuật (G7 - G12)</p>
+                </div>
+                <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md w-fit">Composition</span>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
+                <div>
+                  <div className="text-base">📚</div>
+                  <h6 className="font-black text-xs text-slate-900 leading-tight">McDougal Littell</h6>
+                  <p className="text-[10px] text-slate-500 line-clamp-2">Kiệt tác văn học & Bộ đề SAT/ACT (G9 - G12)</p>
+                </div>
+                <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md w-fit">Literature & Vocab</span>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
+                <div>
+                  <div className="text-base">🎧</div>
+                  <h6 className="font-black text-xs text-slate-900 leading-tight">Audio Sound Studio</h6>
+                  <p className="text-[10px] text-slate-500 line-clamp-2">Audio nghe chuẩn giọng bản xứ Mỹ (G01 - G12)</p>
+                </div>
+                <span className="text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md w-fit">Sound Studio MP3</span>
+              </div>
+            </div>
           </div>
         )}
 

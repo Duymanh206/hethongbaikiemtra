@@ -229,7 +229,7 @@ export const submitAttempt = (req, res) => {
       } else if (attempt.quizId === 'composite_final45') {
         quiz = { id: 'composite_final45', title: 'BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)', durationMinutes: 45 };
       } else {
-        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: (attempt.mode === 'practice' || mode === 'practice') ? 90 : 15 };
+        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: (attempt.mode === 'practice') ? 90 : 15 };
       }
     }
 
@@ -407,7 +407,7 @@ export const getAttemptResult = (req, res) => {
       } else if (attempt.quizId === 'composite_final45') {
         quiz = { id: 'composite_final45', title: 'BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)', durationMinutes: 45 };
       } else {
-        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: (attempt.mode === 'practice' || mode === 'practice') ? 90 : 15 };
+        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: (attempt.mode === 'practice') ? 90 : 15 };
       }
     }
 

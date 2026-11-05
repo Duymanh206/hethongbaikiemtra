@@ -177,13 +177,30 @@ export const getQuizExamQuestions = (req, res) => {
 
     // Helper: get quizzes strictly belonging to the SAME course (never mix courses!)
     const getQuizzesForCourse = (targetCourse, requestedIds = []) => {
+      // 1. If user selected specific topic IDs, find their quizzes and respect the chosen course
+      if (requestedIds.length > 0) {
+        const requestedQuizzes = requestedIds.map(qid => db.findOne('quizzes', q => q.id === qid)).filter(Boolean);
+        if (requestedQuizzes.length > 0) {
+          const matchingCourseQuizzes = requestedQuizzes.filter(q => getQuizSubjectName(q) === targetCourse);
+          if (matchingCourseQuizzes.length > 0) return matchingCourseQuizzes;
+          // Group strictly by the first quiz's subject so we NEVER mix different subjects!
+          const firstSubject = getQuizSubjectName(requestedQuizzes[0]);
+          return requestedQuizzes.filter(q => getQuizSubjectName(q) === firstSubject);
+        }
+      }
+
+      // 2. Otherwise get candidate quizzes strictly for targetCourse
       let candidateQuizzes = allQuizzes.filter(q => getQuizSubjectName(q) === targetCourse);
       if (candidateQuizzes.length === 0) {
-        candidateQuizzes = allQuizzes;
+        const targetLower = (targetCourse || '').toLowerCase();
+        candidateQuizzes = allQuizzes.filter(q => {
+          const s = getQuizSubjectName(q).toLowerCase();
+          return s.includes(targetLower) || targetLower.includes(s);
+        });
       }
-      if (requestedIds.length > 0) {
-        const filtered = candidateQuizzes.filter(q => requestedIds.includes(q.id));
-        if (filtered.length > 0) return filtered;
+      if (candidateQuizzes.length === 0 && allQuizzes.length > 0) {
+        const firstSubject = getQuizSubjectName(allQuizzes[0]);
+        candidateQuizzes = allQuizzes.filter(q => getQuizSubjectName(q) === firstSubject);
       }
       return candidateQuizzes;
     };
@@ -249,9 +266,15 @@ export const getQuizExamQuestions = (req, res) => {
         const existingIds = new Set(questions.map(q => q.id));
         const remaining = allCourseQuestions.filter(q => !existingIds.has(q.id));
         const needed = totalTarget - questions.length;
-        shuffleArray(remaining).slice(0, needed).forEach(q => {
-          questions.push({ ...q, topicName: `${targetCourse}` });
-        });
+        if (remaining.length > 0) {
+          shuffleArray(remaining).slice(0, needed).forEach(q => {
+            questions.push({ ...q, topicName: `${targetCourse}` });
+          });
+        }
+        while (questions.length < totalTarget && allCourseQuestions.length > 0) {
+          const sample = { ...shuffleArray(allCourseQuestions)[0] };
+          questions.push({ ...sample, id: `${sample.id}_extra_${questions.length}`, topicName: `${targetCourse}` });
+        }
       }
 
       questions = shuffleArray(questions);
@@ -302,9 +325,15 @@ export const getQuizExamQuestions = (req, res) => {
         const existingIds = new Set(questions.map(q => q.id));
         const remaining = allCourseQuestions.filter(q => !existingIds.has(q.id));
         const needed = totalTarget - questions.length;
-        shuffleArray(remaining).slice(0, needed).forEach(q => {
-          questions.push({ ...q, topicName: `${targetCourse}` });
-        });
+        if (remaining.length > 0) {
+          shuffleArray(remaining).slice(0, needed).forEach(q => {
+            questions.push({ ...q, topicName: `${targetCourse}` });
+          });
+        }
+        while (questions.length < totalTarget && allCourseQuestions.length > 0) {
+          const sample = { ...shuffleArray(allCourseQuestions)[0] };
+          questions.push({ ...sample, id: `${sample.id}_extra_${questions.length}`, topicName: `${targetCourse}` });
+        }
       }
 
       questions = shuffleArray(questions);
@@ -363,11 +392,11 @@ export const getQuizExamQuestions = (req, res) => {
         options = shuffleArray(options);
       }
 
-      const sanitizedOptions = options.map(opt => ({
+      const sanitizedOptions = options.map((opt, oIdx) => ({
         id: opt.id,
-        label: opt.label,
+        label: String.fromCharCode(65 + oIdx),
         content: opt.content,
-        orderIndex: opt.orderIndex
+        orderIndex: oIdx + 1
       }));
 
       // For drag & drop items
