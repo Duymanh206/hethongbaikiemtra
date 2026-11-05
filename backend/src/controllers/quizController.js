@@ -325,24 +325,31 @@ export const getQuizExamQuestions = (req, res) => {
           title: `BÀI KIỂM TRA 15 PHÚT - ${quiz.title}`,
           durationMinutes: 15,
           mode: 'quiz15',
-          modeBadge
+          modeBadge,
+          courseName: getQuizSubjectName(quiz)
         };
       }
-      // MODE 1: ÔN TẬP TỪNG CHỦ ĐỀ (TOÀN BỘ CÂU HỎI)
+      // MODE 1: ÔN TẬP TỪNG CHỦ ĐỀ (TOÀN BỘ CÂU HỎI - 90 PHÚT)
       else if (mode === 'practice') {
-        durationMinutes = quiz.durationMinutes || 45;
-        modeBadge = 'ÔN TẬP CHỦ ĐỀ';
+        durationMinutes = 90;
+        modeBadge = 'ÔN TẬP CHỦ ĐỀ (90 PHÚT)';
         questions = allQuestions;
         quiz = {
           ...quiz,
-          title: `ÔN TẬP: ${quiz.title}`,
+          title: `ÔN TẬP (90 PHÚT): ${quiz.title}`,
+          durationMinutes: 90,
           mode: 'practice',
-          modeBadge
+          modeBadge,
+          courseName: getQuizSubjectName(quiz)
         };
       }
       // DEFAULT
       else {
         questions = quiz.shuffleQuestions ? shuffleArray(allQuestions) : allQuestions;
+        quiz = {
+          ...quiz,
+          courseName: getQuizSubjectName(quiz)
+        };
       }
     }
 
@@ -394,8 +401,10 @@ export const getQuizExamQuestions = (req, res) => {
       success: true,
       quiz: {
         id: quiz.id,
-        title: quiz.title,
-        durationMinutes: durationMinutes || quiz.durationMinutes || 15,
+        title: fixMojibake(quiz.title),
+        courseName: quiz.courseName || (typeof targetCourse !== 'undefined' ? targetCourse : null) || getQuizSubjectName(quiz) || quiz.category || 'Chung',
+        category: quiz.category || 'Chung',
+        durationMinutes: durationMinutes || quiz.durationMinutes || (mode === 'practice' ? 90 : 15),
         antiCheatEnabled: quiz.antiCheatEnabled !== false,
         maxViolations: quiz.maxViolations || 3,
         mode: quiz.mode || mode || 'standard',

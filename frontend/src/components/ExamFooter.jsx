@@ -10,6 +10,7 @@ import {
 export default function ExamFooter({
   quizTitle,
   modeBadge,
+  courseName,
   totalQuestions,
   currentIndex,
   onSelectQuestion,
@@ -32,7 +33,7 @@ export default function ExamFooter({
               {modeBadge || quizTitle || 'BÀI KIỂM TRA 15 PHÚT'}
             </div>
             <div className="text-[10px] sm:text-[11px] text-white/90 leading-tight truncate">
-              Môn: Chủ nghĩa xã hội khoa học
+              Môn: {courseName || 'Chủ nghĩa xã hội khoa học'}
             </div>
           </div>
 

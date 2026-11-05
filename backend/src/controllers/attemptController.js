@@ -2,7 +2,7 @@ import { db } from '../database/db.js';
 
 export const startAttempt = (req, res) => {
   try {
-    const { quizId, studentId = 'dtc245200060', candidateName = 'Nguyễn Văn An', questionIds = [], durationMinutes } = req.body;
+    const { quizId, studentId = 'dtc245200060', candidateName = 'Nguyễn Văn An', questionIds = [], durationMinutes, mode } = req.body;
     let quiz = db.findOne('quizzes', q => q.id === quizId);
     if (!quiz) {
       if (quizId === 'composite_period60') {
@@ -10,16 +10,18 @@ export const startAttempt = (req, res) => {
       } else if (quizId === 'composite_final45') {
         quiz = { id: 'composite_final45', title: 'Bài Kiểm Tra Kết Thúc Học Phần (45 Phút - 40 Câu)', durationMinutes: 45, antiCheatEnabled: true, maxViolations: 3 };
       } else {
-        quiz = { id: quizId, title: 'Bài Kiểm Tra', durationMinutes: durationMinutes || 15, antiCheatEnabled: true, maxViolations: 3 };
+        quiz = { id: quizId, title: 'Bài Kiểm Tra', durationMinutes: durationMinutes || (mode === 'practice' ? 90 : 15), antiCheatEnabled: true, maxViolations: 3 };
       }
     }
 
-    const totalDurationSeconds = ((durationMinutes || quiz.durationMinutes) || 15) * 60;
+    const calculatedDurationMinutes = durationMinutes || (mode === 'practice' ? 90 : (quiz.durationMinutes || 15));
+    const totalDurationSeconds = calculatedDurationMinutes * 60;
     const attemptId = `att_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
 
     const newAttempt = {
       id: attemptId,
       quizId,
+      mode: mode || (durationMinutes === 90 ? 'practice' : 'standard'),
       questionIds: Array.isArray(questionIds) && questionIds.length > 0 ? questionIds : null,
       userId: 'user_1',
       studentId: studentId.trim(),
@@ -193,7 +195,7 @@ export const submitAttempt = (req, res) => {
       } else if (attempt.quizId === 'composite_final45') {
         quiz = { id: 'composite_final45', title: 'BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)', durationMinutes: 45 };
       } else {
-        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: 15 };
+        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: (attempt.mode === 'practice' || mode === 'practice') ? 90 : 15 };
       }
     }
 
@@ -345,7 +347,7 @@ export const getAttemptResult = (req, res) => {
       } else if (attempt.quizId === 'composite_final45') {
         quiz = { id: 'composite_final45', title: 'BÀI KIỂM TRA KẾT THÚC HỌC PHẦN (45 PHÚT - 40 CÂU)', durationMinutes: 45 };
       } else {
-        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: 15 };
+        quiz = { id: attempt.quizId, title: 'Bài Kiểm Tra', durationMinutes: (attempt.mode === 'practice' || mode === 'practice') ? 90 : 15 };
       }
     }
 

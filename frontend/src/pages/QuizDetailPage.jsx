@@ -223,7 +223,7 @@ export default function QuizDetailPage({
                 className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-md shadow-sky-600/20 active:scale-98 transition-all cursor-pointer"
               >
                 <BookOpen className="w-4 h-4" />
-                <span>📚 ÔN TẬP TOÀN BỘ ({quiz.totalQuestions} CÂU)</span>
+                <span>📚 ÔN TẬP (90 PHÚT - {quiz.totalQuestions} CÂU)</span>
               </button>
 
               {/* Option 2: 15-minute 20-question randomized test */}

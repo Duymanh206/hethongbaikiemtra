@@ -24,8 +24,9 @@ export default function ExamTakingPage({
 
   // Attempt State
   const [attemptId, setAttemptId] = useState(null);
-  const [timeRemaining, setTimeRemaining] = useState(900); // 15 mins default
-  const [totalTime, setTotalTime] = useState(900);
+  const defaultDurationSeconds = mode === 'practice' ? 5400 : (mode === 'period60' ? 3600 : (mode === 'final45' ? 2700 : 900));
+  const [timeRemaining, setTimeRemaining] = useState(defaultDurationSeconds);
+  const [totalTime, setTotalTime] = useState(defaultDurationSeconds);
   const [answers, setAnswers] = useState({}); // { [questionId]: answerValue }
   const [markedForReview, setMarkedForReview] = useState([]); // [questionIndices]
 
@@ -443,6 +444,7 @@ export default function ExamTakingPage({
       <ExamFooter
         quizTitle={quizInfo?.title}
         modeBadge={quizInfo?.modeBadge}
+        courseName={quizInfo?.courseName || quizInfo?.category}
         totalQuestions={questions.length}
         currentIndex={currentQuestionIndex}
         onSelectQuestion={(idx) => setCurrentQuestionIndex(idx)}
