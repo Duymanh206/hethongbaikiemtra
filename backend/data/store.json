@@ -15,9 +15,9 @@
     {
       "id": "quiz_cnxhkh_05",
       "title": "BÀI KIỂM TRA 15 PHÚT - TUẦN 1",
-      "description": "Môn: Chủ nghĩa xã hội khoa học. Bài thi gồm 40 câu trắc nghiệm chuẩn hóa bao gồm Single Choice, Multiple Choice, Đúng/Sai từng phát biểu và Kéo thả phân loại / ghép nối.",
+      "description": "Chủ nghĩa xã hội khoa học - Bài 5: Vấn đề dân tộc và tôn giáo trong thời kỳ quá độ lên CNXH",
       "category": "Chủ nghĩa xã hội khoa học",
-      "originalDocxName": "DeThi_CNXHKH_40Cau_ChinhThuc.docx",
+      "originalDocxName": "Chủ_Nghĩa_Xã_Hội_Khoa_Học_Bài_5.docx",
       "durationMinutes": 15,
       "passingScore": 5,
       "shuffleQuestions": false,
@@ -25,11 +25,11 @@
       "antiCheatEnabled": true,
       "maxViolations": 3,
       "totalQuestions": 40,
-      "attemptsCount": 245,
+      "attemptsCount": 0,
       "avgRating": 5,
-      "createdBy": "Bộ môn Triết học & CNXHKH",
-      "createdAt": "2026-03-10T10:00:00.000Z",
-      "updatedAt": "2026-03-12T14:20:00.000Z"
+      "createdBy": "Hoàng Duy Mạnh",
+      "createdAt": "2026-11-05T01:46:25.436Z",
+      "updatedAt": "2026-11-05T01:46:25.438Z"
     }
   ],
   "questions": [
@@ -40,7 +40,7 @@
       "type": "single_choice",
       "content": "Trong những nội dung của quyền dân tộc tự quyết, nội dung nào được coi là cơ bản, trước hết?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -53,7 +53,7 @@
       "type": "single_choice",
       "content": "Quan điểm: Không phân biệt dân tộc lớn hay nhỏ, ở trình độ phát triển cao hay thấp, các dân tộc đều có nghĩa vụ và quyền lợi ngang nhau trên tất cả các lĩnh vực của đời sống xã hội - thuộc nội dung nào trong Cương lĩnh dân tộc của V.I. Lênin?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -66,7 +66,7 @@
       "type": "single_choice",
       "content": "Thứ tự quá trình phát triển của dân tộc lần lượt trải qua các hình thức nào?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -79,7 +79,7 @@
       "type": "single_choice",
       "content": "Theo chủ nghĩa Mác – Lênin, nguyên nhân nào dẫn đến các cộng đồng dân cư muốn tách ra để hình thành cộng đồng dân tộc độc lập?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -90,9 +90,9 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 5,
       "type": "single_choice",
-      "content": "Tôn giáo là một phạm trù thuộc:A. Hình thái ý thức xã hội",
+      "content": "Tôn giáo là một phạm trù thuộc:",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -105,7 +105,7 @@
       "type": "single_choice",
       "content": "Tôn giáo là sản phẩm của ai?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -118,7 +118,7 @@
       "type": "single_choice",
       "content": "Tôn giáo khác với tín ngưỡng khác ở điểm nào?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -129,9 +129,9 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 8,
       "type": "single_choice",
-      "content": "Niềm tin của con người vào các lực lượng siêu nhiên, thần thánh đến mức độ mê muội, cuồng tín, dẫn đến những hành vi cực đoan, sai lệch quá mức, trái với các giá trị văn hoá, đạo đức, pháp luật – gọi là:A. Mê tín dị đoan",
+      "content": "Niềm tin của con người vào các lực lượng siêu nhiên, thần thánh đến mức độ mê muội, cuồng tín, dẫn đến những hành vi cực đoan, sai lệch quá mức, trái với các giá trị văn hoá, đạo đức, pháp luật – gọi là:",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -144,7 +144,7 @@
       "type": "single_choice",
       "content": "Theo chủ nghĩa Mác – Lênin, xét đến cùng nhân tố quyết định sự tồn tại và phát triển của các hình thái ý thức xã hội, trong đó có tôn giáo là gì?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -157,7 +157,7 @@
       "type": "single_choice",
       "content": "Sự sợ hãi trước những hiện tượng tự nhiên, xã hội, hay lúc ốm đau, những may rủi, bất ngờ, tâm lý muốn bình yên khi làm việc lớn... khiến con người dễ tìm đến với hình thái ý thức xã hội nào?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -168,10 +168,10 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 11,
       "type": "multiple_choice",
-      "content": "Tại sao ngày nay khoa học đã phát triển rất mạnh mẽ mà tôn giáo vẫn có xu hướng phát triển? Sinh viên chọn 2 phương án đúng nhất",
+      "content": "Tại sao ngày nay khoa học đã phát triển rất mạnh mẽ mà tôn giáo vẫn có xu hướng phát triển?",
       "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
-      "points": 1.5,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 2,
       "categories": [],
       "statements": []
@@ -183,7 +183,7 @@
       "type": "single_choice",
       "content": "Ở Việt Nam hiện nay có khoảng bao nhiêu dân tộc?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -196,7 +196,7 @@
       "type": "single_choice",
       "content": "Tìm đáp án sai về đặc điểm dân tộc ở Việt Nam",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -207,9 +207,9 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 14,
       "type": "single_choice",
-      "content": "Vận dụng kiến thức về đặc điểm tôn giáo ở Việt Nam, hãy xác định số lượng tôn giáo đã được công nhận và cấp đăng ký hoạt động ở Việt Nam:A. 5",
+      "content": "Vận dụng kiến thức về đặc điểm tôn giáo ở Việt Nam, hãy xác định số lượng tôn giáo đã được công nhận và cấp đăng ký hoạt động ở Việt Nam:",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -222,7 +222,7 @@
       "type": "single_choice",
       "content": "Tại sao các tôn giáo ở Việt Nam luôn đồng hành cùng dân tộc và có nhiều đóng góp quan trọng trong quá trình xây dựng và bảo vệ đất nước?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -233,9 +233,9 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 16,
       "type": "single_choice",
-      "content": "Dân tộc hiểu theo nghĩa hẹp là:A. Bộ lạc",
+      "content": "Dân tộc hiểu theo nghĩa hẹp là:",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -248,7 +248,7 @@
       "type": "single_choice",
       "content": "Đâu là đặc trưng quan trọng nhất, là cơ sở để liên kết các thành viên của dân tộc tạo thành nền tảng vững chắc của cộng đồng dân tộc?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -259,10 +259,10 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 18,
       "type": "multiple_choice",
-      "content": "Theo quan điểm của chủ nghĩa Mác – Lênin, để thực hiện được bình đẳng dân tộc cần phải làm gì? \nSinh viên chọn 2 phương án đúng nhất",
+      "content": "Theo quan điểm của chủ nghĩa Mác – Lênin, để thực hiện được bình đẳng dân tộc cần phải làm gì?",
       "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
-      "points": 1.5,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 2,
       "categories": [],
       "statements": []
@@ -274,7 +274,7 @@
       "type": "single_choice",
       "content": "Tôn giáo ra đời từ những nguồn gốc cơ bản nào?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -287,7 +287,7 @@
       "type": "single_choice",
       "content": "Vận dụng kiến thức về vấn đề dân tộc, hãy chỉ ra điểm khác biệt cơ bản trong quá trình hình thành nên dân tộc Việt Nam so với các dân tộc khác là gì?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -298,9 +298,9 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 21,
       "type": "single_choice",
-      "content": "Hiểu theo nghĩa rộng, dân tộc là:A. Tộc người",
+      "content": "Hiểu theo nghĩa rộng, dân tộc là:",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -313,7 +313,7 @@
       "type": "single_choice",
       "content": "Đâu là sự giống nhau giữa tôn giáo và tín ngưỡng?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -324,9 +324,9 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 23,
       "type": "single_choice",
-      "content": "Về phương diện thế giới quan, tôn giáo mang bản chất:A. Thế giới quan siêu hình",
+      "content": "Về phương diện thế giới quan, tôn giáo mang bản chất:",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -339,7 +339,7 @@
       "type": "single_choice",
       "content": "Luận điểm nổi tiếng: “Tôn giáo là tiếng thở dài của chúng sinh bị áp bức, là trái tim của thế giới không có trái tim…Tôn giáo là thuốc phiện của nhân dân” là của ai?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -352,7 +352,7 @@
       "type": "single_choice",
       "content": "Vì sao Đảng, Nhà nước Việt Nam chủ trương luôn tôn trọng, bảo đảm quyền tự do tín ngưỡng tôn giáo và không tín ngưỡng tôn giáo của nhân dân?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -365,7 +365,7 @@
       "type": "single_choice",
       "content": "Nội dung nào vừa là nội dung chủ yếu vừa là giải pháp quan trọng để liên kết các nội dung của Cương lĩnh dân tộc thành một chỉnh thể?",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -378,7 +378,7 @@
       "type": "single_choice",
       "content": "Đối với quốc gia và từng thành viên của dân tộc, yếu tố nào là thiêng liêng nhất mà nếu không có thì không có khái niệm tổ quốc, quốc gi",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -389,9 +389,9 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 28,
       "type": "single_choice",
-      "content": "Tìm đáp án sai về nguồn gốc hình thành của tôn giáo:A. Nguồn gốc nhân tạo",
+      "content": "Tìm đáp án sai về nguồn gốc hình thành của tôn giáo:",
       "instructionBadge": null,
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
       "points": 1,
       "requiredCount": 1,
       "categories": [],
@@ -404,8 +404,8 @@
       "type": "drag_drop_categorize",
       "content": "Kéo thả các yếu tố liên quan vào các cột tương ứng:",
       "instructionBadge": "(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng",
-      "explanation": "Phân loại các khái niệm, đặc trưng vào đúng nhóm danh mục.",
-      "points": 2,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 6,
       "categories": [
         "Đặc trưng của dân tộc (quốc gia)",
@@ -420,8 +420,8 @@
       "type": "drag_drop_categorize",
       "content": "Kéo thả các yếu tố liên quan đến tôn giáo vào các cột tương ứng:",
       "instructionBadge": "(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng",
-      "explanation": "Phân loại các khái niệm, đặc trưng vào đúng nhóm danh mục.",
-      "points": 2,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 6,
       "categories": [
         "Yếu tố liên quan đến tôn giáo",
@@ -435,9 +435,9 @@
       "orderIndex": 31,
       "type": "drag_drop_matching",
       "content": "Kéo thả các đáp án đúng tương ứng với các phát biểu về dân tộc dưới đây:",
-      "instructionBadge": "(!) Kéo thẻ đáp án khớp với từng phát biểu",
-      "explanation": "Ghép nối chính xác các nhận định với khái niệm tương ứng.",
-      "points": 2,
+      "instructionBadge": "(!) Kéo và thả các đáp án đúng vào ô tương ứng",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 4,
       "categories": [],
       "statements": []
@@ -449,30 +449,34 @@
       "type": "true_false_matrix",
       "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
       "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
-      "explanation": "Phân định tính đúng đắn của từng luận điểm căn cứ vào lý luận.",
-      "points": 2,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 4,
       "categories": [],
       "statements": [
         {
-          "id": "tf_32_1",
+          "id": "stmt_32_1",
+          "indexNumber": 1,
           "text": "1) Tâm lý dân tộc tạo nên bản sắc văn hóa dân tộc",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_32_2",
+          "id": "stmt_32_2",
+          "indexNumber": 2,
           "text": "2) Dân tộc (tộc người) có ý thức tự giác tộc người",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_32_3",
+          "id": "stmt_32_3",
+          "indexNumber": 3,
           "text": "3) Đấu tranh chống chủ nghĩa Sô - vanh là giải pháp thực hiện bình đẳng dân tộc",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_32_4",
+          "id": "stmt_32_4",
+          "indexNumber": 4,
           "text": "4) Tôn giáo là đặc trưng chính của dân tộc quốc gia",
-          "isCorrect": "sai"
+          "correctAnswer": "Sai"
         }
       ]
     },
@@ -483,30 +487,34 @@
       "type": "true_false_matrix",
       "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
       "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
-      "explanation": "Phân định tính đúng đắn của từng luận điểm căn cứ vào lý luận.",
-      "points": 2,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 4,
       "categories": [],
       "statements": [
         {
-          "id": "tf_33_1",
+          "id": "stmt_33_1",
+          "indexNumber": 1,
           "text": "1) Tôn giáo phản ánh chân thực hiện thực khách quan",
-          "isCorrect": "sai"
+          "correctAnswer": "Sai"
         },
         {
-          "id": "tf_33_2",
+          "id": "stmt_33_2",
+          "indexNumber": 2,
           "text": "2) Tín ngưỡng là niềm tin vào lực lượng siêu nhiên",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_33_3",
+          "id": "stmt_33_3",
+          "indexNumber": 3,
           "text": "3) Khoa học chưa giải thích hết được các hiện tượng là lý do tôn giáo phát triển",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_33_4",
+          "id": "stmt_33_4",
+          "indexNumber": 4,
           "text": "4) Nguồn gốc nhận thức của tôn giáo là sự hạn chế hiểu biết của con người",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         }
       ]
     },
@@ -517,30 +525,34 @@
       "type": "true_false_matrix",
       "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
       "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
-      "explanation": "Phân định tính đúng đắn của từng luận điểm căn cứ vào lý luận.",
-      "points": 2,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 4,
       "categories": [],
       "statements": [
         {
-          "id": "tf_34_1",
+          "id": "stmt_34_1",
+          "indexNumber": 1,
           "text": "1) Tôn giáo phản ánh hoang đường, hư ảo hiện thực khách quan",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_34_2",
+          "id": "stmt_34_2",
+          "indexNumber": 2,
           "text": "2) Tín ngưỡng có hệ thống giáo lý chặt chẽ",
-          "isCorrect": "sai"
+          "correctAnswer": "Sai"
         },
         {
-          "id": "tf_34_3",
+          "id": "stmt_34_3",
+          "indexNumber": 3,
           "text": "3) Nguồn gốc kinh tế - xã hội dẫn đến sự ra đời của tôn giáo",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_34_4",
+          "id": "stmt_34_4",
+          "indexNumber": 4,
           "text": "4) Mê tín dị đoan là niềm tin mù quáng cần loại bỏ",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         }
       ]
     },
@@ -551,8 +563,8 @@
       "type": "drag_drop_categorize",
       "content": "Kéo thả các yếu tố liên quan vào các cột tương ứng:",
       "instructionBadge": "(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng",
-      "explanation": "Phân loại các khái niệm, đặc trưng vào đúng nhóm danh mục.",
-      "points": 2,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 7,
       "categories": [
         "Đặc trưng của dân tộc",
@@ -566,9 +578,9 @@
       "orderIndex": 36,
       "type": "drag_drop_matching",
       "content": "Kéo thả các đáp án đúng tương ứng với các phát biểu về nội dung Cương lĩnh dân tộc của Chủ nghĩa Mác – Lênin:",
-      "instructionBadge": "(!) Kéo thẻ đáp án khớp với từng phát biểu",
-      "explanation": "Ghép nối chính xác các nhận định với khái niệm tương ứng.",
-      "points": 2,
+      "instructionBadge": "(!) Kéo và thả các đáp án đúng vào ô tương ứng",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 4,
       "categories": [],
       "statements": []
@@ -578,10 +590,10 @@
       "quizId": "quiz_cnxhkh_05",
       "orderIndex": 37,
       "type": "multiple_choice",
-      "content": "Hãy chỉ ra đâu là nguồn gốc tồn tại của Tôn giáo?Sinh viên chọn 2 phương án đúng nhất",
+      "content": "Hãy chỉ ra đâu là nguồn gốc tồn tại của Tôn giáo?",
       "instructionBadge": "(!) Sinh viên chọn 2 phương án đúng nhất",
-      "explanation": "Đáp án được đối chiếu chuẩn xác theo giáo trình môn học.",
-      "points": 1.5,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 2,
       "categories": [],
       "statements": []
@@ -592,9 +604,9 @@
       "orderIndex": 38,
       "type": "drag_drop_matching",
       "content": "Kéo thả các đáp án đúng khớp với các phát biểu dưới đây:",
-      "instructionBadge": "(!) Kéo thẻ đáp án khớp với từng phát biểu",
-      "explanation": "Ghép nối chính xác các nhận định với khái niệm tương ứng.",
-      "points": 2,
+      "instructionBadge": "(!) Kéo và thả các đáp án đúng vào ô tương ứng",
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 4,
       "categories": [],
       "statements": []
@@ -606,30 +618,34 @@
       "type": "true_false_matrix",
       "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
       "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
-      "explanation": "Phân định tính đúng đắn của từng luận điểm căn cứ vào lý luận.",
-      "points": 2,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 4,
       "categories": [],
       "statements": [
         {
-          "id": "tf_39_1",
+          "id": "stmt_39_1",
+          "indexNumber": 1,
           "text": "1) Cương lĩnh dân tộc của Chủ nghĩa Mác-Lênin không đề cập đến bình đẳng dân tộc",
-          "isCorrect": "sai"
+          "correctAnswer": "Sai"
         },
         {
-          "id": "tf_39_2",
+          "id": "stmt_39_2",
+          "indexNumber": 2,
           "text": "2) Dân tộc (tộc người) có ngôn ngữ riêng",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_39_3",
+          "id": "stmt_39_3",
+          "indexNumber": 3,
           "text": "3) Lãnh thổ chung là đặc trưng của dân tộc quốc gia",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_39_4",
+          "id": "stmt_39_4",
+          "indexNumber": 4,
           "text": "4) Quyền tự quyết dân tộc không bao gồm nội dung liên hiệp các dân tộc lại",
-          "isCorrect": "sai"
+          "correctAnswer": "Sai"
         }
       ]
     },
@@ -640,30 +656,34 @@
       "type": "true_false_matrix",
       "content": "Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:",
       "instructionBadge": "(!) Chọn Đúng hoặc Sai cho mỗi phát biểu",
-      "explanation": "Phân định tính đúng đắn của từng luận điểm căn cứ vào lý luận.",
-      "points": 2,
+      "explanation": "Đáp án theo đề thi Chủ nghĩa xã hội khoa học chuẩn.",
+      "points": 1,
       "requiredCount": 4,
       "categories": [],
       "statements": [
         {
-          "id": "tf_40_1",
+          "id": "stmt_40_1",
+          "indexNumber": 1,
           "text": "1) Dân tộc là cộng đồng người có ngôn ngữ riêng và văn hóa đặc thù",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_40_2",
+          "id": "stmt_40_2",
+          "indexNumber": 2,
           "text": "2) Bình đẳng dân tộc là nội dung cương lĩnh dân tộc của Mác-Lênin",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_40_3",
+          "id": "stmt_40_3",
+          "indexNumber": 3,
           "text": "3) Quyền tự quyết dân tộc bao gồm quyền phân lập thành quốc gia độc lập",
-          "isCorrect": "dung"
+          "correctAnswer": "Đúng"
         },
         {
-          "id": "tf_40_4",
+          "id": "stmt_40_4",
+          "indexNumber": 4,
           "text": "4) Dân tộc (quốc gia) không cần lãnh thổ chung",
-          "isCorrect": "sai"
+          "correctAnswer": "Sai"
         }
       ]
     }
@@ -713,7 +733,7 @@
       "id": "opt_q_u40_2_b",
       "questionId": "q_u40_2",
       "label": "B",
-      "content": "Liên hiệp công nhân tất cả các dân tộc",
+      "content": "Liên hiệp công nhân tất cả các dân tộ",
       "isCorrect": false,
       "orderIndex": 2
     },
@@ -738,14 +758,14 @@
       "questionId": "q_u40_3",
       "label": "A",
       "content": "Bộ lạc, bộ tộc, thị tộc, dân tộc",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
       "id": "opt_q_u40_3_b",
       "questionId": "q_u40_3",
       "label": "B",
-      "content": "Bộ tộc, thị tộc, bộ lạc, dân tộc",
+      "content": "Bộ tộc, thị tộc, bộ lạc, dân tộ",
       "isCorrect": false,
       "orderIndex": 2
     },
@@ -762,7 +782,7 @@
       "questionId": "q_u40_3",
       "label": "D",
       "content": "Thị tộc, bộ lạc, bộ tộc, dân tộc",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 4
     },
     {
@@ -770,7 +790,7 @@
       "questionId": "q_u40_4",
       "label": "A",
       "content": "Do chủ nghĩa tư bản đã phát triển thành chủ nghĩa đế quốc",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -778,7 +798,7 @@
       "questionId": "q_u40_4",
       "label": "B",
       "content": "Do sự thức tỉnh, sự trưởng thành về ý thức dân tộc, ý thức về quyền sống của mình",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 2
     },
     {
@@ -798,12 +818,20 @@
       "orderIndex": 4
     },
     {
+      "id": "opt_q_u40_5_a",
+      "questionId": "q_u40_5",
+      "label": "A",
+      "content": "Hình thái ý thức xã hội",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
       "id": "opt_q_u40_5_b",
       "questionId": "q_u40_5",
       "label": "B",
       "content": "Cơ sở hạ tầng",
-      "isCorrect": true,
-      "orderIndex": 1
+      "isCorrect": false,
+      "orderIndex": 2
     },
     {
       "id": "opt_q_u40_5_c",
@@ -811,7 +839,7 @@
       "label": "C",
       "content": "Kiến trúc thượng tầng",
       "isCorrect": false,
-      "orderIndex": 2
+      "orderIndex": 3
     },
     {
       "id": "opt_q_u40_5_d",
@@ -819,14 +847,14 @@
       "label": "D",
       "content": "Tồn tại xã hội",
       "isCorrect": false,
-      "orderIndex": 3
+      "orderIndex": 4
     },
     {
       "id": "opt_q_u40_6_a",
       "questionId": "q_u40_6",
       "label": "A",
       "content": "Lực lượng siêu nhiên",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -850,7 +878,7 @@
       "questionId": "q_u40_6",
       "label": "D",
       "content": "Con người",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 4
     },
     {
@@ -858,7 +886,7 @@
       "questionId": "q_u40_7",
       "label": "A",
       "content": "Tín ngưỡng tôn giáo ra đời từ rất sớm",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -874,7 +902,7 @@
       "questionId": "q_u40_7",
       "label": "C",
       "content": "Tín ngưỡng tôn giáo có hệ thống giáo lý, giáo luật, có tổ chức và các nghi lễ chặt chẽ",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 3
     },
     {
@@ -886,12 +914,20 @@
       "orderIndex": 4
     },
     {
+      "id": "opt_q_u40_8_a",
+      "questionId": "q_u40_8",
+      "label": "A",
+      "content": "Mê tín dị đoan",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
       "id": "opt_q_u40_8_b",
       "questionId": "q_u40_8",
       "label": "B",
       "content": "Thờ cúng tổ tiên",
-      "isCorrect": true,
-      "orderIndex": 1
+      "isCorrect": false,
+      "orderIndex": 2
     },
     {
       "id": "opt_q_u40_8_c",
@@ -899,7 +935,7 @@
       "label": "C",
       "content": "Tín ngưỡng thờ Mẫu",
       "isCorrect": false,
-      "orderIndex": 2
+      "orderIndex": 3
     },
     {
       "id": "opt_q_u40_8_d",
@@ -907,7 +943,7 @@
       "label": "D",
       "content": "Thờ anh hùng dân tộc",
       "isCorrect": false,
-      "orderIndex": 3
+      "orderIndex": 4
     },
     {
       "id": "opt_q_u40_9_a",
@@ -986,7 +1022,7 @@
       "questionId": "q_u40_11",
       "label": "B",
       "content": "Do lực lượng siêu nhiên thúc đẩy",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 2
     },
     {
@@ -1002,7 +1038,7 @@
       "questionId": "q_u40_11",
       "label": "D",
       "content": "Do thế giới mà con người đang sống vẫn còn muôn vàn điều bí ẩn mà khoa học chưa hiểu rõ bản chất của nó",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 4
     },
     {
@@ -1070,20 +1106,28 @@
       "orderIndex": 4
     },
     {
+      "id": "opt_q_u40_14_a",
+      "questionId": "q_u40_14",
+      "label": "A",
+      "content": "5",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
       "id": "opt_q_u40_14_b",
       "questionId": "q_u40_14",
       "label": "B",
       "content": "43",
-      "isCorrect": true,
-      "orderIndex": 1
+      "isCorrect": false,
+      "orderIndex": 2
     },
     {
       "id": "opt_q_u40_14_c",
       "questionId": "q_u40_14",
       "label": "C",
       "content": "16",
-      "isCorrect": false,
-      "orderIndex": 2
+      "isCorrect": true,
+      "orderIndex": 3
     },
     {
       "id": "opt_q_u40_14_d",
@@ -1091,14 +1135,14 @@
       "label": "D",
       "content": "13",
       "isCorrect": false,
-      "orderIndex": 3
+      "orderIndex": 4
     },
     {
       "id": "opt_q_u40_15_a",
       "questionId": "q_u40_15",
       "label": "A",
       "content": "Vì các tôn giáo thường bị lợi dụng bởi các thế lực phản động",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -1114,7 +1158,7 @@
       "questionId": "q_u40_15",
       "label": "C",
       "content": "Vì đa số tín đồ là nhân dân lao động có lòng yêu nước, chống giặc ngoại xâm",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 3
     },
     {
@@ -1126,20 +1170,28 @@
       "orderIndex": 4
     },
     {
+      "id": "opt_q_u40_16_a",
+      "questionId": "q_u40_16",
+      "label": "A",
+      "content": "Bộ lạc",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
       "id": "opt_q_u40_16_b",
       "questionId": "q_u40_16",
       "label": "B",
-      "content": "Quốc gia dân tộc",
-      "isCorrect": true,
-      "orderIndex": 1
+      "content": "Quốc gia dân tộ",
+      "isCorrect": false,
+      "orderIndex": 2
     },
     {
       "id": "opt_q_u40_16_c",
       "questionId": "q_u40_16",
       "label": "C",
       "content": "Tộc người",
-      "isCorrect": false,
-      "orderIndex": 2
+      "isCorrect": true,
+      "orderIndex": 3
     },
     {
       "id": "opt_q_u40_16_d",
@@ -1147,14 +1199,14 @@
       "label": "D",
       "content": "Bộ tộc",
       "isCorrect": false,
-      "orderIndex": 3
+      "orderIndex": 4
     },
     {
       "id": "opt_q_u40_17_a",
       "questionId": "q_u40_17",
       "label": "A",
       "content": "Có thể cư trú tập trung trên một vùng lãnh thổ của một quốc gia, hoặc cư trú đan xen với nhiều dân tộc anh em",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -1178,7 +1230,7 @@
       "questionId": "q_u40_17",
       "label": "D",
       "content": "Có chung một phương thức sinh hoạt kinh tế",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 4
     },
     {
@@ -1194,7 +1246,7 @@
       "questionId": "q_u40_18",
       "label": "B",
       "content": "Phải liên kết với các nước đế quốc lớn",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 2
     },
     {
@@ -1202,7 +1254,7 @@
       "questionId": "q_u40_18",
       "label": "C",
       "content": "Phải đấu tranh chống chủ nghĩa phân biệt chủng tộc, chủ nghĩa sô vanh",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 3
     },
     {
@@ -1250,7 +1302,7 @@
       "questionId": "q_u40_20",
       "label": "A",
       "content": "Do dân tộc Việt Nam có diện tích nhỏ",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -1266,7 +1318,7 @@
       "questionId": "q_u40_20",
       "label": "C",
       "content": "Do yêu cầu đoàn kết của quá trình đấu tranh chống thiên tai và xâm lược",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 3
     },
     {
@@ -1278,12 +1330,20 @@
       "orderIndex": 4
     },
     {
+      "id": "opt_q_u40_21_a",
+      "questionId": "q_u40_21",
+      "label": "A",
+      "content": "Tộc người",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
       "id": "opt_q_u40_21_b",
       "questionId": "q_u40_21",
       "label": "B",
-      "content": "Thị tộc",
-      "isCorrect": true,
-      "orderIndex": 1
+      "content": "Thị tộ",
+      "isCorrect": false,
+      "orderIndex": 2
     },
     {
       "id": "opt_q_u40_21_c",
@@ -1291,22 +1351,22 @@
       "label": "C",
       "content": "Bộ tộc",
       "isCorrect": false,
-      "orderIndex": 2
+      "orderIndex": 3
     },
     {
       "id": "opt_q_u40_21_d",
       "questionId": "q_u40_21",
       "label": "D",
       "content": "Quốc gia",
-      "isCorrect": false,
-      "orderIndex": 3
+      "isCorrect": true,
+      "orderIndex": 4
     },
     {
       "id": "opt_q_u40_22_a",
       "questionId": "q_u40_22",
       "label": "A",
       "content": "Đều có hệ thống kinh điển",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -1330,8 +1390,16 @@
       "questionId": "q_u40_22",
       "label": "D",
       "content": "Đều có niềm tin vào đấng siêu nhiên",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 4
+    },
+    {
+      "id": "opt_q_u40_23_a",
+      "questionId": "q_u40_23",
+      "label": "A",
+      "content": "Thế giới quan siêu hình",
+      "isCorrect": false,
+      "orderIndex": 1
     },
     {
       "id": "opt_q_u40_23_b",
@@ -1339,7 +1407,7 @@
       "label": "B",
       "content": "Thế giới quan duy tâm",
       "isCorrect": true,
-      "orderIndex": 1
+      "orderIndex": 2
     },
     {
       "id": "opt_q_u40_23_c",
@@ -1347,7 +1415,7 @@
       "label": "C",
       "content": "Thế giới quan biện chứng",
       "isCorrect": false,
-      "orderIndex": 2
+      "orderIndex": 3
     },
     {
       "id": "opt_q_u40_23_d",
@@ -1355,14 +1423,14 @@
       "label": "D",
       "content": "Thế giới quan duy vật",
       "isCorrect": false,
-      "orderIndex": 3
+      "orderIndex": 4
     },
     {
       "id": "opt_q_u40_24_a",
       "questionId": "q_u40_24",
       "label": "A",
       "content": "V.I. Lênin",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -1377,17 +1445,9 @@
       "id": "opt_q_u40_24_c",
       "questionId": "q_u40_24",
       "label": "C",
-      "content": "",
-      "isCorrect": false,
-      "orderIndex": 3
-    },
-    {
-      "id": "opt_q_u40_24_c",
-      "questionId": "q_u40_24",
-      "label": "C",
       "content": "Mác",
-      "isCorrect": false,
-      "orderIndex": 4
+      "isCorrect": true,
+      "orderIndex": 3
     },
     {
       "id": "opt_q_u40_24_d",
@@ -1395,14 +1455,14 @@
       "label": "D",
       "content": "Ph. Ăngghen",
       "isCorrect": false,
-      "orderIndex": 5
+      "orderIndex": 4
     },
     {
       "id": "opt_q_u40_25_a",
       "questionId": "q_u40_25",
       "label": "A",
       "content": "Vì tín ngưỡng, tôn giáo có số lượng tín đồ đông",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -1410,7 +1470,7 @@
       "questionId": "q_u40_25",
       "label": "B",
       "content": "Vì tín ngưỡng, tôn giáo là nhu cầu tinh thần của nhân dân",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 2
     },
     {
@@ -1434,7 +1494,7 @@
       "questionId": "q_u40_26",
       "label": "A",
       "content": "Các dân tộc được quyền tự quyết",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -1450,7 +1510,7 @@
       "questionId": "q_u40_26",
       "label": "C",
       "content": "Liên hiệp công nhân tất cả các dân tộc",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 3
     },
     {
@@ -1494,12 +1554,20 @@
       "orderIndex": 4
     },
     {
+      "id": "opt_q_u40_28_a",
+      "questionId": "q_u40_28",
+      "label": "A",
+      "content": "Nguồn gốc nhân tạo",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
       "id": "opt_q_u40_28_b",
       "questionId": "q_u40_28",
       "label": "B",
-      "content": "Nguồn gốc nhận thức",
-      "isCorrect": true,
-      "orderIndex": 1
+      "content": "Nguồn gốc nhận thứ",
+      "isCorrect": false,
+      "orderIndex": 2
     },
     {
       "id": "opt_q_u40_28_c",
@@ -1507,7 +1575,7 @@
       "label": "C",
       "content": "Nguồn gốc kinh tế - xã hội",
       "isCorrect": false,
-      "orderIndex": 2
+      "orderIndex": 3
     },
     {
       "id": "opt_q_u40_28_d",
@@ -1515,14 +1583,14 @@
       "label": "D",
       "content": "Nguồn gốc tâm lý",
       "isCorrect": false,
-      "orderIndex": 3
+      "orderIndex": 4
     },
     {
       "id": "opt_q_u40_37_a",
       "questionId": "q_u40_37",
       "label": "A",
       "content": "Do các lực lượng siêu nhiên thúc đẩy",
-      "isCorrect": true,
+      "isCorrect": false,
       "orderIndex": 1
     },
     {
@@ -1546,7 +1614,7 @@
       "questionId": "q_u40_37",
       "label": "D",
       "content": "Do khoa học chưa giải thích hết được các hiện tượng tự nhiên và xã hội",
-      "isCorrect": false,
+      "isCorrect": true,
       "orderIndex": 4
     }
   ],

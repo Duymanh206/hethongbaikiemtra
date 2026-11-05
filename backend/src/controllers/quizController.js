@@ -211,7 +211,9 @@ export const importDocxQuiz = async (req, res) => {
           instructionBadge: q.instructionBadge,
           explanation: q.explanation || 'Đáp án được nhận diện từ định dạng gốc trong văn bản.',
           points: q.points || 1.0,
-          requiredCount: q.requiredCount || 1
+          requiredCount: q.requiredCount || 1,
+          categories: q.categories || [],
+          statements: q.statements || []
         });
 
         if (q.options && q.options.length > 0) {
@@ -223,6 +225,18 @@ export const importDocxQuiz = async (req, res) => {
               content: opt.content,
               isCorrect: !!opt.isCorrect,
               orderIndex: optIdx + 1
+            });
+          });
+        }
+
+        if (q.dragDropItems && q.dragDropItems.length > 0) {
+          q.dragDropItems.forEach((dd, ddIdx) => {
+            db.insert('drag_drop_items', {
+              id: `dd_${qId}_${ddIdx + 1}`,
+              questionId: qId,
+              itemText: dd.itemText,
+              targetCategoryOrMatch: dd.targetCategoryOrMatch,
+              orderIndex: ddIdx + 1
             });
           });
         }

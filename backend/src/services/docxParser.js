@@ -1,24 +1,6 @@
 import JSZip from 'jszip';
-import { XMLParser } from 'fast-xml-parser';
 
-// Standard Word highlight color names to common hex/types
-const HIGHLIGHT_COLOR_MAP = {
-  yellow: '#FFFF00',
-  green: '#22C55E',
-  cyan: '#06B6D4',
-  magenta: '#D946EF',
-  blue: '#3B82F6',
-  red: '#EF4444',
-  darkBlue: '#1D4ED8',
-  darkCyan: '#0E7490',
-  darkGreen: '#15803D',
-  darkMagenta: '#A21CAF',
-  darkRed: '#B91C1C',
-  darkYellow: '#B45309',
-  lightGray: '#E5E7EB'
-};
-
-// Check if hex or named color matches target color group
+// Standard Word highlight / text color matcher
 function colorMatchesGroup(hexOrName, targetColorGroup, customHex = '') {
   if (!hexOrName) return false;
   const val = String(hexOrName).trim().toLowerCase().replace('#', '');
@@ -52,11 +34,11 @@ function colorMatchesGroup(hexOrName, targetColorGroup, customHex = '') {
 
 export async function parseDocxBuffer(buffer, config = {}) {
   const {
-    detectByColor = false,
-    selectedColors = ['red', 'yellow'], // 'red', 'yellow', 'green', 'blue', 'custom'
+    detectByColor = true,
+    selectedColors = ['red', 'yellow'],
     customColorHex = '',
     detectByBold = true,
-    detectByUnderline = false,
+    detectByUnderline = true,
     detectByHighlight = true
   } = config;
 
@@ -67,324 +49,353 @@ export async function parseDocxBuffer(buffer, config = {}) {
   }
 
   const xmlContent = await docXmlFile.async('text');
-  const parser = new XMLParser({
-    ignoreAttributes: false,
-    attributeNamePrefix: '@_',
-    preserveOrder: false,
-    trimValues: false
-  });
 
-  const parsedDoc = parser.parse(xmlContent);
-  const body = parsedDoc?.['w:document']?.['w:body'];
-  if (!body) {
-    throw new Error('Cấu trúc nội dung Word trống hoặc không đọc được');
-  }
+  function checkRunIsCorrect(r) {
+    // If run is question header "Câu ...", ignore highlight/color on it
+    if (/^Câu\s*\d*[:.-]/i.test(r.text.trim())) return false;
 
-  // Collect paragraphs
-  let rawParagraphs = [];
-  if (Array.isArray(body['w:p'])) {
-    rawParagraphs = body['w:p'];
-  } else if (body['w:p']) {
-    rawParagraphs = [body['w:p']];
-  }
-
-  // Also check if there are tables with paragraphs
-  if (body['w:tbl']) {
-    const tables = Array.isArray(body['w:tbl']) ? body['w:tbl'] : [body['w:tbl']];
-    for (const tbl of tables) {
-      const rows = Array.isArray(tbl['w:tr']) ? tbl['w:tr'] : tbl['w:tr'] ? [tbl['w:tr']] : [];
-      for (const tr of rows) {
-        const cells = Array.isArray(tr['w:tc']) ? tr['w:tc'] : tr['w:tc'] ? [tr['w:tc']] : [];
-        for (const tc of cells) {
-          if (tc['w:p']) {
-            const tcParas = Array.isArray(tc['w:p']) ? tc['w:p'] : [tc['w:p']];
-            rawParagraphs.push(...tcParas);
-          }
-        }
+    if (detectByBold && r.isBold) return true;
+    if (detectByUnderline && r.isUnderline) return true;
+    
+    if (detectByColor && r.color) {
+      if (!selectedColors || selectedColors.length === 0) return true;
+      for (const c of selectedColors) {
+        if (colorMatchesGroup(r.color, c, customColorHex)) return true;
       }
     }
-  }
-
-  // Process runs inside each paragraph to retain formatting
-  const processedParagraphs = [];
-  for (const p of rawParagraphs) {
-    let runs = [];
-    if (Array.isArray(p['w:r'])) {
-      runs = p['w:r'];
-    } else if (p['w:r']) {
-      runs = [p['w:r']];
-    }
-
-    let pFullText = '';
-    const runDetails = [];
-
-    for (const r of runs) {
-      let t = '';
-      if (typeof r['w:t'] === 'string') {
-        t = r['w:t'];
-      } else if (r['w:t'] && typeof r['w:t']['#text'] === 'string') {
-        t = r['w:t']['#text'];
-      }
-
-      if (!t) continue;
-      pFullText += t;
-
-      const rPr = r['w:rPr'] || {};
-      const isBold = rPr['w:b'] !== undefined && rPr['w:b']['@_w:val'] !== 'false' && rPr['w:b']['@_w:val'] !== '0';
-      const isUnderline = rPr['w:u'] !== undefined && rPr['w:u']['@_w:val'] !== 'none';
-      const colorVal = rPr['w:color'] ? rPr['w:color']['@_w:val'] : null;
-      const highlightVal = rPr['w:highlight'] ? rPr['w:highlight']['@_w:val'] : null;
-      const shdVal = rPr['w:shd'] ? rPr['w:shd']['@_w:fill'] : null;
-
-      runDetails.push({
-        text: t,
-        isBold,
-        isUnderline,
-        colorVal,
-        highlightVal,
-        shdVal
-      });
-    }
-
-    const trimmedText = pFullText.trim();
-    if (trimmedText) {
-      processedParagraphs.push({
-        fullText: trimmedText,
-        runs: runDetails
-      });
-    }
-  }
-
-  // Regex patterns
-  // Matches "Câu 1:", "Câu 1.", "Câu 1 -", "Question 1:", "Bài 1:"
-  const questionRegex = /^(?:Câu|Question|Bài)\s*(\d+)[\s*.:\-_)]+(.*)$/i;
-  // Matches option lines: "A.", "A)", "A:", "B.", "B)", etc.
-  const optionRegex = /^[(\[]?([A-Ha-h])[)\].:\-]\s*(.*)$/;
-
-  const extractedQuestions = [];
-  let currentQuestion = null;
-  let currentOption = null;
-
-  function evaluateOptionIsCorrect(runs) {
-    if (!runs || runs.length === 0) return false;
-
-    for (const r of runs) {
-      if (detectByBold && r.isBold) return true;
-      if (detectByUnderline && r.isUnderline) return true;
-      
-      if (detectByHighlight && r.highlightVal) {
-        if (!selectedColors || selectedColors.length === 0) return true;
-        for (const col of selectedColors) {
-          if (colorMatchesGroup(r.highlightVal, col, customColorHex)) return true;
-        }
-      }
-
-      if (detectByColor && r.colorVal) {
-        if (!selectedColors || selectedColors.length === 0) return true;
-        for (const col of selectedColors) {
-          if (colorMatchesGroup(r.colorVal, col, customColorHex)) return true;
-        }
-      }
-
-      if (r.shdVal && r.shdVal !== 'auto' && r.shdVal !== 'FFFFFF') {
-        if (detectByColor || detectByHighlight) {
-          for (const col of selectedColors) {
-            if (colorMatchesGroup(r.shdVal, col, customColorHex)) return true;
-          }
-        }
+    if (detectByHighlight && r.highlight) {
+      if (!selectedColors || selectedColors.length === 0) return true;
+      for (const c of selectedColors) {
+        if (colorMatchesGroup(r.highlight, c, customColorHex)) return true;
       }
     }
     return false;
   }
 
-  for (const para of processedParagraphs) {
-    const text = para.fullText;
-    const qMatch = text.match(questionRegex);
+  // Extract body XML
+  const bodyStart = xmlContent.indexOf('<w:body>');
+  const bodyEnd = xmlContent.lastIndexOf('</w:body>');
+  const bodyXml = bodyStart !== -1 ? xmlContent.substring(bodyStart + 8, bodyEnd) : xmlContent;
 
-    if (qMatch) {
-      // Finalize previous question
-      if (currentQuestion) {
-        finalizeQuestion(currentQuestion);
-        extractedQuestions.push(currentQuestion);
-      }
+  // Scan sequential top-level body elements: <w:p>...</w:p> and <w:tbl>...</w:tbl>
+  const elements = [];
+  let pos = 0;
+  while (pos < bodyXml.length) {
+    const nextP = bodyXml.indexOf('<w:p', pos);
+    const nextTbl = bodyXml.indexOf('<w:tbl', pos);
 
-      const qNum = parseInt(qMatch[1], 10);
-      const qText = qMatch[2].trim();
+    if (nextP === -1 && nextTbl === -1) break;
 
-      currentQuestion = {
-        orderIndex: qNum || extractedQuestions.length + 1,
-        content: qText || `Câu hỏi ${qNum}`,
-        instructionBadge: null,
-        type: 'single_choice',
-        points: 1.0,
-        options: [],
-        explanation: ''
-      };
-      currentOption = null;
-      continue;
+    if (nextTbl !== -1 && (nextP === -1 || nextTbl < nextP)) {
+      const closeTbl = bodyXml.indexOf('</w:tbl>', nextTbl);
+      if (closeTbl === -1) break;
+      elements.push({ type: 'table', xml: bodyXml.substring(nextTbl, closeTbl + 8) });
+      pos = closeTbl + 8;
+    } else {
+      const closeP = bodyXml.indexOf('</w:p>', nextP);
+      if (closeP === -1) break;
+      elements.push({ type: 'paragraph', xml: bodyXml.substring(nextP, closeP + 6) });
+      pos = closeP + 6;
+    }
+  }
+
+  // Parse a paragraph's XML into runs and text
+  function parseParagraph(pXml) {
+    const rRegex = /<w:r(?: [^>]*)?>([\s\S]*?)<\/w:r>/g;
+    let rm;
+    const runs = [];
+    let fullText = '';
+    while ((rm = rRegex.exec(pXml)) !== null) {
+      const rContent = rm[1];
+      const tMatch = rContent.match(/<w:t(?: [^>]*)?>([^<]*)<\/w:t>/);
+      const text = tMatch ? tMatch[1] : '';
+      if (!text) continue;
+      fullText += text;
+      const isBold = /<w:b(?:\/| [^>]*\/>)/.test(rContent);
+      const isUnderline = /<w:u(?:\/| [^>]*\/>)/.test(rContent);
+      const colorMatch = rContent.match(/<w:color [^>]*w:val="([^"]+)"/);
+      const highlightMatch = rContent.match(/<w:highlight [^>]*w:val="([^"]+)"/);
+      runs.push({
+        text,
+        isBold,
+        isUnderline,
+        color: colorMatch ? colorMatch[1] : null,
+        highlight: highlightMatch ? highlightMatch[1] : null
+      });
+    }
+    return { fullText: fullText.trim(), runs };
+  }
+
+  // Parse a table's XML into rows and cells
+  function parseTable(tblXml) {
+    const rows = tblXml.split(/<w:tr(?: [^>]*)?>/).slice(1);
+    return rows.map(r => {
+      const cells = r.split(/<w:tc(?: [^>]*)?>/).slice(1);
+      return cells.map(c => {
+        const paras = c.split(/<w:p(?: [^>]*)?>/).slice(1);
+        const paraObjects = paras.map(p => parseParagraph(p)).filter(p => p.fullText.length > 0);
+        return {
+          text: paraObjects.map(p => p.fullText).join('\n'),
+          paragraphs: paraObjects
+        };
+      });
+    });
+  }
+
+  // Parse sequential options: A, B, C, D even when glued to words (e.g. "nhấtA.", "NamA.")
+  function parseSequentialOptions(text, runs = []) {
+    const labels = ['A', 'B', 'C', 'D'];
+    const positions = [];
+    let searchPos = 0;
+    for (let i = 0; i < labels.length; i++) {
+      const l = labels[i];
+      const regex = new RegExp('(?:^|[\\s\\?:;,.!_\\-]|[a-zà-ỹ0-9])(' + l + ')[.):]\\s*', 'i');
+      const sub = text.substring(searchPos);
+      const m = sub.match(regex);
+      if (!m) break;
+      const actualLetterPos = searchPos + m.index + m[0].toUpperCase().indexOf(l);
+      const afterMarker = text.substring(actualLetterPos).match(/^[A-D][.):]\s*/i);
+      const contentStart = actualLetterPos + (afterMarker ? afterMarker[0].length : 2);
+      positions.push({ label: l, start: actualLetterPos, contentStart });
+      searchPos = contentStart;
     }
 
-    // Check if this paragraph contains options
-    const optMatch = text.match(optionRegex);
-    if (optMatch && currentQuestion) {
-      const label = optMatch[1].toUpperCase();
-      const content = optMatch[2].trim();
-      const isCorrect = evaluateOptionIsCorrect(para.runs);
+    if (positions.length < 2) return null;
 
-      currentOption = {
-        id: `opt_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+    const prompt = text.substring(0, positions[0].start).trim();
+    const options = [];
+    for (let i = 0; i < positions.length; i++) {
+      const start = positions[i].contentStart;
+      const end = (i < positions.length - 1) ? positions[i + 1].start : text.length;
+      let optContent = text.substring(start, end).trim();
+      // Clean up leading punctuation or stray letters
+      optContent = optContent.replace(/^[\s.:\-]+/, '').replace(/^[A-D][.):\s]+/, '').trim();
+      const label = positions[i].label;
+
+      // Check if correct from styled runs
+      const isCorrect = runs.some(r => {
+        if (!checkRunIsCorrect(r)) return false;
+        const rt = r.text.trim();
+        if (rt.startsWith(label + '.') || rt.startsWith(label + ')') || rt.startsWith(label + ':')) return true;
+        return (optContent.includes(rt) || rt.includes(optContent)) && rt.length >= 3;
+      });
+
+      options.push({
         label,
-        content,
-        isCorrect,
-        orderIndex: currentQuestion.options.length + 1
-      };
-      currentQuestion.options.push(currentOption);
-      continue;
+        content: optContent,
+        isCorrect
+      });
     }
 
-    // If text starts without marker but we are in a question and have no options yet, append to question content
-    if (currentQuestion && currentQuestion.options.length === 0 && !optMatch) {
-      currentQuestion.content += `\n${text}`;
-    } else if (currentOption) {
-      // Append additional text to current option
-      currentOption.content += ` ${text}`;
-      if (evaluateOptionIsCorrect(para.runs)) {
-        currentOption.isCorrect = true;
-      }
-    }
+    return { prompt, options };
   }
 
-  if (currentQuestion) {
-    finalizeQuestion(currentQuestion);
-    extractedQuestions.push(currentQuestion);
-  }
+  // Question regex: Matches "Câu 1:", "Câu:", "Câu 1.", "Câu1:", "Bài 1:", "Question 1:"
+  const qStartRegex = /^(?:Câu|Question|Bài)\s*\d*[:.-]\s*(.*)$/i;
 
-  function finalizeQuestion(q) {
-    // If no options were parsed from separate paragraphs, check if question content contains inline options, True/False, or Drag&Drop
-    if (q.options.length === 0) {
-      const fullText = q.content;
+  const questions = [];
+  let currentQ = null;
+  let qCounter = 0;
 
-      // 1. Check for Drag & Drop Categorization
-      if (fullText.toLowerCase().includes('kéo thả') && (fullText.toLowerCase().includes('vào các cột tương ứng') || fullText.toLowerCase().includes('vào cột tương ứng'))) {
-        const tableLines = fullText.split('\n').filter(l => l.includes('|'));
-        if (tableLines.length >= 2) {
-          const categories = tableLines[0].split('|').map(c => c.trim()).filter(Boolean);
-          const dataCells = tableLines[1].split('|').map(c => c.trim()).filter(Boolean);
-          const dragDropItems = [];
-          dataCells.forEach((cellText, colIdx) => {
-            const targetCol = categories[colIdx] || `Cột ${colIdx + 1}`;
-            const items = cellText.split(/\s{2,}|\t/).map(s => s.trim()).filter(Boolean);
-            items.forEach((itemStr, itemIdx) => {
-              dragDropItems.push({
-                id: `dd_${Date.now()}_${colIdx + 1}_${itemIdx + 1}`,
-                itemText: itemStr,
-                targetCategoryOrMatch: targetCol,
-                orderIndex: dragDropItems.length + 1
-              });
+  for (const el of elements) {
+    if (el.type === 'paragraph') {
+      const { fullText, runs } = parseParagraph(el.xml);
+      if (!fullText) continue;
+
+      const qMatch = fullText.match(qStartRegex);
+      if (qMatch) {
+        qCounter++;
+        currentQ = {
+          orderIndex: qCounter,
+          rawHeader: fullText,
+          content: qMatch[1].trim(),
+          runs: [...runs],
+          type: 'single_choice',
+          instructionBadge: null,
+          points: 1.0,
+          requiredCount: 1,
+          options: [],
+          categories: [],
+          statements: [],
+          dragDropItems: [],
+          matchingTargets: []
+        };
+        questions.push(currentQ);
+
+        // Check if inline options are right inside this question paragraph
+        const seqRes = parseSequentialOptions(currentQ.content, runs);
+        if (seqRes) {
+          currentQ.content = seqRes.prompt;
+          seqRes.options.forEach((opt, idx) => {
+            currentQ.options.push({
+              id: `opt_${Date.now()}_${qCounter}_${opt.label.toLowerCase()}`,
+              label: opt.label,
+              content: opt.content,
+              isCorrect: opt.isCorrect,
+              orderIndex: idx + 1
             });
           });
-          q.type = 'drag_drop_categorize';
-          q.instructionBadge = '(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng';
-          q.content = fullText.split('\n')[0].trim();
-          q.categories = categories;
-          q.dragDropItems = dragDropItems;
-          q.requiredCount = dragDropItems.length;
-          return;
         }
+        continue;
       }
 
-      // 2. Check for Drag & Drop Matching
-      if (fullText.toLowerCase().includes('kéo thả') && (fullText.toLowerCase().includes('khớp với') || fullText.toLowerCase().includes('tương ứng với các phát biểu') || fullText.toLowerCase().includes('dưới đây'))) {
-        const tableLines = fullText.split('\n').filter(l => l.includes('|'));
-        if (tableLines.length > 0) {
-          const dragDropItems = [];
-          const targets = new Set();
-          tableLines.forEach((row, idx) => {
-            const cells = row.split('|').map(c => c.trim()).filter(Boolean);
-            if (cells.length >= 2) {
-              targets.add(cells[1]);
-              dragDropItems.push({
-                id: `dd_match_${Date.now()}_${idx + 1}`,
-                itemText: cells[0],
-                targetCategoryOrMatch: cells[1],
-                orderIndex: idx + 1
+      // If we are inside a question
+      if (currentQ) {
+        currentQ.runs.push(...runs);
+
+        // Check if this paragraph is an option line: "A. ...", "B. ...", etc.
+        const optLineMatch = fullText.match(/^[(\[]?([A-Ha-h])[)\].:\-]\s*(.*)$/);
+        if (optLineMatch) {
+          const label = optLineMatch[1].toUpperCase();
+          let content = optLineMatch[2].trim();
+          content = content.replace(/^[\s.:\-]+/, '').trim();
+          const isCorrect = runs.some(r => checkRunIsCorrect(r));
+          currentQ.options.push({
+            id: `opt_${Date.now()}_${qCounter}_${label.toLowerCase()}`,
+            label,
+            content,
+            isCorrect,
+            orderIndex: currentQ.options.length + 1
+          });
+          continue;
+        }
+
+        // Check if True/False statement line: e.g. "1) ... Đúng", "1) ... Sai", or "Đúng", "Sai"
+        const tfInlineMatch = fullText.match(/^(\d+[\).:-]\s*)([\s\S]+?)\s*(Đúng|Sai)$/i);
+        if (tfInlineMatch) {
+          currentQ.type = 'true_false_matrix';
+          currentQ.instructionBadge = '(!) Chọn Đúng hoặc Sai cho mỗi phát biểu';
+          currentQ.statements.push({
+            id: `stmt_${qCounter}_${currentQ.statements.length + 1}`,
+            indexNumber: currentQ.statements.length + 1,
+            text: `${tfInlineMatch[1]}${tfInlineMatch[2]}`.trim(),
+            correctAnswer: tfInlineMatch[3].charAt(0).toUpperCase() + tfInlineMatch[3].slice(1).toLowerCase()
+          });
+          continue;
+        }
+
+        // If paragraph is just "Đúng" or "Sai", it belongs to the previous statement!
+        if (/^(Đúng|Sai)$/i.test(fullText) && currentQ.statements.length > 0) {
+          const lastStmt = currentQ.statements[currentQ.statements.length - 1];
+          if (!lastStmt.correctAnswer) {
+            lastStmt.correctAnswer = fullText.charAt(0).toUpperCase() + fullText.slice(1).toLowerCase();
+          }
+          continue;
+        }
+
+        // Check if paragraph is statement prompt without answer: "1) Phát biểu..."
+        const stmtOnlyMatch = fullText.match(/^(\d+[\).:-]\s*)([\s\S]+)$/);
+        if (stmtOnlyMatch && (currentQ.content.toLowerCase().includes('đúng hoặc sai') || currentQ.type === 'true_false_matrix')) {
+          currentQ.type = 'true_false_matrix';
+          currentQ.instructionBadge = '(!) Chọn Đúng hoặc Sai cho mỗi phát biểu';
+          currentQ.statements.push({
+            id: `stmt_${qCounter}_${currentQ.statements.length + 1}`,
+            indexNumber: currentQ.statements.length + 1,
+            text: fullText.trim(),
+            correctAnswer: '' // will be filled by next paragraph
+          });
+          continue;
+        }
+
+        // Check if paragraph has inline options: e.g. "Sinh viên chọn 2 phương án... A. ... B. ..."
+        const seqRes = parseSequentialOptions(fullText, runs);
+        if (seqRes) {
+          if (seqRes.prompt) {
+            currentQ.content += (currentQ.content ? '\n' : '') + seqRes.prompt;
+          }
+          seqRes.options.forEach((opt, idx) => {
+            currentQ.options.push({
+              id: `opt_${Date.now()}_${qCounter}_${opt.label.toLowerCase()}`,
+              label: opt.label,
+              content: opt.content,
+              isCorrect: opt.isCorrect,
+              orderIndex: idx + 1
+            });
+          });
+          continue;
+        }
+
+        // Check if instruction paragraph: "Sinh viên chọn 2 phương án đúng nhất"
+        const multiMatch = fullText.match(/(?:chọn|Sinh viên chọn)\s*(\d+)\s*phương án/i);
+        if (multiMatch) {
+          currentQ.type = 'multiple_choice';
+          currentQ.requiredCount = parseInt(multiMatch[1], 10);
+          currentQ.instructionBadge = `(!) Sinh viên chọn ${currentQ.requiredCount} phương án đúng nhất`;
+        }
+
+        // Otherwise append text to question content if options haven't started
+        if (currentQ.options.length === 0 && currentQ.statements.length === 0) {
+          currentQ.content += (currentQ.content ? '\n' : '') + fullText;
+        }
+      }
+    } else if (el.type === 'table' && currentQ) {
+      const tableData = parseTable(el.xml);
+      if (tableData.length === 0) continue;
+
+      const row1 = tableData[0];
+      const isTwoColumnTable = row1.length === 2;
+
+      // Categorization (Row 1 headers, Row 2 items)
+      if (tableData.length === 2 && isTwoColumnTable) {
+        currentQ.type = 'drag_drop_categorize';
+        currentQ.instructionBadge = '(!) Kéo và thả các thẻ đáp án vào đúng cột tương ứng';
+        const col1Title = row1[0].text.trim();
+        const col2Title = row1[1].text.trim();
+        currentQ.categories = [col1Title, col2Title];
+
+        const row2 = tableData[1];
+        const cell1Paras = row2[0].paragraphs;
+        const cell2Paras = row2[1].paragraphs;
+
+        cell1Paras.forEach((p, idx) => {
+          if (p.fullText.trim()) {
+            currentQ.dragDropItems.push({
+              id: `dd_${qCounter}_1_${idx + 1}`,
+              itemText: p.fullText.trim(),
+              targetCategoryOrMatch: col1Title,
+              orderIndex: currentQ.dragDropItems.length + 1
+            });
+          }
+        });
+
+        cell2Paras.forEach((p, idx) => {
+          if (p.fullText.trim()) {
+            currentQ.dragDropItems.push({
+              id: `dd_${qCounter}_2_${idx + 1}`,
+              itemText: p.fullText.trim(),
+              targetCategoryOrMatch: col2Title,
+              orderIndex: currentQ.dragDropItems.length + 1
+            });
+          }
+        });
+        currentQ.requiredCount = currentQ.dragDropItems.length;
+      } 
+      // Matching (each row is statement -> match target)
+      else if (tableData.length >= 2 && isTwoColumnTable) {
+        currentQ.type = 'drag_drop_matching';
+        currentQ.instructionBadge = '(!) Kéo và thả các đáp án đúng vào ô tương ứng';
+        tableData.forEach((row, rIdx) => {
+          if (row.length >= 2) {
+            const statement = row[0].text.trim();
+            const target = row[1].text.trim();
+            if (statement && target) {
+              currentQ.dragDropItems.push({
+                id: `dd_${qCounter}_${rIdx + 1}`,
+                itemText: statement,
+                targetCategoryOrMatch: target,
+                orderIndex: rIdx + 1
               });
             }
-          });
-          q.type = 'drag_drop_matching';
-          q.instructionBadge = '(!) Kéo thẻ đáp án khớp với từng phát biểu';
-          q.content = fullText.split('\n')[0].trim();
-          q.dragDropItems = dragDropItems;
-          q.matchingTargets = Array.from(targets);
-          q.requiredCount = dragDropItems.length;
-          return;
-        }
-      }
-
-      // 3. Check for True / False Matrix
-      if (fullText.toLowerCase().includes('đúng hoặc sai') || fullText.toLowerCase().includes('đúng hay sai') || fullText.toLowerCase().includes('đúng/sai')) {
-        const lines = fullText.split('\n').map(l => l.trim()).filter(Boolean);
-        const prompt = lines[0] || 'Chọn đáp án (Đúng hoặc Sai) với từng phát biểu sau:';
-        const statements = [];
-        const stmtRegex = /(?:^|\n)\s*(\d+)[\)\.]\s*(.*?)(?=(?:\n\s*\d+[\)\.]|$))/gs;
-        let match;
-        const rest = lines.slice(1).join('\n');
-        while ((match = stmtRegex.exec(rest)) !== null) {
-          const sNum = match[1];
-          let sText = match[2].trim();
-          let isCorrect = 'dung';
-          if (/(?:Đúng|\(Đúng\))\s*$/i.test(sText)) {
-            isCorrect = 'dung';
-            sText = sText.replace(/(?:Đúng|\(Đúng\))\s*$/i, '').trim();
-          } else if (/(?:Sai|\(Sai\))\s*$/i.test(sText)) {
-            isCorrect = 'sai';
-            sText = sText.replace(/(?:Sai|\(Sai\))\s*$/i, '').trim();
           }
-          statements.push({
-            id: `tf_${Date.now()}_${sNum}`,
-            text: `${sNum}) ${sText}`,
-            isCorrect
-          });
-        }
-        if (statements.length > 0) {
-          q.type = 'true_false_matrix';
-          q.content = prompt;
-          q.instructionBadge = '(!) Chọn Đúng hoặc Sai cho mỗi phát biểu';
-          q.statements = statements;
-          q.requiredCount = statements.length;
-          return;
-        }
-      }
-
-      // 4. Check for inline options: "A. ... B. ... C. ... D. ..."
-      const firstOptIdx = fullText.search(/(?:^|\s|\?|[a-z0-9])([A-D])[.):]\s*/i);
-      if (firstOptIdx !== -1) {
-        const matchA = fullText.substring(firstOptIdx).match(/([A-D])[.):]\s*/i);
-        if (matchA) {
-          const realStart = firstOptIdx + matchA.index;
-          const cleanPrompt = fullText.substring(0, realStart).trim();
-          const optionsText = fullText.substring(realStart).trim();
-
-          const optionRegex = /([A-D])[.):]\s*(.*?)(?=(?:[A-D][.):]\s*|$))/gs;
-          let optMatch;
-          while ((optMatch = optionRegex.exec(optionsText)) !== null) {
-            const label = optMatch[1].toUpperCase();
-            const content = optMatch[2].trim();
-            q.options.push({
-              id: `opt_${Date.now()}_${label.toLowerCase()}`,
-              label,
-              content,
-              isCorrect: false,
-              orderIndex: q.options.length + 1
-            });
-          }
-          if (q.options.length > 0) {
-            q.content = cleanPrompt;
-          }
-        }
+        });
+        currentQ.matchingTargets = [...new Set(currentQ.dragDropItems.map(d => d.targetCategoryOrMatch))];
+        currentQ.requiredCount = currentQ.dragDropItems.length;
       }
     }
+  }
 
+  // Post-process each question
+  questions.forEach(q => {
     // Check multiple choice instruction in content
     const multiMatch = q.content.match(/(?:chọn|Sinh viên chọn)\s*(\d+)\s*phương án/i);
     if (multiMatch) {
@@ -392,32 +403,40 @@ export async function parseDocxBuffer(buffer, config = {}) {
       q.type = 'multiple_choice';
       q.requiredCount = requiredCount;
       q.instructionBadge = `(!) Sinh viên chọn ${requiredCount} phương án đúng nhất`;
-      for (let i = 0; i < Math.min(requiredCount, q.options.length); i++) {
-        q.options[i].isCorrect = true;
+      const correctOpts = q.options.filter(o => o.isCorrect);
+      if (correctOpts.length < requiredCount) {
+        for (let i = 0; i < Math.min(requiredCount, q.options.length); i++) {
+          q.options[i].isCorrect = true;
+        }
       }
-      return;
-    }
-
-    const correctOptions = q.options.filter(o => o.isCorrect);
-    const correctCount = correctOptions.length;
-
-    if (correctCount > 1) {
-      q.type = 'multiple_choice';
-      q.requiredCount = correctCount;
-      q.instructionBadge = `(!) Chọn ${correctCount} phương án đúng nhất`;
-    } else {
-      q.type = 'single_choice';
-      q.requiredCount = 1;
-      q.instructionBadge = null;
-      if (correctCount === 0 && q.options.length > 0) {
+    } else if (q.type === 'single_choice' && q.options.length > 0) {
+      const correctOpts = q.options.filter(o => o.isCorrect);
+      if (correctOpts.length === 0) {
         q.options[0].isCorrect = true;
+      } else if (correctOpts.length > 1) {
+        // Keep only first marked as correct
+        let firstFound = false;
+        q.options.forEach(o => {
+          if (o.isCorrect && !firstFound) {
+            firstFound = true;
+          } else {
+            o.isCorrect = false;
+          }
+        });
       }
     }
-  }
 
-  return {
-    totalQuestions: extractedQuestions.length,
-    questions: extractedQuestions
-  };
+    if (q.type === 'true_false_matrix') {
+      q.requiredCount = q.statements.length;
+      q.statements.forEach(s => {
+        if (!s.correctAnswer) s.correctAnswer = 'Đúng';
+      });
+    }
+
+    q.content = q.content.replace(/\s*Sinh viên chọn \d+ phương án đúng nhất\s*$/i, '').trim();
+    q.content = q.content.replace(/<\/?p>/gi, '').trim();
+    delete q.runs;
+  });
+
+  return { totalQuestions: questions.length, questions };
 }
-
