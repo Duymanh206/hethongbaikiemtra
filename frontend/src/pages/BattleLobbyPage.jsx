@@ -65,6 +65,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
   // Reveal & Podium State
   const [revealData, setRevealData] = useState(null);
   const [podiumData, setPodiumData] = useState(null);
+  const [revealCountdown, setRevealCountdown] = useState(6);
 
   // Check URL query for PIN on mount
   useEffect(() => {
@@ -137,10 +138,49 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
   useEffect(() => {
     if (stage !== 'playing') return;
     const interval = setInterval(() => {
-      setTimeRemaining(prev => (prev > 0 ? prev - 1 : 0));
+      setTimeRemaining(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [stage, httpQIndex]);
+
+  // When timer reaches 0s in playing stage: automatically reveal! Never freeze at 0s!
+  useEffect(() => {
+    if (stage === 'playing' && timeRemaining === 0) {
+      const timer = setTimeout(() => {
+        handleTimeUp();
+      }, 400);
+      return () => clearTimeout(timer);
+    }
+  }, [timeRemaining, stage]);
+
+  // Countdown timer in 'reveal' stage to auto-advance to next question
+  useEffect(() => {
+    if (stage !== 'reveal') return;
+    setRevealCountdown(6);
+    const interval = setInterval(() => {
+      setRevealCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
     return () => clearInterval(interval);
   }, [stage]);
+
+  // When reveal countdown reaches 0s: auto-advance for participants
+  useEffect(() => {
+    if (stage === 'reveal' && revealCountdown === 0 && !isHost) {
+      handleParticipantNextQuestion();
+    }
+  }, [stage, revealCountdown, isHost]);
 
   // HTTP Polling fallback loop for room sync on Vercel
   useEffect(() => {
@@ -151,24 +191,28 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
         const query = new URLSearchParams();
         if (hostToken) query.set('hostToken', hostToken);
         if (playerId) query.set('playerId', playerId);
+        if (nicknameInput) query.set('playerName', nicknameInput);
 
         const res = await fetch(`/api/battle/room/${roomData.pin}?${query.toString()}`);
         const data = await res.json();
         if (data.success) {
           if (data.players) setPlayers(data.players);
+          if (typeof data.answeredCount === 'number') setAnsweredCount(data.answeredCount);
+
           if (data.questions && data.questions.length > 0) {
             setHttpQuestions(data.questions);
             if (!currentQuestion) {
-              setCurrentQuestion(data.questions[0]);
+              const qIdx = data.currentQuestionIndex || 0;
+              setCurrentQuestion(data.currentQuestion || data.questions[qIdx]);
             }
           }
 
           // Case 1: Participant in lobby -> starts playing
           if (data.status === 'playing' && stage === 'player_lobby') {
             setStage('playing');
-            setHttpQIndex(data.currentQuestionIndex || 0);
+            const qIdx = data.currentQuestionIndex || 0;
+            setHttpQIndex(qIdx);
             if (data.questions && data.questions.length > 0) {
-              const qIdx = data.currentQuestionIndex || 0;
               setCurrentQuestion(data.currentQuestion || data.questions[qIdx]);
               setTimeRemaining(20);
               setSelectedOptionId(null);
@@ -299,6 +343,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
         (res) => {
           if (res && res.success) {
             socketResponded = true;
+            if (res.playerId) setPlayerId(res.playerId);
             setRoomData(res.room);
             setIsHost(false);
             setStage('player_lobby');
@@ -363,52 +408,122 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
 
   // Player submits answer
   const handleSubmitPlayerAnswer = async (optionId) => {
-    if (hasAnswered || !roomData) return;
+    if (hasAnswered) return;
     setSelectedOptionId(optionId);
     setHasAnswered(true);
 
-    if (socketRef.current && socketRef.current.connected) {
+    const q = currentQuestion || httpQuestions[httpQIndex];
+    const qId = q?.id;
+
+    if (socketRef.current && socketRef.current.connected && roomData?.pin) {
       socketRef.current.emit('submit_answer', {
         pin: roomData.pin,
         optionId,
-        answerTimeMs: (20 - timeRemaining) * 1000
+        answerTimeMs: (20 - Math.max(0, timeRemaining)) * 1000
       });
     }
 
     try {
-      const qId = currentQuestion?.id || httpQuestions[httpQIndex]?.id;
+      const pin = roomData?.pin || pinInput;
       const res = await fetch('/api/battle/submit-answer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          pin: roomData.pin,
-          playerId,
+          pin,
+          playerId: playerId || user?.studentId || user?.username || nicknameInput,
+          playerName: nicknameInput || user?.fullName || 'Thí sinh',
           questionId: qId,
           selectedOptionId: optionId,
-          timeSpentSeconds: 20 - timeRemaining
+          timeSpentSeconds: 20 - Math.max(0, timeRemaining)
         })
       });
       const d = await res.json();
-      if (d.success) {
+      if (d && d.success) {
         setRevealData({
+          questionIndex: (q?.questionIndex || httpQIndex + 1),
+          totalQuestions: (q?.totalQuestions || httpQuestions.length || 40),
+          correctOptionLabel: d.correctOptionLabel || q?.correctOptionLabel || 'A',
+          correctOptionContent: d.correctOptionContent || q?.correctOptionContent || '',
+          fastestPlayer: null,
+          leaderboard: players,
           myResult: {
-            isCorrect: d.isCorrect,
-            pointsAwarded: d.points,
-            myScore: d.myScore !== undefined ? d.myScore : d.points
+            isCorrect: !!d.isCorrect,
+            pointsAwarded: d.points || 0,
+            myScore: d.myScore !== undefined ? d.myScore : (d.points || 0)
           },
           isLastQuestion: httpQIndex >= (httpQuestions.length - 1)
         });
-        setStage('reveal');
       }
     } catch (err) {
       console.error('Submit answer error:', err);
     }
   };
 
+  // Called when timer hits 0s or user clicks "Xem kết quả ngay"
+  const handleTimeUp = () => {
+    const q = currentQuestion || httpQuestions[httpQIndex];
+    if (!q) return;
+
+    if (!hasAnswered) {
+      setSelectedOptionId(null);
+      setHasAnswered(true);
+      const pin = roomData?.pin || pinInput;
+      fetch('/api/battle/submit-answer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pin,
+          playerId: playerId || user?.studentId || user?.username || nicknameInput,
+          playerName: nicknameInput || user?.fullName || 'Thí sinh',
+          questionId: q.id,
+          selectedOptionId: null,
+          timeSpentSeconds: 20
+        })
+      }).catch(() => {});
+    }
+
+    setRevealData(prev => {
+      const isCorrect = prev?.myResult?.isCorrect ?? false;
+      const points = prev?.myResult?.pointsAwarded ?? 0;
+      return {
+        questionIndex: (q?.questionIndex || httpQIndex + 1),
+        totalQuestions: (q?.totalQuestions || httpQuestions.length || 40),
+        correctOptionLabel: q?.correctOptionLabel || prev?.correctOptionLabel || 'A',
+        correctOptionContent: q?.correctOptionContent || prev?.correctOptionContent || '',
+        fastestPlayer: prev?.fastestPlayer || null,
+        leaderboard: players,
+        myResult: {
+          isCorrect,
+          pointsAwarded: points,
+          myScore: prev?.myResult?.myScore ?? 0
+        },
+        isLastQuestion: httpQIndex >= (httpQuestions.length - 1)
+      };
+    });
+
+    setStage('reveal');
+  };
+
+  // Participant auto-advances or clicks Next Question
+  const handleParticipantNextQuestion = () => {
+    const nextIdx = httpQIndex + 1;
+    if (nextIdx < httpQuestions.length) {
+      setHttpQIndex(nextIdx);
+      setCurrentQuestion(httpQuestions[nextIdx]);
+      setTimeRemaining(20);
+      setSelectedOptionId(null);
+      setHasAnswered(false);
+      setStage('playing');
+    } else {
+      handleFinishBattle();
+    }
+  };
+
   // Host triggers next question
   const handleHostNextQuestion = async () => {
-    if (socketRef.current && socketRef.current.connected && roomData) {
-      socketRef.current.emit('host_next_question', { pin: roomData.pin });
+    const pin = roomData?.pin || pinInput;
+    if (socketRef.current && socketRef.current.connected && pin) {
+      socketRef.current.emit('host_next_question', { pin });
     }
 
     const nextIdx = httpQIndex + 1;
@@ -417,7 +532,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
         await fetch('/api/battle/next-question', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pin: roomData.pin, questionIndex: nextIdx })
+          body: JSON.stringify({ pin, questionIndex: nextIdx })
         });
       } catch {}
       setHttpQIndex(nextIdx);
@@ -427,20 +542,26 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
       setHasAnswered(false);
       setStage('playing');
     } else {
-      try {
-        const res = await fetch('/api/battle/finish', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pin: roomData.pin, hostToken })
-        });
-        const d = await res.json();
-        setPodiumData(d);
-      } catch {}
-      setStage('podium');
-      try {
-        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-      } catch {}
+      handleFinishBattle();
     }
+  };
+
+  // Finish battle and show podium
+  const handleFinishBattle = async () => {
+    const pin = roomData?.pin || pinInput;
+    try {
+      const res = await fetch('/api/battle/finish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin, hostToken, playerId })
+      });
+      const d = await res.json();
+      if (d) setPodiumData(d);
+    } catch {}
+    setStage('podium');
+    try {
+      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+    } catch (e) {}
   };
 
   return (
@@ -714,7 +835,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
           {/* Header Bar */}
           <div className="flex items-center justify-between bg-slate-800 p-4 rounded-2xl border border-slate-700">
             <span className="text-xs font-bold text-amber-400 uppercase">
-              Câu {currentQuestion.questionIndex} / {currentQuestion.totalQuestions}
+              Câu {(currentQuestion?.questionIndex || httpQIndex + 1)} / {(currentQuestion?.totalQuestions || httpQuestions.length || 40)}
             </span>
 
             {/* Digital Timer */}
@@ -726,7 +847,7 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
             </div>
 
             <span className="text-xs font-bold text-slate-400">
-              Đã nộp: {answeredCount}/{players.length}
+              Đã nộp: {answeredCount || (hasAnswered ? 1 : 0)}/{Math.max(1, players.length)}
             </span>
           </div>
 
@@ -776,8 +897,34 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
           </div>
 
           {hasAnswered && (
-            <div className="p-3 bg-slate-800 rounded-xl text-center text-xs text-amber-400 font-bold border border-slate-700 animate-pulse">
-              ✓ Đã ghi nhận câu trả lời của bạn! Chờ công bố kết quả vòng đấu...
+            <div className="p-4 bg-slate-800 rounded-2xl border border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left animate-in fade-in">
+              <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
+                <span>Đã ghi nhận câu trả lời của bạn! Chờ hết giờ ({timeRemaining}s)...</span>
+              </div>
+              <button
+                type="button"
+                onClick={handleTimeUp}
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md active:scale-95 transition-all cursor-pointer"
+              >
+                Xem Kết Quả Ngay ➔
+              </button>
+            </div>
+          )}
+
+          {isHost && (
+            <div className="p-3 bg-amber-500/10 border border-amber-400/30 rounded-2xl flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs font-bold text-amber-300">
+                <Crown className="w-4 h-4 text-amber-400" />
+                <span>Quyền Chủ phòng: Bạn có thể khóa câu hỏi và hiện kết quả ngay</span>
+              </div>
+              <button
+                type="button"
+                onClick={handleTimeUp}
+                className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-md active:scale-95 transition-all cursor-pointer"
+              >
+                Khóa & Hiện Đáp Án ➔
+              </button>
             </div>
           )}
 
@@ -873,13 +1020,17 @@ export default function BattleLobbyPage({ defaultQuizId, onBackToExplore }) {
                   <span className="text-amber-400 font-mono text-base">{revealData.myResult?.myScore || 0} pts</span>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-700/60 text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
-                  <Lock className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Bảng điểm xếp hạng toàn phòng chỉ Chủ phòng (Người tạo) được quyền xem.</span>
-                </div>
-
-                <div className="text-xs text-slate-400 animate-pulse pt-2">
-                  ⏳ Đang đợi Chủ phòng chuyển sang câu tiếp theo...
+                <div className="pt-4 border-t border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="text-xs font-bold text-slate-400">
+                    Tự động chuyển câu sau trong: <strong className="text-amber-400 font-mono text-sm">{revealCountdown}s</strong>
+                  </div>
+                  <button
+                    onClick={handleParticipantNextQuestion}
+                    className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <span>{httpQIndex >= (httpQuestions.length - 1) ? 'Xem Bảng Tổng Kết Trận Đấu' : 'Tiếp Tục Câu Sau Ngay'}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             )}

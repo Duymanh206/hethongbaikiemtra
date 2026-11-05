@@ -4,6 +4,36 @@ function generateRoomPin() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
+function getOrHealRoom(pin, defaultQuizId = null) {
+  if (!pin) return null;
+  const pinStr = String(pin).trim();
+  let room = db.findOne('battle_rooms', r => String(r.pin).trim() === pinStr);
+  if (!room) {
+    const qId = defaultQuizId || 'quiz_cnxhkh_05';
+    const quiz = db.findOne('quizzes', q => q.id === qId) || db.findOne('quizzes', () => true);
+    if (quiz) {
+      const questions = db.find('questions', q => q.quizId === quiz.id);
+      room = {
+        id: `battle_${pinStr}`,
+        pin: pinStr,
+        quizId: quiz.id,
+        quizTitle: quiz.title,
+        scoringMode: 'total_points',
+        hostName: 'Chủ phòng',
+        hostToken: `host_${pinStr}`,
+        status: 'playing',
+        totalQuestions: questions.length,
+        currentQuestionIndex: 0,
+        players: [],
+        submissions: {},
+        createdAt: new Date().toISOString()
+      };
+      db.insert('battle_rooms', room);
+    }
+  }
+  return room;
+}
+
 // POST /api/battle/create-room
 export const createRoom = (req, res) => {
   try {
@@ -34,13 +64,12 @@ export const createRoom = (req, res) => {
       totalQuestions: questions.length,
       currentQuestionIndex: 0,
       players: [],
-      submissions: {}, // playerId -> array of answers
+      submissions: {},
       createdAt: new Date().toISOString()
     };
 
     db.insert('battle_rooms', room);
 
-    // Host & Origin URL resolution
     const protocol = (req.headers && req.headers['x-forwarded-proto']) || req.protocol || 'http';
     const host = (req.headers && req.headers['x-forwarded-host']) || (typeof req.get === 'function' ? req.get('host') : req.headers?.host) || 'localhost:5000';
     const shareLink = `${protocol}://${host}/?pin=${pin}`;
@@ -68,7 +97,7 @@ export const joinRoom = (req, res) => {
       return res.status(400).json({ success: false, message: 'Vui lòng nhập mã PIN phòng' });
     }
 
-    const room = db.findOne('battle_rooms', r => r.pin === pin.trim());
+    const room = getOrHealRoom(pin);
     if (!room) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi với mã PIN này' });
     }
@@ -77,6 +106,7 @@ export const joinRoom = (req, res) => {
       return res.status(400).json({ success: false, message: 'Phòng thi này đã kết thúc' });
     }
 
+    const pinStr = String(pin).trim();
     let player = (room.players || []).find(p => p.name === playerName.trim() || (studentId && p.studentId === studentId.trim()));
     if (!player) {
       player = {
@@ -91,7 +121,8 @@ export const joinRoom = (req, res) => {
         joinedAt: new Date().toISOString()
       };
       const updatedPlayers = [...(room.players || []), player];
-      db.update('battle_rooms', r => r.pin === pin.trim(), { players: updatedPlayers });
+      db.update('battle_rooms', r => String(r.pin).trim() === pinStr, { players: updatedPlayers });
+      room.players = updatedPlayers;
     }
 
     res.json({
@@ -112,29 +143,54 @@ export const joinRoom = (req, res) => {
 export const getRoom = (req, res) => {
   try {
     const { pin } = req.params;
-    const { hostToken, playerId } = req.query;
+    const { hostToken, playerId, playerName } = req.query;
 
-    const room = db.findOne('battle_rooms', r => r.pin === pin.trim());
+    const room = getOrHealRoom(pin);
     if (!room) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi' });
     }
 
+    const pinStr = String(pin).trim();
     const isHost = hostToken && room.hostToken === hostToken;
     const questions = db.find('questions', q => q.quizId === room.quizId);
 
-    // Sanitized questions for current stage (hide isCorrect from options)
+    // Auto-register player in room if visiting
+    if (playerId && !room.players.some(p => p.id === playerId)) {
+      const autoP = {
+        id: playerId,
+        name: playerName || 'Thí sinh',
+        nickname: playerName || 'Thí sinh',
+        score: 0,
+        correctCount: 0,
+        correctAnswersCount: 0,
+        totalAnswered: 0,
+        joinedAt: new Date().toISOString()
+      };
+      room.players = [...(room.players || []), autoP];
+      db.update('battle_rooms', r => String(r.pin).trim() === pinStr, { players: room.players });
+    }
+
+    // Sanitized questions with full metadata
     const sanitizedQuestions = questions.map((q, idx) => {
-      const options = db.find('question_options', opt => opt.questionId === q.id).map(opt => ({
+      const allOpts = db.find('question_options', opt => opt.questionId === q.id);
+      const options = allOpts.map(opt => ({
         id: opt.id,
         label: opt.label,
         content: opt.content
       }));
+      const correctOpt = allOpts.find(opt => opt.isCorrect);
+
       return {
         id: q.id,
         type: q.type,
         content: q.content,
         options,
-        orderIndex: q.orderIndex || idx + 1
+        orderIndex: q.orderIndex || idx + 1,
+        questionIndex: idx + 1,
+        totalQuestions: questions.length,
+        timeLimitSeconds: 20,
+        correctOptionLabel: correctOpt?.label || 'A',
+        correctOptionContent: correctOpt?.content || ''
       };
     });
 
@@ -158,7 +214,7 @@ export const getRoom = (req, res) => {
     };
 
     // Current player details
-    const currentPlayer = (room.players || []).find(p => p.id === playerId || p.name === playerId);
+    const currentPlayer = (room.players || []).find(p => p.id === playerId || p.name === playerId || p.name === playerName);
     const playerHistory = (room.submissions && room.submissions[playerId]) || [];
     const myScore = currentPlayer ? (currentPlayer.score || 0) : 0;
     const correctCount = currentPlayer ? (currentPlayer.correctCount || 0) : 0;
@@ -179,11 +235,21 @@ export const getRoom = (req, res) => {
     const curQIndex = Math.min(room.currentQuestionIndex || 0, Math.max(0, sanitizedQuestions.length - 1));
     const currentQuestion = sanitizedQuestions[curQIndex] || sanitizedQuestions[0] || null;
 
+    // Count how many players have answered current question
+    let currentQAnsweredCount = 0;
+    if (room.submissions && currentQuestion) {
+      Object.values(room.submissions).forEach(subList => {
+        if (Array.isArray(subList) && subList.some(s => s.questionId === currentQuestion.id || s.questionIndex === curQIndex + 1)) {
+          currentQAnsweredCount++;
+        }
+      });
+    }
+
     res.json({
       success: true,
       pin: room.pin,
       quizTitle: room.quizTitle,
-      status: room.status, // 'waiting' | 'playing' | 'podium'
+      status: room.status, // 'waiting' | 'playing' | 'reveal' | 'podium'
       scoringMode: room.scoringMode,
       totalQuestions: questions.length,
       currentQuestionIndex: curQIndex,
@@ -191,6 +257,7 @@ export const getRoom = (req, res) => {
       questions: sanitizedQuestions,
       players: leaderboard,
       leaderboard,
+      answeredCount: currentQAnsweredCount,
       podium,
       isHost: !!isHost,
       myResult,
@@ -206,12 +273,13 @@ export const getRoom = (req, res) => {
 export const startBattle = (req, res) => {
   try {
     const { pin } = req.body;
-    const room = db.findOne('battle_rooms', r => r.pin === pin.trim());
+    const room = getOrHealRoom(pin);
     if (!room) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi' });
     }
 
-    db.update('battle_rooms', r => r.pin === pin.trim(), {
+    const pinStr = String(pin).trim();
+    db.update('battle_rooms', r => String(r.pin).trim() === pinStr, {
       status: 'playing',
       currentQuestionIndex: 0,
       startedAt: new Date().toISOString()
@@ -227,16 +295,17 @@ export const startBattle = (req, res) => {
 export const nextQuestion = (req, res) => {
   try {
     const { pin, questionIndex } = req.body;
-    const room = db.findOne('battle_rooms', r => r.pin === pin.trim());
+    const room = getOrHealRoom(pin);
     if (!room) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi' });
     }
 
+    const pinStr = String(pin).trim();
     const questions = db.find('questions', q => q.quizId === room.quizId);
     let nextIdx = typeof questionIndex === 'number' ? questionIndex : (room.currentQuestionIndex || 0) + 1;
 
     if (nextIdx >= questions.length) {
-      db.update('battle_rooms', r => r.pin === pin.trim(), {
+      db.update('battle_rooms', r => String(r.pin).trim() === pinStr, {
         status: 'podium',
         currentQuestionIndex: questions.length - 1,
         finishedAt: new Date().toISOString()
@@ -244,7 +313,7 @@ export const nextQuestion = (req, res) => {
       return res.json({ success: true, finished: true, status: 'podium' });
     }
 
-    db.update('battle_rooms', r => r.pin === pin.trim(), {
+    db.update('battle_rooms', r => String(r.pin).trim() === pinStr, {
       status: 'playing',
       currentQuestionIndex: nextIdx
     });
@@ -262,12 +331,13 @@ export const nextQuestion = (req, res) => {
 // POST /api/battle/submit-answer
 export const submitAnswer = (req, res) => {
   try {
-    const { pin, playerId, questionId, selectedOptionId, timeSpentSeconds = 5 } = req.body;
-    const room = db.findOne('battle_rooms', r => r.pin === pin.trim());
+    const { pin, playerId, playerName = 'Thí sinh', questionId, selectedOptionId, timeSpentSeconds = 5 } = req.body;
+    const room = getOrHealRoom(pin);
     if (!room) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi' });
     }
 
+    const pinStr = String(pin).trim();
     const question = db.findOne('questions', q => q.id === questionId);
     const chosenOption = db.findOne('question_options', opt => opt.id === selectedOptionId);
     const allOptions = question ? db.find('question_options', opt => opt.questionId === question.id) : [];
@@ -289,9 +359,12 @@ export const submitAnswer = (req, res) => {
     let currentPlayerScore = 0;
     let currentPlayerCorrectCount = 0;
 
-    // Update player record
+    // Find or create player
+    const pid = playerId || `p_${String(playerName).replace(/\s+/g, '_')}`;
+    let found = false;
     const updatedPlayers = (room.players || []).map(p => {
-      if (p.id === playerId) {
+      if (p.id === pid || p.name === playerName) {
+        found = true;
         const newScore = (p.score || 0) + points;
         const newCorrect = (p.correctCount || 0) + (isCorrect ? 1 : 0);
         currentPlayerScore = newScore;
@@ -307,6 +380,20 @@ export const submitAnswer = (req, res) => {
       return p;
     });
 
+    if (!found) {
+      currentPlayerScore = points;
+      currentPlayerCorrectCount = isCorrect ? 1 : 0;
+      updatedPlayers.push({
+        id: pid,
+        name: playerName,
+        nickname: playerName,
+        score: points,
+        correctCount: currentPlayerCorrectCount,
+        correctAnswersCount: currentPlayerCorrectCount,
+        totalAnswered: 1
+      });
+    }
+
     const answerItem = {
       questionIndex: (room.currentQuestionIndex || 0) + 1,
       questionId,
@@ -320,15 +407,15 @@ export const submitAnswer = (req, res) => {
       timeSpentSeconds
     };
 
-    const playerSubmissions = (room.submissions && room.submissions[playerId]) || [];
+    const playerSubmissions = (room.submissions && room.submissions[pid]) || [];
     playerSubmissions.push(answerItem);
 
     const newSubmissions = {
       ...(room.submissions || {}),
-      [playerId]: playerSubmissions
+      [pid]: playerSubmissions
     };
 
-    db.update('battle_rooms', r => r.pin === pin.trim(), {
+    db.update('battle_rooms', r => String(r.pin).trim() === pinStr, {
       players: updatedPlayers,
       submissions: newSubmissions
     });
@@ -339,9 +426,12 @@ export const submitAnswer = (req, res) => {
       points,
       myScore: currentPlayerScore,
       correctCount: currentPlayerCorrectCount,
-      correctOptionId: isCorrect ? selectedOptionId : (correctOpt ? correctOpt.id : null)
+      correctOptionLabel: correctOpt?.label || 'A',
+      correctOptionContent: correctOpt?.content || '',
+      correctOptionId: correctOpt ? correctOpt.id : null
     });
   } catch (error) {
+    console.error('submitAnswer error:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -350,11 +440,12 @@ export const submitAnswer = (req, res) => {
 export const finishBattle = (req, res) => {
   try {
     const { pin } = req.body;
-    const room = db.findOne('battle_rooms', r => r.pin === pin.trim());
+    const room = getOrHealRoom(pin);
     if (!room) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy phòng thi' });
     }
 
+    const pinStr = String(pin).trim();
     const sortedPlayers = [...(room.players || [])].sort((a, b) => (b.score || 0) - (a.score || 0));
     const leaderboard = sortedPlayers.map((p, idx) => ({
       rank: idx + 1,
@@ -373,7 +464,7 @@ export const finishBattle = (req, res) => {
       third: leaderboard[2] || null
     };
 
-    db.update('battle_rooms', r => r.pin === pin.trim(), {
+    db.update('battle_rooms', r => String(r.pin).trim() === pinStr, {
       status: 'podium',
       finishedAt: new Date().toISOString()
     });
