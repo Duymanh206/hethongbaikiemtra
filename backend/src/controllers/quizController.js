@@ -1,6 +1,7 @@
 import { db } from '../database/db.js';
 import { englishFlashcards } from '../database/englishSeedData.js';
 import { englishCurriculumK12 } from '../database/englishCurriculumK12.js';
+import { usEduCurriculum } from '../database/usEduCurriculum.js';
 import { parseDocxBuffer } from '../services/docxParser.js';
 import { parseRawQuizText } from '../services/smartQuizParser.js';
 import { fixMojibake, cleanDescription, cleanQuiz, getQuizSubjectName } from '../utils/textEncoding.js';
@@ -847,18 +848,31 @@ export const deleteQuiz = (req, res) => {
 export const getEnglishCurriculum = (req, res) => {
   try {
     const { grade, level } = req.query;
-    let list = englishCurriculumK12;
+    let nationalList = englishCurriculumK12;
+    let usList = usEduCurriculum;
+
     if (grade) {
       const gClean = grade.toLowerCase().replace(/lớp\s*/, '').trim();
-      const matched = list.find(g => g.grade.toLowerCase().includes(gClean));
-      if (matched) {
-        return res.json({ success: true, curriculum: matched });
-      }
+      const matchedNat = nationalList.find(g => g.grade.toLowerCase().includes(gClean));
+      const matchedUs = usList.find(g => g.grade.toLowerCase().includes(gClean) || (g.gradeCode && g.gradeCode.toLowerCase().includes(gClean)));
+      return res.json({ 
+        success: true, 
+        curriculum: matchedNat || null,
+        usEduCurriculum: matchedUs || null
+      });
     }
+
     if (level) {
-      list = list.filter(g => g.level === level);
+      nationalList = nationalList.filter(g => g.level === level);
+      usList = usList.filter(g => g.level === level);
     }
-    res.json({ success: true, curriculum: list });
+
+    res.json({ 
+      success: true, 
+      curriculum: nationalList,
+      usEduCurriculum: usList,
+      googleDriveRootUrl: 'https://drive.google.com/drive/folders/15PofJBFW3ymrm41AojESeKMuGvHVg7Y8'
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -868,10 +882,11 @@ export const getEnglishCurriculum = (req, res) => {
 export const getEnglishFlashcards = (req, res) => {
   try {
     const { level, grade, unitId } = req.query;
+    const allCurriculumPool = [...englishCurriculumK12, ...usEduCurriculum];
 
-    // 1. By Unit ID (e.g. g6_u1)
+    // 1. By Unit ID (e.g. g6_u1 or us_g1_u1)
     if (unitId) {
-      for (const g of englishCurriculumK12) {
+      for (const g of allCurriculumPool) {
         const u = g.units?.find(item => item.id === unitId);
         if (u && Array.isArray(u.vocabulary)) {
           return res.json({
@@ -888,7 +903,7 @@ export const getEnglishFlashcards = (req, res) => {
     // 2. By Grade (e.g. Lớp 1, Lớp 6)
     if (grade) {
       const gClean = grade.toLowerCase().replace(/lớp\s*/, '').trim();
-      const matched = englishCurriculumK12.find(g => g.grade.toLowerCase().includes(gClean));
+      const matched = allCurriculumPool.find(g => g.grade.toLowerCase().includes(gClean));
       if (matched) {
         const gradeCards = [];
         matched.units.forEach(u => {
@@ -915,7 +930,7 @@ export const getEnglishFlashcards = (req, res) => {
 
     // 4. Default: all cards across curriculum
     const all = [];
-    englishCurriculumK12.forEach(g => {
+    allCurriculumPool.forEach(g => {
       g.units?.forEach(u => {
         if (Array.isArray(u.vocabulary)) all.push(...u.vocabulary);
       });

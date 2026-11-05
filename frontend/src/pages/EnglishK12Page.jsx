@@ -23,7 +23,10 @@ import {
   Lightbulb,
   MessageSquare,
   Edit3,
-  FileText
+  FileText,
+  ExternalLink,
+  FolderOpen,
+  DownloadCloud
 } from 'lucide-react';
 import VocabularyFlashcards from '../components/english/VocabularyFlashcards';
 import LessonDetailModal from '../components/english/LessonDetailModal';
@@ -35,6 +38,7 @@ export default function EnglishK12Page({
 }) {
   // Navigation & Filter States
   const [activeHubTab, setActiveHubTab] = useState('lessons'); // 'lessons' | 'exams'
+  const [activeCurriculumSystem, setActiveCurriculumSystem] = useState('all'); // 'all' | 'national' | 'usedu'
   const [selectedLevel, setSelectedLevel] = useState('all'); // 'all' | 'primary' | 'secondary' | 'highschool'
   const [selectedGrade, setSelectedGrade] = useState('all'); // 'all' | 'Lớp 1' | ... | 'Lớp 12'
   const [selectedSkillFilter, setSelectedSkillFilter] = useState('all'); // 'all' | 'listening' | 'speaking' | 'reading' | 'writing'
@@ -42,6 +46,8 @@ export default function EnglishK12Page({
 
   // Data States
   const [curriculumList, setCurriculumList] = useState([]);
+  const [usEduCurriculumList, setUsEduCurriculumList] = useState([]);
+  const [googleDriveRootUrl, setGoogleDriveRootUrl] = useState('https://drive.google.com/drive/folders/15PofJBFW3ymrm41AojESeKMuGvHVg7Y8');
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -58,12 +64,14 @@ export default function EnglishK12Page({
       try {
         setLoading(true);
 
-        // 1. Fetch Curriculum (Grades 1-12)
+        // 1. Fetch Curriculum (Grades 1-12 & US_EDU)
         try {
           const cRes = await fetch('/api/quizzes/english/curriculum');
           const cData = await cRes.json();
-          if (cData.success && Array.isArray(cData.curriculum)) {
-            setCurriculumList(cData.curriculum);
+          if (cData.success) {
+            if (Array.isArray(cData.curriculum)) setCurriculumList(cData.curriculum);
+            if (Array.isArray(cData.usEduCurriculum)) setUsEduCurriculumList(cData.usEduCurriculum);
+            if (cData.googleDriveRootUrl) setGoogleDriveRootUrl(cData.googleDriveRootUrl);
           }
         } catch (err) {
           console.warn('Failed to load curriculum:', err);
@@ -104,20 +112,37 @@ export default function EnglishK12Page({
     loadData();
   }, []);
 
-  // Filtered Curriculum list based on Level & Grade
-  const filteredCurriculum = curriculumList.filter(gradeItem => {
+  // Combined and filtered Curriculum list based on System, Level & Grade
+  let baseCurriculum = [];
+  if (activeCurriculumSystem === 'national') {
+    baseCurriculum = curriculumList.map(item => ({ ...item, isUsEdu: false }));
+  } else if (activeCurriculumSystem === 'usedu') {
+    baseCurriculum = usEduCurriculumList.map(item => ({ ...item, isUsEdu: true }));
+  } else {
+    baseCurriculum = [
+      ...curriculumList.map(item => ({ ...item, isUsEdu: false })),
+      ...usEduCurriculumList.map(item => ({ ...item, isUsEdu: true }))
+    ];
+  }
+
+  const filteredCurriculum = baseCurriculum.filter(gradeItem => {
     // Level filter
     if (selectedLevel !== 'all' && gradeItem.level !== selectedLevel) {
       return false;
     }
     // Specific Grade filter
-    if (selectedGrade !== 'all' && gradeItem.grade !== selectedGrade) {
-      return false;
+    if (selectedGrade !== 'all') {
+      const gClean = selectedGrade.toLowerCase().replace(/lớp\s*/, '').trim();
+      const matchGradeName = gradeItem.grade.toLowerCase().includes(gClean) || 
+                             (gradeItem.gradeCode && gradeItem.gradeCode.toLowerCase().includes(gClean));
+      if (!matchGradeName) return false;
     }
     // Search query
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
-      const matchGrade = gradeItem.grade.toLowerCase().includes(q) || gradeItem.description.toLowerCase().includes(q);
+      const matchGrade = gradeItem.grade.toLowerCase().includes(q) || 
+                         gradeItem.description.toLowerCase().includes(q) ||
+                         (gradeItem.textbook && gradeItem.textbook.toLowerCase().includes(q));
       const matchUnit = gradeItem.units?.some(u => 
         u.title.toLowerCase().includes(q) || 
         u.vietnameseTitle.toLowerCase().includes(q) ||
@@ -278,6 +303,95 @@ export default function EnglishK12Page({
               : 'Luyện đề 15 phút, 1 tiết, giữa kỳ và thi thử tốt nghiệp THPT Quốc gia'}
           </div>
         </div>
+
+        {/* CURRICULUM SYSTEM SWITCHER (Hệ Chuẩn Quốc Gia vs Hệ Song Ngữ Chuẩn Mỹ US_EDU) */}
+        <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-4 sm:p-5 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                Hệ Thống Giáo Trình
+              </span>
+              <span className="text-xs text-blue-200">
+                Lựa chọn khung chương trình học theo mục tiêu của học sinh
+              </span>
+            </div>
+            <h3 className="text-sm sm:text-base font-extrabold text-white">
+              Khung Chương Trình Đào Tạo Tiếng Anh K12 & Song Ngữ
+            </h3>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setActiveCurriculumSystem('all')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                activeCurriculumSystem === 'all'
+                  ? 'bg-white text-slate-900 shadow-md font-extrabold'
+                  : 'bg-white/10 hover:bg-white/20 text-white'
+              }`}
+            >
+              🌟 Tất cả ({curriculumList.length + usEduCurriculumList.length} Khối)
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveCurriculumSystem('national')}
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                activeCurriculumSystem === 'national'
+                  ? 'bg-emerald-500 text-white shadow-md font-extrabold'
+                  : 'bg-white/10 hover:bg-white/20 text-white'
+              }`}
+            >
+              <span>🇻🇳</span>
+              <span>Hệ Chuẩn Bộ GD&ĐT (Global Success)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveCurriculumSystem('usedu')}
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                activeCurriculumSystem === 'usedu'
+                  ? 'bg-amber-400 text-slate-950 shadow-md font-black ring-2 ring-amber-300/50'
+                  : 'bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 border border-amber-400/40'
+              }`}
+            >
+              <span>🇺🇸</span>
+              <span>Hệ Song Ngữ Chuẩn Mỹ (US_EDU)</span>
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            </button>
+          </div>
+        </div>
+
+        {/* US_EDU MASTER GOOGLE DRIVE BANNER */}
+        {(activeCurriculumSystem === 'usedu' || activeCurriculumSystem === 'all') && (
+          <div className="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/5 rounded-3xl p-4 sm:p-5 border border-amber-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">📁</span>
+                <span className="font-extrabold text-sm sm:text-base text-amber-950">
+                  Kho Học Liệu & Giáo Trình Chuẩn Mỹ (Google Drive: US_EDU)
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 text-[10px] font-black uppercase">
+                  G01 - G12
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
+                Bao gồm toàn bộ file PDF và âm thanh bản ngữ: <strong>California Science Leveled Readers</strong>, <strong>Scott Foresman ELL Readers</strong>, <strong>Math Concept Readers</strong>, <strong>Writer's Choice Grammar</strong>, và <strong>McDougal Littell Literature</strong> (từ Lớp 1 đến Lớp 12).
+              </p>
+            </div>
+
+            <a
+              href={googleDriveRootUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-xs shadow-md shadow-amber-500/20 transition-all cursor-pointer shrink-0 active:scale-95"
+            >
+              <FolderOpen className="w-4 h-4" />
+              <span>Mở Kho Google Drive Gốc</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        )}
 
         {/* 2.2. LEVEL & GRADE SELECTOR (3 Thẻ Cấp học + Grade Pills Lớp 1 - 12) */}
         <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/90 space-y-4">
@@ -581,33 +695,71 @@ export default function EnglishK12Page({
 
             {/* List of Grades & Units */}
             <div className="space-y-8">
-              {filteredCurriculum.map(gradeItem => (
+              {filteredCurriculum.map((gradeItem, gIdx) => (
                 <div 
-                  key={gradeItem.grade}
+                  key={`${gradeItem.isUsEdu ? 'usedu_' : 'nat_'}${gradeItem.grade}_${gIdx}`}
                   className="bg-white rounded-3xl p-5 sm:p-7 shadow-xs border border-slate-200/90 space-y-5"
                 >
                   {/* Grade Banner */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2.5">
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className={`px-3 py-1 rounded-xl text-xs font-black text-white ${
-                          gradeItem.level === 'primary' ? 'bg-emerald-600' : (gradeItem.level === 'highschool' ? 'bg-indigo-600' : 'bg-blue-600')
+                          gradeItem.isUsEdu ? 'bg-amber-600' : (
+                            gradeItem.level === 'primary' ? 'bg-emerald-600' : (gradeItem.level === 'highschool' ? 'bg-indigo-600' : 'bg-blue-600')
+                          )
                         }`}>
                           {gradeItem.grade}
                         </span>
+
+                        {gradeItem.isUsEdu && (
+                          <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">
+                            <span>🇺🇸 Chuẩn Mỹ (US_EDU)</span>
+                          </span>
+                        )}
+
                         <h4 className="font-extrabold text-base sm:text-lg text-slate-900">
-                          {gradeItem.textbook}
+                          {gradeItem.textbook || (gradeItem.textbooks && gradeItem.textbooks[0])}
                         </h4>
                       </div>
+
                       <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
                         {gradeItem.description}
                       </p>
+
+                      {/* US_EDU Textbooks list */}
+                      {gradeItem.textbooks && gradeItem.textbooks.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {gradeItem.textbooks.map((tb, tbIdx) => (
+                            <span
+                              key={tbIdx}
+                              className="px-2 py-0.5 rounded-lg bg-amber-50 text-amber-900 text-[10px] font-medium border border-amber-200"
+                            >
+                              📚 {tb}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
-                    <div className="text-right shrink-0">
+                    <div className="flex flex-col sm:items-end gap-2 shrink-0">
                       <span className="text-xs font-bold text-slate-500">
-                        {gradeItem.units?.length || 0} bài học trọng tâm
+                        {gradeItem.units?.length || 0} bài học chuyên sâu
                       </span>
+
+                      {gradeItem.driveUrl && (
+                        <a
+                          href={gradeItem.driveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 font-bold text-xs transition-all shadow-xs cursor-pointer"
+                          title="Mở thư mục sách PDF gốc trên Google Drive"
+                        >
+                          <FolderOpen className="w-3.5 h-3.5 text-amber-600" />
+                          <span>Mở Drive Lớp Này</span>
+                          <ExternalLink className="w-3 h-3 text-amber-500" />
+                        </a>
+                      )}
                     </div>
                   </div>
 
@@ -636,6 +788,26 @@ export default function EnglishK12Page({
                             <p className="text-xs text-slate-600 mt-0.5 font-medium">
                               {unit.vietnameseTitle}
                             </p>
+
+                            {unit.curriculumSeries && (
+                              <div className="mt-2 flex items-center justify-between gap-2">
+                                <span className="inline-block px-2 py-0.5 rounded-md bg-blue-50 text-blue-800 text-[10px] font-bold border border-blue-200">
+                                  {unit.curriculumSeries}
+                                </span>
+                                {unit.driveLink && (
+                                  <a
+                                    href={unit.driveLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 hover:text-amber-900 hover:underline"
+                                    title="Mở tài liệu PDF & audio trên Google Drive"
+                                  >
+                                    <ExternalLink className="w-3 h-3 text-amber-600" />
+                                    <span>Tài liệu Drive</span>
+                                  </a>
+                                )}
+                              </div>
+                            )}
                           </div>
 
                           {/* Vocabulary Chips Preview */}
