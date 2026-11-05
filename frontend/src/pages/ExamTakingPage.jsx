@@ -408,7 +408,7 @@ export default function ExamTakingPage({
     .filter(idx => !isQuestionCompleted(idx));
 
   return (
-    <div className="min-h-screen bg-[#f4f6f9] flex flex-col justify-between pb-28">
+    <div className="min-h-screen bg-[#f4f6f9] flex flex-col justify-between pb-44 sm:pb-32">
       {/* 1.1 Top Header Bar */}
       <ExamHeader
         candidate={{

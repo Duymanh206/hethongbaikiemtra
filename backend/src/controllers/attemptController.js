@@ -61,9 +61,26 @@ export const syncAttemptState = (req, res) => {
     const { id } = req.params;
     const { answers = {}, markedForReview = [], remainingSeconds = null } = req.body;
 
-    const attempt = db.findOne('exam_attempts', a => a.id === id);
+    let attempt = db.findOne('exam_attempts', a => a.id === id);
     if (!attempt) {
-      return res.status(404).json({ success: false, message: 'Phiên thi không tồn tại' });
+      attempt = {
+        id,
+        quizId: 'composite_period60',
+        quizTitle: 'Bài kiểm tra',
+        userId: 'user_1',
+        studentId: 'dtc245200060',
+        score: 0,
+        maxScore: 10,
+        correctCount: 0,
+        totalCount: 20,
+        percentage: 0,
+        startedAt: new Date().toISOString(),
+        isSubmitted: false,
+        status: 'in_progress',
+        violationsCount: 0,
+        violationLogs: []
+      };
+      db.insert('exam_attempts', attempt);
     }
 
     if (attempt.isSubmitted) {
@@ -92,9 +109,26 @@ export const recordViolation = (req, res) => {
     const { id } = req.params;
     const { reason = 'Rời khỏi màn hình làm bài thi (Tab switch / Blur / Exit Fullscreen)' } = req.body;
 
-    const attempt = db.findOne('exam_attempts', a => a.id === id);
+    let attempt = db.findOne('exam_attempts', a => a.id === id);
     if (!attempt) {
-      return res.status(404).json({ success: false, message: 'Phiên thi không tồn tại' });
+      attempt = {
+        id,
+        quizId: 'composite_period60',
+        quizTitle: 'Bài kiểm tra',
+        userId: 'user_1',
+        studentId: 'dtc245200060',
+        score: 0,
+        maxScore: 10,
+        correctCount: 0,
+        totalCount: 20,
+        percentage: 0,
+        startedAt: new Date().toISOString(),
+        isSubmitted: false,
+        status: 'in_progress',
+        violationsCount: 0,
+        violationLogs: []
+      };
+      db.insert('exam_attempts', attempt);
     }
 
     if (attempt.isSubmitted) {

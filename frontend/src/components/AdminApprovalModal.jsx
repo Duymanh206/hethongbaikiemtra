@@ -49,6 +49,9 @@ export default function AdminApprovalModal({ isOpen, onClose }) {
         if (!aList.some(u => u.username === cu.username || (u.id && u.id === cu.id))) {
           aList.push(cu);
         }
+        if (cu.status === 'pending' && !pList.some(u => u.username === cu.username || (u.id && u.id === cu.id))) {
+          pList.push(cu);
+        }
       });
     } catch {}
 

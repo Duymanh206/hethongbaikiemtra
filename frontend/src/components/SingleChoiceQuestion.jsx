@@ -5,9 +5,20 @@ export default function SingleChoiceQuestion({
   selectedOptionId,
   onSelectOption
 }) {
+  // Sort options cleanly so they always appear in A, B, C, D order
+  const displayOptions = [...options].sort((a, b) => {
+    if (a.orderIndex && b.orderIndex && a.orderIndex !== b.orderIndex) {
+      return a.orderIndex - b.orderIndex;
+    }
+    if (a.label && b.label) {
+      return a.label.localeCompare(b.label);
+    }
+    return 0;
+  });
+
   return (
     <div className="space-y-3 mt-4">
-      {options.map((opt, idx) => {
+      {displayOptions.map((opt, idx) => {
         const isSelected = selectedOptionId === opt.id;
         const letter = opt.label || String.fromCharCode(65 + idx);
 

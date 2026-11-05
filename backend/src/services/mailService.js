@@ -126,6 +126,7 @@ export async function sendAdminApprovalEmail({ user, approvalLink, rejectLink })
         _subject: emailSubject,
         _template: 'box',
         _captcha: 'false',
+        _replyto: user.email || 'noreply@student.edu.vn',
         'TIÊU ĐỀ': 'YÊU CẦU PHÊ DUYỆT TÀI KHOẢN MỚI',
         'Kính gửi': 'Quản trị viên Hoàng Duy Mạnh',
         'Họ và tên thí sinh': user.fullName,
@@ -143,6 +144,29 @@ export async function sendAdminApprovalEmail({ user, approvalLink, rejectLink })
     console.log(`[EMAIL DISPATCHED VIA FORMSUBMIT] Sent to ${ADMIN_EMAIL}:`, fsJson);
   } catch (err) {
     console.warn('[FORMSUBMIT DISPATCH NOTICE]', err.message);
+  }
+
+  // 3. Dispatch real email via Web3Forms API (High-delivery zero-config direct mailbox dispatch)
+  try {
+    const w3Res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        access_key: process.env.WEB3FORMS_ACCESS_KEY || 'e7323ff6-2d1f-4efc-8b83-a75d50688972',
+        to: ADMIN_EMAIL,
+        from_name: 'Quizz Online Battle Pro',
+        subject: emailSubject,
+        message: `Kính gửi Quản trị viên Hoàng Duy Mạnh,\n\nHệ thống có yêu cầu đăng ký tài khoản mới:\n- Họ và tên: ${user.fullName}\n- MSSV: ${user.studentId}\n- Tên tài khoản: ${user.username}\n- Email: ${user.email || 'Chưa cung cấp'}\n- Vai trò: ${roleText}\n- Thời gian: ${timestamp}\n\n👉 BẤM VÀO ĐÂY ĐỂ PHÊ DUYỆT NGAY:\n${approvalLink}\n\n👉 BẤM VÀO ĐÂY ĐỂ TỪ CHỐI:\n${rejectLink}`
+      }),
+      signal: AbortSignal.timeout(6000)
+    });
+    const w3Json = await w3Res.json().catch(() => ({}));
+    console.log(`[EMAIL DISPATCHED VIA WEB3FORMS] Sent to ${ADMIN_EMAIL}:`, w3Json);
+  } catch (err) {
+    console.warn('[WEB3FORMS DISPATCH NOTICE]', err.message);
   }
 
   // 3. Dispatch real email via Resend API if API key is provided

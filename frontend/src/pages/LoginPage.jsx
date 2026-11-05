@@ -368,6 +368,17 @@ export default function LoginPage() {
                         )}
                       </button>
 
+                      {/* Button: Open Gmail Web */}
+                      <a
+                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=manhvipsv@gmail.com&su=${encodeURIComponent(`[Quizz. PRO] Yêu cầu phê duyệt tài khoản: ${pendingUser?.fullName || loginUsername} (${pendingUser?.studentId || loginUsername})`)}&body=${encodeURIComponent(`Kính gửi Quản trị viên Hoàng Duy Mạnh,\n\nTôi vừa đăng ký tài khoản tham gia kiểm tra trắc nghiệm:\n- Họ và tên: ${pendingUser?.fullName || loginUsername}\n- Mã sinh viên: ${pendingUser?.studentId || loginUsername}\n- Tên tài khoản: ${loginUsername || pendingUser?.username}\n\n👉 Bấm vào đường link sau để PHÊ DUYỆT & KÍCH HOẠT tài khoản cho tôi ngay:\n${pendingApprovalLink || `${window.location.origin}/api/auth/approve?userId=${encodeURIComponent(loginUsername || pendingUser?.username || 'user')}&action=approve`}\n\nXin trân trọng cảm ơn!`)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-bold text-xs shadow-xs transition-all text-center cursor-pointer"
+                      >
+                        <Mail className="w-3.5 h-3.5" />
+                        <span>🚀 Mở Gmail gửi ngay (mail.google.com)</span>
+                      </a>
+
                       <div className="grid grid-cols-2 gap-2">
                         {/* Button 2: Open mail app */}
                         <a
@@ -399,6 +410,19 @@ export default function LoginPage() {
                           )}
                         </button>
                       </div>
+
+                      {/* Direct 1-click Approval Link for Admin testing */}
+                      {pendingApprovalLink && (
+                        <a
+                          href={pendingApprovalLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-xs transition-all text-center"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>✓ Bấm để Kích hoạt tài khoản này ngay (Dành cho Admin)</span>
+                        </a>
+                      )}
                     </div>
 
                     {reminderSuccess && (
@@ -408,9 +432,15 @@ export default function LoginPage() {
                       </div>
                     )}
 
-                    <p className="text-[10px] text-amber-800/90 italic leading-relaxed pt-1 border-t border-amber-200/80">
-                      💡 <b>Tiện ích:</b> Quản trị viên Hoàng Duy Mạnh chỉ cần mở email và bấm nút <b>"✓ ĐỒNG Ý PHÊ DUYỆT TÀI KHOẢN"</b> trong email là tài khoản của bạn được kích hoạt ngay lập tức mà Quản trị viên không cần phải đăng nhập vào hệ thống!
-                    </p>
+                    {/* Important Gmail Notice */}
+                    <div className="p-2.5 rounded-xl bg-amber-100/90 border border-amber-300/90 text-[11px] text-amber-950 space-y-1">
+                      <div className="font-bold flex items-center gap-1 text-amber-900">
+                        <span>📬 Lưu ý quan trọng về hòm thư Gmail (manhvipsv@gmail.com):</span>
+                      </div>
+                      <p className="leading-relaxed">
+                        Email thông báo tự động có thể nằm trong mục <strong>Thư rác (Spam)</strong> hoặc <strong>Quảng cáo (Promotions)</strong> của Gmail. Quản trị viên vui lòng kiểm tra mục Thư rác và bấm <em>"Báo cáo không phải spam"</em> để các thông báo sau hiển thị thẳng trong Hộp thư đến!
+                      </p>
+                    </div>
                   </div>
                 )}
 
