@@ -289,6 +289,315 @@
       "createdAt": "2026-03-18T08:00:00.000Z",
       "updatedAt": "2026-03-18T08:00:00.000Z",
       "subjectName": "Tiếng Anh Phổ Thông"
+    },
+    {
+      "id": "us_g01_u1",
+      "title": "Unit 1: Living and Non-living Things (Lớp 1 (Grade 1))",
+      "description": "undefined. Giáo trình chuẩn: California Science. Luyện bài tập trắc nghiệm, bài đọc hiểu và cấu trúc ngữ pháp.",
+      "category": "Tiếng Anh Chuẩn Mỹ (US_EDU)",
+      "originalDocxName": "us_g01_u1_textbook.pdf",
+      "durationMinutes": 15,
+      "passingScore": 5,
+      "shuffleQuestions": false,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 3,
+      "attemptsCount": 35,
+      "avgRating": 5,
+      "createdBy": "US_EDU Curriculum Board",
+      "createdAt": "2026-11-05T20:01:32.024Z",
+      "updatedAt": "2026-11-05T20:01:32.026Z",
+      "isUnitQuiz": true,
+      "unitData": {
+        "num": 1,
+        "title": "Unit 1: Living and Non-living Things",
+        "viTitle": "Chuyên đề: Sinh vật sống & Vật không sống (California Science G1)",
+        "series": "California Science",
+        "overview": "Phân biệt sinh vật sống (cần thức ăn, nước, không khí để lớn lên) với các vật thể vô tri.",
+        "grammar": "Living things need + [food / water / air] to survive and grow.",
+        "patterns": [
+          "Plants and animals are living things.",
+          "A rock is a non-living thing because it does not grow."
+        ],
+        "tips": "Phát âm chuẩn cụm \"living things\" với âm /ɪ/ ngắn và đuôi /ŋz/.",
+        "vocab": [
+          [
+            "Living thing",
+            "/ˈlɪv.ɪŋ θɪŋ/",
+            "noun",
+            "Sinh vật sống",
+            "Plants are living things.",
+            "Cây cối là sinh vật sống.",
+            "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&auto=format&fit=crop&q=80"
+          ],
+          [
+            "Non-living",
+            "/nɒn ˈlɪv.ɪŋ/",
+            "adj",
+            "Vật vô tri, không sống",
+            "Rocks are non-living.",
+            "Đá là vật vô tri.",
+            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format&fit=crop&q=80"
+          ],
+          [
+            "Survive",
+            "/səˈvaɪv/",
+            "verb",
+            "Sinh tồn, sống sót",
+            "Animals need water to survive.",
+            "Động vật cần nước để sinh tồn.",
+            "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=400&auto=format&fit=crop&q=80"
+          ],
+          [
+            "Grow",
+            "/ɡrəʊ/",
+            "verb",
+            "Lớn lên, phát triển",
+            "A seed grows into a plant.",
+            "Hạt mầm lớn lên thành cây.",
+            "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=400&auto=format&fit=crop&q=80"
+          ]
+        ],
+        "listen": {
+          "script": "Science teacher: Look around our garden! Plants and little birds are living things because they need food and water to grow.",
+          "q": "What do living things need to grow?",
+          "opts": [
+            [
+              "Food and water (Thức ăn và nước uống)",
+              true
+            ],
+            [
+              "Batteries and gasoline",
+              false
+            ]
+          ],
+          "exp": "Trong bài nghe: \"they need food and water to grow\"."
+        },
+        "speaking": [
+          [
+            "Living things grow and change.",
+            "/ˈlɪv.ɪŋ θɪŋz ɡrəʊ ænd tʃeɪndʒ/",
+            "Living things grow and change"
+          ],
+          [
+            "Plants need sunlight and water.",
+            "/plɑːnts niːd ˈsʌn.laɪt ænd ˈwɔː.tər/",
+            "Plants need sunlight and water"
+          ]
+        ],
+        "reading": {
+          "title": "What is Alive?",
+          "passage": "Living things breathe air. They take in water and eat food. They grow bigger over time. A puppy grows into a dog. A tiny acorn grows into a huge oak tree. Toys and desks do not breathe. They do not eat. They are non-living things.",
+          "q": "Why is a desk a non-living thing?",
+          "opts": [
+            [
+              "Because it does not breathe, eat or grow",
+              true
+            ],
+            [
+              "Because it is in a classroom",
+              false
+            ]
+          ],
+          "exp": "Bàn học là vật vô tri vì nó không hô hấp, không ăn uống và không phát triển."
+        },
+        "writing": {
+          "prompt": "Sắp xếp các từ thành câu đúng về sinh vật sống:",
+          "correct": "Plants need water to survive",
+          "words": [
+            "water",
+            "Plants",
+            "survive",
+            "to",
+            "need"
+          ],
+          "exp": "Cấu trúc: Chủ ngữ (Plants) + động từ (need) + tân ngữ (water) + chỉ mục đích (to survive)."
+        },
+        "id": "us_g01_u1",
+        "unitNumber": 1,
+        "curriculumSeries": "California Science",
+        "readingPractice": {
+          "title": "What is Alive?",
+          "passage": "Living things breathe air. They take in water and eat food. They grow bigger over time. A puppy grows into a dog. A tiny acorn grows into a huge oak tree. Toys and desks do not breathe. They do not eat. They are non-living things.",
+          "question": "Why is a desk a non-living thing?",
+          "options": [
+            {
+              "id": "opt_r_us_g01_u1_1",
+              "label": "A",
+              "text": "Because it does not breathe, eat or grow",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_r_us_g01_u1_2",
+              "label": "B",
+              "text": "Because it is in a classroom",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Bàn học là vật vô tri vì nó không hô hấp, không ăn uống và không phát triển."
+        },
+        "listeningPractice": {
+          "script": "Science teacher: Look around our garden! Plants and little birds are living things because they need food and water to grow.",
+          "question": "What do living things need to grow?",
+          "options": [
+            {
+              "id": "opt_l_us_g01_u1_1",
+              "label": "A",
+              "text": "Food and water (Thức ăn và nước uống)",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_l_us_g01_u1_2",
+              "label": "B",
+              "text": "Batteries and gasoline",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Trong bài nghe: \"they need food and water to grow\"."
+        },
+        "writingPractice": {
+          "type": "sentence_rearrangement",
+          "prompt": "Sắp xếp các từ thành câu đúng về sinh vật sống:",
+          "correctSentence": "Plants need water to survive",
+          "scrambledWords": [
+            "water",
+            "Plants",
+            "survive",
+            "to",
+            "need"
+          ],
+          "explanation": "Cấu trúc: Chủ ngữ (Plants) + động từ (need) + tân ngữ (water) + chỉ mục đích (to survive)."
+        }
+      }
+    },
+    {
+      "id": "us_g12_u6",
+      "title": "Unit 6: AP English Literature & Personal College Admissions Statement (Lớp 12 (Grade 12))",
+      "description": "Chuyên đề: Luyện Đề AP English Literature & Hoàn Thiện Bài Luận Đại Học Mỹ (Writer's Choice G12). Giáo trình chuẩn: Writer's Choice. Luyện bài tập trắc nghiệm, bài đọc hiểu và cấu trúc ngữ pháp.",
+      "category": "Tiếng Anh Chuẩn Mỹ (US_EDU)",
+      "originalDocxName": "us_g12_u6_textbook.pdf",
+      "durationMinutes": 15,
+      "passingScore": 5,
+      "shuffleQuestions": false,
+      "shuffleOptions": true,
+      "antiCheatEnabled": true,
+      "maxViolations": 3,
+      "totalQuestions": 10,
+      "attemptsCount": 35,
+      "avgRating": 5,
+      "createdBy": "US_EDU Curriculum Board",
+      "createdAt": "2026-11-05T20:01:32.072Z",
+      "updatedAt": "2026-11-05T20:01:32.072Z",
+      "isUnitQuiz": true,
+      "unitData": {
+        "id": "us_g12_u6",
+        "unitNumber": 6,
+        "title": "Unit 6: AP English Literature & Personal College Admissions Statement",
+        "vietnameseTitle": "Chuyên đề: Luyện Đề AP English Literature & Hoàn Thiện Bài Luận Đại Học Mỹ (Writer's Choice G12)",
+        "curriculumSeries": "Writer's Choice",
+        "driveLink": "https://drive.google.com/drive/folders/1tzj33xKlv2sGTxNqfu-YjkozSKFOQEEv",
+        "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 12: College Admissions Essay. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
+        "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for College Admissions Essay.",
+        "sentencePatterns": [
+          "Through rigorous analysis of nuance, scholars uncover deeper philosophical motifs.",
+          "The author masterfully employs nuance to challenge conventional perceptions."
+        ],
+        "tips": "Phát âm chuẩn thuật ngữ học thuật: Nuance (/ˈnjuː.ɑːns/).",
+        "vocabulary": [
+          {
+            "word": "Nuance",
+            "ipa": "/ˈnjuː.ɑːns/",
+            "type": "noun",
+            "meaning": "Sắc thái tinh tế trong ý nghĩa và ngôn từ",
+            "example": "The essay deeply analyzes the concept of nuance.",
+            "exampleVi": "Bài luận phân tích sâu sắc khái niệm sắc thái tinh tế trong ý nghĩa và ngôn từ.",
+            "imageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&auto=format&fit=crop&q=80"
+          },
+          {
+            "word": "Rhetoric",
+            "ipa": "/ˈret.ər.ɪk/",
+            "type": "noun",
+            "meaning": "Thuật hùng biện, nghệ thuật sử dụng ngôn từ",
+            "example": "The speaker's persuasive rhetoric captivated the audience.",
+            "exampleVi": "Thuật hùng biện thuyết phục của diễn giả đã lôi cuốn khán giả.",
+            "imageUrl": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=400&auto=format&fit=crop&q=80"
+          },
+          {
+            "word": "Perspective",
+            "ipa": "/pəˈspek.tɪv/",
+            "type": "noun",
+            "meaning": "Góc nhìn, quan điểm nhận thức",
+            "example": "Literature broadens our cultural perspectives.",
+            "exampleVi": "Văn học mở rộng góc nhìn văn hóa của chúng ta.",
+            "imageUrl": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&auto=format&fit=crop&q=80"
+          }
+        ],
+        "listeningPractice": {
+          "script": "University Professor: In today's seminar on College Admissions Essay, note how the text utilizes nuance. It allows the narrator to construct a compelling narrative voice.",
+          "question": "What rhetorical technique is emphasized in the seminar?",
+          "options": [
+            {
+              "id": "opt_g12_u6_1",
+              "label": "A",
+              "text": "Nuance",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_g12_u6_2",
+              "label": "B",
+              "text": "Linear simplistic exposition",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Giáo sư khẳng định kỹ thuật trọng tâm là: \"Nuance\"."
+        },
+        "speakingPractice": [
+          {
+            "phrase": "Nuance shapes literary meaning.",
+            "ipa": "/ˈnjuː.ɑːns/",
+            "prompt": "Luyện phát âm thuật ngữ học thuật Nuance",
+            "targetText": "Nuance shapes literary meaning",
+            "difficulty": "Hard"
+          }
+        ],
+        "readingPractice": {
+          "title": "Critical Perspectives on College Admissions Essay",
+          "passage": "Critical literary scholars examine how authors deploy nuance to convey complex thematic undertones. Rather than stating themes explicitly, sophisticated writers weave subtle symbols throughout the narrative fabric, inviting discerning readers to engage in active interpretation.",
+          "question": "Why do sophisticated writers utilize subtle techniques rather than explicit statements?",
+          "options": [
+            {
+              "id": "opt_r_g12_u6_1",
+              "label": "A",
+              "text": "To invite active intellectual interpretation by the reader",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_r_g12_u6_2",
+              "label": "B",
+              "text": "To conceal their lack of ideas",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Đoạn văn nêu: \"inviting discerning readers to engage in active interpretation\"."
+        },
+        "writingPractice": {
+          "type": "sentence_rearrangement",
+          "prompt": "Sắp xếp các từ thành câu học thuật hoàn chỉnh:",
+          "correctSentence": "Nuance enhances the philosophical depth of literature",
+          "scrambledWords": [
+            "depth",
+            "philosophical",
+            "literature",
+            "enhances",
+            "the",
+            "Nuance",
+            "of"
+          ],
+          "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
+        },
+        "series": "Writer's Choice"
+      }
     }
   ],
   "questions": [
@@ -2733,6 +3042,149 @@
       ],
       "correctSentence": "all students must submit their assignments before friday",
       "explanation": "Cấu trúc: All students (Chủ ngữ) + must submit (Động từ khuyết thiếu) + their assignments (Tân ngữ) + before Friday (Trạng từ chỉ thời gian).",
+      "points": 1
+    },
+    {
+      "id": "q_us_g01_u1_read_1",
+      "quizId": "us_g01_u1",
+      "type": "reading_comprehension",
+      "orderIndex": 1,
+      "content": "Why is a desk a non-living thing?",
+      "passageTitle": "What is Alive?",
+      "passageText": "Living things breathe air. They take in water and eat food. They grow bigger over time. A puppy grows into a dog. A tiny acorn grows into a huge oak tree. Toys and desks do not breathe. They do not eat. They are non-living things.",
+      "explanation": "Bàn học là vật vô tri vì nó không hô hấp, không ăn uống và không phát triển.",
+      "points": 1
+    },
+    {
+      "id": "q_us_g01_u1_listen_1",
+      "quizId": "us_g01_u1",
+      "type": "listening",
+      "orderIndex": 2,
+      "content": "What do living things need to grow?",
+      "listeningScript": "Science teacher: Look around our garden! Plants and little birds are living things because they need food and water to grow.",
+      "audioUrl": null,
+      "explanation": "Trong bài nghe: \"they need food and water to grow\".",
+      "points": 1
+    },
+    {
+      "id": "q_us_g01_u1_write_1",
+      "quizId": "us_g01_u1",
+      "type": "sentence_rearrange",
+      "orderIndex": 3,
+      "content": "Sắp xếp các từ thành câu đúng về sinh vật sống:",
+      "scrambledWords": [
+        "water",
+        "Plants",
+        "survive",
+        "to",
+        "need"
+      ],
+      "correctSentence": "Plants need water to survive",
+      "explanation": "Cấu trúc: Chủ ngữ (Plants) + động từ (need) + tân ngữ (water) + chỉ mục đích (to survive).",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_read_1",
+      "quizId": "us_g12_u6",
+      "type": "reading_comprehension",
+      "orderIndex": 1,
+      "content": "Why do sophisticated writers utilize subtle techniques rather than explicit statements?",
+      "passageTitle": "Critical Perspectives on College Admissions Essay",
+      "passageText": "Critical literary scholars examine how authors deploy nuance to convey complex thematic undertones. Rather than stating themes explicitly, sophisticated writers weave subtle symbols throughout the narrative fabric, inviting discerning readers to engage in active interpretation.",
+      "explanation": "Đoạn văn nêu: \"inviting discerning readers to engage in active interpretation\".",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_listen_1",
+      "quizId": "us_g12_u6",
+      "type": "listening",
+      "orderIndex": 2,
+      "content": "What rhetorical technique is emphasized in the seminar?",
+      "listeningScript": "University Professor: In today's seminar on College Admissions Essay, note how the text utilizes nuance. It allows the narrator to construct a compelling narrative voice.",
+      "audioUrl": null,
+      "explanation": "Giáo sư khẳng định kỹ thuật trọng tâm là: \"Nuance\".",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_write_1",
+      "quizId": "us_g12_u6",
+      "type": "sentence_rearrange",
+      "orderIndex": 3,
+      "content": "Sắp xếp các từ thành câu học thuật hoàn chỉnh:",
+      "scrambledWords": [
+        "depth",
+        "philosophical",
+        "literature",
+        "enhances",
+        "the",
+        "Nuance",
+        "of"
+      ],
+      "correctSentence": "Nuance enhances the philosophical depth of literature",
+      "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature).",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_vocab_1",
+      "quizId": "us_g12_u6",
+      "type": "single_choice",
+      "orderIndex": 4,
+      "content": "Từ vựng \"<strong>Nuance</strong>\" (phiên âm: <span class=\"font-mono text-blue-600\">/ˈnjuː.ɑːns/</span>, từ loại: <em>noun</em>) có nghĩa tiếng Việt là gì?",
+      "explanation": "Từ vựng: \"Nuance\" có nghĩa là \"Sắc thái tinh tế trong ý nghĩa và ngôn từ\". Ví dụ: \"The essay deeply analyzes the concept of nuance.\" (Bài luận phân tích sâu sắc khái niệm sắc thái tinh tế trong ý nghĩa và ngôn từ.).",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_ctx_1",
+      "quizId": "us_g12_u6",
+      "type": "single_choice",
+      "orderIndex": 5,
+      "content": "Điền từ vựng thích hợp vào chỗ trống:<br/><blockquote class=\"p-2.5 my-2 border-l-4 border-blue-500 bg-slate-50 italic font-medium\">\"The essay deeply analyzes the concept of _____.\"</blockquote>",
+      "explanation": "Câu hoàn chỉnh: \"The essay deeply analyzes the concept of nuance.\" (Bài luận phân tích sâu sắc khái niệm sắc thái tinh tế trong ý nghĩa và ngôn từ.).",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_vocab_2",
+      "quizId": "us_g12_u6",
+      "type": "single_choice",
+      "orderIndex": 6,
+      "content": "Từ vựng \"<strong>Rhetoric</strong>\" (phiên âm: <span class=\"font-mono text-blue-600\">/ˈret.ər.ɪk/</span>, từ loại: <em>noun</em>) có nghĩa tiếng Việt là gì?",
+      "explanation": "Từ vựng: \"Rhetoric\" có nghĩa là \"Thuật hùng biện, nghệ thuật sử dụng ngôn từ\". Ví dụ: \"The speaker's persuasive rhetoric captivated the audience.\" (Thuật hùng biện thuyết phục của diễn giả đã lôi cuốn khán giả.).",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_ctx_2",
+      "quizId": "us_g12_u6",
+      "type": "single_choice",
+      "orderIndex": 7,
+      "content": "Điền từ vựng thích hợp vào chỗ trống:<br/><blockquote class=\"p-2.5 my-2 border-l-4 border-blue-500 bg-slate-50 italic font-medium\">\"The speaker's persuasive _____ captivated the audience.\"</blockquote>",
+      "explanation": "Câu hoàn chỉnh: \"The speaker's persuasive rhetoric captivated the audience.\" (Thuật hùng biện thuyết phục của diễn giả đã lôi cuốn khán giả.).",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_vocab_3",
+      "quizId": "us_g12_u6",
+      "type": "single_choice",
+      "orderIndex": 8,
+      "content": "Từ vựng \"<strong>Perspective</strong>\" (phiên âm: <span class=\"font-mono text-blue-600\">/pəˈspek.tɪv/</span>, từ loại: <em>noun</em>) có nghĩa tiếng Việt là gì?",
+      "explanation": "Từ vựng: \"Perspective\" có nghĩa là \"Góc nhìn, quan điểm nhận thức\". Ví dụ: \"Literature broadens our cultural perspectives.\" (Văn học mở rộng góc nhìn văn hóa của chúng ta.).",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_ctx_3",
+      "quizId": "us_g12_u6",
+      "type": "single_choice",
+      "orderIndex": 9,
+      "content": "Điền từ vựng thích hợp vào chỗ trống:<br/><blockquote class=\"p-2.5 my-2 border-l-4 border-blue-500 bg-slate-50 italic font-medium\">\"Literature broadens our cultural perspectives.\"</blockquote>",
+      "explanation": "Câu hoàn chỉnh: \"Literature broadens our cultural perspectives.\" (Văn học mở rộng góc nhìn văn hóa của chúng ta.).",
+      "points": 1
+    },
+    {
+      "id": "q_us_g12_u6_grammar_1",
+      "quizId": "us_g12_u6",
+      "type": "single_choice",
+      "orderIndex": 10,
+      "content": "Dựa vào ngữ pháp bài học (Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for College Admissions Essay.), phương án nào sau đây diễn đạt chính xác nhất?",
+      "explanation": "Mẫu câu chuẩn ngữ pháp trong bài học: \"Through rigorous analysis of nuance, scholars uncover deeper philosophical motifs.\".",
       "points": 1
     }
   ],
@@ -6928,6 +7380,286 @@
       "content": "questionable and hazardous",
       "isCorrect": false,
       "orderIndex": 1
+    },
+    {
+      "id": "opt_r_us_g01_u1_1",
+      "questionId": "q_us_g01_u1_read_1",
+      "label": "A",
+      "content": "Because it does not breathe, eat or grow",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_r_us_g01_u1_2",
+      "questionId": "q_us_g01_u1_read_1",
+      "label": "B",
+      "content": "Because it is in a classroom",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_l_us_g01_u1_1",
+      "questionId": "q_us_g01_u1_listen_1",
+      "label": "A",
+      "content": "Food and water (Thức ăn và nước uống)",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_l_us_g01_u1_2",
+      "questionId": "q_us_g01_u1_listen_1",
+      "label": "B",
+      "content": "Batteries and gasoline",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_r_g12_u6_1",
+      "questionId": "q_us_g12_u6_read_1",
+      "label": "A",
+      "content": "To invite active intellectual interpretation by the reader",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_r_g12_u6_2",
+      "questionId": "q_us_g12_u6_read_1",
+      "label": "B",
+      "content": "To conceal their lack of ideas",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "opt_g12_u6_1",
+      "questionId": "q_us_g12_u6_listen_1",
+      "label": "A",
+      "content": "Nuance",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "opt_g12_u6_2",
+      "questionId": "q_us_g12_u6_listen_1",
+      "label": "B",
+      "content": "Linear simplistic exposition",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "q_us_g12_u6_vocab_1_opt_1",
+      "questionId": "q_us_g12_u6_vocab_1",
+      "label": "A",
+      "content": "Sắc thái tinh tế trong ý nghĩa và ngôn từ",
+      "isCorrect": true,
+      "orderIndex": 1
+    },
+    {
+      "id": "q_us_g12_u6_vocab_1_opt_2",
+      "questionId": "q_us_g12_u6_vocab_1",
+      "label": "B",
+      "content": "Thuật hùng biện, nghệ thuật sử dụng ngôn từ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "q_us_g12_u6_vocab_1_opt_3",
+      "questionId": "q_us_g12_u6_vocab_1",
+      "label": "C",
+      "content": "Môi trường sống tự nhiên",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "q_us_g12_u6_vocab_1_opt_4",
+      "questionId": "q_us_g12_u6_vocab_1",
+      "label": "D",
+      "content": "Góc nhìn, quan điểm nhận thức",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "q_us_g12_u6_ctx_1_opt_1",
+      "questionId": "q_us_g12_u6_ctx_1",
+      "label": "A",
+      "content": "Perspective",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "q_us_g12_u6_ctx_1_opt_2",
+      "questionId": "q_us_g12_u6_ctx_1",
+      "label": "B",
+      "content": "Rhetoric",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "q_us_g12_u6_ctx_1_opt_3",
+      "questionId": "q_us_g12_u6_ctx_1",
+      "label": "C",
+      "content": "Nuance",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "q_us_g12_u6_ctx_1_opt_4",
+      "questionId": "q_us_g12_u6_ctx_1",
+      "label": "D",
+      "content": "grow",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "q_us_g12_u6_vocab_2_opt_1",
+      "questionId": "q_us_g12_u6_vocab_2",
+      "label": "A",
+      "content": "Góc nhìn, quan điểm nhận thức",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "q_us_g12_u6_vocab_2_opt_2",
+      "questionId": "q_us_g12_u6_vocab_2",
+      "label": "B",
+      "content": "Sắc thái tinh tế trong ý nghĩa và ngôn từ",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "q_us_g12_u6_vocab_2_opt_3",
+      "questionId": "q_us_g12_u6_vocab_2",
+      "label": "C",
+      "content": "Môi trường sống tự nhiên",
+      "isCorrect": false,
+      "orderIndex": 3
+    },
+    {
+      "id": "q_us_g12_u6_vocab_2_opt_4",
+      "questionId": "q_us_g12_u6_vocab_2",
+      "label": "D",
+      "content": "Thuật hùng biện, nghệ thuật sử dụng ngôn từ",
+      "isCorrect": true,
+      "orderIndex": 4
+    },
+    {
+      "id": "q_us_g12_u6_ctx_2_opt_1",
+      "questionId": "q_us_g12_u6_ctx_2",
+      "label": "A",
+      "content": "Nuance",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "q_us_g12_u6_ctx_2_opt_2",
+      "questionId": "q_us_g12_u6_ctx_2",
+      "label": "B",
+      "content": "Perspective",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "q_us_g12_u6_ctx_2_opt_3",
+      "questionId": "q_us_g12_u6_ctx_2",
+      "label": "C",
+      "content": "Rhetoric",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "q_us_g12_u6_ctx_2_opt_4",
+      "questionId": "q_us_g12_u6_ctx_2",
+      "label": "D",
+      "content": "grow",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "q_us_g12_u6_vocab_3_opt_1",
+      "questionId": "q_us_g12_u6_vocab_3",
+      "label": "A",
+      "content": "Sắc thái tinh tế trong ý nghĩa và ngôn từ",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "q_us_g12_u6_vocab_3_opt_2",
+      "questionId": "q_us_g12_u6_vocab_3",
+      "label": "B",
+      "content": "Môi trường sống tự nhiên",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "q_us_g12_u6_vocab_3_opt_3",
+      "questionId": "q_us_g12_u6_vocab_3",
+      "label": "C",
+      "content": "Góc nhìn, quan điểm nhận thức",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "q_us_g12_u6_vocab_3_opt_4",
+      "questionId": "q_us_g12_u6_vocab_3",
+      "label": "D",
+      "content": "Thuật hùng biện, nghệ thuật sử dụng ngôn từ",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "q_us_g12_u6_ctx_3_opt_1",
+      "questionId": "q_us_g12_u6_ctx_3",
+      "label": "A",
+      "content": "Rhetoric",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "q_us_g12_u6_ctx_3_opt_2",
+      "questionId": "q_us_g12_u6_ctx_3",
+      "label": "B",
+      "content": "grow",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "q_us_g12_u6_ctx_3_opt_3",
+      "questionId": "q_us_g12_u6_ctx_3",
+      "label": "C",
+      "content": "Perspective",
+      "isCorrect": true,
+      "orderIndex": 3
+    },
+    {
+      "id": "q_us_g12_u6_ctx_3_opt_4",
+      "questionId": "q_us_g12_u6_ctx_3",
+      "label": "D",
+      "content": "Nuance",
+      "isCorrect": false,
+      "orderIndex": 4
+    },
+    {
+      "id": "q_us_g12_u6_grammar_1_opt_1",
+      "questionId": "q_us_g12_u6_grammar_1",
+      "label": "A",
+      "content": "analysis of nuance, scholars uncover deeper philosophical motifs. Through rigorous",
+      "isCorrect": false,
+      "orderIndex": 1
+    },
+    {
+      "id": "q_us_g12_u6_grammar_1_opt_2",
+      "questionId": "q_us_g12_u6_grammar_1",
+      "label": "B",
+      "content": "The Through are not motifs.",
+      "isCorrect": false,
+      "orderIndex": 2
+    },
+    {
+      "id": "q_us_g12_u6_grammar_1_opt_3",
+      "questionId": "q_us_g12_u6_grammar_1",
+      "label": "C",
+      "content": "Through rigorous analysis of nuance, scholars uncover deeper philosophical motifs.",
+      "isCorrect": true,
+      "orderIndex": 3
     }
   ],
   "drag_drop_items": [

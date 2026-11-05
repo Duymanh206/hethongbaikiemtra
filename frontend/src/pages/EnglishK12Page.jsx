@@ -42,6 +42,7 @@ export default function EnglishK12Page({
   const [selectedLevel, setSelectedLevel] = useState('all'); // 'all' | 'primary' | 'secondary' | 'highschool'
   const [selectedGrade, setSelectedGrade] = useState('all'); // 'all' | 'Lớp 1' | ... | 'Lớp 12'
   const [selectedSkillFilter, setSelectedSkillFilter] = useState('all'); // 'all' | 'listening' | 'speaking' | 'reading' | 'writing'
+  const [selectedSeriesFilter, setSelectedSeriesFilter] = useState('all'); // 'all' | 'California Science' | 'Scott Foresman' | 'Math Concept' | 'Writer's Choice' | 'McDougal Littell' | 'Sound Studio'
   const [searchQuery, setSearchQuery] = useState('');
 
   // Data States
@@ -125,33 +126,51 @@ export default function EnglishK12Page({
     ];
   }
 
-  const filteredCurriculum = baseCurriculum.filter(gradeItem => {
-    // Level filter
-    if (selectedLevel !== 'all' && gradeItem.level !== selectedLevel) {
-      return false;
-    }
-    // Specific Grade filter
-    if (selectedGrade !== 'all') {
-      const gClean = selectedGrade.toLowerCase().replace(/lớp\s*/, '').trim();
-      const matchGradeName = gradeItem.grade.toLowerCase().includes(gClean) || 
-                             (gradeItem.gradeCode && gradeItem.gradeCode.toLowerCase().includes(gClean));
-      if (!matchGradeName) return false;
-    }
-    // Search query
-    if (searchQuery.trim()) {
-      const q = searchQuery.trim().toLowerCase();
-      const matchGrade = gradeItem.grade.toLowerCase().includes(q) || 
-                         gradeItem.description.toLowerCase().includes(q) ||
-                         (gradeItem.textbook && gradeItem.textbook.toLowerCase().includes(q));
-      const matchUnit = gradeItem.units?.some(u => 
-        u.title.toLowerCase().includes(q) || 
-        u.vietnameseTitle.toLowerCase().includes(q) ||
-        u.vocabulary?.some(v => v.word.toLowerCase().includes(q) || v.meaning.toLowerCase().includes(q))
-      );
-      if (!matchGrade && !matchUnit) return false;
-    }
-    return true;
-  });
+  // Filtered Curriculum based on level, grade, series, and search query
+  const filteredCurriculum = baseCurriculum
+    .map(gradeItem => {
+      if (selectedSeriesFilter === 'all') return gradeItem;
+      const target = selectedSeriesFilter.toLowerCase();
+      const matchedUnits = (gradeItem.units || []).filter(u => {
+        const uSeries = (u.series || u.curriculumSeries || '').toLowerCase();
+        return uSeries.includes(target) || target.includes(uSeries);
+      });
+      return {
+        ...gradeItem,
+        units: matchedUnits
+      };
+    })
+    .filter(gradeItem => {
+      // If series filter is active, skip grades that have 0 matching units
+      if (selectedSeriesFilter !== 'all' && (!gradeItem.units || gradeItem.units.length === 0)) {
+        return false;
+      }
+      // Level filter
+      if (selectedLevel !== 'all' && gradeItem.level !== selectedLevel) {
+        return false;
+      }
+      // Specific Grade filter
+      if (selectedGrade !== 'all') {
+        const gClean = selectedGrade.toLowerCase().replace(/lớp\s*/, '').trim();
+        const matchGradeName = gradeItem.grade.toLowerCase().includes(gClean) || 
+                               (gradeItem.gradeCode && gradeItem.gradeCode.toLowerCase().includes(gClean));
+        if (!matchGradeName) return false;
+      }
+      // Search query
+      if (searchQuery.trim()) {
+        const q = searchQuery.trim().toLowerCase();
+        const matchGrade = gradeItem.grade.toLowerCase().includes(q) || 
+                           gradeItem.description.toLowerCase().includes(q) ||
+                           (gradeItem.textbook && gradeItem.textbook.toLowerCase().includes(q));
+        const matchUnit = gradeItem.units?.some(u => 
+          u.title.toLowerCase().includes(q) || 
+          u.vietnameseTitle.toLowerCase().includes(q) ||
+          u.vocabulary?.some(v => v.word.toLowerCase().includes(q) || v.meaning.toLowerCase().includes(q))
+        );
+        if (!matchGrade && !matchUnit) return false;
+      }
+      return true;
+    });
 
   // Filtered Quizzes based on level, grade, search
   const filteredQuizzes = quizzes.filter(q => {
@@ -200,16 +219,22 @@ export default function EnglishK12Page({
     });
   };
 
-  // Launch Practice for specific unit
-  const handleStartUnitPractice = (unit, gradeName) => {
+  // Launch Practice / 15-Minute Exam for specific unit
+  const handleStartUnitPractice = (unit, gradeName, examMode = 'quiz15') => {
+    if (unit && unit.id) {
+      if (onStartExam) {
+        onStartExam(unit.id, examMode, [], 'Tiếng Anh Phổ Thông & Song Ngữ Mỹ');
+      }
+      return;
+    }
     const cleanG = (gradeName || '').toUpperCase();
     const matchingQuiz = quizzes.find(q => 
       (q.grade && q.grade.toUpperCase().includes(cleanG)) ||
       (q.title && q.title.toUpperCase().includes(cleanG))
     ) || quizzes[0];
 
-    if (matchingQuiz) {
-      onStartExam(matchingQuiz.id, 'practice');
+    if (matchingQuiz && onStartExam) {
+      onStartExam(matchingQuiz.id, examMode, [], 'Tiếng Anh Phổ Thông & Song Ngữ Mỹ');
     }
   };
 
@@ -393,60 +418,156 @@ export default function EnglishK12Page({
               </a>
             </div>
 
-            {/* 6 Textbook Collections Quick Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 pt-2 border-t border-amber-200/60">
-              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
-                <div>
-                  <div className="text-base">🔬</div>
-                  <h6 className="font-black text-xs text-slate-900 leading-tight">California Science</h6>
-                  <p className="text-[10px] text-slate-500 line-clamp-2">Khoa học Đời sống, Trái đất & Vật lý (G1 - G8)</p>
-                </div>
-                <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md w-fit">Leveled Readers</span>
+            {/* 6 Textbook Collections Quick Cards (Interactive Filters) */}
+            <div className="space-y-2 pt-2 border-t border-amber-200/60">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                  Bấm để lọc theo bộ sách chuyên đề (72 bài học & trắc nghiệm chuẩn Mỹ):
+                </span>
+                {selectedSeriesFilter !== 'all' && (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSeriesFilter('all')}
+                    className="text-xs font-bold text-amber-800 hover:text-amber-950 underline cursor-pointer"
+                  >
+                    ✕ Xem tất cả sách (72 bài)
+                  </button>
+                )}
               </div>
 
-              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
-                <div>
-                  <div className="text-base">📖</div>
-                  <h6 className="font-black text-xs text-slate-900 leading-tight">Scott Foresman</h6>
-                  <p className="text-[10px] text-slate-500 line-clamp-2">Đọc hiểu Reading Street & ELL Readers (G1 - G6)</p>
-                </div>
-                <span className="text-[10px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md w-fit">Reading Street</span>
-              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                {/* 1. California Science */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedSeriesFilter(selectedSeriesFilter === 'California Science' ? 'all' : 'California Science')}
+                  className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between active:scale-95 ${
+                    selectedSeriesFilter === 'California Science'
+                      ? 'bg-amber-100 border-amber-500 ring-2 ring-amber-500 shadow-sm'
+                      : 'bg-white/90 border-amber-200 hover:border-amber-400 hover:bg-white shadow-2xs'
+                  }`}
+                >
+                  <div>
+                    <div className="text-base">🔬</div>
+                    <h6 className="font-black text-xs text-slate-900 leading-tight">California Science</h6>
+                    <p className="text-[10px] text-slate-500 line-clamp-2">Khoa học Đời sống, Trái đất & Vật lý (G1 - G8)</p>
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md w-fit mt-2 ${
+                    selectedSeriesFilter === 'California Science' ? 'bg-amber-600 text-white' : 'text-amber-700 bg-amber-50'
+                  }`}>
+                    {selectedSeriesFilter === 'California Science' ? '✓ Đang lọc' : 'Leveled Readers'}
+                  </span>
+                </button>
 
-              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
-                <div>
-                  <div className="text-base">📐</div>
-                  <h6 className="font-black text-xs text-slate-900 leading-tight">Math Concept Readers</h6>
-                  <p className="text-[10px] text-slate-500 line-clamp-2">Toán tư duy song ngữ trực quan (G1 - G6)</p>
-                </div>
-                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md w-fit">Math Readers</span>
-              </div>
+                {/* 2. Scott Foresman */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedSeriesFilter(selectedSeriesFilter === 'Scott Foresman' ? 'all' : 'Scott Foresman')}
+                  className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between active:scale-95 ${
+                    selectedSeriesFilter === 'Scott Foresman'
+                      ? 'bg-sky-100 border-sky-500 ring-2 ring-sky-500 shadow-sm'
+                      : 'bg-white/90 border-amber-200 hover:border-sky-400 hover:bg-white shadow-2xs'
+                  }`}
+                >
+                  <div>
+                    <div className="text-base">📖</div>
+                    <h6 className="font-black text-xs text-slate-900 leading-tight">Scott Foresman</h6>
+                    <p className="text-[10px] text-slate-500 line-clamp-2">Đọc hiểu Reading Street & ELL Readers (G1 - G6)</p>
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md w-fit mt-2 ${
+                    selectedSeriesFilter === 'Scott Foresman' ? 'bg-sky-600 text-white' : 'text-sky-700 bg-sky-50'
+                  }`}>
+                    {selectedSeriesFilter === 'Scott Foresman' ? '✓ Đang lọc' : 'Reading Street'}
+                  </span>
+                </button>
 
-              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
-                <div>
-                  <div className="text-base">✍️</div>
-                  <h6 className="font-black text-xs text-slate-900 leading-tight">Writer's Choice</h6>
-                  <p className="text-[10px] text-slate-500 line-clamp-2">Ngữ pháp & Viết luận học thuật (G7 - G12)</p>
-                </div>
-                <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md w-fit">Composition</span>
-              </div>
+                {/* 3. Math Concept Readers */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedSeriesFilter(selectedSeriesFilter === 'Math Concept Readers' ? 'all' : 'Math Concept Readers')}
+                  className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between active:scale-95 ${
+                    selectedSeriesFilter === 'Math Concept Readers'
+                      ? 'bg-emerald-100 border-emerald-500 ring-2 ring-emerald-500 shadow-sm'
+                      : 'bg-white/90 border-amber-200 hover:border-emerald-400 hover:bg-white shadow-2xs'
+                  }`}
+                >
+                  <div>
+                    <div className="text-base">📐</div>
+                    <h6 className="font-black text-xs text-slate-900 leading-tight">Math Concept Readers</h6>
+                    <p className="text-[10px] text-slate-500 line-clamp-2">Toán tư duy song ngữ trực quan (G1 - G6)</p>
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md w-fit mt-2 ${
+                    selectedSeriesFilter === 'Math Concept Readers' ? 'bg-emerald-600 text-white' : 'text-emerald-700 bg-emerald-50'
+                  }`}>
+                    {selectedSeriesFilter === 'Math Concept Readers' ? '✓ Đang lọc' : 'Math Readers'}
+                  </span>
+                </button>
 
-              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
-                <div>
-                  <div className="text-base">📚</div>
-                  <h6 className="font-black text-xs text-slate-900 leading-tight">McDougal Littell</h6>
-                  <p className="text-[10px] text-slate-500 line-clamp-2">Kiệt tác văn học & Bộ đề SAT/ACT (G9 - G12)</p>
-                </div>
-                <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md w-fit">Literature & Vocab</span>
-              </div>
+                {/* 4. Writer's Choice */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedSeriesFilter(selectedSeriesFilter === "Writer's Choice" ? 'all' : "Writer's Choice")}
+                  className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between active:scale-95 ${
+                    selectedSeriesFilter === "Writer's Choice"
+                      ? 'bg-indigo-100 border-indigo-500 ring-2 ring-indigo-500 shadow-sm'
+                      : 'bg-white/90 border-amber-200 hover:border-indigo-400 hover:bg-white shadow-2xs'
+                  }`}
+                >
+                  <div>
+                    <div className="text-base">✍️</div>
+                    <h6 className="font-black text-xs text-slate-900 leading-tight">Writer's Choice</h6>
+                    <p className="text-[10px] text-slate-500 line-clamp-2">Ngữ pháp & Viết luận học thuật (G7 - G12)</p>
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md w-fit mt-2 ${
+                    selectedSeriesFilter === "Writer's Choice" ? 'bg-indigo-600 text-white' : 'text-indigo-700 bg-indigo-50'
+                  }`}>
+                    {selectedSeriesFilter === "Writer's Choice" ? '✓ Đang lọc' : 'Composition'}
+                  </span>
+                </button>
 
-              <div className="p-3 rounded-2xl bg-white/90 border border-amber-200 shadow-2xs space-y-1.5 flex flex-col justify-between">
-                <div>
-                  <div className="text-base">🎧</div>
-                  <h6 className="font-black text-xs text-slate-900 leading-tight">Audio Sound Studio</h6>
-                  <p className="text-[10px] text-slate-500 line-clamp-2">Audio nghe chuẩn giọng bản xứ Mỹ (G01 - G12)</p>
-                </div>
-                <span className="text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md w-fit">Sound Studio MP3</span>
+                {/* 5. McDougal Littell */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedSeriesFilter(selectedSeriesFilter === 'McDougal Littell' ? 'all' : 'McDougal Littell')}
+                  className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between active:scale-95 ${
+                    selectedSeriesFilter === 'McDougal Littell'
+                      ? 'bg-purple-100 border-purple-500 ring-2 ring-purple-500 shadow-sm'
+                      : 'bg-white/90 border-amber-200 hover:border-purple-400 hover:bg-white shadow-2xs'
+                  }`}
+                >
+                  <div>
+                    <div className="text-base">📚</div>
+                    <h6 className="font-black text-xs text-slate-900 leading-tight">McDougal Littell</h6>
+                    <p className="text-[10px] text-slate-500 line-clamp-2">Kiệt tác văn học & Bộ đề SAT/ACT (G9 - G12)</p>
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md w-fit mt-2 ${
+                    selectedSeriesFilter === 'McDougal Littell' ? 'bg-purple-600 text-white' : 'text-purple-700 bg-purple-50'
+                  }`}>
+                    {selectedSeriesFilter === 'McDougal Littell' ? '✓ Đang lọc' : 'Literature & Vocab'}
+                  </span>
+                </button>
+
+                {/* 6. Audio Sound Studio */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedSeriesFilter(selectedSeriesFilter === 'Audio Sound Studio' ? 'all' : 'Audio Sound Studio')}
+                  className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between active:scale-95 ${
+                    selectedSeriesFilter === 'Audio Sound Studio'
+                      ? 'bg-rose-100 border-rose-500 ring-2 ring-rose-500 shadow-sm'
+                      : 'bg-white/90 border-amber-200 hover:border-rose-400 hover:bg-white shadow-2xs'
+                  }`}
+                >
+                  <div>
+                    <div className="text-base">🎧</div>
+                    <h6 className="font-black text-xs text-slate-900 leading-tight">Audio Sound Studio</h6>
+                    <p className="text-[10px] text-slate-500 line-clamp-2">Audio nghe chuẩn giọng bản xứ Mỹ (G01 - G12)</p>
+                  </div>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md w-fit mt-2 ${
+                    selectedSeriesFilter === 'Audio Sound Studio' ? 'bg-rose-600 text-white' : 'text-rose-700 bg-rose-50'
+                  }`}>
+                    {selectedSeriesFilter === 'Audio Sound Studio' ? '✓ Đang lọc' : 'Sound Studio MP3'}
+                  </span>
+                </button>
               </div>
             </div>
           </div>
@@ -964,36 +1085,46 @@ export default function EnglishK12Page({
 
                         </div>
 
-                        {/* Action Buttons: [Flashcard] [Xem chi tiết] [Luyện tập] */}
-                        <div className="grid grid-cols-3 gap-2 pt-3 border-t border-slate-200/70 text-xs">
+                        {/* Action Buttons: [Đọc bài & Nghe] [Làm bài tập] [Thi 15p] [Flashcard] */}
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-slate-200/70 text-xs">
+                          <button
+                            type="button"
+                            onClick={() => handleOpenLessonDetail(unit, gradeItem, 'reading')}
+                            className="flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold text-[11px] border border-sky-200 transition-all cursor-pointer active:scale-95 shadow-2xs"
+                            title="Đọc bài học và nghe audio đọc bản ngữ chuẩn Mỹ"
+                          >
+                            <FileText className="w-3.5 h-3.5 text-sky-600 shrink-0" />
+                            <span>📖 Đọc & Nghe</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleOpenLessonDetail(unit, gradeItem, 'practice_quiz')}
+                            className="flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-black text-[11px] shadow-xs transition-all cursor-pointer active:scale-95"
+                            title="Làm bài tập trắc nghiệm tương tác & kiểm tra đáp án ngay"
+                          >
+                            <Check className="w-3.5 h-3.5 stroke-[3] shrink-0" />
+                            <span>📝 Làm Bài Tập</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleStartUnitPractice(unit, gradeItem.grade, 'quiz15')}
+                            className="flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-[11px] shadow-xs transition-all cursor-pointer active:scale-95"
+                            title="Vào phòng thi 15 phút tính điểm với ma trận câu hỏi của bài học này"
+                          >
+                            <Zap className="w-3.5 h-3.5 fill-white shrink-0" />
+                            <span>⚡ Thi 15p</span>
+                          </button>
+
                           <button
                             type="button"
                             onClick={() => handleOpenUnitFlashcards(unit, gradeItem.grade)}
-                            className="flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-800 font-bold text-[11px] border border-blue-200 transition-all cursor-pointer active:scale-95"
-                            title="Mở bộ thẻ ghi nhớ Flashcard 2 mặt"
+                            className="flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] border border-slate-200 transition-all cursor-pointer active:scale-95"
+                            title="Mở bộ thẻ ghi nhớ Flashcard 2 mặt và luyện phát âm AI"
                           >
-                            <Sparkles className="w-3 h-3 text-blue-600 shrink-0" />
-                            <span>Flashcard</span>
-                          </button>
-
-                          <button
-                            type="button"
-                            onClick={() => handleOpenLessonDetail(unit, gradeItem, 'vocabulary')}
-                            className="flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-[11px] border border-slate-200 transition-all cursor-pointer"
-                            title="Xem bảng từ vựng song ngữ, mẹo ngữ pháp và 4 kỹ năng"
-                          >
-                            <BookOpen className="w-3 h-3 text-slate-500 shrink-0" />
-                            <span>Bài học</span>
-                          </button>
-
-                          <button
-                            type="button"
-                            onClick={() => handleStartUnitPractice(unit, gradeItem.grade)}
-                            className="flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-xs transition-all cursor-pointer active:scale-95"
-                            title="Luyện tập trắc nghiệm bài học này"
-                          >
-                            <Zap className="w-3 h-3 fill-white shrink-0" />
-                            <span>Khảo thí</span>
+                            <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                            <span>🗂️ Flashcard</span>
                           </button>
                         </div>
 

@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  X, 
+  X,
+  Zap,
+  FolderOpen,
+  ExternalLink, 
   BookOpen, 
   Volume2, 
   Sparkles, 
@@ -46,6 +49,24 @@ export default function LessonDetailModal({
   }, [initialTab, unit?.id]);
 
   // =========================================================================
+
+  // =========================================================================
+  // 5. PRACTICE QUIZ TAB STATE (Instant Interactive Exercises)
+  // =========================================================================
+  const [practiceAnswers, setPracticeAnswers] = useState({});
+  const [practiceChecked, setPracticeChecked] = useState(false);
+  const [practiceScore, setPracticeScore] = useState(null);
+
+  const resetPracticeQuiz = () => {
+    setPracticeAnswers({});
+    setPracticeChecked(false);
+    setPracticeScore(null);
+  };
+
+  useEffect(() => {
+    resetPracticeQuiz();
+  }, [unit?.id]);
+
   // 1. LISTENING STATE & HELPERS
   // =========================================================================
   const [isPlayingListening, setIsPlayingListening] = useState(false);
@@ -396,6 +417,20 @@ export default function LessonDetailModal({
             >
               <Edit3 className="w-3.5 h-3.5 text-slate-900" />
               <span>✍️ Luyện Viết</span>
+            </button>
+
+            {/* 7. Bài Tập & Trắc Nghiệm */}
+            <button
+              type="button"
+              onClick={() => { stopAllSpeech(); setActiveTab('practice_quiz'); }}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                activeTab === 'practice_quiz'
+                  ? 'bg-amber-400 text-slate-950 shadow-md font-black ring-2 ring-white/50'
+                  : 'bg-white/10 text-white hover:bg-white/20'
+              }`}
+            >
+              <Zap className="w-3.5 h-3.5 fill-current" />
+              <span>📝 Bài Tập & Trắc Nghiệm</span>
             </button>
 
           </div>
@@ -1122,6 +1157,324 @@ export default function LessonDetailModal({
               </div>
             </div>
           )}
+
+
+          {/* ========================================================================= */}
+          {/* TAB 7: BÀI TẬP & TRẮC NGHIỆM TƯƠNG TÁC (Tự Chấm Điểm & Giải Thích Chi Tiết)  */}
+          {/* ========================================================================= */}
+          {activeTab === 'practice_quiz' && (() => {
+            // Build dynamically synthesized questions from unit
+            const questionsList = [];
+
+            // Q1: Reading Comprehension
+            if (unit?.readingPractice) {
+              questionsList.push({
+                id: 'pq_reading',
+                type: 'reading',
+                badge: '📖 Đọc Hiểu Đoạn Văn',
+                title: unit.readingPractice.title || unit.title,
+                passage: unit.readingPractice.passage,
+                question: unit.readingPractice.question || 'Dựa vào bài đọc trên, hãy chọn phương án chính xác:',
+                options: unit.readingPractice.options || [
+                  { id: 'opt_r1', text: 'Chính xác theo nội dung bài đọc', isCorrect: true },
+                  { id: 'opt_r2', text: 'Sai lệch so với đoạn văn', isCorrect: false }
+                ],
+                explanation: unit.readingPractice.explanation || 'Thông tin được đối chiếu trực tiếp từ bài đọc.'
+              });
+            }
+
+            // Q2: Listening Comprehension
+            if (unit?.listeningPractice) {
+              questionsList.push({
+                id: 'pq_listening',
+                type: 'listening',
+                badge: '🎧 Nghe Hiểu Trích Đoạn',
+                script: unit.listeningPractice.script,
+                question: unit.listeningPractice.question || 'Nghe đoạn trích bài giảng và chọn đáp án chính xác:',
+                options: unit.listeningPractice.options || [
+                  { id: 'opt_l1', text: 'Đáp án đúng theo bài nghe', isCorrect: true },
+                  { id: 'opt_l2', text: 'Đáp án sai', isCorrect: false }
+                ],
+                explanation: unit.listeningPractice.explanation || 'Kịch bản nghe đã chỉ rõ thông tin trên.'
+              });
+            }
+
+            // Q3 & Q4: Vocabulary in context
+            const vocabs = unit?.vocabulary || [];
+            vocabs.slice(0, 2).forEach((v, idx) => {
+              const distractors = vocabs.filter(item => item.word !== v.word).map(item => item.meaning);
+              const fallback = ['Môi trường sống tự nhiên', 'Quy luật phát triển vũ trụ', 'Cấu trúc vật chất vi mô'];
+              const wrongOptions = [...distractors, ...fallback].filter(m => m !== v.meaning).slice(0, 3);
+              const allOpts = [
+                { id: `opt_v_${idx}_correct`, text: v.meaning, isCorrect: true },
+                ...wrongOptions.map((m, mIdx) => ({ id: `opt_v_${idx}_w_${mIdx}`, text: m, isCorrect: false }))
+              ].sort(() => Math.random() - 0.5);
+
+              questionsList.push({
+                id: `pq_vocab_${idx}`,
+                type: 'vocab',
+                badge: `🗂️ Từ Vựng Trọng Tâm #${idx + 1}`,
+                question: `Từ vựng "${v.word}" (${v.ipa || ''}, từ loại: ${v.type || 'noun'}) mang ý nghĩa tiếng Việt nào sau đây?`,
+                example: `Ví dụ: "${v.example || ''}" (${v.exampleVi || ''})`,
+                options: allOpts,
+                explanation: `"${v.word}" nghĩa là "${v.meaning}". ${v.example ? `Ví dụ trong bài: "${v.example}"` : ''}`
+              });
+            });
+
+            // Q5: Sentence Rearrangement or Grammar
+            if (unit?.writingPractice) {
+              questionsList.push({
+                id: 'pq_writing',
+                type: 'writing',
+                badge: '✍️ Ngữ Pháp & Cấu Trúc Câu',
+                prompt: unit.writingPractice.prompt || 'Chọn câu tiếng Anh viết đúng ngữ pháp nhất:',
+                correctSentence: unit.writingPractice.correctSentence,
+                options: [
+                  { id: 'opt_w_correct', text: unit.writingPractice.correctSentence, isCorrect: true },
+                  { id: 'opt_w_wrong1', text: (unit.writingPractice.scrambledWords || []).join(' '), isCorrect: false }
+                ].sort(() => Math.random() - 0.5),
+                explanation: unit.writingPractice.explanation || 'Cấu trúc câu hoàn chỉnh đúng ngữ pháp tiếng Anh.'
+              });
+            }
+
+            const handleCheckAllAnswers = () => {
+              let correctCount = 0;
+              questionsList.forEach(q => {
+                const userPick = practiceAnswers[q.id];
+                const correctOpt = q.options.find(o => o.isCorrect);
+                if (userPick && correctOpt && userPick === correctOpt.id) {
+                  correctCount++;
+                }
+              });
+              const pct = Math.round((correctCount / Math.max(1, questionsList.length)) * 100);
+              setPracticeScore({
+                correct: correctCount,
+                total: questionsList.length,
+                percentage: pct
+              });
+              setPracticeChecked(true);
+            };
+
+            return (
+              <div className="space-y-6 animate-in fade-in duration-200">
+                
+                {/* Header Banner */}
+                <div className="p-5 rounded-3xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/5 border border-amber-300/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 text-white font-black text-[11px] uppercase tracking-wider shadow-2xs">
+                      <Zap className="w-3.5 h-3.5 fill-white" />
+                      <span>Bài Tập Trắc Nghiệm & Đọc Hiểu Theo Bài</span>
+                    </div>
+                    <h3 className="font-black text-base sm:text-lg text-slate-900 leading-snug">
+                      Luyện Tập & Củng Cố Toàn Diện: {unit.title}
+                    </h3>
+                    <p className="text-xs text-slate-600">
+                      Bao gồm {questionsList.length} câu hỏi tự động trích xuất từ bài đọc hiểu, kịch bản nghe, từ vựng và ngữ pháp.
+                    </p>
+                  </div>
+
+                  {practiceChecked && practiceScore && (
+                    <div className="flex items-center gap-3 bg-white px-4 py-2.5 rounded-2xl border border-amber-300 shadow-sm shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black text-sm">
+                        {practiceScore.percentage}%
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-500">Kết quả bài tập</div>
+                        <div className="text-sm font-black text-slate-900">
+                          {practiceScore.correct} / {practiceScore.total} câu đúng
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Questions Render Loop */}
+                <div className="space-y-5">
+                  {questionsList.map((q, qIdx) => {
+                    const userPick = practiceAnswers[q.id];
+                    const isAnswered = !!userPick;
+                    const correctOpt = q.options.find(o => o.isCorrect);
+                    const isUserCorrect = practiceChecked && userPick === correctOpt?.id;
+
+                    return (
+                      <div 
+                        key={q.id}
+                        className={`p-5 sm:p-6 rounded-3xl border transition-all ${
+                          practiceChecked
+                            ? isUserCorrect 
+                              ? 'bg-emerald-50/40 border-emerald-300 ring-1 ring-emerald-300' 
+                              : 'bg-rose-50/30 border-rose-300 ring-1 ring-rose-300'
+                            : 'bg-white border-slate-200/90 shadow-2xs hover:border-slate-300'
+                        }`}
+                      >
+                        {/* Question Top Badge */}
+                        <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
+                          <div className="flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-lg bg-blue-100 text-blue-800 font-black text-xs flex items-center justify-center">
+                              {qIdx + 1}
+                            </span>
+                            <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-bold">
+                              {q.badge}
+                            </span>
+                          </div>
+
+                          {practiceChecked && (
+                            <span className={`px-2.5 py-1 rounded-xl text-xs font-black flex items-center gap-1 ${
+                              isUserCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                            }`}>
+                              {isUserCorrect ? '✓ Đúng (+1.0 đ)' : '✗ Chưa đúng (0 đ)'}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Passage (If Reading Comprehension) */}
+                        {q.type === 'reading' && q.passage && (
+                          <div className="mb-4 p-4 rounded-2xl bg-sky-50/70 border border-sky-200 text-xs sm:text-sm text-slate-800 leading-relaxed space-y-2">
+                            <div className="font-black text-sky-900 flex items-center gap-1.5 text-xs uppercase tracking-wider">
+                              <FileText className="w-3.5 h-3.5 text-sky-600" />
+                              <span>Đoạn văn đọc hiểu: {q.title}</span>
+                            </div>
+                            <p className="whitespace-pre-line font-serif italic text-slate-700">{q.passage}</p>
+                          </div>
+                        )}
+
+                        {/* Audio Track (If Listening) */}
+                        {q.type === 'listening' && q.script && (
+                          <div className="mb-4 p-3.5 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between gap-3">
+                            <div className="flex items-center gap-2.5">
+                              <Headphones className="w-4 h-4 text-amber-700" />
+                              <span className="text-xs font-bold text-amber-950">Đoạn băng nghe âm thanh chuẩn Mỹ:</span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => playTextSpeech(q.script, 1.0)}
+                              className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 cursor-pointer shadow-2xs active:scale-95"
+                            >
+                              <Volume2 className="w-3.5 h-3.5" />
+                              <span>Phát Audio</span>
+                            </button>
+                          </div>
+                        )}
+
+                        {/* Question Title */}
+                        <div className="space-y-1 mb-4">
+                          <h4 className="font-extrabold text-sm sm:text-base text-slate-900 leading-snug">
+                            {q.question}
+                          </h4>
+                          {q.example && (
+                            <p className="text-xs text-slate-500 italic">{q.example}</p>
+                          )}
+                        </div>
+
+                        {/* Options */}
+                        <div className="space-y-2.5">
+                          {q.options.map((opt, oIdx) => {
+                            const isPicked = userPick === opt.id;
+                            const isThisCorrect = opt.isCorrect;
+                            const letter = String.fromCharCode(65 + oIdx);
+
+                            let optStyle = "border-slate-200 bg-white hover:bg-slate-50 text-slate-800";
+                            if (practiceChecked) {
+                              if (isThisCorrect) {
+                                optStyle = "border-emerald-500 bg-emerald-100/70 text-emerald-950 font-bold ring-1 ring-emerald-500";
+                              } else if (isPicked && !isThisCorrect) {
+                                optStyle = "border-rose-500 bg-rose-100/70 text-rose-950 font-medium ring-1 ring-rose-500";
+                              } else {
+                                optStyle = "border-slate-200 bg-slate-50/50 text-slate-400 opacity-70";
+                              }
+                            } else if (isPicked) {
+                              optStyle = "border-amber-500 bg-amber-50 text-amber-950 font-bold ring-2 ring-amber-400";
+                            }
+
+                            return (
+                              <button
+                                key={opt.id}
+                                type="button"
+                                disabled={practiceChecked}
+                                onClick={() => setPracticeAnswers(prev => ({ ...prev, [q.id]: opt.id }))}
+                                className={`w-full p-3.5 rounded-2xl border text-left flex items-center gap-3 transition-all cursor-pointer ${optStyle}`}
+                              >
+                                <span className={`w-6 h-6 rounded-lg font-black text-xs flex items-center justify-center shrink-0 ${
+                                  practiceChecked && isThisCorrect 
+                                    ? 'bg-emerald-600 text-white' 
+                                    : (isPicked ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-600')
+                                }`}>
+                                  {letter}
+                                </span>
+                                <span className="text-xs sm:text-sm flex-1 leading-relaxed">{opt.text}</span>
+                                {practiceChecked && isThisCorrect && (
+                                  <Check className="w-4 h-4 text-emerald-700 stroke-[3] shrink-0" />
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Explanation on Check */}
+                        {practiceChecked && (
+                          <div className="mt-4 p-3.5 rounded-2xl bg-blue-50 border border-blue-200 text-xs text-blue-950 space-y-1">
+                            <div className="font-black flex items-center gap-1.5 text-blue-800">
+                              <Lightbulb className="w-3.5 h-3.5 text-blue-600" />
+                              <span>Giải thích chi tiết:</span>
+                            </div>
+                            <p className="leading-relaxed">{q.explanation}</p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Bottom Action Strip */}
+                <div className="p-5 rounded-3xl bg-slate-100 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="text-xs text-slate-600 font-semibold text-center sm:text-left">
+                    {!practiceChecked 
+                      ? `Đã trả lời: ${Object.keys(practiceAnswers).length} / ${questionsList.length} câu hỏi`
+                      : `Hoàn thành bài tập! Điểm số: ${practiceScore?.correct}/${practiceScore?.total} (${practiceScore?.percentage}%)`
+                    }
+                  </div>
+
+                  <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                    {!practiceChecked ? (
+                      <button
+                        type="button"
+                        onClick={handleCheckAllAnswers}
+                        disabled={Object.keys(practiceAnswers).length === 0}
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 disabled:opacity-50 text-white font-black text-xs shadow-md shadow-amber-500/20 transition-all cursor-pointer active:scale-95"
+                      >
+                        <Check className="w-4 h-4 stroke-[3]" />
+                        <span>Kiểm Tra Đáp Án & Tính Điểm</span>
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          type="button"
+                          onClick={resetPracticeQuiz}
+                          className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-2xl border border-slate-300 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
+                        >
+                          <RotateCcw className="w-3.5 h-3.5" />
+                          <span>Làm Lại</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            stopAllSpeech();
+                            onStartPractice && onStartPractice(unit, 'quiz15');
+                          }}
+                          className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs shadow-md shadow-indigo-600/20 transition-all cursor-pointer active:scale-95"
+                        >
+                          <Zap className="w-3.5 h-3.5 fill-white" />
+                          <span>🚀 Bắt Đầu Bài Thi 15 Phút Tính Điểm</span>
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            );
+          })()}
 
         </div>
 

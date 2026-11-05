@@ -1,9 +1,13 @@
 import { db } from '../database/db.js';
+import { findAndEnsureUnitQuiz } from '../services/curriculumQuizGenerator.js';
 
 export const startAttempt = (req, res) => {
   try {
     const { quizId, studentId = 'dtc245200060', candidateName = 'Nguyễn Văn An', questionIds = [], durationMinutes, mode } = req.body;
     let quiz = db.findOne('quizzes', q => q.id === quizId);
+    if (!quiz) {
+      quiz = findAndEnsureUnitQuiz(quizId);
+    }
     if (!quiz) {
       if (quizId === 'composite_period60') {
         quiz = { id: 'composite_period60', title: 'Bài Kiểm Tra 1 Tiết (60 Phút) - Ma Trận 3 Chủ Đề', durationMinutes: 60, antiCheatEnabled: true, maxViolations: 3 };
@@ -224,6 +228,9 @@ export const submitAttempt = (req, res) => {
 
     let quiz = db.findOne('quizzes', q => q.id === attempt.quizId);
     if (!quiz) {
+      quiz = findAndEnsureUnitQuiz(attempt.quizId);
+    }
+    if (!quiz) {
       if (attempt.quizId === 'composite_period60') {
         quiz = { id: 'composite_period60', title: 'BÀI KIỂM TRA 1 TIẾT (60 PHÚT) - TỔNG HỢP 3 CHỦ ĐỀ', durationMinutes: 60 };
       } else if (attempt.quizId === 'composite_final45') {
@@ -402,6 +409,9 @@ export const getAttemptResult = (req, res) => {
 
     let quiz = db.findOne('quizzes', q => q.id === attempt.quizId);
     if (!quiz) {
+      quiz = findAndEnsureUnitQuiz(attempt.quizId);
+    }
+    if (!quiz) {
       if (attempt.quizId === 'composite_period60') {
         quiz = { id: 'composite_period60', title: 'BÀI KIỂM TRA 1 TIẾT (60 PHÚT) - TỔNG HỢP 3 CHỦ ĐỀ', durationMinutes: 60 };
       } else if (attempt.quizId === 'composite_final45') {
@@ -432,9 +442,9 @@ export const getAttemptResult = (req, res) => {
       const isCorrect = userAnsObj ? userAnsObj.isCorrect : false;
 
       const isSinglePick = q.type === 'single_choice' || q.type === 'phonetics' || q.type === 'listening' || q.type === 'reading_comprehension';
-      const qOptions = allOptions.filter(o => o.questionId === q.id).map(o => ({
+      const qOptions = allOptions.filter(o => o.questionId === q.id).map((o, oIdx) => ({
         id: o.id,
-        label: o.label,
+        label: String.fromCharCode(65 + oIdx),
         content: o.content,
         isCorrect: o.isCorrect,
         isUserSelected: isSinglePick

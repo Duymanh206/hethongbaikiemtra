@@ -5,6 +5,7 @@ import { usEduCurriculum } from '../database/usEduCurriculum.js';
 import { parseDocxBuffer } from '../services/docxParser.js';
 import { parseRawQuizText } from '../services/smartQuizParser.js';
 import { fixMojibake, cleanDescription, cleanQuiz, getQuizSubjectName } from '../utils/textEncoding.js';
+import { findAndEnsureUnitQuiz } from '../services/curriculumQuizGenerator.js';
 
 // Helper to shuffle array (Fisher-Yates)
 function shuffleArray(array) {
@@ -100,7 +101,10 @@ export const getQuizById = (req, res) => {
           })
         });
       } else {
-        return res.status(404).json({ success: false, message: 'Không tìm thấy bài thi' });
+        quiz = findAndEnsureUnitQuiz(id);
+        if (!quiz) {
+          return res.status(404).json({ success: false, message: 'Không tìm thấy bài thi' });
+        }
       }
     }
 
@@ -341,6 +345,9 @@ export const getQuizExamQuestions = (req, res) => {
     // MODE 1 & 2: SPECIFIC QUIZ
     else {
       quiz = db.findOne('quizzes', q => q.id === id);
+      if (!quiz) {
+        quiz = findAndEnsureUnitQuiz(id);
+      }
       if (!quiz) {
         return res.status(404).json({ success: false, message: 'Không tìm thấy bài thi' });
       }

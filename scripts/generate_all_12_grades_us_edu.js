@@ -666,3 +666,4 @@ export const usEduCurriculum = ${JSON.stringify(allGrades, null, 2)};
 
 fs.writeFileSync(path.join(process.cwd(), 'backend', 'src', 'database', 'usEduCurriculum.js'), fileContent, 'utf-8');
 console.log('Successfully written to backend/src/database/usEduCurriculum.js!');
+

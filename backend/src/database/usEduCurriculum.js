@@ -1,15 +1,7 @@
 /**
  * US_EDU Curriculum Database (Chương trình Hệ Song Ngữ & Quốc Tế Chuẩn Mỹ)
  * Tích hợp trực tiếp từ Google Drive: US_EDU (ID: 15PofJBFW3ymrm41AojESeKMuGvHVg7Y8)
- * Bao gồm các bộ giáo trình:
- * - California Science Leveled Readers (Grade 1 - 8)
- * - Scott Foresman Reading Street & ELL Readers (Grade 1 - 6)
- * - Math Concept Readers (Grade 1 - 6)
- * - Writer's Choice: Grammar and Composition (Grade 7 - 12)
- * - McDougal Littell Literature & Vocabulary Practice (Grade 9 - 12)
- * - Audio Tracks & Sound Studio theo từng Unit (G01 - G12)
- * 
- * Tổng số: 12 Lớp (Grade 1 đến Grade 12) x 6 Chuyên đề/Lớp = 72 Chuyên đề toàn diện
+ * Bao gồm 12 Khối lớp x 6 Chuyên đề = 72 Chuyên đề chuẩn hóa
  */
 
 export const usEduCurriculum = [
@@ -34,7 +26,7 @@ export const usEduCurriculum = [
         "num": 1,
         "title": "Unit 1: Living and Non-living Things",
         "viTitle": "Chuyên đề: Sinh vật sống & Vật không sống (California Science G1)",
-        "series": "California Science Leveled Readers",
+        "series": "California Science",
         "overview": "Phân biệt sinh vật sống (cần thức ăn, nước, không khí để lớn lên) với các vật thể vô tri.",
         "grammar": "Living things need + [food / water / air] to survive and grow.",
         "patterns": [
@@ -134,13 +126,68 @@ export const usEduCurriculum = [
             "need"
           ],
           "exp": "Cấu trúc: Chủ ngữ (Plants) + động từ (need) + tân ngữ (water) + chỉ mục đích (to survive)."
+        },
+        "id": "us_g01_u1",
+        "unitNumber": 1,
+        "curriculumSeries": "California Science",
+        "readingPractice": {
+          "title": "What is Alive?",
+          "passage": "Living things breathe air. They take in water and eat food. They grow bigger over time. A puppy grows into a dog. A tiny acorn grows into a huge oak tree. Toys and desks do not breathe. They do not eat. They are non-living things.",
+          "question": "Why is a desk a non-living thing?",
+          "options": [
+            {
+              "id": "opt_r_us_g01_u1_1",
+              "label": "A",
+              "text": "Because it does not breathe, eat or grow",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_r_us_g01_u1_2",
+              "label": "B",
+              "text": "Because it is in a classroom",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Bàn học là vật vô tri vì nó không hô hấp, không ăn uống và không phát triển."
+        },
+        "listeningPractice": {
+          "script": "Science teacher: Look around our garden! Plants and little birds are living things because they need food and water to grow.",
+          "question": "What do living things need to grow?",
+          "options": [
+            {
+              "id": "opt_l_us_g01_u1_1",
+              "label": "A",
+              "text": "Food and water (Thức ăn và nước uống)",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_l_us_g01_u1_2",
+              "label": "B",
+              "text": "Batteries and gasoline",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Trong bài nghe: \"they need food and water to grow\"."
+        },
+        "writingPractice": {
+          "type": "sentence_rearrangement",
+          "prompt": "Sắp xếp các từ thành câu đúng về sinh vật sống:",
+          "correctSentence": "Plants need water to survive",
+          "scrambledWords": [
+            "water",
+            "Plants",
+            "survive",
+            "to",
+            "need"
+          ],
+          "explanation": "Cấu trúc: Chủ ngữ (Plants) + động từ (need) + tân ngữ (water) + chỉ mục đích (to survive)."
         }
       },
       {
         "num": 2,
         "title": "Unit 2: Weather and Four Seasons",
         "viTitle": "Chuyên đề: Thời tiết & 4 Mùa trong năm (Scott Foresman G1)",
-        "series": "Scott Foresman Reading Street",
+        "series": "Scott Foresman",
         "overview": "Tìm hiểu các kiểu thời tiết: sunny, rainy, windy, snowy và đặc trưng của 4 mùa: Spring, Summer, Autumn, Winter.",
         "grammar": "It is + [sunny / rainy / windy / snowy] today.",
         "patterns": [
@@ -236,13 +283,69 @@ export const usEduCurriculum = [
             "It"
           ],
           "exp": "Cấu trúc: It is + very cold + in winter."
+        },
+        "id": "us_g01_u2",
+        "unitNumber": 2,
+        "curriculumSeries": "Scott Foresman",
+        "readingPractice": {
+          "title": "The Four Seasons",
+          "passage": "Earth has four seasons: spring, summer, fall, and winter. Spring brings rain and blossoms. Summer has long, warm days. Fall brings cool breezes and colorful leaves. Winter brings chilly winds and white snowflakes.",
+          "question": "Which season brings warm days and sunshine?",
+          "options": [
+            {
+              "id": "opt_r_us_g01_u2_1",
+              "label": "A",
+              "text": "Summer",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_r_us_g01_u2_2",
+              "label": "B",
+              "text": "Winter",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Bài đọc nêu rõ: \"Summer has long, warm days\"."
+        },
+        "listeningPractice": {
+          "script": "Weather reporter: Good morning! Today it is sunny and warm outside. Put on your hats and enjoy the park!",
+          "question": "How is the weather today?",
+          "options": [
+            {
+              "id": "opt_l_us_g01_u2_1",
+              "label": "A",
+              "text": "Sunny and warm",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_l_us_g01_u2_2",
+              "label": "B",
+              "text": "Snowy and freezing",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Người dẫn chương trình nói: \"Today it is sunny and warm outside\"."
+        },
+        "writingPractice": {
+          "type": "sentence_rearrangement",
+          "prompt": "Sắp xếp các từ thành câu hoàn chỉnh:",
+          "correctSentence": "It is very cold in winter",
+          "scrambledWords": [
+            "in",
+            "cold",
+            "winter",
+            "is",
+            "very",
+            "It"
+          ],
+          "explanation": "Cấu trúc: It is + very cold + in winter."
         }
       },
       {
         "num": 3,
         "title": "Unit 3: Plants and Seeds: How Plants Grow",
         "viTitle": "Chuyên đề: Cây cối & Hạt mầm phát triển (California Science G1)",
-        "series": "California Science Leveled Readers",
+        "series": "California Science",
         "overview": "Các bộ phận của cây (roots, stem, leaves, flower) và chu trình nảy mầm từ hạt giống.",
         "grammar": "A plant has + [roots / stem / leaves / flower].",
         "patterns": [
@@ -328,13 +431,68 @@ export const usEduCurriculum = [
             "food"
           ],
           "exp": "Chủ ngữ Leaves + động từ make + tân ngữ food + bổ ngữ for plants."
+        },
+        "id": "us_g01_u3",
+        "unitNumber": 3,
+        "curriculumSeries": "California Science",
+        "readingPractice": {
+          "title": "Parts of a Plant",
+          "passage": "Most plants have roots, stems, and leaves. Roots grow underground. They hold the plant firmly in the dirt. Stems carry water up from the roots to the leaves. Leaves use sunshine and air to make food.",
+          "question": "What do stems carry up to the leaves?",
+          "options": [
+            {
+              "id": "opt_r_us_g01_u3_1",
+              "label": "A",
+              "text": "Water",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_r_us_g01_u3_2",
+              "label": "B",
+              "text": "Dirt and stones",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "\"Stems carry water up from the roots to the leaves\"."
+        },
+        "listeningPractice": {
+          "script": "Botanist: The roots grow down into the soil to absorb moisture, while the green leaves catch rays of sunshine.",
+          "question": "What part of the plant absorbs water from soil?",
+          "options": [
+            {
+              "id": "opt_l_us_g01_u3_1",
+              "label": "A",
+              "text": "The roots",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_l_us_g01_u3_2",
+              "label": "B",
+              "text": "The flower petals",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "\"The roots grow down into the soil to absorb moisture\"."
+        },
+        "writingPractice": {
+          "type": "sentence_rearrangement",
+          "prompt": "Sắp xếp từ thành câu:",
+          "correctSentence": "Leaves make food for plants",
+          "scrambledWords": [
+            "plants",
+            "make",
+            "Leaves",
+            "for",
+            "food"
+          ],
+          "explanation": "Chủ ngữ Leaves + động từ make + tân ngữ food + bổ ngữ for plants."
         }
       },
       {
         "num": 4,
         "title": "Unit 4: Animal Families, Habitats & Senses",
         "viTitle": "Chuyên đề: Gia đình loài vật & Môi trường sống (SF ELL Reader G1)",
-        "series": "Scott Foresman Reading Street ELL Readers",
+        "series": "Scott Foresman",
         "overview": "Học về các giác quan (5 senses) và cách động vật sử dụng thị giác, thính giác để sinh tồn trong môi trường tự nhiên.",
         "grammar": "Animals use their + [eyes / ears / nose / paws] to + verb.",
         "patterns": [
@@ -420,13 +578,68 @@ export const usEduCurriculum = [
             "trees"
           ],
           "exp": "Chủ ngữ Birds + động từ build + tân ngữ nests + giới từ in trees."
+        },
+        "id": "us_g01_u4",
+        "unitNumber": 4,
+        "curriculumSeries": "Scott Foresman",
+        "readingPractice": {
+          "title": "Animal Homes",
+          "passage": "Every animal needs a safe home called a shelter. Birds weave nests out of twigs. Rabbits dig cozy burrows beneath the ground. Fish swim inside coral reefs. Shelter keeps animals warm and safe from danger.",
+          "question": "What is an animal's home called?",
+          "options": [
+            {
+              "id": "opt_r_us_g01_u4_1",
+              "label": "A",
+              "text": "A shelter",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_r_us_g01_u4_2",
+              "label": "B",
+              "text": "A store",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "\"Every animal needs a safe home called a shelter\"."
+        },
+        "listeningPractice": {
+          "script": "Park ranger: Animals use their five senses to locate food and escape from predators in the deep wild forest.",
+          "question": "Why do animals use their five senses?",
+          "options": [
+            {
+              "id": "opt_l_us_g01_u4_1",
+              "label": "A",
+              "text": "To locate food and escape from predators",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_l_us_g01_u4_2",
+              "label": "B",
+              "text": "To watch television",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Trích đoạn: \"to locate food and escape from predators\"."
+        },
+        "writingPractice": {
+          "type": "sentence_rearrangement",
+          "prompt": "Sắp xếp từ thành câu:",
+          "correctSentence": "Birds build nests in trees",
+          "scrambledWords": [
+            "in",
+            "build",
+            "nests",
+            "Birds",
+            "trees"
+          ],
+          "explanation": "Chủ ngữ Birds + động từ build + tân ngữ nests + giới từ in trees."
         }
       },
       {
         "num": 5,
         "title": "Unit 5: Matter: Solid, Liquid and Gas",
         "viTitle": "Chuyên đề: Vật chất & 3 Trạng thái của nước (CalSci Physical Science G1)",
-        "series": "California Science Leveled Readers",
+        "series": "California Science",
         "overview": "Khám phá 3 trạng thái vật chất cơ bản: chất rắn (solid), chất lỏng (liquid) và chất khí (gas).",
         "grammar": "A [solid / liquid / gas] has + [its own shape / no shape].",
         "patterns": [
@@ -512,13 +725,68 @@ export const usEduCurriculum = [
             "Ice"
           ],
           "exp": "Chủ ngữ Ice + động từ melts + giới từ into + tân ngữ liquid water."
+        },
+        "id": "us_g01_u5",
+        "unitNumber": 5,
+        "curriculumSeries": "California Science",
+        "readingPractice": {
+          "title": "Three Forms of Matter",
+          "passage": "Everything around you is matter. A solid has its own shape, like a wooden pencil. A liquid takes the shape of its container, like sweet orange juice in a cup. A gas spreads out to fill any space, like steam in the air.",
+          "question": "Which form of matter takes the shape of its container?",
+          "options": [
+            {
+              "id": "opt_r_us_g01_u5_1",
+              "label": "A",
+              "text": "A liquid",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_r_us_g01_u5_2",
+              "label": "B",
+              "text": "A rock",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "\"A liquid takes the shape of its container\"."
+        },
+        "listeningPractice": {
+          "script": "Science teacher: All things are made of matter. Rocks are solids. Water is a liquid. And air is a gas that we breathe.",
+          "question": "What is an example of a solid?",
+          "options": [
+            {
+              "id": "opt_l_us_g01_u5_1",
+              "label": "A",
+              "text": "A rock",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_l_us_g01_u5_2",
+              "label": "B",
+              "text": "Air",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "\"Rocks are solids\"."
+        },
+        "writingPractice": {
+          "type": "sentence_rearrangement",
+          "prompt": "Sắp xếp từ thành câu:",
+          "correctSentence": "Ice melts into liquid water",
+          "scrambledWords": [
+            "water",
+            "into",
+            "melts",
+            "liquid",
+            "Ice"
+          ],
+          "explanation": "Chủ ngữ Ice + động từ melts + giới từ into + tân ngữ liquid water."
         }
       },
       {
         "num": 6,
         "title": "Unit 6: Math in Nature: Counting, Shapes & Patterns",
         "viTitle": "Chuyên đề: Toán học trong Tự nhiên (Math Concept Reader G1)",
-        "series": "Math Concept Readers G1",
+        "series": "Math Concept Readers",
         "overview": "Nhận biết hình dạng hình học (circle, square, triangle, rectangle) và quy luật lặp lại (patterns) trong tự nhiên.",
         "grammar": "There is / There are + [number] + [shapes / objects].",
         "patterns": [
@@ -604,6 +872,61 @@ export const usEduCurriculum = [
             "circles"
           ],
           "exp": "Cấu trúc There are + số lượng + danh từ số nhiều + vị trí."
+        },
+        "id": "us_g01_u6",
+        "unitNumber": 6,
+        "curriculumSeries": "Math Concept Readers",
+        "readingPractice": {
+          "title": "Shapes Everywhere",
+          "passage": "Look at your world! You can see shapes in every corner. A clock on the wall is a circle. A door is a tall rectangle. A rooftop can be a triangle. Finding shapes makes math exciting!",
+          "question": "What shape is usually a clock on the wall?",
+          "options": [
+            {
+              "id": "opt_r_us_g01_u6_1",
+              "label": "A",
+              "text": "A circle",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_r_us_g01_u6_2",
+              "label": "B",
+              "text": "A pyramid",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "\"A clock on the wall is a circle\"."
+        },
+        "listeningPractice": {
+          "script": "Math guide: Look at the petals on the daisy! Let us count them: one, two, three, four, five! Five lovely white petals.",
+          "question": "How many petals did the guide count?",
+          "options": [
+            {
+              "id": "opt_l_us_g01_u6_1",
+              "label": "A",
+              "text": "Five petals",
+              "isCorrect": true
+            },
+            {
+              "id": "opt_l_us_g01_u6_2",
+              "label": "B",
+              "text": "Twenty petals",
+              "isCorrect": false
+            }
+          ],
+          "explanation": "Bài nghe nói: \"one, two, three, four, five! Five lovely white petals\"."
+        },
+        "writingPractice": {
+          "type": "sentence_rearrangement",
+          "prompt": "Sắp xếp từ thành câu:",
+          "correctSentence": "There are four circles here",
+          "scrambledWords": [
+            "four",
+            "are",
+            "There",
+            "here",
+            "circles"
+          ],
+          "explanation": "Cấu trúc There are + số lượng + danh từ số nhiều + vị trí."
         }
       }
     ]
@@ -629,7 +952,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: Plant and Animal Life Cycles",
         "vietnameseTitle": "Chuyên đề: Vòng đời của Thực vật & Động vật (California Science G2)",
-        "curriculumSeries": "California Science G2",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1j6l6C57HfjVdo1HJjH8xRxCmxYYIQdvm",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 02: Life Cycles. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Life Cycles.",
@@ -727,14 +1050,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g02_u2",
         "unitNumber": 2,
         "title": "Unit 2: Earth's Landforms, Rocks and Soil",
         "vietnameseTitle": "Chuyên đề: Địa hình Trái Đất, Đá & Thổ nhưỡng (California Science G2)",
-        "curriculumSeries": "California Science G2",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1j6l6C57HfjVdo1HJjH8xRxCmxYYIQdvm",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 02: Earth Landforms. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Earth Landforms.",
@@ -832,14 +1156,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g02_u3",
         "unitNumber": 3,
         "title": "Unit 3: The Water Cycle and Cloud Types",
         "vietnameseTitle": "Chuyên đề: Vòng tuần hoàn của Nước & Các loại Mây (Scott Foresman G2)",
-        "curriculumSeries": "Scott Foresman G2",
+        "curriculumSeries": "Scott Foresman",
         "driveLink": "https://drive.google.com/drive/folders/1j6l6C57HfjVdo1HJjH8xRxCmxYYIQdvm",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 02: The Water Cycle. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for The Water Cycle.",
@@ -937,14 +1262,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "Scott Foresman"
       },
       {
         "id": "us_g02_u4",
         "unitNumber": 4,
         "title": "Unit 4: Forces, Motion, Push and Pull",
         "vietnameseTitle": "Chuyên đề: Lực học: Lực đẩy, Lực kéo & Chuyển động (California Science G2)",
-        "curriculumSeries": "California Science G2",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1j6l6C57HfjVdo1HJjH8xRxCmxYYIQdvm",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 02: Forces and Motion. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Forces and Motion.",
@@ -1042,14 +1368,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g02_u5",
         "unitNumber": 5,
         "title": "Unit 5: Sound and Light Energy",
         "vietnameseTitle": "Chuyên đề: Năng lượng Âm thanh & Ánh sáng (California Science G2)",
-        "curriculumSeries": "California Science G2",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1j6l6C57HfjVdo1HJjH8xRxCmxYYIQdvm",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 02: Sound & Light. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Sound & Light.",
@@ -1147,14 +1474,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g02_u6",
         "unitNumber": 6,
         "title": "Unit 6: Geometry & Fractions in Daily Life",
         "vietnameseTitle": "Chuyên đề: Toán hình học & Phân số thực tế (Math Concept Readers G2)",
-        "curriculumSeries": "Math Concept Readers G2",
+        "curriculumSeries": "Math Concept Readers",
         "driveLink": "https://drive.google.com/drive/folders/1j6l6C57HfjVdo1HJjH8xRxCmxYYIQdvm",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 02: Math Concepts. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Math Concepts.",
@@ -1252,7 +1580,8 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "Math Concept Readers"
       }
     ]
   },
@@ -1277,7 +1606,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: Plant and Animal Adaptations in Habitats",
         "vietnameseTitle": "Chuyên đề: Sự thích nghi của Động Thực vật theo Môi trường (California Science G3)",
-        "curriculumSeries": "California Science G3",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1izZcnEASGfT6bYhC_P94xE6tbi1F8Neu",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 03: Adaptations. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Adaptations.",
@@ -1375,14 +1704,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g03_u2",
         "unitNumber": 2,
         "title": "Unit 2: Earth's Natural Resources and Conservation",
         "vietnameseTitle": "Chuyên đề: Tài nguyên Thiên nhiên & Bảo vệ Môi trường (California Science G3)",
-        "curriculumSeries": "California Science G3",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1izZcnEASGfT6bYhC_P94xE6tbi1F8Neu",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 03: Earth Resources. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Earth Resources.",
@@ -1480,14 +1810,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g03_u3",
         "unitNumber": 3,
         "title": "Unit 3: Simple Machines: Levers, Pulleys & Inclined Planes",
         "vietnameseTitle": "Chuyên đề: Các Máy cơ Đơn giản: Đòn bẩy, Ròng rọc & Mặt phẳng nghiêng (California Science G3)",
-        "curriculumSeries": "California Science G3",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1izZcnEASGfT6bYhC_P94xE6tbi1F8Neu",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 03: Simple Machines. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Simple Machines.",
@@ -1585,14 +1916,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g03_u4",
         "unitNumber": 4,
         "title": "Unit 4: Matter Changes: Heating, Cooling & Mixtures",
         "vietnameseTitle": "Chuyên đề: Biến đổi Vật chất: Nhiệt độ & Hỗn hợp (California Science G3)",
-        "curriculumSeries": "California Science G3",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1izZcnEASGfT6bYhC_P94xE6tbi1F8Neu",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 03: Physical Changes. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Physical Changes.",
@@ -1690,14 +2022,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g03_u5",
         "unitNumber": 5,
         "title": "Unit 5: The Solar System: Sun, Earth and Moon Phases",
         "vietnameseTitle": "Chuyên đề: Hệ Mặt Trời & Các Pha của Mặt Trăng (Scott Foresman G3)",
-        "curriculumSeries": "Scott Foresman G3",
+        "curriculumSeries": "Scott Foresman",
         "driveLink": "https://drive.google.com/drive/folders/1izZcnEASGfT6bYhC_P94xE6tbi1F8Neu",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 03: Astronomy. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Astronomy.",
@@ -1795,14 +2128,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "Scott Foresman"
       },
       {
         "id": "us_g03_u6",
         "unitNumber": 6,
         "title": "Unit 6: Math Concept: Measurements, Perimeter & Area",
         "vietnameseTitle": "Chuyên đề: Toán đo lường: Chu vi, Diện tích & Thể tích (Math Concept Readers G3)",
-        "curriculumSeries": "Math Concept Readers G3",
+        "curriculumSeries": "Math Concept Readers",
         "driveLink": "https://drive.google.com/drive/folders/1izZcnEASGfT6bYhC_P94xE6tbi1F8Neu",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 03: Measurement. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Measurement.",
@@ -1900,7 +2234,8 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "Math Concept Readers"
       }
     ]
   },
@@ -1925,7 +2260,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: Ecosystems & Food Webs: Energy Flow",
         "vietnameseTitle": "Chuyên đề: Hệ Sinh Thái & Chuỗi Thức Ăn (California Science G4)",
-        "curriculumSeries": "California Science G4",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1Rdjf2py_JmUIBBSzaWAzegB4vrFWsIde",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 04: Ecosystems. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Ecosystems.",
@@ -2023,14 +2358,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g04_u2",
         "unitNumber": 2,
         "title": "Unit 2: Rock Layers, Fossils & Earth's History",
         "vietnameseTitle": "Chuyên đề: Các Lớp Đá, Hóa Thạch & Lịch Sử Trái Đất (California Science G4)",
-        "curriculumSeries": "California Science G4",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1Rdjf2py_JmUIBBSzaWAzegB4vrFWsIde",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 04: Geology. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Geology.",
@@ -2128,14 +2464,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g04_u3",
         "unitNumber": 3,
         "title": "Unit 3: Electricity, Magnetism & Closed Circuits",
         "vietnameseTitle": "Chuyên đề: Điện học, Từ tính & Mạch điện kín (California Science G4)",
-        "curriculumSeries": "California Science G4",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1Rdjf2py_JmUIBBSzaWAzegB4vrFWsIde",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 04: Electricity. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Electricity.",
@@ -2233,14 +2570,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g04_u4",
         "unitNumber": 4,
         "title": "Unit 4: Waves, Light Reflection and Refraction",
         "vietnameseTitle": "Chuyên đề: Sóng, Sự Phản Xạ & Khúc Xạ Ánh Sáng (California Science G4)",
-        "curriculumSeries": "California Science G4",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1Rdjf2py_JmUIBBSzaWAzegB4vrFWsIde",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 04: Optics and Waves. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Optics and Waves.",
@@ -2338,14 +2676,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g04_u5",
         "unitNumber": 5,
         "title": "Unit 5: Conservation of Land, Air & Oceans",
         "vietnameseTitle": "Chuyên đề: Bảo Tồn Tài Nguyên Đất, Không Khí & Đại Dương (Scott Foresman G4)",
-        "curriculumSeries": "Scott Foresman G4",
+        "curriculumSeries": "Scott Foresman",
         "driveLink": "https://drive.google.com/drive/folders/1Rdjf2py_JmUIBBSzaWAzegB4vrFWsIde",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 04: Environmental Conservation. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Environmental Conservation.",
@@ -2443,14 +2782,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "Scott Foresman"
       },
       {
         "id": "us_g04_u6",
         "unitNumber": 6,
         "title": "Unit 6: Math Concept: Decimals, Fractions & Estimation",
         "vietnameseTitle": "Chuyên đề: Toán Số Thập Phân & Ước Lượng Thực Tế (Math Concept Readers G4)",
-        "curriculumSeries": "Math Concept Readers G4",
+        "curriculumSeries": "Math Concept Readers",
         "driveLink": "https://drive.google.com/drive/folders/1Rdjf2py_JmUIBBSzaWAzegB4vrFWsIde",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 04: Decimals and Fractions. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Decimals and Fractions.",
@@ -2548,7 +2888,8 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "Math Concept Readers"
       }
     ]
   },
@@ -2573,7 +2914,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: The Human Body Systems & Cell Biology",
         "vietnameseTitle": "Chuyên đề: Các Hệ Cơ Quan Con Người & Sinh Học Tế Bào (California Science G5)",
-        "curriculumSeries": "California Science G5",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1eae6uSE5KWlcN3yBsfeso-IoCmJfmpZe",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 05: Human Anatomy. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Human Anatomy.",
@@ -2671,14 +3012,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g05_u2",
         "unitNumber": 2,
         "title": "Unit 2: Plant Biology: Photosynthesis & Transpiration",
         "vietnameseTitle": "Chuyên đề: Quang Hợp & Sự Thoát Hơi Nước ở Cây Cối (California Science G5)",
-        "curriculumSeries": "California Science G5",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1eae6uSE5KWlcN3yBsfeso-IoCmJfmpZe",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 05: Plant Physiology. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Plant Physiology.",
@@ -2776,14 +3118,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g05_u3",
         "unitNumber": 3,
         "title": "Unit 3: Oceans, Water Systems & Deep Sea Trenches",
         "vietnameseTitle": "Chuyên đề: Hệ Thống Thủy Văn & Rãnh Biển Sâu (California Science G5)",
-        "curriculumSeries": "California Science G5",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1eae6uSE5KWlcN3yBsfeso-IoCmJfmpZe",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 05: Oceanography. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Oceanography.",
@@ -2881,14 +3224,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g05_u4",
         "unitNumber": 4,
         "title": "Unit 4: Chemistry: Atoms, Elements & Chemical Reactions",
         "vietnameseTitle": "Chuyên đề: Hóa Học: Nguyên Tử, Nguyên Tố & Phản Ứng Hóa Học (California Science G5)",
-        "curriculumSeries": "California Science G5",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1eae6uSE5KWlcN3yBsfeso-IoCmJfmpZe",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 05: Introductory Chemistry. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Introductory Chemistry.",
@@ -2986,14 +3330,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g05_u5",
         "unitNumber": 5,
         "title": "Unit 5: Astronomy: Stars, Constellations & Galaxies",
         "vietnameseTitle": "Chuyên đề: Thiên Văn Học: Các Vì Sao, Chòm Sao & Dải Ngân Hà (Scott Foresman G5)",
-        "curriculumSeries": "Scott Foresman G5",
+        "curriculumSeries": "Scott Foresman",
         "driveLink": "https://drive.google.com/drive/folders/1eae6uSE5KWlcN3yBsfeso-IoCmJfmpZe",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 05: Astronomy. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Astronomy.",
@@ -3091,14 +3436,15 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "Scott Foresman"
       },
       {
         "id": "us_g05_u6",
         "unitNumber": 6,
         "title": "Unit 6: Math Concept: Data Analysis, Graphs & Percentages",
         "vietnameseTitle": "Chuyên đề: Toán Phân Tích Dữ Liệu, Biểu Đồ & Phần Trăm (Math Concept Readers G5)",
-        "curriculumSeries": "Math Concept Readers G5",
+        "curriculumSeries": "Math Concept Readers",
         "driveLink": "https://drive.google.com/drive/folders/1eae6uSE5KWlcN3yBsfeso-IoCmJfmpZe",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 05: Data Analysis. Học sinh rèn luyện tư duy học thuật và từ vựng chuyên ngành.",
         "grammarFocus": "Academic Grammar Focus: Scientific inquiry and compound sentence structures for Data Analysis.",
@@ -3196,7 +3542,8 @@ export const usEduCurriculum = [
             "life"
           ],
           "explanation": "Chủ ngữ + to be + tính từ + bổ ngữ."
-        }
+        },
+        "series": "Math Concept Readers"
       }
     ]
   },
@@ -3221,7 +3568,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: Plate Tectonics & Continental Drift",
         "vietnameseTitle": "Chuyên đề: Thuyết Kiến tạo Mảng & Sự Trôi dạt Lục địa (California Earth Science G6)",
-        "curriculumSeries": "California Earth Science G6",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1KqIvaNSNovAsIaXdKwu9gN_Q17mqEWt9",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 06: Plate Tectonics. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Plate Tectonics.",
@@ -3321,14 +3668,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g06_u2",
         "unitNumber": 2,
         "title": "Unit 2: Earthquakes, Fault Lines & Seismic Waves",
         "vietnameseTitle": "Chuyên đề: Động Đất, Các Đứt Gãy Địa Chất & Sóng Địa Chấn (California Earth Science G6)",
-        "curriculumSeries": "California Earth Science G6",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1KqIvaNSNovAsIaXdKwu9gN_Q17mqEWt9",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 06: Earthquakes. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Earthquakes.",
@@ -3428,14 +3776,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g06_u3",
         "unitNumber": 3,
         "title": "Unit 3: Weathering, Erosion & Deposition",
         "vietnameseTitle": "Chuyên đề: Quá Trình Phong Hóa, Xói Mòn & Bồi Tụ Thổ Nhưỡng (California Earth Science G6)",
-        "curriculumSeries": "California Earth Science G6",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1KqIvaNSNovAsIaXdKwu9gN_Q17mqEWt9",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 06: Weathering and Erosion. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Weathering and Erosion.",
@@ -3535,14 +3884,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g06_u4",
         "unitNumber": 4,
         "title": "Unit 4: Earth's Atmosphere & Weather Systems",
         "vietnameseTitle": "Chuyên đề: Khí Quyển Trái Đất & Các Hệ Thống Áp Khí Thời Tiết (California Earth Science G6)",
-        "curriculumSeries": "California Earth Science G6",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1KqIvaNSNovAsIaXdKwu9gN_Q17mqEWt9",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 06: Atmospheric Layers. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Atmospheric Layers.",
@@ -3642,14 +3992,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g06_u5",
         "unitNumber": 5,
         "title": "Unit 5: Thermal Energy Transfer: Conduction, Convection & Radiation",
         "vietnameseTitle": "Chuyên đề: Sự Truyền Nhiệt Năng: Dẫn Nhiệt, Đối Lưu & Bức Xạ (California Earth Science G6)",
-        "curriculumSeries": "California Earth Science G6",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1KqIvaNSNovAsIaXdKwu9gN_Q17mqEWt9",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 06: Heat Transfer. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Heat Transfer.",
@@ -3749,14 +4100,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g06_u6",
         "unitNumber": 6,
         "title": "Unit 6: Earth in the Solar System & Gravitational Pull",
         "vietnameseTitle": "Chuyên đề: Trái Đất Trong Hệ Mặt Trời & Lực Hấp Dẫn (Audio Studio) (Sound Studio G06)",
-        "curriculumSeries": "Sound Studio G06",
+        "curriculumSeries": "Audio Sound Studio",
         "driveLink": "https://drive.google.com/drive/folders/1KqIvaNSNovAsIaXdKwu9gN_Q17mqEWt9",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 06: Planetary Motion. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Planetary Motion.",
@@ -3856,7 +4208,8 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "Audio Sound Studio"
       }
     ]
   },
@@ -3880,7 +4233,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: Cell Structure, Organelles & Microscopy",
         "vietnameseTitle": "Chuyên đề: Cấu Trúc Tế Bào, Bào Quan & Kính Hiển Vi (California Life Science G7)",
-        "curriculumSeries": "California Life Science G7",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1gQRY_sRXuxNClJJm9DqvTp0vOk5bvMAG",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 07: Cell Organelles. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Cell Organelles.",
@@ -3980,14 +4333,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g07_u2",
         "unitNumber": 2,
         "title": "Unit 2: Genetics, DNA & Mendelian Heredity",
         "vietnameseTitle": "Chuyên đề: Di Truyền Học Men-đen, Cấu Trúc DNA & Tính Trạng (California Life Science G7)",
-        "curriculumSeries": "California Life Science G7",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1gQRY_sRXuxNClJJm9DqvTp0vOk5bvMAG",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 07: Genetics and DNA. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Genetics and DNA.",
@@ -4087,14 +4441,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g07_u3",
         "unitNumber": 3,
         "title": "Unit 3: Evolution, Natural Selection & Fossil Records",
         "vietnameseTitle": "Chuyên đề: Thuyết Tiến Hóa, Chọn Lọc Tự Nhiên & Hóa Thạch (California Life Science G7)",
-        "curriculumSeries": "California Life Science G7",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1gQRY_sRXuxNClJJm9DqvTp0vOk5bvMAG",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 07: Natural Selection. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Natural Selection.",
@@ -4194,14 +4549,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g07_u4",
         "unitNumber": 4,
         "title": "Unit 4: Human Organ Systems & Homeostasis",
         "vietnameseTitle": "Chuyên đề: Các Hệ Cơ Quan Cơ Thể & Cân Bằng Nội Môi (California Life Science G7)",
-        "curriculumSeries": "California Life Science G7",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1gQRY_sRXuxNClJJm9DqvTp0vOk5bvMAG",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 07: Homeostasis. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Homeostasis.",
@@ -4301,14 +4657,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g07_u5",
         "unitNumber": 5,
         "title": "Unit 5: Writer's Choice: Narrative & Descriptive Composition",
         "vietnameseTitle": "Chuyên đề: Writer's Choice: Kỹ Năng Viết Văn Tự Sự & Miêu Tả (Writer's Choice G7)",
-        "curriculumSeries": "Writer's Choice G7",
+        "curriculumSeries": "Writer's Choice",
         "driveLink": "https://drive.google.com/drive/folders/1gQRY_sRXuxNClJJm9DqvTp0vOk5bvMAG",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 07: Essay Composition. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Essay Composition.",
@@ -4408,14 +4765,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "Writer's Choice"
       },
       {
         "id": "us_g07_u6",
         "unitNumber": 6,
         "title": "Unit 6: Grammar Mechanics: Phrases, Clauses & Complex Sentences",
         "vietnameseTitle": "Chuyên đề: Ngữ Pháp Chuyên Sâu: Mệnh Đề, Câu Phức & Dấu Câu (Writer's Choice G7)",
-        "curriculumSeries": "Writer's Choice G7",
+        "curriculumSeries": "Writer's Choice",
         "driveLink": "https://drive.google.com/drive/folders/1gQRY_sRXuxNClJJm9DqvTp0vOk5bvMAG",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 07: Complex Sentences. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Complex Sentences.",
@@ -4515,7 +4873,8 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "Writer's Choice"
       }
     ]
   },
@@ -4539,7 +4898,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: Atomic Structure & The Periodic Table",
         "vietnameseTitle": "Chuyên đề: Cấu Trúc Nguyên Tử & Bảng Tuần Hoàn Các Nguyên Tố (California Physical Science G8)",
-        "curriculumSeries": "California Physical Science G8",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1qgExGNrkbdg-HjrvqaicbjKF3031AxDC",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 08: Periodic Trends. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Periodic Trends.",
@@ -4639,14 +4998,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g08_u2",
         "unitNumber": 2,
         "title": "Unit 2: Chemical Bonds, Compounds & Balancing Equations",
         "vietnameseTitle": "Chuyên đề: Liên Kết Hóa Học & Cân Bằng Phương Trình Phản Ứng (California Physical Science G8)",
-        "curriculumSeries": "California Physical Science G8",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1qgExGNrkbdg-HjrvqaicbjKF3031AxDC",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 08: Chemical Bonding. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Chemical Bonding.",
@@ -4746,14 +5106,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g08_u3",
         "unitNumber": 3,
         "title": "Unit 3: Newton's Three Laws of Motion & Momentum",
         "vietnameseTitle": "Chuyên đề: Ba Định Luật Niutơn về Chuyển Động & Động Lượng (California Physical Science G8)",
-        "curriculumSeries": "California Physical Science G8",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1qgExGNrkbdg-HjrvqaicbjKF3031AxDC",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 08: Classical Mechanics. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Classical Mechanics.",
@@ -4853,14 +5214,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g08_u4",
         "unitNumber": 4,
         "title": "Unit 4: Fluid Mechanics: Density, Buoyancy & Pressure",
         "vietnameseTitle": "Chuyên đề: Cơ Học Chất Lưu: Khối Lượng Riêng & Lực Đẩy Ác-si-mét (California Physical Science G8)",
-        "curriculumSeries": "California Physical Science G8",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1qgExGNrkbdg-HjrvqaicbjKF3031AxDC",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 08: Fluid Dynamics. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Fluid Dynamics.",
@@ -4960,14 +5322,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g08_u5",
         "unitNumber": 5,
         "title": "Unit 5: The Electromagnetic Spectrum & Wave Behavior",
         "vietnameseTitle": "Chuyên đề: Quang Phổ Sóng Điện Từ & Bản Chất Sóng Âm (California Physical Science G8)",
-        "curriculumSeries": "California Physical Science G8",
+        "curriculumSeries": "California Science",
         "driveLink": "https://drive.google.com/drive/folders/1qgExGNrkbdg-HjrvqaicbjKF3031AxDC",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 08: Electromagnetism. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Electromagnetism.",
@@ -5067,14 +5430,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "California Science"
       },
       {
         "id": "us_g08_u6",
         "unitNumber": 6,
         "title": "Unit 6: Writer's Choice: Persuasive Writing & Rhetorical Logic",
         "vietnameseTitle": "Chuyên đề: Writer's Choice: Viết Luận Thuyết Phục & Logic Biện Luận (Writer's Choice G8)",
-        "curriculumSeries": "Writer's Choice G8",
+        "curriculumSeries": "Writer's Choice",
         "driveLink": "https://drive.google.com/drive/folders/1qgExGNrkbdg-HjrvqaicbjKF3031AxDC",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 08: Persuasive Writing. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Persuasive Writing.",
@@ -5174,7 +5538,8 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "Writer's Choice"
       }
     ]
   },
@@ -5198,7 +5563,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: Elements of Fiction: Plot, Theme & Character Arc",
         "vietnameseTitle": "Chuyên đề: Các Yếu Tố Văn Xuôi: Cốt Truyện, Chủ Đề & Xung Đột (McDougal Littell Literature G9)",
-        "curriculumSeries": "McDougal Littell Literature G9",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/13iJycpXc7RPbfYsuwKKwwYM5ibVVgpgD",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 09: Literary Analysis. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Literary Analysis.",
@@ -5298,14 +5663,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g09_u2",
         "unitNumber": 2,
         "title": "Unit 2: The Epic Tradition: Homer's Odyssey & Hero Archetypes",
         "vietnameseTitle": "Chuyên đề: Sử Thi Cổ Đại: Tác Phẩm Odyssey & Khuôn Mẫu Người Hùng (McDougal Littell Literature G9)",
-        "curriculumSeries": "McDougal Littell Literature G9",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/13iJycpXc7RPbfYsuwKKwwYM5ibVVgpgD",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 09: The Hero's Journey. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for The Hero's Journey.",
@@ -5405,14 +5771,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g09_u3",
         "unitNumber": 3,
         "title": "Unit 3: Dramatic Literature: Shakespeare's Romeo & Juliet",
         "vietnameseTitle": "Chuyên đề: Kịch Bản Văn Học: Romeo & Juliet của Shakespeare (McDougal Littell Literature G9)",
-        "curriculumSeries": "McDougal Littell Literature G9",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/13iJycpXc7RPbfYsuwKKwwYM5ibVVgpgD",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 09: Dramatic Irony. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Dramatic Irony.",
@@ -5512,14 +5879,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g09_u4",
         "unitNumber": 4,
         "title": "Unit 4: Poetry and Poetic Devices: Metaphor, Tone & Meter",
         "vietnameseTitle": "Chuyên đề: Thơ Ca & Biện Pháp Tu Từ: Ẩn Dụ, Âm Điệu & Nhịp Thơ (McDougal Littell Literature G9)",
-        "curriculumSeries": "McDougal Littell Literature G9",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/13iJycpXc7RPbfYsuwKKwwYM5ibVVgpgD",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 09: Poetics. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Poetics.",
@@ -5619,14 +5987,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g09_u5",
         "unitNumber": 5,
         "title": "Unit 5: Nonfiction Analysis: Rhetorical Fallacies & Bias",
         "vietnameseTitle": "Chuyên đề: Phân Tích Văn Phi Hư Cấu: Ngụy Biện Logic & Thiên Vị (McDougal Littell Literature G9)",
-        "curriculumSeries": "McDougal Littell Literature G9",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/13iJycpXc7RPbfYsuwKKwwYM5ibVVgpgD",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 09: Rhetorical Criticism. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Rhetorical Criticism.",
@@ -5726,14 +6095,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g09_u6",
         "unitNumber": 6,
         "title": "Unit 6: Writer's Choice: Literary Synthesis & MLA Research",
         "vietnameseTitle": "Chuyên đề: Writer's Choice: Viết Báo Cáo Nghiên Cứu & Trích Dẫn MLA (Writer's Choice G9)",
-        "curriculumSeries": "Writer's Choice G9",
+        "curriculumSeries": "Writer's Choice",
         "driveLink": "https://drive.google.com/drive/folders/13iJycpXc7RPbfYsuwKKwwYM5ibVVgpgD",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 09: MLA Research. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for MLA Research.",
@@ -5833,7 +6203,8 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "Writer's Choice"
       }
     ]
   },
@@ -5858,7 +6229,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: World Literature Masterpieces & Cultural Perspectives",
         "vietnameseTitle": "Chuyên đề: Kiệt Tác Văn Học Thế Giới & Góc Nhìn Văn Hóa Đa Chiều (McDougal Littell Literature G10)",
-        "curriculumSeries": "McDougal Littell Literature G10",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1qlmR8rMG2FD5YY5G1Lp9SUigPBitpz86",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 10: World Masterpieces. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for World Masterpieces.",
@@ -5958,14 +6329,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g10_u2",
         "unitNumber": 2,
         "title": "Unit 2: Classical Rhetoric: Ethos, Pathos & Logos in Persuasion",
         "vietnameseTitle": "Chuyên đề: Thuật Hùng Biện Cổ Điển: Tam Giác Thuyết Phục Ethos, Pathos & Logos (McDougal Littell Literature G10)",
-        "curriculumSeries": "McDougal Littell Literature G10",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1qlmR8rMG2FD5YY5G1Lp9SUigPBitpz86",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 10: Classical Rhetoric. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Classical Rhetoric.",
@@ -6065,14 +6437,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g10_u3",
         "unitNumber": 3,
         "title": "Unit 3: Greek Tragedy: Sophocles' Antigone & Moral Conflict",
         "vietnameseTitle": "Chuyên đề: Bi Kịch Hy Lạp: Vở Kịch Antigone & Xung Đột Đạo Đức (McDougal Littell Literature G10)",
-        "curriculumSeries": "McDougal Littell Literature G10",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1qlmR8rMG2FD5YY5G1Lp9SUigPBitpz86",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 10: Greek Tragedy. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Greek Tragedy.",
@@ -6172,14 +6545,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g10_u4",
         "unitNumber": 4,
         "title": "Unit 4: The Novel: Critical Analysis, Symbolism & Historical Context",
         "vietnameseTitle": "Chuyên đề: Tiểu Thuyết: Phân Tích Biểu Tượng & Bối Cảnh Lịch Sử (McDougal Littell Literature G10)",
-        "curriculumSeries": "McDougal Littell Literature G10",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1qlmR8rMG2FD5YY5G1Lp9SUigPBitpz86",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 10: Novel Analysis. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Novel Analysis.",
@@ -6279,14 +6653,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g10_u5",
         "unitNumber": 5,
         "title": "Unit 5: Writer's Choice: Research Writing, Evidence & MLA Format",
         "vietnameseTitle": "Chuyên đề: Writer's Choice: Viết Luận Nghiên Cứu Chuẩn Học Thuật MLA (Writer's Choice G10)",
-        "curriculumSeries": "Writer's Choice G10",
+        "curriculumSeries": "Writer's Choice",
         "driveLink": "https://drive.google.com/drive/folders/1qlmR8rMG2FD5YY5G1Lp9SUigPBitpz86",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 10: Academic Argument. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Academic Argument.",
@@ -6386,14 +6761,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "Writer's Choice"
       },
       {
         "id": "us_g10_u6",
         "unitNumber": 6,
         "title": "Unit 6: Vocabulary Practice and Tests with Answer Key (SAT Prep)",
         "vietnameseTitle": "Chuyên đề: Luyện Từ Vựng Học Thuật SAT Kèm Đáp Án Chi Tiết (Vocabulary Practice & Tests G10)",
-        "curriculumSeries": "Vocabulary Practice & Tests G10",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1qlmR8rMG2FD5YY5G1Lp9SUigPBitpz86",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 10: SAT Vocabulary. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for SAT Vocabulary.",
@@ -6493,7 +6869,8 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       }
     ]
   },
@@ -6517,7 +6894,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: Early American Voices: Puritan Tradition & Independence",
         "vietnameseTitle": "Chuyên đề: Tiếng Nói Đầu Tiên Nước Mỹ: Truyền Thống Thanh Giáo & Tuyên Ngôn Độc Lập (American Literature G11)",
-        "curriculumSeries": "American Literature G11",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1ElYWck0Yuf9nNyuxtX21MDfh5cXSQ5dW",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 11: Colonial America. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Colonial America.",
@@ -6617,14 +6994,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g11_u2",
         "unitNumber": 2,
         "title": "Unit 2: American Romanticism & Transcendentalism (Emerson, Thoreau)",
         "vietnameseTitle": "Chuyên đề: Chủ Nghĩa Lãng Mạn & Thuyết Siêu Việt (Emerson & Thoreau) (American Literature G11)",
-        "curriculumSeries": "American Literature G11",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1ElYWck0Yuf9nNyuxtX21MDfh5cXSQ5dW",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 11: Transcendentalism. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Transcendentalism.",
@@ -6724,14 +7102,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g11_u3",
         "unitNumber": 3,
         "title": "Unit 3: The American Renaissance: Poe, Hawthorne, Melville & Dickinson",
         "vietnameseTitle": "Chuyên đề: Phục Hưng Văn Học Mỹ: Truyện Kinh Dị Của Poe & Thơ Dickinson (American Literature G11)",
-        "curriculumSeries": "American Literature G11",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1ElYWck0Yuf9nNyuxtX21MDfh5cXSQ5dW",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 11: Gothic Romanticism. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Gothic Romanticism.",
@@ -6831,14 +7210,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g11_u4",
         "unitNumber": 4,
         "title": "Unit 4: Realism & Regionalism: Mark Twain & The Gilded Age",
         "vietnameseTitle": "Chuyên đề: Chủ Nghĩa Hiện Thực: Mark Twain & Thời Kỳ Vàng Son Nước Mỹ (American Literature G11)",
-        "curriculumSeries": "American Literature G11",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1ElYWck0Yuf9nNyuxtX21MDfh5cXSQ5dW",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 11: Literary Realism. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Literary Realism.",
@@ -6938,14 +7318,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g11_u5",
         "unitNumber": 5,
         "title": "Unit 5: Modernism & The Lost Generation: The Great Gatsby",
         "vietnameseTitle": "Chuyên đề: Chủ Nghĩa Hiện Đại & Đại Gia Gatsby: Phản Chiếu Giấc Mơ Mỹ (American Literature G11)",
-        "curriculumSeries": "American Literature G11",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1ElYWck0Yuf9nNyuxtX21MDfh5cXSQ5dW",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 11: The American Dream. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for The American Dream.",
@@ -7045,14 +7426,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g11_u6",
         "unitNumber": 6,
         "title": "Unit 6: Advanced Rhetorical Analysis & ACT/SAT Synthesis Essay",
         "vietnameseTitle": "Chuyên đề: Phân Tích Hùng Biện Nâng Cao & Viết Luận Tổng Hợp SAT/ACT (Writer's Choice G11)",
-        "curriculumSeries": "Writer's Choice G11",
+        "curriculumSeries": "Writer's Choice",
         "driveLink": "https://drive.google.com/drive/folders/1ElYWck0Yuf9nNyuxtX21MDfh5cXSQ5dW",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 11: Synthesis Essay. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Synthesis Essay.",
@@ -7152,7 +7534,8 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "Writer's Choice"
       }
     ]
   },
@@ -7176,7 +7559,7 @@ export const usEduCurriculum = [
         "unitNumber": 1,
         "title": "Unit 1: Anglo-Saxon & Medieval Period: Beowulf & Canterbury Tales",
         "vietnameseTitle": "Chuyên đề: Thời Kỳ Anglo-Saxon & Trung Cổ: Sử Thi Beowulf & Truyện Canterbury (British Literature G12)",
-        "curriculumSeries": "British Literature G12",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1tzj33xKlv2sGTxNqfu-YjkozSKFOQEEv",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 12: Old English Epic. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Old English Epic.",
@@ -7276,14 +7659,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g12_u2",
         "unitNumber": 2,
         "title": "Unit 2: The English Renaissance: Shakespeare's Hamlet & Macbeth",
         "vietnameseTitle": "Chuyên đề: Phục Hưng Nước Anh: Bi Kịch Hamlet & Macbeth của Shakespeare (British Literature G12)",
-        "curriculumSeries": "British Literature G12",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1tzj33xKlv2sGTxNqfu-YjkozSKFOQEEv",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 12: Shakespearean Tragedy. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Shakespearean Tragedy.",
@@ -7383,14 +7767,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g12_u3",
         "unitNumber": 3,
         "title": "Unit 3: The Enlightenment & Romanticism: Swift, Shelley & Keats",
         "vietnameseTitle": "Chuyên đề: Thời Kỳ Khai Sáng & Lãng Mạn Anh: Châm Biếm Của Swift & Thơ Keats (British Literature G12)",
-        "curriculumSeries": "British Literature G12",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1tzj33xKlv2sGTxNqfu-YjkozSKFOQEEv",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 12: Satire and Romanticism. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Satire and Romanticism.",
@@ -7490,14 +7875,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g12_u4",
         "unitNumber": 4,
         "title": "Unit 4: The Victorian Era to Modernism: Dickens, Woolf & Yeats",
         "vietnameseTitle": "Chuyên đề: Thời Đại Victoria đến Chủ Nghĩa Hiện Đại: Dickens & Virginia Woolf (British Literature G12)",
-        "curriculumSeries": "British Literature G12",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1tzj33xKlv2sGTxNqfu-YjkozSKFOQEEv",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 12: Stream of Consciousness. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Stream of Consciousness.",
@@ -7597,14 +7983,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g12_u5",
         "unitNumber": 5,
         "title": "Unit 5: Dystopian Fiction & Totalitarian Critique: George Orwell's 1984",
         "vietnameseTitle": "Chuyên đề: Văn Học Phản Địa Đàng (Dystopia): Tác Phẩm 1984 của George Orwell (British Literature G12)",
-        "curriculumSeries": "British Literature G12",
+        "curriculumSeries": "McDougal Littell",
         "driveLink": "https://drive.google.com/drive/folders/1tzj33xKlv2sGTxNqfu-YjkozSKFOQEEv",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 12: Dystopian Literature. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for Dystopian Literature.",
@@ -7704,14 +8091,15 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "McDougal Littell"
       },
       {
         "id": "us_g12_u6",
         "unitNumber": 6,
         "title": "Unit 6: AP English Literature & Personal College Admissions Statement",
         "vietnameseTitle": "Chuyên đề: Luyện Đề AP English Literature & Hoàn Thiện Bài Luận Đại Học Mỹ (Writer's Choice G12)",
-        "curriculumSeries": "Writer's Choice G12",
+        "curriculumSeries": "Writer's Choice",
         "driveLink": "https://drive.google.com/drive/folders/1tzj33xKlv2sGTxNqfu-YjkozSKFOQEEv",
         "overview": "Trọng tâm kiến thức chuẩn Mỹ Grade 12: College Admissions Essay. Rèn luyện tư duy phản biện, phân tích văn học và viết luận học thuật chuyên sâu.",
         "grammarFocus": "Academic Grammar Focus: Advanced syntactical structures, rhetorical balance, and thesis statements for College Admissions Essay.",
@@ -7811,7 +8199,8 @@ export const usEduCurriculum = [
             "of"
           ],
           "explanation": "Chủ ngữ + động từ (enhances) + cụm tân ngữ (the philosophical depth of literature)."
-        }
+        },
+        "series": "Writer's Choice"
       }
     ]
   }
