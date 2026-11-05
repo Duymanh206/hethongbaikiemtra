@@ -11,13 +11,23 @@ import HistoryPage from './pages/HistoryPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import GuidePage from './pages/GuidePage';
 import FeedbackPage from './pages/FeedbackPage';
+import LoginPage from './pages/LoginPage';
 import AuthModal from './components/AuthModal';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 function MainApp() {
+  const { user } = useAuth();
+
   const [activePage, setActivePage] = useState('explore');
   const [selectedQuizId, setSelectedQuizId] = useState('quiz_cnxhkh_05');
   const [lastAttemptId, setLastAttemptId] = useState(null);
+
+  // AUTHENTICATION GATE:
+  // If user is not logged in, show the full-screen Login & Register portal
+  // The user CANNOT enter the inside interface or do exams until they log in or register!
+  if (!user) {
+    return <LoginPage />;
+  }
 
   // Navigation handlers
   const handleSelectQuiz = (quizId) => {
@@ -140,4 +150,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
