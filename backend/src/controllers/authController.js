@@ -21,7 +21,7 @@ export function initAuthAccounts() {
       username: 'dtc245200060',
       fullName: 'Hoàng Duy Mạnh',
       studentId: 'dtc245200060',
-      email: 'dtc245200060@student.edu.vn',
+      email: 'manhvipsv@gmail.com',
       password: '123',
       role: 'student',
       status: 'active',

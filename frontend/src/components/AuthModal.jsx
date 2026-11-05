@@ -220,7 +220,7 @@ export default function AuthModal() {
                     type="text"
                     value={loginUsername}
                     onChange={(e) => setLoginUsername(e.target.value)}
-                    placeholder="VD: dtc245200060"
+                    placeholder="Nhập mã sinh viên hoặc tên tài khoản"
                     className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs text-slate-900 font-medium placeholder:text-slate-400"
                     required
                   />
@@ -307,7 +307,7 @@ export default function AuthModal() {
                     type="text"
                     value={regStudentId}
                     onChange={(e) => setRegStudentId(e.target.value)}
-                    placeholder="VD: dtc245200060"
+                    placeholder="Nhập mã sinh viên hoặc tên tài khoản"
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
                   />
                 </div>
@@ -325,7 +325,7 @@ export default function AuthModal() {
                     type="email"
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
-                    placeholder="VD: manh@student.edu.vn"
+                    placeholder="VD: email@example.com"
                     className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
                   />
                 </div>

@@ -20,7 +20,7 @@ const initialData = {
       username: 'dtc245200060',
       fullName: 'Hoàng Duy Mạnh',
       studentId: 'dtc245200060',
-      email: 'dtc245200060@student.edu.vn',
+      email: 'manhvipsv@gmail.com',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       role: 'student',
       createdAt: '2026-03-01T08:00:00.000Z'

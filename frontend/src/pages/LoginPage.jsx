@@ -214,13 +214,13 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Candidate Info Badge */}
+            {/* System Info Badge */}
             <div className="p-3 rounded-xl bg-blue-900/30 border border-blue-500/20 text-xs text-blue-200 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span>Quản trị viên: <strong>Hoàng Duy Mạnh</strong> (Mã SV: <code className="font-mono bg-blue-950/60 px-1 py-0.5 rounded">dtc245200060</code>)</span>
+                <span>Hệ thống Khảo thí & Thi đấu Trực tuyến Chuẩn hóa</span>
               </div>
-              <span className="text-[10px] text-blue-300/70 hidden sm:inline">Phê duyệt tự động qua Email</span>
+              <span className="text-[10px] text-blue-300/70 hidden sm:inline">Phê duyệt bởi Quản trị viên</span>
             </div>
           </div>
 
@@ -313,7 +313,7 @@ export default function LoginPage() {
                           type="text"
                           value={loginUsername}
                           onChange={(e) => setLoginUsername(e.target.value)}
-                          placeholder="VD: dtc245200060"
+                          placeholder="Nhập mã sinh viên hoặc tên đăng nhập"
                           className="w-full pl-10 pr-3.5 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-slate-900 font-medium placeholder:text-slate-400 transition-all bg-slate-50/50 hover:bg-white"
                           required
                           autoFocus
@@ -361,25 +361,6 @@ export default function LoginPage() {
                         </>
                       )}
                     </button>
-
-                    {/* Helper credentials hint box */}
-                    <div className="mt-5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-600 space-y-1">
-                      <div className="font-bold text-slate-700 flex items-center gap-1.5">
-                        <span>💡 Tài khoản kiểm tra mẫu đã kích hoạt:</span>
-                      </div>
-                      <div className="flex items-center justify-between text-slate-600 pt-0.5">
-                        <span>• Quản trị viên & Sinh viên (Hoàng Duy Mạnh):</span>
-                        <code className="bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-blue-600 font-bold">
-                          dtc245200060 / 123
-                        </code>
-                      </div>
-                      <div className="flex items-center justify-between text-slate-600">
-                        <span>• Giảng viên (TS. Quang Minh):</span>
-                        <code className="bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-indigo-600 font-bold">
-                          giangvien / 123
-                        </code>
-                      </div>
-                    </div>
                   </form>
                 )}
 
@@ -432,7 +413,7 @@ export default function LoginPage() {
                           type="text"
                           value={regStudentId}
                           onChange={(e) => setRegStudentId(e.target.value)}
-                          placeholder="VD: dtc245200999"
+                          placeholder="VD: 245200001"
                           className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
                         />
                       </div>
@@ -529,7 +510,7 @@ export default function LoginPage() {
 
       {/* Footer */}
       <footer className="px-6 py-4 border-t border-white/10 text-center text-xs text-slate-500 backdrop-blur-md">
-        © 2026 Quizz. Online Battle Pro — Hệ Thống Khảo Thí & Thi Đấu Trắc Nghiệm Trực Tuyến. Bản quyền thuộc về Hoàng Duy Mạnh (dtc245200060).
+        © 2026 Quizz. Online Battle Pro — Hệ Thống Khảo Thí & Thi Đấu Trắc Nghiệm Trực Tuyến. Bản quyền thuộc về Hoàng Duy Mạnh.
       </footer>
 
     </div>

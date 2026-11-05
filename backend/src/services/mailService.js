@@ -1,7 +1,7 @@
 import { db } from '../database/db.js';
 
 // Admin email address (Hoàng Duy Mạnh)
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'dtc245200060@student.edu.vn';
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'manhvipsv@gmail.com';
 
 /**
  * Dispatch approval notification email to Admin (Hoàng Duy Mạnh)
