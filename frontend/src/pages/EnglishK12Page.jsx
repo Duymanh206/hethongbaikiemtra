@@ -26,7 +26,8 @@ import {
   FileText,
   ExternalLink,
   FolderOpen,
-  DownloadCloud
+  DownloadCloud,
+  Check
 } from 'lucide-react';
 import VocabularyFlashcards from '../components/english/VocabularyFlashcards';
 import LessonDetailModal from '../components/english/LessonDetailModal';

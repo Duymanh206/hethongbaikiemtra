@@ -40,20 +40,22 @@ export default function QuickDictionaryPopup() {
   const [definition, setDefinition] = useState(null);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [isOpen, setIsOpen] = useState(false);
-  const synthRef = useRef(window.speechSynthesis);
+  const synthRef = useRef(typeof window !== 'undefined' ? window.speechSynthesis : null);
 
   useEffect(() => {
     const handleMouseUp = (e) => {
       // Ignore if clicking inside dictionary popup itself
-      if (e.target.closest('.quick-dict-popup')) return;
+      if (e.target && e.target.closest && e.target.closest('.quick-dict-popup')) return;
 
-      const selection = window.getSelection();
-      const rawText = selection ? selection.toString().trim() : '';
+      const selection = typeof window !== 'undefined' && window.getSelection ? window.getSelection() : null;
+      if (!selection || selection.rangeCount === 0) return;
+      const rawText = selection.toString().trim();
 
       // Clean to single word
       const cleanWord = rawText.replace(/[^a-zA-Z]/g, '').toLowerCase();
 
       if (cleanWord && cleanWord.length >= 2 && cleanWord.length <= 25) {
+        if (selection.rangeCount === 0) return;
         const range = selection.getRangeAt(0);
         const rect = range.getBoundingClientRect();
 
