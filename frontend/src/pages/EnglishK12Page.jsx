@@ -83,11 +83,12 @@ export default function EnglishK12Page({
         try {
           const qRes = await fetch('/api/quizzes');
           const qData = await qRes.json();
-          if (qData.success && Array.isArray(qData.quizzes)) {
-            const engQuizzes = qData.quizzes.filter(q => {
+          const rawQuizzes = Array.isArray(qData.data) ? qData.data : (Array.isArray(qData.quizzes) ? qData.quizzes : []);
+          if (rawQuizzes.length > 0) {
+            const engQuizzes = rawQuizzes.filter(q => {
               const cat = (q.category || '').toLowerCase();
               const title = (q.title || '').toLowerCase();
-              return cat.includes('tiếng anh') || cat.includes('english') || title.includes('tiếng anh') || title.includes('global success') || title.includes('thpt');
+              return cat.includes('tiếng anh') || cat.includes('english') || title.includes('tiếng anh') || title.includes('global success') || title.includes('thpt') || cat.includes('chuyên đề') || cat.includes('chuẩn mỹ');
             });
             setQuizzes(engQuizzes);
           }
@@ -176,23 +177,42 @@ export default function EnglishK12Page({
   // Filtered Quizzes based on level, grade, search
   const filteredQuizzes = quizzes.filter(q => {
     if (searchQuery.trim()) {
-      const qText = `${q.title} ${q.description} ${q.category}`.toLowerCase();
+      const qText = `${q.title} ${q.description || ''} ${q.category || ''}`.toLowerCase();
       if (!qText.includes(searchQuery.trim().toLowerCase())) return false;
     }
 
+    const titleUpper = (q.title || '').toUpperCase();
+    const gradeUpper = (q.grade || '').toUpperCase();
+    const qLevel = q.level || '';
+
     if (selectedLevel === 'primary') {
-      const isPri = q.level === 'primary' || q.title.includes('LỚP 1') || q.title.includes('LỚP 2') || q.title.includes('LỚP 3') || q.title.includes('LỚP 4') || q.title.includes('LỚP 5');
+      const isPri = qLevel === 'primary' || ['1', '2', '3', '4', '5'].some(n => 
+        gradeUpper.includes(`LỚP ${n}`) || gradeUpper === n || titleUpper.includes(`LỚP ${n}`) || titleUpper.includes(`GRADE ${n}`) || titleUpper.includes(`G0${n}`) || titleUpper.includes(`G${n}`)
+      );
       if (!isPri) return false;
     } else if (selectedLevel === 'secondary') {
-      const isSec = q.level === 'secondary' || q.title.includes('LỚP 6') || q.title.includes('LỚP 7') || q.title.includes('LỚP 8') || q.title.includes('LỚP 9') || q.title.includes('GLOBAL SUCCESS');
+      const isSec = qLevel === 'secondary' || ['6', '7', '8', '9'].some(n => 
+        gradeUpper.includes(`LỚP ${n}`) || gradeUpper === n || titleUpper.includes(`LỚP ${n}`) || titleUpper.includes(`GRADE ${n}`) || titleUpper.includes(`G0${n}`) || titleUpper.includes(`G${n}`)
+      ) || titleUpper.includes('GLOBAL SUCCESS');
       if (!isSec) return false;
     } else if (selectedLevel === 'highschool') {
-      const isHigh = q.level === 'highschool' || q.title.includes('LỚP 10') || q.title.includes('LỚP 11') || q.title.includes('LỚP 12') || q.title.includes('THPT');
+      const isHigh = qLevel === 'highschool' || ['10', '11', '12'].some(n => 
+        gradeUpper.includes(`LỚP ${n}`) || gradeUpper === n || titleUpper.includes(`LỚP ${n}`) || titleUpper.includes(`GRADE ${n}`) || titleUpper.includes(`G${n}`)
+      ) || titleUpper.includes('THPT');
       if (!isHigh) return false;
     }
 
     if (selectedGrade !== 'all') {
-      if (!q.title.toUpperCase().includes(selectedGrade.toUpperCase())) {
+      const gNum = selectedGrade.replace(/\D/g, ''); // e.g. "1" from "Lớp 1"
+      const matchGrade = gradeUpper.includes(selectedGrade.toUpperCase()) ||
+                         gradeUpper === gNum ||
+                         gradeUpper === selectedGrade.toUpperCase() ||
+                         titleUpper.includes(selectedGrade.toUpperCase()) ||
+                         titleUpper.includes(`LỚP ${gNum}`) ||
+                         titleUpper.includes(`GRADE ${gNum}`) ||
+                         titleUpper.includes(`G0${gNum}`) ||
+                         titleUpper.includes(`G${gNum}`);
+      if (!matchGrade) {
         return false;
       }
     }
