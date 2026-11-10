@@ -527,18 +527,6 @@ export const getAttemptResult = async (req, res) => {
         instructionBadge: q.instructionBadge,
         explanation: q.explanation || 'Không có giải thích chi tiết cho câu hỏi này.',
         points: q.points,
-        passageText: q.passageText,
-        passageTitle: q.passageTitle,
-        listeningScript: q.listeningScript,
-        audioUrl: q.audioUrl,
-        options: qOptions,
-        dragDropItems: qDragDrop,
-        statements: qStatements,
-        userAnswer,
-        isCorrect,
-        isUnanswered
-      };
-    });
         requiredCount: q.requiredCount,
         categories: q.categories || [],
         statements: qStatements,
@@ -553,8 +541,9 @@ export const getAttemptResult = async (req, res) => {
         correctSentence: q.correctSentence,
         blanks: q.blanks,
         imageUrl: q.imageUrl,
+        userAnswer,
         isCorrect,
-        userAnswer
+        isUnanswered
       };
     });
 
