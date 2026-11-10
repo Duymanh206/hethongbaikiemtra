@@ -43,6 +43,10 @@ export default function CreateQuizPage({ onQuizCreated }) {
   const [isSaving, setIsSaving] = useState(false);
   const [editingQuestionIdx, setEditingQuestionIdx] = useState(null);
 
+  // Save Feedback & Toast / Modal States
+  const [saveSuccessModal, setSaveSuccessModal] = useState(null); // { open: true, title, quizId, count, category }
+  const [feedbackToast, setFeedbackToast] = useState(null); // { type: 'error' | 'success', message }
+
   // Visual Builder State
   const [builderTitle, setBuilderTitle] = useState('');
   const [builderDescription, setBuilderDescription] = useState('');
@@ -328,36 +332,83 @@ export default function CreateQuizPage({ onQuizCreated }) {
     ]);
   };
 
-  // Save edited questions to DB
+  // Save edited questions to DB & localStorage
   const handleSaveEditedQuiz = async () => {
     if (!previewQuestions || previewQuestions.length === 0) {
-      alert('Không có câu hỏi nào để lưu');
+      setFeedbackToast({ type: 'error', message: 'Không có câu hỏi nào để lưu' });
       return;
     }
+
+    // Filter out options with empty content
+    const cleanedQuestions = previewQuestions.map(q => {
+      let opts = q.options;
+      if (Array.isArray(opts)) {
+        opts = opts.filter(o => o && o.content && o.content.trim().length > 0);
+      }
+      return { ...q, options: opts };
+    });
+
     setIsSaving(true);
     try {
+      const finalTitle = quizTitle || file?.name?.replace(/\.docx$/i, '') || 'Bài kiểm tra';
+      const finalCategory = quizCategory.trim();
       const res = await fetch('/api/quizzes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          title: quizTitle || file?.name?.replace(/\.docx$/i, '') || 'Bài kiểm tra',
-          description: `Đề thi nhập từ file Word (${previewQuestions.length} câu hỏi)`,
-          category: quizCategory,
+          title: finalTitle,
+          description: `Đề thi nhập từ file Word (${cleanedQuestions.length} câu hỏi)`,
+          category: finalCategory,
+          originalDocxName: file?.name || '',
           durationMinutes: 15,
           antiCheatEnabled: true,
-          questions: previewQuestions,
+          questions: cleanedQuestions,
           createdBy: user?.fullName || 'Quản trị viên'
         })
       });
       const data = await res.json();
       if (data.success) {
-        alert('Đã lưu bài thi và các câu hỏi chỉnh sửa thành công!');
-        onQuizCreated(data.quizId);
+        const quizId = data.quizId || `quiz_${Date.now()}`;
+        const customQuizRecord = {
+          id: quizId,
+          title: finalTitle,
+          description: `Đề thi nhập từ file Word (${cleanedQuestions.length} câu hỏi)`,
+          category: finalCategory,
+          originalDocxName: file?.name || '',
+          durationMinutes: 15,
+          passingScore: 5.0,
+          totalQuestions: cleanedQuestions.length,
+          shuffleQuestions: true,
+          shuffleOptions: true,
+          antiCheatEnabled: true,
+          attemptsCount: 0,
+          avgRating: 5.0,
+          createdBy: user?.fullName || 'Quản trị viên',
+          createdAt: new Date().toISOString(),
+          questions: cleanedQuestions
+        };
+
+        try {
+          const existing = JSON.parse(localStorage.getItem('custom_quizzes') || '[]');
+          const updated = [customQuizRecord, ...existing.filter(q => q.id !== quizId)];
+          localStorage.setItem('custom_quizzes', JSON.stringify(updated));
+          localStorage.setItem(`custom_questions_${quizId}`, JSON.stringify(cleanedQuestions));
+        } catch (e) {
+          console.warn('LocalStorage save failed:', e);
+        }
+
+        setSaveSuccessModal({
+          open: true,
+          quizId,
+          title: finalTitle,
+          count: cleanedQuestions.length,
+          category: finalCategory
+        });
       } else {
-        alert(data.message || 'Lỗi khi lưu bài thi');
+        setFeedbackToast({ type: 'error', message: data.message || 'Lỗi khi lưu bài thi' });
       }
     } catch (e) {
-      alert('Lỗi kết nối máy chủ');
+      setFeedbackToast({ type: 'error', message: 'Lỗi kết nối máy chủ' });
     } finally {
       setIsSaving(false);
     }
@@ -366,38 +417,81 @@ export default function CreateQuizPage({ onQuizCreated }) {
   // Visual Builder Save
   const handleSaveBuilderQuiz = async () => {
     if (!builderTitle.trim()) {
-      alert('Vui lòng nhập tiêu đề bài thi');
+      setFeedbackToast({ type: 'error', message: 'Vui lòng nhập tiêu đề bài thi' });
       return;
     }
     if (builderQuestions.length === 0) {
-      alert('Vui lòng thêm ít nhất 1 câu hỏi');
+      setFeedbackToast({ type: 'error', message: 'Vui lòng thêm ít nhất 1 câu hỏi' });
       return;
     }
 
+    const cleanedQuestions = builderQuestions.map(q => {
+      let opts = q.options;
+      if (Array.isArray(opts)) {
+        opts = opts.filter(o => o && o.content && o.content.trim().length > 0);
+      }
+      return { ...q, options: opts };
+    });
+
     setIsSaving(true);
     try {
+      const finalTitle = builderTitle.trim();
+      const finalCategory = builderCategory.trim();
       const res = await fetch('/api/quizzes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          title: builderTitle,
-          description: builderDescription,
-          category: builderCategory,
-          durationMinutes: builderDuration,
+          title: finalTitle,
+          description: builderDescription || `Đề thi soạn thảo thủ công (${cleanedQuestions.length} câu hỏi)`,
+          category: finalCategory,
+          durationMinutes: Number(builderDuration) || 15,
           antiCheatEnabled: builderAntiCheat,
-          questions: builderQuestions,
+          questions: cleanedQuestions,
           createdBy: user?.fullName || 'Giảng viên'
         })
       });
       const data = await res.json();
       if (data.success) {
-        alert('Tạo bài thi thành công!');
-        onQuizCreated(data.quizId);
+        const quizId = data.quizId || `quiz_${Date.now()}`;
+        const customQuizRecord = {
+          id: quizId,
+          title: finalTitle,
+          description: builderDescription || `Đề thi soạn thảo thủ công (${cleanedQuestions.length} câu hỏi)`,
+          category: finalCategory,
+          durationMinutes: Number(builderDuration) || 15,
+          passingScore: 5.0,
+          totalQuestions: cleanedQuestions.length,
+          shuffleQuestions: true,
+          shuffleOptions: true,
+          antiCheatEnabled: builderAntiCheat,
+          attemptsCount: 0,
+          avgRating: 5.0,
+          createdBy: user?.fullName || 'Giảng viên',
+          createdAt: new Date().toISOString(),
+          questions: cleanedQuestions
+        };
+
+        try {
+          const existing = JSON.parse(localStorage.getItem('custom_quizzes') || '[]');
+          const updated = [customQuizRecord, ...existing.filter(q => q.id !== quizId)];
+          localStorage.setItem('custom_quizzes', JSON.stringify(updated));
+          localStorage.setItem(`custom_questions_${quizId}`, JSON.stringify(cleanedQuestions));
+        } catch (e) {
+          console.warn('LocalStorage save failed:', e);
+        }
+
+        setSaveSuccessModal({
+          open: true,
+          quizId,
+          title: finalTitle,
+          count: cleanedQuestions.length,
+          category: finalCategory
+        });
       } else {
-        alert(data.message || 'Lỗi khi lưu');
+        setFeedbackToast({ type: 'error', message: data.message || 'Lỗi khi lưu bài thi' });
       }
     } catch (e) {
-      alert('Lỗi kết nối máy chủ');
+      setFeedbackToast({ type: 'error', message: 'Lỗi kết nối máy chủ' });
     } finally {
       setIsSaving(false);
     }
@@ -1002,10 +1096,85 @@ export default function CreateQuizPage({ onQuizCreated }) {
                 type="button"
                 onClick={handleSaveBuilderQuiz}
                 disabled={isSaving}
-                className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/25 active:scale-95 transition-all"
+                className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/25 active:scale-95 transition-all cursor-pointer"
               >
                 {isSaving ? 'Đang lưu...' : 'Lưu & Xuất bản bài thi'}
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* ===================== TOAST NOTIFICATION ===================== */}
+        {feedbackToast && (
+          <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-5 duration-200">
+            <div className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-xl border text-xs font-bold ${
+              feedbackToast.type === 'error'
+                ? 'bg-rose-50 text-rose-800 border-rose-200'
+                : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+            }`}>
+              {feedbackToast.type === 'error' ? (
+                <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
+              ) : (
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+              )}
+              <span>{feedbackToast.message}</span>
+              <button
+                type="button"
+                onClick={() => setFeedbackToast(null)}
+                className="ml-2 text-slate-400 hover:text-slate-600 p-1"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ===================== SAVE SUCCESS MODAL ===================== */}
+        {saveSuccessModal && saveSuccessModal.open && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-150">
+            <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-emerald-100 text-center animate-in zoom-in-95 duration-150 space-y-5">
+              
+              <div className="w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm shadow-emerald-500/10">
+                <CheckCircle2 className="w-9 h-9" />
+              </div>
+
+              <div>
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                  Lưu Bài Thi Thành Công!
+                </h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  Bài thi đã được lưu an toàn vào hệ thống & đồng bộ bộ nhớ thiết bị.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-4 text-left border border-slate-200/80 space-y-2 text-xs">
+                <div className="font-bold text-slate-800 text-sm line-clamp-2">
+                  {saveSuccessModal.title}
+                </div>
+                <div className="flex items-center justify-between text-slate-500 pt-1 border-t border-slate-200/60">
+                  <span>Số lượng câu hỏi:</span>
+                  <span className="font-extrabold text-blue-600">{saveSuccessModal.count} câu</span>
+                </div>
+                <div className="flex items-center justify-between text-slate-500">
+                  <span>Danh mục:</span>
+                  <span className="font-bold text-slate-700">{saveSuccessModal.category}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSaveSuccessModal(null);
+                    if (onQuizCreated) onQuizCreated(saveSuccessModal.quizId);
+                  }}
+                  className="w-full py-3 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-md shadow-emerald-600/25 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>Vào Phòng Thi Ngay</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+
             </div>
           </div>
         )}

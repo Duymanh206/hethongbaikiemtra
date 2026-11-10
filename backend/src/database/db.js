@@ -8,11 +8,30 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const IS_VERCEL = !!process.env.VERCEL;
-const BUNDLED_DATA_DIR = path.join(__dirname, '..', '..', 'data');
-const BUNDLED_STORE_PATH = path.join(BUNDLED_DATA_DIR, 'store.json');
-const DATA_DIR = IS_VERCEL ? '/tmp' : BUNDLED_DATA_DIR;
+
+function findBundledStore() {
+  const candidates = [
+    path.join(process.cwd(), 'backend', 'data', 'store.json'),
+    path.join(process.cwd(), 'data', 'store.json'),
+    path.join(__dirname, '..', '..', 'data', 'store.json'),
+    path.join(__dirname, '..', 'data', 'store.json'),
+    path.join(__dirname, 'data', 'store.json'),
+    path.join(__dirname, 'store.json'),
+    '/var/task/backend/data/store.json',
+    '/var/task/data/store.json'
+  ];
+  for (const p of candidates) {
+    try {
+      if (fs.existsSync(p)) return p;
+    } catch {}
+  }
+  return null;
+}
+
+const BUNDLED_STORE_PATH = findBundledStore() || path.join(__dirname, '..', '..', 'data', 'store.json');
+const DATA_DIR = IS_VERCEL ? '/tmp' : path.dirname(BUNDLED_STORE_PATH);
 const STORE_PATH = IS_VERCEL ? path.join('/tmp', 'store.json') : BUNDLED_STORE_PATH;
-const CLOUD_SYNC_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1aaa77dde3ea0';
+const CLOUD_SYNC_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1c39bb5777845';
 
 // Initial seed data with the exact requirements
 const initialData = {
@@ -460,13 +479,15 @@ class Database {
 
   loadData() {
     try {
-      if (IS_VERCEL && !fs.existsSync(STORE_PATH) && fs.existsSync(BUNDLED_STORE_PATH)) {
-        const bundled = fs.readFileSync(BUNDLED_STORE_PATH, 'utf-8');
+      const sourceFile = findBundledStore();
+      if (IS_VERCEL && !fs.existsSync(STORE_PATH) && sourceFile && fs.existsSync(sourceFile)) {
+        const bundled = fs.readFileSync(sourceFile, 'utf-8');
         this.ensureDataDir();
         fs.writeFileSync(STORE_PATH, bundled, 'utf-8');
       }
-      if (fs.existsSync(STORE_PATH)) {
-        const content = fs.readFileSync(STORE_PATH, 'utf-8');
+      const targetPath = fs.existsSync(STORE_PATH) ? STORE_PATH : sourceFile;
+      if (targetPath && fs.existsSync(targetPath)) {
+        const content = fs.readFileSync(targetPath, 'utf-8');
         const parsed = JSON.parse(content);
         if (Array.isArray(parsed.quizzes)) {
           parsed.quizzes = parsed.quizzes.map(cleanQuiz);
@@ -510,7 +531,7 @@ class Database {
     const table = this.getTable(tableName);
     table.push(record);
     this.saveData();
-    if (tableName === 'users') {
+    if (['users', 'quizzes', 'questions', 'question_options'].includes(tableName)) {
       this.syncToCloud().catch(() => {});
     }
     return record;
@@ -522,7 +543,7 @@ class Database {
     if (index !== -1) {
       table[index] = { ...table[index], ...updates };
       this.saveData();
-      if (tableName === 'users') {
+      if (['users', 'quizzes', 'questions', 'question_options'].includes(tableName)) {
         this.syncToCloud().catch(() => {});
       }
       return table[index];
@@ -536,7 +557,7 @@ class Database {
     this.data[tableName] = table.filter(item => !predicate(item));
     if (this.data[tableName].length !== initialLen) {
       this.saveData();
-      if (tableName === 'users') {
+      if (['users', 'quizzes', 'questions', 'question_options'].includes(tableName)) {
         this.syncToCloud().catch(() => {});
       }
       return true;

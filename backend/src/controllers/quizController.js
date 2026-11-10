@@ -34,9 +34,10 @@ export const getAllQuizzes = async (req, res) => {
       );
     }
 
-    // Filter by category
+    // Filter by category (case-insensitive & trimmed)
     if (category.trim()) {
-      quizzes = quizzes.filter(item => item.category === category.trim());
+      const catClean = category.trim().toLowerCase();
+      quizzes = quizzes.filter(item => (item.category || '').trim().toLowerCase() === catClean);
     }
 
     // Sort
@@ -679,8 +680,9 @@ export const createQuiz = async (req, res) => {
         statements: q.statements || []
       });
 
-      if (q.options && q.options.length > 0) {
-        q.options.forEach((opt, optIdx) => {
+      const validOpts = (q.options || []).filter(opt => opt && opt.content && opt.content.trim().length > 0);
+      if (validOpts.length > 0) {
+        validOpts.forEach((opt, optIdx) => {
           db.insert('question_options', {
             id: `opt_${qId}_${optIdx + 1}`,
             questionId: qId,
@@ -711,7 +713,8 @@ export const createQuiz = async (req, res) => {
     res.json({
       success: true,
       message: 'Tạo bài thi thành công',
-      quizId
+      quizId,
+      quiz: newQuiz
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

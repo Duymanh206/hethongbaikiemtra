@@ -313,13 +313,15 @@ function parseStandardChoiceQuestion(text, qNum) {
   while ((optMatch = optionRegex.exec(optionsText)) !== null) {
     const label = optMatch[1].toUpperCase();
     const content = optMatch[2].trim();
-    options.push({
-      id: `opt_${qNum}_${label.toLowerCase()}`,
-      label,
-      content,
-      isCorrect: false, // will mark default or evaluated
-      orderIndex: options.length + 1
-    });
+    if (content.length > 0) {
+      options.push({
+        id: `opt_${qNum}_${label.toLowerCase()}`,
+        label,
+        content,
+        isCorrect: false, // will mark default or evaluated
+        orderIndex: options.length + 1
+      });
+    }
   }
 
   // Fallback: if optionsText didn't match, check if lines start with A., B., C., D.
@@ -328,7 +330,7 @@ function parseStandardChoiceQuestion(text, qNum) {
     prompt = lines[0];
     for (let i = 1; i < lines.length; i++) {
       const lMatch = lines[i].match(/^([A-D])[.):]\s*(.*)/i);
-      if (lMatch) {
+      if (lMatch && lMatch[2].trim().length > 0) {
         options.push({
           id: `opt_${qNum}_${lMatch[1].toLowerCase()}`,
           label: lMatch[1].toUpperCase(),

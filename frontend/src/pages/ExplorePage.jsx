@@ -57,11 +57,65 @@ export default function ExplorePage({ onSelectQuiz, onStartExam, onStartBattleFo
     fetch(`/api/quizzes?sort=${sortBy}${catParam}${searchParam}`)
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
-          setQuizzes(data.data);
+        const serverQuizzes = data.success && Array.isArray(data.data) ? data.data : [];
+        let localQuizzes = [];
+        try {
+          localQuizzes = JSON.parse(localStorage.getItem('custom_quizzes') || '[]');
+        } catch (e) {
+          localQuizzes = [];
         }
+
+        // Merge server quizzes with user-created custom quizzes
+        const mergedMap = new Map();
+        serverQuizzes.forEach(q => mergedMap.set(q.id, q));
+        localQuizzes.forEach(q => {
+          if (mergedMap.has(q.id)) {
+            mergedMap.set(q.id, { ...mergedMap.get(q.id), ...q });
+          } else {
+            mergedMap.set(q.id, q);
+          }
+        });
+
+        let mergedList = Array.from(mergedMap.values());
+
+        // Client-side category filter fallback (case-insensitive & trimmed)
+        if (selectedCategory && selectedCategory !== 'Tất cả') {
+          const targetCat = selectedCategory.trim().toLowerCase();
+          mergedList = mergedList.filter(q => (q.category || '').trim().toLowerCase() === targetCat);
+        }
+
+        // Client-side search filter fallback
+        if (searchQuery.trim()) {
+          const qText = searchQuery.trim().toLowerCase();
+          mergedList = mergedList.filter(q => 
+            (q.title || '').toLowerCase().includes(qText) ||
+            (q.description || '').toLowerCase().includes(qText) ||
+            (q.category || '').toLowerCase().includes(qText)
+          );
+        }
+
+        // Sort
+        if (sortBy === 'most_taken') {
+          mergedList.sort((a, b) => (b.attemptsCount || 0) - (a.attemptsCount || 0));
+        } else if (sortBy === 'newest') {
+          mergedList.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        } else if (sortBy === 'highest_rated') {
+          mergedList.sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0));
+        }
+
+        setQuizzes(mergedList);
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err);
+        try {
+          let localQuizzes = JSON.parse(localStorage.getItem('custom_quizzes') || '[]');
+          if (selectedCategory && selectedCategory !== 'Tất cả') {
+            const targetCat = selectedCategory.trim().toLowerCase();
+            localQuizzes = localQuizzes.filter(q => (q.category || '').trim().toLowerCase() === targetCat);
+          }
+          setQuizzes(localQuizzes);
+        } catch {}
+      })
       .finally(() => setLoading(false));
   };
 

@@ -194,16 +194,19 @@ export function extractOptionsUniversal(text, runs = [], checkRunIsCorrect = () 
 
         const cleaned = cleanOptionContentAndDetectCorrect(rawContent, runs, checkRunIsCorrect, optLabel);
 
-        options.push({
-          label: optLabel,
-          originalLabel: matches[i].label,
-          content: cleaned.content,
-          isCorrect: cleaned.isCorrect,
-          hasExplicitMarker: cleaned.hasExplicitMarker
-        });
+        if (cleaned.content && cleaned.content.trim().length > 0) {
+          options.push({
+            label: optLabel,
+            originalLabel: matches[i].label,
+            content: cleaned.content,
+            isCorrect: cleaned.isCorrect,
+            hasExplicitMarker: cleaned.hasExplicitMarker
+          });
+        }
       }
 
-      const correctCount = options.filter(o => o.isCorrect).length;
+      const validOptions = options.filter(o => o.content && o.content.trim().length > 0);
+      const correctCount = validOptions.filter(o => o.isCorrect).length;
       let qType = 'single_choice';
       let requiredCount = 1;
       let instructionBadge = null;
@@ -221,11 +224,11 @@ export function extractOptionsUniversal(text, runs = [], checkRunIsCorrect = () 
           requiredCount = parseInt(multiMatch[1], 10);
           qType = 'multiple_choice';
           instructionBadge = `(!) Chọn ${requiredCount} phương án đúng`;
-          for (let i = 0; i < Math.min(requiredCount, options.length); i++) {
-            options[i].isCorrect = true;
+          for (let i = 0; i < Math.min(requiredCount, validOptions.length); i++) {
+            validOptions[i].isCorrect = true;
           }
-        } else {
-          options[0].isCorrect = true;
+        } else if (validOptions.length > 0) {
+          validOptions[0].isCorrect = true;
         }
       }
 
@@ -234,7 +237,7 @@ export function extractOptionsUniversal(text, runs = [], checkRunIsCorrect = () 
         type: qType,
         requiredCount,
         instructionBadge,
-        options,
+        options: validOptions,
         matchedStyle: style.name
       };
     }
@@ -605,6 +608,9 @@ export async function parseDocxBuffer(buffer, config = {}) {
           }
 
           const cleaned = cleanOptionContentAndDetectCorrect(rawRest, runs, checkRunIsCorrect, label);
+          if (!cleaned.content || cleaned.content.trim().length === 0) {
+            continue;
+          }
 
           currentQ.options.push({
             id: `opt_${Date.now()}_${qCounter}_${label.toLowerCase()}`,
@@ -751,6 +757,14 @@ export async function parseDocxBuffer(buffer, config = {}) {
 
   // Post-process each question
   questions.forEach(q => {
+    // Strictly filter out any options with empty content
+    if (q.options && q.options.length > 0) {
+      q.options = q.options.filter(o => o && o.content && o.content.trim().length > 0);
+      q.options.forEach((opt, oIdx) => {
+        opt.orderIndex = oIdx + 1;
+      });
+    }
+
     // If options were parsed from separate lines or inline
     if (q.options.length > 0) {
       const correctOpts = q.options.filter(o => o.isCorrect);

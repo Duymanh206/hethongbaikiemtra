@@ -79,21 +79,39 @@ export default function EnglishK12Page({
           console.warn('Failed to load curriculum:', err);
         }
 
-        // 2. Fetch Quizzes
+        // 2. Fetch Quizzes & merge with LocalStorage
         try {
           const qRes = await fetch('/api/quizzes');
           const qData = await qRes.json();
-          const rawQuizzes = Array.isArray(qData.data) ? qData.data : (Array.isArray(qData.quizzes) ? qData.quizzes : []);
+          let rawQuizzes = Array.isArray(qData.data) ? qData.data : (Array.isArray(qData.quizzes) ? qData.quizzes : []);
+
+          try {
+            const localQuizzes = JSON.parse(localStorage.getItem('custom_quizzes') || '[]');
+            const map = new Map();
+            rawQuizzes.forEach(q => map.set(q.id, q));
+            localQuizzes.forEach(q => map.set(q.id, { ...(map.get(q.id) || {}), ...q }));
+            rawQuizzes = Array.from(map.values());
+          } catch {}
+
           if (rawQuizzes.length > 0) {
             const engQuizzes = rawQuizzes.filter(q => {
               const cat = (q.category || '').toLowerCase();
               const title = (q.title || '').toLowerCase();
-              return cat.includes('tiếng anh') || cat.includes('english') || title.includes('tiếng anh') || title.includes('global success') || title.includes('thpt') || cat.includes('chuyên đề') || cat.includes('chuẩn mỹ');
+              return cat.includes('anh') || cat.includes('english') || cat.includes('chuyên đề') || cat.includes('chuẩn mỹ') || title.includes('tiếng anh') || title.includes('global success') || title.includes('thpt') || Boolean(q.grade);
             });
             setQuizzes(engQuizzes);
           }
         } catch (err) {
           console.warn('Failed to load quizzes:', err);
+          try {
+            const localQuizzes = JSON.parse(localStorage.getItem('custom_quizzes') || '[]');
+            const engQuizzes = localQuizzes.filter(q => {
+              const cat = (q.category || '').toLowerCase();
+              const title = (q.title || '').toLowerCase();
+              return cat.includes('anh') || cat.includes('english') || title.includes('tiếng anh') || Boolean(q.grade);
+            });
+            if (engQuizzes.length > 0) setQuizzes(engQuizzes);
+          } catch {}
         }
 
         // 3. Fetch default Flashcards
@@ -1280,8 +1298,13 @@ export default function EnglishK12Page({
                   </p>
                   <button
                     type="button"
-                    onClick={() => { setSelectedLevel('all'); setSelectedGrade('all'); setSearchQuery(''); }}
-                    className="px-4 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs cursor-pointer"
+                    onClick={() => {
+                      setSelectedLevel('all');
+                      setSelectedGrade('all');
+                      setSearchQuery('');
+                      setSelectedSeriesFilter('all');
+                    }}
+                    className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs cursor-pointer active:scale-95 transition-all"
                   >
                     Đặt lại bộ lọc
                   </button>

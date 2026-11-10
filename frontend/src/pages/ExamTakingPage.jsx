@@ -54,6 +54,21 @@ export default function ExamTakingPage({
   const courseKey = courseName ? encodeURIComponent(courseName) : '';
   const STORAGE_KEY = `exam_progress_${quizId}_${mode}_${topicsKey}_${courseKey}_${user?.studentId || 'guest'}`;
 
+  // Cleanup fullscreen & overflow on unmount
+  useEffect(() => {
+    return () => {
+      try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      } catch (e) {}
+      document.body.style.overflow = 'auto';
+      document.body.style.height = 'auto';
+      document.documentElement.style.overflow = 'auto';
+      document.documentElement.style.height = 'auto';
+    };
+  }, []);
+
   // 1. Initialize Exam
   useEffect(() => {
     async function initExam() {
@@ -352,6 +367,21 @@ export default function ExamTakingPage({
 
       const durationSpent = totalTime - timeRemaining;
       const finalAttemptId = attemptId || attemptIdRef.current || `att_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+      // Save local backup submission for zero-latency result rendering & offline resilience
+      try {
+        localStorage.setItem('last_exam_submission', JSON.stringify({
+          attemptId: finalAttemptId,
+          quizId,
+          mode,
+          quizTitle: quizInfo?.title || 'Bài kiểm tra',
+          questions,
+          answers,
+          durationSpent,
+          violationsCount,
+          submittedAt: new Date().toISOString()
+        }));
+      } catch (e) {}
+
       const res = await fetch(`/api/attempts/${finalAttemptId}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -359,6 +389,7 @@ export default function ExamTakingPage({
           quizId,
           mode,
           quizTitle: quizInfo?.title || 'Bài kiểm tra',
+          questions,
           questionIds: questions.map(q => q.id),
           studentId: user?.studentId || 'dtc245200060',
           candidateName: user?.fullName || 'Hoàng Duy Mạnh',
@@ -370,29 +401,38 @@ export default function ExamTakingPage({
       });
 
       const data = await res.json().catch(() => ({ success: true, attemptId: finalAttemptId }));
-      if (data.success || data.attemptId) {
-        // Clear local storage
-        localStorage.removeItem(STORAGE_KEY);
-        // Exit fullscreen
-        try {
-          if (document.fullscreenElement && document.exitFullscreen) {
-            document.exitFullscreen().catch(() => {});
-          }
-        } catch (e) {}
+      
+      // Cleanup scroll and fullscreen
+      try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      } catch (e) {}
+      document.body.style.overflow = 'auto';
+      document.body.style.height = 'auto';
+      document.documentElement.style.overflow = 'auto';
+      document.documentElement.style.height = 'auto';
 
+      if (data.success || data.attemptId) {
+        localStorage.removeItem(STORAGE_KEY);
         onExamSubmitted(finalAttemptId);
       } else {
         console.warn('Submit warning, recovering attempt:', data.message);
         localStorage.removeItem(STORAGE_KEY);
-        try {
-          if (document.fullscreenElement && document.exitFullscreen) {
-            document.exitFullscreen().catch(() => {});
-          }
-        } catch (e) {}
         onExamSubmitted(finalAttemptId);
       }
     } catch (err) {
       console.error(err);
+      try {
+        if (document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      } catch (e) {}
+      document.body.style.overflow = 'auto';
+      document.body.style.height = 'auto';
+      document.documentElement.style.overflow = 'auto';
+      document.documentElement.style.height = 'auto';
+
       const fallbackId = attemptId || attemptIdRef.current || `att_${Date.now()}`;
       localStorage.removeItem(STORAGE_KEY);
       onExamSubmitted(fallbackId);

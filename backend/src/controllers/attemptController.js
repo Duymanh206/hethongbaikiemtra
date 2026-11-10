@@ -173,8 +173,9 @@ export const recordViolation = (req, res) => {
   }
 };
 
-export const submitAttempt = (req, res) => {
+export const submitAttempt = async (req, res) => {
   try {
+    await db.syncFromCloud();
     const { id } = req.params;
     const { 
       answers = {}, 
@@ -185,7 +186,8 @@ export const submitAttempt = (req, res) => {
       studentId,
       candidateName,
       quizTitle,
-      mode
+      mode,
+      questions: clientQuestions = []
     } = req.body;
 
     let attempt = db.findOne('exam_attempts', a => a.id === id);
@@ -194,7 +196,7 @@ export const submitAttempt = (req, res) => {
       console.log(`[SUBMIT-HEAL] Reconstituting attempt ${id} for ${studentId || 'candidate'}`);
       const fallbackQIds = Array.isArray(questionIds) && questionIds.length > 0 
         ? questionIds 
-        : Object.keys(answers || {});
+        : (Array.isArray(clientQuestions) && clientQuestions.length > 0 ? clientQuestions.map(q => q.id) : Object.keys(answers || {}));
       const fallbackTotal = fallbackQIds.length || (mode === 'period60' ? 45 : (mode === 'final45' ? 40 : 20));
 
       attempt = {
@@ -220,6 +222,40 @@ export const submitAttempt = (req, res) => {
         violationLogs: []
       };
       db.insert('exam_attempts', attempt);
+    }
+
+    // Cache client questions if passed to survive multi-instance serverless calls
+    if (Array.isArray(clientQuestions) && clientQuestions.length > 0) {
+      attempt.cachedQuestions = clientQuestions;
+      for (const cq of clientQuestions) {
+        if (!db.findOne('questions', q => q.id === cq.id)) {
+          db.insert('questions', {
+            id: cq.id,
+            quizId: attempt.quizId,
+            content: cq.content,
+            type: cq.type,
+            points: cq.points || 1,
+            instructionBadge: cq.instructionBadge,
+            explanation: cq.explanation,
+            statements: cq.statements || [],
+            options: cq.options || []
+          });
+        }
+        if (Array.isArray(cq.options)) {
+          for (const opt of cq.options) {
+            if (!db.findOne('question_options', o => o.id === opt.id)) {
+              db.insert('question_options', {
+                id: opt.id,
+                questionId: cq.id,
+                label: opt.label,
+                content: opt.content,
+                isCorrect: !!opt.isCorrect,
+                orderIndex: opt.orderIndex || 1
+              });
+            }
+          }
+        }
+      }
     }
 
     if (attempt.isSubmitted) {
@@ -380,8 +416,9 @@ export const submitAttempt = (req, res) => {
   }
 };
 
-export const getAttemptResult = (req, res) => {
+export const getAttemptResult = async (req, res) => {
   try {
+    await db.syncFromCloud();
     const { id } = req.params;
     let attempt = db.findOne('exam_attempts', a => a.id === id);
     if (!attempt) {
@@ -431,6 +468,9 @@ export const getAttemptResult = (req, res) => {
     } else {
       questions = db.find('questions', q => q.quizId === attempt.quizId);
     }
+    if (questions.length === 0 && Array.isArray(attempt.cachedQuestions) && attempt.cachedQuestions.length > 0) {
+      questions = attempt.cachedQuestions;
+    }
     if (questions.length === 0 && answers.length > 0) {
       questions = answers.map(a => db.findOne('questions', q => q.id === a.questionId)).filter(Boolean);
     }
@@ -440,13 +480,17 @@ export const getAttemptResult = (req, res) => {
       const userAnsObj = answers.find(a => a.questionId === q.id);
       const userAnswer = userAnsObj ? userAnsObj.userAnswer : null;
       const isCorrect = userAnsObj ? userAnsObj.isCorrect : false;
+      const isUnanswered = userAnswer === null || userAnswer === undefined || userAnswer === '' || (Array.isArray(userAnswer) && userAnswer.length === 0);
 
       const isSinglePick = q.type === 'single_choice' || q.type === 'phonetics' || q.type === 'listening' || q.type === 'reading_comprehension';
-      const qOptions = allOptions.filter(o => o.questionId === q.id).map((o, oIdx) => ({
-        id: o.id,
-        label: String.fromCharCode(65 + oIdx),
+      const rawOptions = allOptions.filter(o => o.questionId === q.id);
+      const sourceOptions = rawOptions.length > 0 ? rawOptions : (q.options || []);
+
+      const qOptions = sourceOptions.map((o, oIdx) => ({
+        id: o.id || `opt_${q.id}_${oIdx}`,
+        label: o.label || String.fromCharCode(65 + oIdx),
         content: o.content,
-        isCorrect: o.isCorrect,
+        isCorrect: !!o.isCorrect,
         isUserSelected: isSinglePick
           ? userAnswer === o.id
           : Array.isArray(userAnswer) && userAnswer.includes(o.id)
@@ -483,6 +527,18 @@ export const getAttemptResult = (req, res) => {
         instructionBadge: q.instructionBadge,
         explanation: q.explanation || 'Không có giải thích chi tiết cho câu hỏi này.',
         points: q.points,
+        passageText: q.passageText,
+        passageTitle: q.passageTitle,
+        listeningScript: q.listeningScript,
+        audioUrl: q.audioUrl,
+        options: qOptions,
+        dragDropItems: qDragDrop,
+        statements: qStatements,
+        userAnswer,
+        isCorrect,
+        isUnanswered
+      };
+    });
         requiredCount: q.requiredCount,
         categories: q.categories || [],
         statements: qStatements,

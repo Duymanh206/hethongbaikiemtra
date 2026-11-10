@@ -39,12 +39,15 @@ export default function IncompleteModal({
             {incompleteQuestionIndices.map(idx => (
               <button
                 key={idx}
-                onClick={() => {
-                  onJumpToQuestion(idx);
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  if (onJumpToQuestion) onJumpToQuestion(idx);
                   onClose();
                 }}
-                className="w-9 h-9 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-xs hover:scale-110 active:scale-95 transition-all flex items-center justify-center"
-                title={`Nhảy tới Câu ${idx + 1}`}
+                className="w-9 h-9 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs shadow-xs hover:scale-110 active:scale-95 transition-all flex items-center justify-center cursor-pointer"
+                title={`Nhảy trực tiếp tới Câu ${idx + 1}`}
               >
                 {idx + 1}
               </button>

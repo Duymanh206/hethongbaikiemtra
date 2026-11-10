@@ -41,19 +41,137 @@ export default function ExamResultPage({
   const [aiExplanation, setAiExplanation] = useState(null);
 
   useEffect(() => {
+    // 1. Force exit fullscreen and ensure page is fully scrollable
+    try {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+    } catch (e) {}
+
+    document.body.style.overflow = 'auto';
+    document.body.style.height = 'auto';
+    document.documentElement.style.overflow = 'auto';
+    document.documentElement.style.height = 'auto';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
     if (!attemptId) return;
     setLoading(true);
+
+    const buildReviewFromLocalFallback = (localSub) => {
+      if (!localSub || !Array.isArray(localSub.questions)) return [];
+      const answers = localSub.answers || {};
+      return localSub.questions.map((q, idx) => {
+        const userAnswer = answers[q.id] || null;
+        const isUnanswered = userAnswer === null || userAnswer === undefined || userAnswer === '' || (Array.isArray(userAnswer) && userAnswer.length === 0);
+        let isCorrect = false;
+
+        const opts = (q.options || []).map((o, oIdx) => {
+          const isUserSelected = Array.isArray(userAnswer) ? userAnswer.includes(o.id) : (userAnswer === o.id);
+          return {
+            id: o.id || `opt_${q.id}_${oIdx}`,
+            label: o.label || String.fromCharCode(65 + oIdx),
+            content: o.content,
+            isCorrect: !!o.isCorrect,
+            isUserSelected
+          };
+        });
+
+        if (!isUnanswered) {
+          if (q.type === 'single_choice' || q.type === 'phonetics' || q.type === 'listening' || q.type === 'reading_comprehension') {
+            const correctOpt = opts.find(o => o.isCorrect);
+            isCorrect = correctOpt && correctOpt.id === userAnswer;
+          } else if (q.type === 'multiple_choice') {
+            const correctIds = opts.filter(o => o.isCorrect).map(o => o.id).sort();
+            const userArr = Array.isArray(userAnswer) ? [...userAnswer].sort() : [];
+            isCorrect = correctIds.length === userArr.length && correctIds.every((v, i) => v === userArr[i]);
+          }
+        }
+
+        return {
+          id: q.id,
+          orderIndex: idx + 1,
+          type: q.type,
+          content: q.content,
+          instructionBadge: q.instructionBadge,
+          explanation: q.explanation || 'Không có giải thích chi tiết cho câu hỏi này.',
+          points: q.points || 1.0,
+          options: opts,
+          statements: q.statements || [],
+          dragDropItems: q.dragDropItems || [],
+          userAnswer,
+          isCorrect,
+          isUnanswered
+        };
+      });
+    };
+
     fetch(`/api/attempts/${attemptId}/result`)
       .then(res => res.json())
       .then(data => {
+        let localSub = null;
+        try {
+          localSub = JSON.parse(localStorage.getItem('last_exam_submission') || 'null');
+        } catch (e) {}
+
         if (data.success) {
-          setResultData(data);
+          let detailedReview = Array.isArray(data.detailedReview) ? data.detailedReview : [];
+          if (detailedReview.length === 0 && localSub && localSub.questions) {
+            detailedReview = buildReviewFromLocalFallback(localSub);
+          }
+          setResultData({
+            ...data,
+            detailedReview
+          });
+        } else if (localSub && localSub.questions) {
+          // Instant offline / cold-start fallback recovery
+          const detailedReview = buildReviewFromLocalFallback(localSub);
+          setResultData({
+            success: true,
+            quiz: {
+              id: localSub.quizId,
+              title: localSub.quizTitle || 'Bài kiểm tra',
+              totalQuestions: localSub.questions.length
+            },
+            attempt: {
+              id: attemptId,
+              candidateName: 'Hoàng Duy Mạnh',
+              score: 0.0,
+              correctCount: 0,
+              totalCount: localSub.questions.length,
+              percentage: 0
+            },
+            detailedReview
+          });
         } else {
           setError(data.message || 'Không thể tải kết quả');
         }
       })
       .catch(err => {
         console.error(err);
+        try {
+          const localSub = JSON.parse(localStorage.getItem('last_exam_submission') || 'null');
+          if (localSub && localSub.questions) {
+            const detailedReview = buildReviewFromLocalFallback(localSub);
+            setResultData({
+              success: true,
+              quiz: {
+                id: localSub.quizId,
+                title: localSub.quizTitle || 'Bài kiểm tra',
+                totalQuestions: localSub.questions.length
+              },
+              attempt: {
+                id: attemptId,
+                candidateName: 'Hoàng Duy Mạnh',
+                score: 0.0,
+                correctCount: 0,
+                totalCount: localSub.questions.length,
+                percentage: 0
+              },
+              detailedReview
+            });
+            return;
+          }
+        } catch {}
         setError('Lỗi kết nối tới máy chủ');
       })
       .finally(() => setLoading(false));
@@ -136,7 +254,7 @@ export default function ExamResultPage({
   const isPassed = attempt.score >= 5.0;
 
   return (
-    <div className="min-h-screen bg-[#f4f6f9] pb-24">
+    <div className="min-h-screen bg-[#f4f6f9] pb-24 overflow-y-auto overflow-x-hidden">
       {/* Top Banner */}
       <div className="bg-white border-b border-slate-200 py-8 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center space-y-4">
@@ -276,21 +394,23 @@ export default function ExamResultPage({
                 <div
                   key={q.id}
                   className={`bg-white rounded-3xl p-6 shadow-xs border transition-all ${
-                    isCorrect ? 'border-emerald-200' : 'border-rose-200'
+                    isCorrect ? 'border-emerald-200' : (q.isUnanswered ? 'border-amber-200' : 'border-rose-200')
                   }`}
                 >
                   {/* Question header */}
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div className="flex items-center gap-2">
                       <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black text-white ${
-                        isCorrect ? 'bg-emerald-600' : 'bg-rose-600'
+                        isCorrect ? 'bg-emerald-600' : (q.isUnanswered ? 'bg-amber-500' : 'bg-rose-600')
                       }`}>
                         {idx + 1}
                       </span>
-                      <span className={`text-xs font-bold uppercase tracking-wider ${
-                        isCorrect ? 'text-emerald-700' : 'text-rose-700'
+                      <span className={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                        isCorrect 
+                          ? 'bg-emerald-50 text-emerald-700' 
+                          : (q.isUnanswered ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700')
                       }`}>
-                        {isCorrect ? 'Chính xác' : 'Chưa chính xác'}
+                        {isCorrect ? '✓ Chính xác' : (q.isUnanswered ? 'Chưa trả lời' : '✕ Chưa chính xác')}
                       </span>
                     </div>
 
