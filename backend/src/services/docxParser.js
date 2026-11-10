@@ -46,11 +46,11 @@ export function cleanOptionContentAndDetectCorrect(rawText, runs = [], checkRunI
     content = content.replace(/^(\*|✓|✔|☑)\s*/, '').trim();
   }
 
-  // 2. Trailing Đúng / Sai, True / False, (Đúng), [Đúng], (Sai), [Sai]
-  const tfTrailingMatch = content.match(/\s*([(\[]?\s*(Đúng|Sai|True|False|Đ|S)\s*[)\]]?)\s*$/i);
+  // 2. Trailing Đúng / Sai, True / False, (Đúng), [Đúng], (Sai), [Sai] (requires enclosure or leading dash/space)
+  const tfTrailingMatch = content.match(/(?:\s*[(\[]\s*(Đúng|Sai|True|False|Đ|S)\s*[)\]]|\s+-\s*(Đúng|Sai|True|False|Đ|S)|\s+(Đúng|Sai|True|False))\s*$/i);
   if (tfTrailingMatch) {
     hasExplicitMarker = true;
-    const markerVal = tfTrailingMatch[2].toLowerCase();
+    const markerVal = (tfTrailingMatch[1] || tfTrailingMatch[2] || tfTrailingMatch[3]).toLowerCase();
     if (markerVal === 'đúng' || markerVal === 'true' || markerVal === 'đ') {
       isCorrect = true;
     }
@@ -322,7 +322,17 @@ export async function parseDocxBuffer(buffer, config = {}) {
     while ((rm = rRegex.exec(pXml)) !== null) {
       const rContent = rm[1];
       const tMatch = rContent.match(/<w:t(?: [^>]*)?>([^<]*)<\/w:t>/);
-      const text = tMatch ? tMatch[1] : '';
+      let text = tMatch ? tMatch[1] : '';
+
+      // Preserve tabs in Word runs (crucial for aligning options like A. ... \t B. ...)
+      if (/<w:tab(?:\/| [^>]*\/>)/.test(rContent)) {
+        text = text ? text + '   ' : '   ';
+      }
+      // Preserve explicit line breaks in Word runs
+      if (/<w:br(?:\/| [^>]*\/>)/.test(rContent)) {
+        text = text ? text + '\n' : '\n';
+      }
+
       if (!text) continue;
       fullText += text;
       const isBold = /<w:b(?:\/| [^>]*\/>)/.test(rContent);
@@ -366,9 +376,10 @@ export async function parseDocxBuffer(buffer, config = {}) {
     });
   }
 
-  // Question regex: Matches "Câu 1:", "Câu:", "Câu 1.", "Câu1:", "Bài 1:", "Question 1:"
-  const qStartRegex = /^(?:Câu|Question|Bài|CÂU|QUESTION|BÀI)\s*\d*[:.-]\s*(.*)$/i;
-  const qBracketRegex = /^\[(?:Câu|Question|Bài)\s*\d*\][:.-]?\s*(.*)$/i;
+  // Question regex: Matches "Câu 1:", "Câu:", "Câu 1.", "Câu1:", "Bài 1:", "Question 1:", "[Câu 1]", "1.", "1)", "1:"
+  const qPrefixedRegex = /^(?:Câu|Question|Bài|Task|Item|CÂU|QUESTION|BÀI|TASK|ITEM)\s*(\d*)[:.\-)\/]\s*(.*)$/i;
+  const qBracketRegex = /^\[(?:Câu|Question|Bài|Task|Item|\d+)[^\]]*\][:.\-)?]\s*(.*)$/i;
+  const qNumericRegex = /^(\d+)[\.\)\:\/\-]\s+(.*)$/;
   // Answer key regex: "Đáp án: B", "Đ/A: 2", "Key: C", "Answer: B"
   const answerKeyRegex = /^(?:Đáp\s*án|Đ\/A|Key|Answer|Phương\s*án\s*đúng)[\s.:\-]+([A-Ha-h1-9,\s]+)/i;
   // Section header for end-of-file answer keys: "BẢNG ĐÁP ÁN", "ĐÁP ÁN TRẮC NGHIỆM"
@@ -403,13 +414,38 @@ export async function parseDocxBuffer(buffer, config = {}) {
       }
 
       // Check if this paragraph is a question start
-      const qMatch = fullText.match(qStartRegex) || fullText.match(qBracketRegex);
-      if (qMatch) {
+      let isQStart = false;
+      let qContent = '';
+
+      const prefMatch = fullText.match(qPrefixedRegex) || fullText.match(qBracketRegex);
+      if (prefMatch) {
+        isQStart = true;
+        qContent = (prefMatch[2] !== undefined ? prefMatch[2] : prefMatch[1]).trim();
+      } else {
+        const numMatch = fullText.match(qNumericRegex);
+        if (numMatch) {
+          const numVal = parseInt(numMatch[1], 10);
+          const restText = numMatch[2].trim();
+          const isNextSeq = numVal === qCounter + 1;
+          const prevHasOptions = currentQ && (currentQ.options.length >= 2 || currentQ.statements.length > 0 || currentQ.dragDropItems.length > 0);
+          const isFirstQ = qCounter === 0 && (numVal === 1 || restText.endsWith('?') || restText.endsWith(':'));
+          const hasQChar = restText.includes('?') || restText.includes(':') || /(?:chọn|tìm|điền|hãy|cho biết|which|what|where|how|why|choose|indicate|dưới đây|sau đây)/i.test(restText);
+
+          const isLikelyOption = currentQ && currentQ.options.length === 0 && numVal <= 4 && !hasQChar && !isNextSeq;
+
+          if ((isNextSeq || prevHasOptions || isFirstQ || hasQChar) && !isLikelyOption) {
+            isQStart = true;
+            qContent = restText;
+          }
+        }
+      }
+
+      if (isQStart) {
         qCounter++;
         currentQ = {
           orderIndex: qCounter,
           rawHeader: fullText,
-          content: qMatch[1].trim(),
+          content: qContent,
           runs: [...runs],
           type: 'single_choice',
           instructionBadge: null,
@@ -555,6 +591,12 @@ export async function parseDocxBuffer(buffer, config = {}) {
         if (singleOptMatch) {
           const rawMarker = singleOptMatch[1];
           const rawRest = singleOptMatch[2].trim();
+
+          // If rawMarker is numeric (1-9) but options already have letter labels (A, B, C...) or already has >= 4 options, don't parse as an option!
+          const hasLetterOptions = currentQ.options.some(o => /^[A-H]$/i.test(o.label));
+          if (/^[1-9]$/.test(rawMarker) && (hasLetterOptions || currentQ.options.length >= 4)) {
+            continue;
+          }
 
           let label = rawMarker.toUpperCase();
           if (/^[1-9]$/.test(rawMarker)) {

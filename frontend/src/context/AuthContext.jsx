@@ -67,6 +67,18 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('quiz_authenticated', 'true');
         localStorage.setItem('quiz_user', JSON.stringify(data.user));
         localStorage.setItem('quiz_token', data.token || data.user.id);
+
+        try {
+          const clientAccs = JSON.parse(localStorage.getItem('client_registered_accounts') || '[]');
+          const updated = clientAccs.map(cu => {
+            if (cu.username === data.user.username || cu.id === data.user.id) {
+              return { ...cu, status: 'active' };
+            }
+            return cu;
+          });
+          localStorage.setItem('client_registered_accounts', JSON.stringify(updated));
+        } catch {}
+
         setIsAuthModalOpen(false);
         return { success: true, message: data.message };
       }

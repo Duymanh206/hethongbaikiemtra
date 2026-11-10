@@ -784,3 +784,4 @@ main().catch(err => {
   console.error('Generation failed:', err);
   process.exit(1);
 });
+

@@ -17,8 +17,9 @@ function shuffleArray(array) {
   return arr;
 }
 
-export const getAllQuizzes = (req, res) => {
+export const getAllQuizzes = async (req, res) => {
   try {
+    await db.syncFromCloud();
     const { search = '', category = '', sort = 'most_taken' } = req.query;
     let quizzes = db.getTable('quizzes');
 
@@ -53,10 +54,14 @@ export const getAllQuizzes = (req, res) => {
   }
 };
 
-export const getQuizById = (req, res) => {
+export const getQuizById = async (req, res) => {
   try {
     const { id } = req.params;
     let quiz = db.findOne('quizzes', q => q.id === id);
+    if (!quiz) {
+      await db.syncFromCloud();
+      quiz = db.findOne('quizzes', q => q.id === id);
+    }
     if (!quiz) {
       if (id === 'composite_period60') {
         quiz = {
@@ -160,7 +165,7 @@ export const getCoursesWithTopics = (req, res) => {
   }
 };
 
-export const getQuizExamQuestions = (req, res) => {
+export const getQuizExamQuestions = async (req, res) => {
   try {
     const { id } = req.params;
     const { mode, quizIds, courseName } = req.query; // 'practice' | 'quiz15' | 'period60' | 'final45'
@@ -345,6 +350,10 @@ export const getQuizExamQuestions = (req, res) => {
     // MODE 1 & 2: SPECIFIC QUIZ
     else {
       quiz = db.findOne('quizzes', q => q.id === id);
+      if (!quiz) {
+        await db.syncFromCloud();
+        quiz = db.findOne('quizzes', q => q.id === id);
+      }
       if (!quiz) {
         quiz = findAndEnsureUnitQuiz(id);
       }
@@ -586,6 +595,9 @@ export const importDocxQuiz = async (req, res) => {
         }
       });
 
+      // Immediately synchronize custom quiz to cloud store so all other users/instances can take it
+      await db.syncToCloud();
+
       return res.json({
         success: true,
         saved: true,
@@ -608,7 +620,7 @@ export const importDocxQuiz = async (req, res) => {
   }
 };
 
-export const createQuiz = (req, res) => {
+export const createQuiz = async (req, res) => {
   try {
     const {
       title,
@@ -692,6 +704,9 @@ export const createQuiz = (req, res) => {
         });
       }
     });
+
+    // Immediately synchronize custom quiz and questions to cloud store so other users can take it
+    await db.syncToCloud();
 
     res.json({
       success: true,

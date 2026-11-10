@@ -320,16 +320,18 @@ class Database {
   async syncFromCloud() {
     try {
       const res = await fetch(CLOUD_SYNC_URL, {
-        signal: AbortSignal.timeout(2500)
+        signal: AbortSignal.timeout(4000)
       });
       if (!res.ok) return;
       const json = await res.json();
-      if (json && json.data && Array.isArray(json.data.users)) {
-        const cloudUsers = json.data.users;
-        const localUsers = this.getTable('users');
-        let changed = false;
+      if (!json || !json.data) return;
 
-        for (const cu of cloudUsers) {
+      let changed = false;
+
+      // 1. Merge users
+      if (Array.isArray(json.data.users)) {
+        const localUsers = this.getTable('users');
+        for (const cu of json.data.users) {
           const idx = localUsers.findIndex(u => 
             (u.id && cu.id && u.id === cu.id) ||
             (u.username && cu.username && u.username.toLowerCase() === cu.username.toLowerCase()) ||
@@ -345,9 +347,66 @@ class Database {
             changed = true;
           }
         }
-        if (changed) {
-          this.saveData();
+      }
+
+      // 2. Merge custom user-created quizzes
+      if (Array.isArray(json.data.customQuizzes)) {
+        const localQuizzes = this.getTable('quizzes');
+        for (const cq of json.data.customQuizzes) {
+          const idx = localQuizzes.findIndex(q => q.id === cq.id);
+          if (idx !== -1) {
+            localQuizzes[idx] = { ...localQuizzes[idx], ...cleanQuiz(cq) };
+          } else {
+            localQuizzes.unshift(cleanQuiz(cq));
+            changed = true;
+          }
         }
+      }
+
+      // 3. Merge custom questions
+      if (Array.isArray(json.data.customQuestions)) {
+        const localQuestions = this.getTable('questions');
+        for (const cq of json.data.customQuestions) {
+          const idx = localQuestions.findIndex(q => q.id === cq.id);
+          if (idx !== -1) {
+            localQuestions[idx] = { ...localQuestions[idx], ...cq };
+          } else {
+            localQuestions.push(cq);
+            changed = true;
+          }
+        }
+      }
+
+      // 4. Merge custom options
+      if (Array.isArray(json.data.customOptions)) {
+        const localOptions = this.getTable('question_options');
+        for (const co of json.data.customOptions) {
+          const idx = localOptions.findIndex(o => o.id === co.id);
+          if (idx !== -1) {
+            localOptions[idx] = { ...localOptions[idx], ...co };
+          } else {
+            localOptions.push(co);
+            changed = true;
+          }
+        }
+      }
+
+      // 5. Merge custom drag & drop items
+      if (Array.isArray(json.data.customDragDrop)) {
+        const localDragDrop = this.getTable('drag_drop_items');
+        for (const cd of json.data.customDragDrop) {
+          const idx = localDragDrop.findIndex(d => d.id === cd.id);
+          if (idx !== -1) {
+            localDragDrop[idx] = { ...localDragDrop[idx], ...cd };
+          } else {
+            localDragDrop.push(cd);
+            changed = true;
+          }
+        }
+      }
+
+      if (changed) {
+        this.saveData();
       }
     } catch {
       // Non-blocking
@@ -357,14 +416,36 @@ class Database {
   async syncToCloud() {
     try {
       const users = this.getTable('users');
+
+      // Identify custom / user-created quizzes (quizzes not in standard pre-seeded list)
+      const isStandardSeed = (q) => 
+        q.id.startsWith('quiz_k12_') || 
+        q.id.startsWith('quiz_eng_') || 
+        q.id.startsWith('quiz_usedu_') || 
+        ['quiz_cnxhkh_05', 'quiz_phapluat_01', 'quiz_lichsudang_02'].includes(q.id);
+
+      const customQuizzes = this.getTable('quizzes').filter(q => !isStandardSeed(q));
+      const customQuizIds = new Set(customQuizzes.map(q => q.id));
+      const customQuestions = this.getTable('questions').filter(q => customQuizIds.has(q.quizId));
+      const customQuestionIds = new Set(customQuestions.map(q => q.id));
+      const customOptions = this.getTable('question_options').filter(o => customQuestionIds.has(o.questionId));
+      const customDragDrop = this.getTable('drag_drop_items').filter(d => customQuestionIds.has(d.questionId));
+
       await fetch(CLOUD_SYNC_URL, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: 'quiz_store_v1',
-          data: { users }
+          data: {
+            users,
+            customQuizzes,
+            customQuestions,
+            customOptions,
+            customDragDrop,
+            updatedAt: new Date().toISOString()
+          }
         }),
-        signal: AbortSignal.timeout(2500)
+        signal: AbortSignal.timeout(5000)
       });
     } catch {
       // Non-blocking

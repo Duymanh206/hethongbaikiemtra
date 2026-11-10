@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { db } from '../database/db.js';
-import { sendAdminApprovalEmail, ADMIN_EMAIL } from '../services/mailService.js';
+import { sendAdminApprovalEmail, sendAccountActivatedEmail, ADMIN_EMAIL } from '../services/mailService.js';
 
 // Helper to sanitize user object (exclude password and tokens)
 function sanitizeUser(u) {
@@ -179,6 +179,7 @@ export const register = async (req, res) => {
     };
 
     db.insert('users', newUser);
+    await db.syncToCloud();
 
     // Send email notification to Admin (Hoàng Duy Mạnh)
     sendAdminApprovalEmail({
@@ -216,22 +217,14 @@ export const login = async (req, res) => {
 
     const cleanInput = username.trim().toLowerCase();
 
-    // 1. Check local DB
+    // Always sync latest accounts and approval statuses from Cloud
+    await db.syncFromCloud();
+
     let user = db.findOne('users', u => 
       u.username?.toLowerCase() === cleanInput ||
       (u.studentId && u.studentId?.toLowerCase() === cleanInput) ||
       (u.email && u.email?.toLowerCase() === cleanInput)
     );
-
-    // 2. If not found, sync from cloud store
-    if (!user) {
-      await db.syncFromCloud();
-      user = db.findOne('users', u => 
-        u.username?.toLowerCase() === cleanInput ||
-        (u.studentId && u.studentId?.toLowerCase() === cleanInput) ||
-        (u.email && u.email?.toLowerCase() === cleanInput)
-      );
-    }
 
     if (!user) {
       return res.status(400).json({ 
@@ -440,6 +433,14 @@ export const approveAccountByLink = async (req, res) => {
       approvedBy: 'Admin Hoàng Duy Mạnh (Email 1-touch)'
     });
 
+    // Synchronize to cloud database immediately so the student can log in from any device
+    await db.syncToCloud();
+
+    // Send confirmation email to the student
+    if (isApprove) {
+      sendAccountActivatedEmail({ user, loginUrl: `${baseUrl}/` }).catch(() => {});
+    }
+
     try {
       db.update('system_notifications', n => n.userId === user.id || n.studentId === user.studentId, { status: newStatus });
     } catch {}
@@ -593,6 +594,14 @@ export const approveUserByAdmin = async (req, res) => {
       status: newStatus,
       approvedAt: new Date().toISOString()
     });
+
+    // Synchronize to cloud database immediately so the student can log in from any device
+    await db.syncToCloud();
+
+    // Send confirmation email to the student
+    if (action === 'approve') {
+      sendAccountActivatedEmail({ user, loginUrl: `${getBaseUrl(req)}/` }).catch(() => {});
+    }
 
     try {
       db.update('system_notifications', n => n.userId === user.id || n.studentId === user.studentId, { status: newStatus });

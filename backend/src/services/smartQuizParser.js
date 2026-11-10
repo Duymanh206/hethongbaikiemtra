@@ -14,8 +14,8 @@ export function parseRawQuizText(rawText) {
   // Normalize line endings
   const normalized = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-  // Split text by "Câu \d+:" or "Câu \d+."
-  const questionBlockRegex = /(?:^|\n)(?:Câu|Question|Bài)\s*(\d+)[\s*.:\-_)]+/gi;
+  // Split text by "Câu \d+:" or "Câu \d+." or pure numeric "1." at start of line
+  const questionBlockRegex = /(?:^|\n)(?:(?:Câu|Question|Bài|Task|Item)\s*(\d+)[\s*.:\-_)]+|(\d+)[\.\)\:\/\-]\s+)/gi;
   
   const blocks = [];
   let match;
@@ -23,11 +23,12 @@ export function parseRawQuizText(rawText) {
   let lastNum = 0;
 
   while ((match = questionBlockRegex.exec(normalized)) !== null) {
+    const qNum = parseInt(match[1] || match[2], 10);
     if (blocks.length > 0) {
       blocks[blocks.length - 1].rawText = normalized.substring(lastIndex, match.index).trim();
     }
     blocks.push({
-      num: parseInt(match[1], 10),
+      num: qNum,
       startIndex: match.index + match[0].length,
       rawText: ''
     });

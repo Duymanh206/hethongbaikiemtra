@@ -120,7 +120,9 @@ export async function sendAdminApprovalEmail({ user, approvalLink, rejectLink })
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Origin': 'https://hethongbaikiemtra-n58g.vercel.app',
+        'Referer': 'https://hethongbaikiemtra-n58g.vercel.app/'
       },
       body: JSON.stringify({
         _subject: emailSubject,
@@ -221,5 +223,50 @@ export async function sendAdminApprovalEmail({ user, approvalLink, rejectLink })
   console.log(`======================================================\n`);
 
   return { success: true, emailSentTo: ADMIN_EMAIL };
+}
+
+/**
+ * Dispatch confirmation email to applicant when their account is approved & activated
+ */
+export async function sendAccountActivatedEmail({ user, loginUrl = 'https://hethongbaikiemtra-n58g.vercel.app' }) {
+  if (!user || !user.email) return;
+
+  const targetEmail = user.email.trim();
+  const subject = `[Quizz. PRO] 🎉 Tài khoản của bạn đã được kích hoạt thành công!`;
+  const timestamp = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+  console.log(`\n======================================================`);
+  console.log(`📧 [ACCOUNT ACTIVATED - NOTIFYING CANDIDATE]`);
+  console.log(`   User:  ${user.fullName} (${user.studentId})`);
+  console.log(`   Email: ${targetEmail}`);
+  console.log(`   Login: ${loginUrl}`);
+  console.log(`======================================================\n`);
+
+  try {
+    await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Origin': 'https://hethongbaikiemtra-n58g.vercel.app',
+        'Referer': 'https://hethongbaikiemtra-n58g.vercel.app/'
+      },
+      body: JSON.stringify({
+        _subject: subject,
+        _template: 'box',
+        _captcha: 'false',
+        'THÔNG BÁO': 'TÀI KHOẢN ĐÃ ĐƯỢC PHÊ DUYỆT & KÍCH HOẠT',
+        'Kính gửi': user.fullName,
+        'Mã sinh viên': user.studentId,
+        'Tên đăng nhập': user.username,
+        'Thời gian kích hoạt': timestamp,
+        'Phê duyệt bởi': 'Quản trị viên Hoàng Duy Mạnh',
+        '👉 BẤM ĐỂ ĐĂNG NHẬP NGAY': loginUrl
+      }),
+      signal: AbortSignal.timeout(6000)
+    });
+  } catch (e) {
+    console.warn('[ACTIVATION EMAIL NOTICE]', e.message);
+  }
 }
 
